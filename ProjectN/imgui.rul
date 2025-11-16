@@ -1,0 +1,30 @@
+[Window][Debug##Default]
+Pos=60,60
+Size=400,400
+Collapsed=0
+
+[Window][Hello Window]
+Pos=92,69
+Size=95,58
+Collapsed=0
+
+[Window][My Debug Window]
+ViewportPos=1431,318
+ViewportId=0x43B82432
+Size=373,203
+Collapsed=0
+
+[Window][Timer Info]
+ViewportPos=1377,75
+ViewportId=0xFC016D28
+Size=289,110
+Collapsed=0
+
+[Window][タイマー情報]
+ViewportPos=1393,83
+ViewportId=0x43D22195
+Size=171,112
+Collapsed=0
+
+[Docking][Data]
+

@@ -1,0 +1,184 @@
+﻿#include "Player.h"
+#include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
+
+#include "System/00_Manager/02_PShotManager/PShotManager.h"
+
+#include "System/02_Singleton/Timer//Timer.h"
+
+//---------------------------------------------
+// PlayerStateのインクルード.
+//---------------------------------------------
+#include "..//Player/PlayerState/PlayerState.h"
+#include "GameObject//SkinMeshObject//Character//Player//PlayerState//00_PlayerIdol//PlayerIdol.h"
+#include "GameObject//SkinMeshObject//Character//Player//PlayerContext//PlayerContext.h"
+#include "..//Player/PlayerState/03_PlayerDead/PlayerDead.h"
+
+
+Player::Player()
+    :Character()
+    , m_pShotManager    (PShotManager::GetInstance())
+    , m_pAttackManager(std::make_unique<PlayerAttackManager>(this))
+    , m_pPlayerIdol     (std::make_shared<PlayerIdol>(this))
+    , m_pPlayerDead     (std::make_shared<PlayerDead>(this))
+
+    , m_pCurrentState   (nullptr)
+
+{
+	SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Player);
+	auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh,[](SkinMesh*){});
+	//AttachMesh に shared_ptr を渡す
+	AttachMesh(shared_mesh);
+    
+    //Game開始時にIdolclassに入る.
+    //Idolclassの中でMoveとAttackを呼んでいる.
+    m_pCurrentState = m_pPlayerIdol.get();
+
+    if (m_pCurrentState) 
+    {
+        m_pCurrentState->Enter();
+    }
+    Init();
+}
+
+Player::~Player()
+{
+}
+
+void Player::Update()
+{
+    //スキンメッシュオブジェクトとしてアニメーション速度を設定.
+    //m_pMesh->SetAnimSpeed(m_AnimSpeed);
+
+    //これでその時のStateに入る.
+    if (m_pCurrentState)
+    {
+        m_pCurrentState->Execute();
+    }
+
+    //アニメーション更新
+    m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
+
+
+    //PlayerAttackManager の更新
+    if (m_pAttackManager)
+    {
+        m_pAttackManager->Update();
+    }
+    if (m_pShotManager)
+    {
+        m_pShotManager->Update(); // 弾の移動処理を実行
+    }
+
+    //ボーン座標の取得.
+    //弾の発射位置を計算するために使用.
+    m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
+
+
+    //基底クラスの更新処理.
+    Character::Update();
+}
+
+void Player::Draw()
+{
+	//m_pMesh->SetAnimSpeed(m_AnimSpeed);
+
+	Character::Draw();
+}
+
+void Player::Init()
+{
+    //これでスケールの変更が可能になりました.
+    SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+    SetPosition(0.f, 0.f, 0.f);
+
+    m_HitPoint = 100.0f;
+
+    //アニメーションの速度.
+    m_AnimSpeed = 1.0f / 60.0f;
+
+    m_BSphere.SetRadius(0.7f);
+
+    //当たり判定の位置を変更.
+    m_HitCenterOffset = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+
+    Character::Init();
+}
+
+void Player::Hit()
+{
+    constexpr float zero = 0.0f;
+    constexpr float ten = 10.0f;
+    //Playerのダメージ実装用のローカル変数.
+    constexpr float Dead_HP = zero;
+    constexpr float Damege_Hit = ten;
+
+    //くらった時のHPの減少.
+    m_HitPoint -= Damege_Hit;
+    if (m_HitPoint <= Dead_HP)
+    {
+        //ここでPlayerのHPが0になったらPlayerDeadClassを呼ぶ.
+        m_HitPoint = Dead_HP;
+
+        // nextState という名前に修正し、ステート遷移ロジックを実装
+        PlayerState* nextState = m_pPlayerDead.get();
+
+        if (m_pCurrentState != nextState)
+        {
+            if (m_pCurrentState) {
+                m_pCurrentState->Exit();    //古いステートの終了処理
+            }
+            m_pCurrentState = nextState;    //ステートを切り替え
+            if (m_pCurrentState) {
+                m_pCurrentState->Enter();   //新しいステートの開始処理
+            }
+        }
+    }
+}
+
+void Player::Stop()
+{
+    if (m_pAnimCtrl)
+    {
+        //アニメーション進行を止める
+        m_pAnimCtrl->AdvanceTime(0.0f, nullptr);
+
+        D3DXTRACK_DESC trackDesc;
+        m_pAnimCtrl->GetTrackDesc(0, &trackDesc);
+        trackDesc.Enable = FALSE;
+        m_pAnimCtrl->SetTrackDesc(0, &trackDesc);
+    }
+}
+
+
+D3DXVECTOR3 Player::GetHitCenter() const
+{
+    //プレイヤーモデルの位置 (m_vPosition) にオフセットを加算して返す
+    return m_vPosition + m_HitCenterOffset;
+}
+
+D3DXVECTOR3 Player::Player_WS(float RotationY) const
+{
+    D3DXVECTOR3 dir;
+    dir.x = sinf(RotationY);
+    dir.y = 0.0f;
+    dir.z = cosf(RotationY);
+    return dir;
+}
+
+D3DXVECTOR3 Player::Player_AD(float RotationY) const
+{
+    D3DXVECTOR3 dir;
+    dir.x = cosf(RotationY);
+    dir.y = 0.0f;
+    dir.z = -sinf(RotationY);
+    return dir;
+}
+
+void Player::ChangeAttackType(PlayerAttackManager::enAttack type)
+{
+    if (m_pAttackManager)
+    {
+        // 実際のステート切り替え処理はAttackManagerに任せる
+        m_pAttackManager->ChangeAttackState(type);
+    }
+}

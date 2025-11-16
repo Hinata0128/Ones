@@ -1,0 +1,78 @@
+#include "PlayerAttackManager.h"
+
+#include "GameObject/SkinMeshObject/Character/Player/Player.h"
+
+#include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/AttackLong/AttackLong.h" 
+#include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/AttackShort/AttackShort.h"
+
+// ---------------------------------------------------------------------
+
+PlayerAttackManager::PlayerAttackManager(Player* pOwner)
+    : ManagerBase()
+    , m_pOwner(pOwner)
+    , m_pCurrentAttackState(nullptr) 
+{
+    RegisterStates();
+    // Å‰‚ÌState‚ðÝ’è‚µAEnter()‚ðŒÄ‚Ño‚·
+    ChangeAttackState(enAttack::Short);
+}
+
+PlayerAttackManager::~PlayerAttackManager()
+{
+}
+
+// ---------------------------------------------------------------------
+
+void PlayerAttackManager::Update()
+{
+    if (m_pCurrentAttackState && m_pOwner)
+    {
+        m_pCurrentAttackState->ExecuteAttack(m_pOwner);
+    }
+    ManagerBase::Update();
+}
+
+void PlayerAttackManager::Draw()
+{
+}
+
+void PlayerAttackManager::Create()
+{
+    ManagerBase::Create();
+}
+
+void PlayerAttackManager::Release()
+{
+    m_StateMap.clear();
+    ManagerBase::Release();
+}
+
+// ---------------------------------------------------------------------
+
+void PlayerAttackManager::ChangeAttackState(enAttack type)
+{
+    if (m_StateMap.count(type) == 0) return;
+
+    PlayerAttckStateBase* nextState = m_StateMap.at(type).get();
+
+    if (m_pCurrentAttackState != nextState)
+    {
+        if (m_pCurrentAttackState) {
+            m_pCurrentAttackState->Exit(m_pOwner);
+        }
+
+        m_pCurrentAttackState = nextState;
+
+        if (m_pCurrentAttackState) {
+            m_pCurrentAttackState->Enter(m_pOwner);
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+
+void PlayerAttackManager::RegisterStates()
+{
+    m_StateMap.emplace(enAttack::Long, std::make_unique<AttackLong>());
+    m_StateMap.emplace(enAttack::Short, std::make_unique<AttackShort>());
+}
