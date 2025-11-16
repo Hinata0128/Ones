@@ -9,6 +9,7 @@ class PlayerContext;
 
 /******************************************************************
 *	PlayerMoveClass.
+* エラーが出たので新しい環境に変更しました
 **/
 
 class PlayerMove final
