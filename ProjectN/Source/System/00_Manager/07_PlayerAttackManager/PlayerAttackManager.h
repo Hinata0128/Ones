@@ -28,7 +28,7 @@ public:
 		//‹ß‹——£UŒ‚.
 		Short,
 
-		max = -1,
+		max,
 	};
 public:
 	PlayerAttackManager(Player* pOwner);

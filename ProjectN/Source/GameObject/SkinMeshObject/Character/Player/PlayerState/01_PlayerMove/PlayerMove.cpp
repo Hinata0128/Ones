@@ -153,46 +153,46 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 
     switch (LStep)
     {
-    case enLeftStep::none:
-        return false; //攻撃していない→移動処理に移動.
-    case enLeftStep::first:
-        //アニメーション切り替え.
-        ctx.AnimNo = 6; //アニメーション番号.
-        ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
-        ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
-        LStep = enLeftStep::run;
-        return true;
-    case enLeftStep::run:
-    {
-        float period = ctx.Mesh->GetAnimPeriod(12);
-        if (ctx.AnimTime > period)
+        case enLeftStep::none:
+            return false; //攻撃していない→移動処理に移動.
+        case enLeftStep::first:
+            //アニメーション切り替え.
+            ctx.AnimNo = 6; //アニメーション番号.
+            ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
+            LStep = enLeftStep::Attack;
+            return true;
+        case enLeftStep::Attack:
         {
-            LStep = enLeftStep::end;
+            float period = ctx.Mesh->GetAnimPeriod(12);
+            if (ctx.AnimTime > period)
+            {
+                LStep = enLeftStep::end;
+            }
+            else
+            {
+                ctx.AnimTime += ctx.AnimSpeed;
+            }
+            return true;
         }
-        else
-        {
-            ctx.AnimTime += ctx.AnimSpeed;
-        }
-        return true;
-    }
-    case enLeftStep::end:
-        ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
-        m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
+        case enLeftStep::end:
+            ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
+            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
 
-        LStep = enLeftStep::release_anim;
-        return true;
-    case enLeftStep::release_anim:
-    {
-        float period = ctx.Mesh->GetAnimPeriod(6);
-        if (ctx.AnimTime >= period)
+            LStep = enLeftStep::release_anim;
+            return true;
+        case enLeftStep::release_anim:
         {
-            ctx.AnimNo = 0;
-            ctx.AnimTime = 0.0f;
-            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
-            LStep = enLeftStep::none;
+            float period = ctx.Mesh->GetAnimPeriod(6);
+            if (ctx.AnimTime >= period)
+            {
+                ctx.AnimNo = 0;
+                ctx.AnimTime = 0.0f;
+                ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+                LStep = enLeftStep::none;
+            }
+            return true;
         }
-        return true;
-    }
     }
     return false;
 }

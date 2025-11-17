@@ -1,9 +1,9 @@
-﻿#include "BoundingBox.h"
-#include <string>        // std::to_string のために必要
-#include <algorithm>     // std::min, std::max のために必要
-#include <d3dx9.h>       // D3DXComputeBoundingBox, D3DXGetFVFVertexSize などのために必要
-#include <windows.h>     // OutputDebugStringA のために必要
-#include <cfloat>        // FLT_MAX のために必要 (ヘッダーにもあったが、念のため)
+﻿#include "BoundingBox.h" 
+#include <string>       // std::to_string のために必要
+#include <algorithm>    // std::min, std::max のために必要
+#include <d3dx9.h>      // D3DXComputeBoundingBox, D3DXGetFVFVertexSize などのために必要
+#include <windows.h>    // OutputDebugStringA のために必要
+#include <cfloat>       // FLT_MAX のために必要 (ヘッダーにもあったが、念のため)
 
 #include "System/01_Renderer/Renderer.h"
 
@@ -121,9 +121,9 @@ HRESULT BoundingBox::CreateBoxForMesh(const StaticMesh& rMesh)
     m_OriginalLocalMax.y = m_OriginalLocalMin.y + desiredHeight; // オリジナルも更新
 
 
-    OutputDebugStringA("BoundingBox::CreateBoxForMesh - Calculated Local BBox:\n");
-    OutputDebugStringA(("  Min: (" + std::to_string(m_MinPosition.x) + ", " + std::to_string(m_MinPosition.y) + ", " + std::to_string(m_MinPosition.z) + ")\n").c_str());
-    OutputDebugStringA(("  Max: (" + std::to_string(m_MaxPosition.x) + ", " + std::to_string(m_MaxPosition.y) + ", " + std::to_string(m_MaxPosition.z) + ")\n").c_str());
+    //OutputDebugStringA("BoundingBox::CreateBoxForMesh - Calculated Local BBox:\n");
+    //OutputDebugStringA(("  Min: (" + std::to_string(m_MinPosition.x) + ", " + std::to_string(m_MinPosition.y) + ", " + std::to_string(m_MinPosition.z) + ")\n").c_str());
+    //OutputDebugStringA(("  Max: (" + std::to_string(m_MaxPosition.x) + ", " + std::to_string(m_MaxPosition.y) + ", " + std::to_string(m_MaxPosition.z) + ")\n").c_str());
 
     return S_OK;
 }

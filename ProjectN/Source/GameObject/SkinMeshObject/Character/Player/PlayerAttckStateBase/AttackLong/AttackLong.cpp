@@ -35,7 +35,7 @@ void AttackLong::ExecuteAttack(Player* player)
 	}
 
 	//’e‚ğŒ‚‚Â“®ì.
-	if (m_ShotCoolDown <= zero)
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 && m_ShotCoolDown <= zero)
 	{      
         D3DXMATRIX matS, matR, matT, playerWorldMatrix;
 

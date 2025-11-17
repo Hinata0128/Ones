@@ -30,7 +30,7 @@ public:
 	{
 		none,
 		first,
-		run,
+		Attack,
 		end,
 		release_anim,
 	};
