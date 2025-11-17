@@ -8,7 +8,7 @@
 AttackLong::AttackLong()
 	: PlayerAttckStateBase  ()
     , m_ShotCoolDown	    (0.0f)
-	, m_CoolTime		    (1.5f)
+	, m_CoolTime		    (1.0f)
 	, m_ShotOffset		    (0.7f, 3.0f, 7.0f)
 {
 }

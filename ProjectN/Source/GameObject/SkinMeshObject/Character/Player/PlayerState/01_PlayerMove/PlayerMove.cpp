@@ -237,7 +237,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            float period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -263,7 +263,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            float period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -279,7 +279,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            float period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -296,7 +296,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            float period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -312,7 +312,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            float period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);

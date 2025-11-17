@@ -16,7 +16,7 @@ PShot::~PShot()
 
 void PShot::Update()
 {
-	constexpr float MaxRange = 30.0f;
+	constexpr float MaxRange = 150.0f;
 
 	if (!m_IsActive) return;
 
