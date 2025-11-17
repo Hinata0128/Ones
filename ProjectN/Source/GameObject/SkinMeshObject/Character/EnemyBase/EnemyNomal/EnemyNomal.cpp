@@ -24,7 +24,7 @@ EnemyNomal::EnemyNomal()
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
     AttachMesh(shared_mesh);
     //サイズの変更.
-    SetScale(D3DXVECTOR3(0.002f, 0.002f, 0.002f));
+    SetScale(D3DXVECTOR3(0.004f, 0.004f, 0.004f));
     SetPosition(0.0f, 0.0f, 10.0f);
 
     m_AnimSpeed = 0.0002f;
@@ -34,7 +34,7 @@ EnemyNomal::EnemyNomal()
     m_BSphere.SetRadius(0.5f);
 
     //当たり判定の位置を変更.
-    m_HitCenterOffset = D3DXVECTOR3(zero, 1.5f, zero);
+    m_HitCenterOffset = D3DXVECTOR3(zero, 3.0f, zero);
 
     m_ShotOffset = D3DXVECTOR3(zero, 1.5f, zero);
 

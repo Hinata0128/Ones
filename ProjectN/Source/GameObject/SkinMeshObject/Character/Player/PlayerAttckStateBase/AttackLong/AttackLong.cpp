@@ -9,7 +9,7 @@ AttackLong::AttackLong()
 	: PlayerAttckStateBase  ()
     , m_ShotCoolDown	    (0.0f)
 	, m_CoolTime		    (3.0f)
-	, m_ShotOffset		    (0.0f, 1.5f, 1.0f)
+	, m_ShotOffset		    (0.7f, 3.0f, 7.0f)
 {
 }
 
@@ -30,8 +30,6 @@ void AttackLong::ExecuteAttack(Player* player)
 	float deltaTime = Timer::GetInstance().DeltaTime();
     PlayerContext ctx(player);
 
-    //ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed);
-
     //クールタイムの処理.
 	if (m_CoolTime >= zero)
 	{
@@ -41,7 +39,6 @@ void AttackLong::ExecuteAttack(Player* player)
 	//弾を撃つ動作.
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 && m_ShotCoolDown <= zero)
 	{      
-
         D3DXMATRIX matS, matR, matT, playerWorldMatrix;
 
         D3DXMatrixScaling(&matS, ctx.Scale.x, ctx.Scale.y, ctx.Scale.z);
@@ -69,32 +66,6 @@ void AttackLong::ExecuteAttack(Player* player)
 
     }
 }
-
-//void AttackLong::ExecuteAttack(Player* player)
-//{
-//    constexpr float zero = 0.0f;
-//    float deltaTime = Timer::GetInstance().DeltaTime();
-//    PlayerContext ctx(player);
-//
-//    ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed);
-//
-//    //もし右クリックが押されたとき.
-//    if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
-//    {
-//        // アニメーション4再生
-//        ctx.AnimNo = 4;
-//        ctx.AnimTime = 0.0;
-//        ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
-//    }
-//    // アニメーション経過時間加算
-//    ctx.AnimTime += ctx.AnimSpeed;
-//    if (ctx.AnimNo == 4 && ctx.AnimTime >= ctx.Mesh->GetAnimPeriod(ctx.AnimNo))
-//    {
-//        return;
-//    }
-//    ctx.Mesh->GetPosFromBone("blade_l_head", &ctx.BonePos);
-//}
-
 
 void AttackLong::Exit(Player* player)
 {
