@@ -8,7 +8,7 @@
 AttackLong::AttackLong()
 	: PlayerAttckStateBase  ()
     , m_ShotCoolDown	    (0.0f)
-	, m_CoolTime		    (3.0f)
+	, m_CoolTime		    (1.5f)
 	, m_ShotOffset		    (0.7f, 3.0f, 7.0f)
 {
 }
@@ -21,8 +21,6 @@ void AttackLong::Enter(Player* player)
 {
 	m_ShotCoolDown = 0.0f;
 }
-
-//ï€ë∂
 
 void AttackLong::ExecuteAttack(Player* player)
 {
@@ -37,7 +35,7 @@ void AttackLong::ExecuteAttack(Player* player)
 	}
 
 	//íeÇåÇÇ¬ìÆçÏ.
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 && m_ShotCoolDown <= zero)
+	if (m_ShotCoolDown <= zero)
 	{      
         D3DXMATRIX matS, matR, matT, playerWorldMatrix;
 
