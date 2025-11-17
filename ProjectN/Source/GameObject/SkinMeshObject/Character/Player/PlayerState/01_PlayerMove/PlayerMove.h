@@ -25,6 +25,15 @@ public:
 		end,
 		release_anim,
 	};
+	//Player‚Ì¶ƒNƒŠƒbƒN‚Ì§Œä—ñ‹“Œ^.
+	enum class enLeftStep : byte
+	{
+		none,
+		first,
+		run,
+		end,
+		release_anim,
+	};
 
 	//Player‚ÌˆÚ“®(WASD)‚Ì§Œä—ñ‹“Œ^
 	enum class enMove : byte
@@ -62,7 +71,7 @@ public:
 	bool RbuttonAttackStep(PlayerContext& ctx);
 	//Player‚Ì¶ƒNƒŠƒbƒN‚ÌUŒ‚ŠÖ”.
 	//ˆø”‚ğ‘‚©‚È‚¢‚Æ‚¢‚¯‚È‚¢‚¯‚ê‚Ç‚àˆê’UŠÖ”‚ğì¬‚·‚é‚½‚ß‚É‘‚¢‚Ä‚¢‚È‚¢.
-	bool LButtonAttackStep();
+	bool LButtonAttackStep(PlayerContext& ctx);
 
 	//Player‚Ì“®ì[GetAsyncKeyState()]‚ğ‘‚­ŠÖ”.
 	void HandleMove(
@@ -75,6 +84,8 @@ public:
 private:
 	//‰“‹——£UŒ‚‚Ì—ñ‹“.
 	enStep step;
+	//‹ß‹——£UŒ‚‚Ì—ñ‹“.
+	enLeftStep LStep;
 	//Player‚ÌˆÚ“®‚Ì—ñ‹“.
 	enMove Move;
 

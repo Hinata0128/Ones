@@ -13,6 +13,7 @@ PlayerMove::PlayerMove(Player* pOwner)
     : PlayerState(pOwner)
     , FastAnim  (false)
     , step      (enStep::none)
+    , LStep     (enLeftStep::none)
     , Move      (enMove::Idol)
 {
     //初期化を書いている.
@@ -33,11 +34,9 @@ void PlayerMove::Execute()
     PlayerContext ctx(m_pOwner);
 
     float deltaTime = Timer::GetInstance().DeltaTime();
-
     //右クリックの攻撃の関数.
-    bool Attacking = RbuttonAttackStep(ctx);
-    //ここに左クリックの攻撃の関数を書く.
-
+    bool RAttacking = RbuttonAttackStep(ctx);
+    bool LAttacking = LButtonAttackStep(ctx);
     //WASDの入力取得.
     Move = GetMoveInput();
 
@@ -97,7 +96,7 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             //アニメーション切り替え.
             ctx.AnimNo = 8; //アニメーション番号.
             ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
-            ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);//アニメションの再生速度.
+            ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
             step = enStep::run;
             return true;
@@ -121,10 +120,6 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 
             if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000))
             {
-                ctx.AnimNo = 2;
-                ctx.AnimTime = 0.0f;
-                ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
-                ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
                 step = enStep::release_anim;
             }
             return true;
@@ -144,8 +139,61 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
     return false;
 }
 
-bool PlayerMove::LButtonAttackStep()
+//左クリックを押したときの近距離攻撃.
+bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 {
+    //左クリックを押したら次のステップに入る.
+    if (GetAsyncKeyState(VK_LBUTTON) & 0x0001)
+    {
+        if (LStep == enLeftStep::none)
+        {
+            LStep = enLeftStep::first;
+        }
+    }
+
+    switch (LStep)
+    {
+    case enLeftStep::none:
+        return false; //攻撃していない→移動処理に移動.
+    case enLeftStep::first:
+        //アニメーション切り替え.
+        ctx.AnimNo = 6; //アニメーション番号.
+        ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+        ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
+        LStep = enLeftStep::run;
+        return true;
+    case enLeftStep::run:
+    {
+        float period = ctx.Mesh->GetAnimPeriod(12);
+        if (ctx.AnimTime > period)
+        {
+            LStep = enLeftStep::end;
+        }
+        else
+        {
+            ctx.AnimTime += ctx.AnimSpeed;
+        }
+        return true;
+    }
+    case enLeftStep::end:
+        ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
+        m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
+
+        LStep = enLeftStep::release_anim;
+        return true;
+    case enLeftStep::release_anim:
+    {
+        float period = ctx.Mesh->GetAnimPeriod(6);
+        if (ctx.AnimTime >= period)
+        {
+            ctx.AnimNo = 0;
+            ctx.AnimTime = 0.0f;
+            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+            LStep = enLeftStep::none;
+        }
+        return true;
+    }
+    }
     return false;
 }
 
@@ -155,11 +203,12 @@ void PlayerMove::HandleMove(
     const D3DXVECTOR3& LeftAndRight)
 {
     // 攻撃中かどうか（アニメを変更するか判断）
-    bool IsAttacking = (step != enStep::none);
+    bool IsRAttacking = (step != enStep::none);
+    bool IsLAttacking = (LStep != enLeftStep::none);
     //移動アニメーションを適応させる.
     auto ApplyMoveAnimation = [&](int animNo)
     {
-        if (IsAttacking)
+        if (IsRAttacking || IsLAttacking)
         {
             // 攻撃中はアニメ変更禁止
             return;
@@ -174,10 +223,9 @@ void PlayerMove::HandleMove(
     };
     switch (Move)
     {
+        //原因の解決をするけれども今ctx.AnimTime += ctx.AnimSpeedを書いていると丁度でいいところでアニメーションが停止する.
         case enMove::Idol:
         {
-            ApplyMoveAnimation(0); // Idle アニメ
-            // Idle のアニメ進行
             ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
@@ -185,15 +233,16 @@ void PlayerMove::HandleMove(
         case enMove::ForWard:
         {
             ctx.Position += ForwardAndBackward * add_value;
-            ApplyMoveAnimation(2); // 歩きアニメ
-            ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
+            ApplyMoveAnimation(2);
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            float period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
+                // アニメーション進行
+                ctx.AnimTime += ctx.AnimSpeed;
             }
         }
         break;
@@ -201,7 +250,9 @@ void PlayerMove::HandleMove(
         case enMove::Back:
         {
             ctx.Position -= ForwardAndBackward * add_value;
-            ApplyMoveAnimation(0);  //待機アニメーションを再生.
+            ApplyMoveAnimation(0);
+            // アニメーション進行
+            ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
         //左.
@@ -212,10 +263,11 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            float period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
+                ctx.AnimTime += ctx.AnimSpeed;
             }
         }
         break;
@@ -227,10 +279,11 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            float period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
+                ctx.AnimTime += ctx.AnimSpeed;
             }
         }
         break;
@@ -243,7 +296,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            float period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -259,7 +312,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            float period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -272,6 +325,7 @@ void PlayerMove::HandleMove(
             ctx.Position -= ForwardAndBackward * add_value;
             ctx.Position -= LeftAndRight * add_value;
             ApplyMoveAnimation(0);
+            ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
         //右後ろ.
@@ -279,7 +333,8 @@ void PlayerMove::HandleMove(
         {
             ctx.Position -= ForwardAndBackward * add_value;
             ctx.Position += LeftAndRight * add_value;
-            ApplyMoveAnimation(0);
+            ApplyMoveAnimation(0);            
+            ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
         default:

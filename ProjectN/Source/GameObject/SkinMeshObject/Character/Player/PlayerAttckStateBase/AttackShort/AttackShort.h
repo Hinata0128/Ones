@@ -23,6 +23,8 @@ public:
 	void ExecuteAttack(Player* player) override;
 	void Exit(Player* player) override;
 
+
+
 private:
 	//近距離攻撃のクールタイム.
 	float m_ShortCoolDown;

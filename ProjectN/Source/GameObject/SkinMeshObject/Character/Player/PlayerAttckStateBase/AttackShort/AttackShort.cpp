@@ -33,7 +33,7 @@ void AttackShort::ExecuteAttack(Player* player)
 		m_ShortCoolDown -= deltaTime;
 	}
 
-    //弾を撃つ動作.
+    //近距離攻撃動作.
     if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 && m_ShortCoolDown <= zero)
     {
         // クールタイムリセット
