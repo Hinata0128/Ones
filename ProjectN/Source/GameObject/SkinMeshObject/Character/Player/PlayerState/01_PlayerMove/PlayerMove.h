@@ -58,11 +58,17 @@ public:
 	void Draw() override;
 	void Init() override;
 
-	//Playerの攻撃関数.
-	bool ProcessAttackStep(PlayerContext& ctx);
-	//Playerの動作関数.
-	void HandleMove(PlayerContext& ctxconst, const D3DXVECTOR3& FB,
-		const D3DXVECTOR3& LR);
+	//Playerの右クリックの攻撃関数.
+	bool RbuttonAttackStep(PlayerContext& ctx);
+	//Playerの左クリックの攻撃関数.
+	//引数を書かないといけないけれども一旦関数を作成するために書いていない.
+	bool LButtonAttackStep();
+
+	//Playerの動作[GetAsyncKeyState()]を書く関数.
+	void HandleMove(
+		PlayerContext& ctxconst,
+		const D3DXVECTOR3& WS,
+		const D3DXVECTOR3& AD);
 public:
 	//操作の関数,
 	enMove GetMoveInput();
