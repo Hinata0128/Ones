@@ -31,8 +31,6 @@ public:
 
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
 
-	void Stop();
-
 public:
 
 	BoundingSphere& GetBoundingSphere() { return m_BSphere; }

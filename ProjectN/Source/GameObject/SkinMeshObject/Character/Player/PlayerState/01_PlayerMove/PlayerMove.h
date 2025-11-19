@@ -6,6 +6,7 @@ class PlayerContext;
 
 #include "System/00_Manager/07_PlayerAttackManager/PlayerAttackManager.h"
 #include "System/02_Singleton/Timer/Timer.h"
+#include "..//..//System/00_Manager/08_InputKeyManager/InputKeyManager.h"
 
 /******************************************************************
 *	PlayerMoveClass.
@@ -93,4 +94,8 @@ private:
 
 	//アニメーションの変数.
 	bool FastAnim;
+
+	bool m_IsShot = false;
+	//InputKeyのメンバ変数.
+	std::unique_ptr<InputKeyManager> m_Key;
 };

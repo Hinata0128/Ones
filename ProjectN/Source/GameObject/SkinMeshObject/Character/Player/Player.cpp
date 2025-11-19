@@ -5,6 +5,8 @@
 
 #include "System/02_Singleton/Timer//Timer.h"
 
+#include "System/00_Manager/03_ImGuiManager/ImGuiManager.h"
+
 //---------------------------------------------
 // PlayerStateのインクルード.
 //---------------------------------------------
@@ -58,6 +60,10 @@ void Player::Update()
     //アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
+
+    ImGui::Begin("debuga");
+    ImGui::InputFloat3("pos", m_Position);
+    ImGui::End();
 
     //PlayerAttackManager の更新
     if (m_pAttackManager)
@@ -135,25 +141,10 @@ void Player::Hit()
     }
 }
 
-void Player::Stop()
-{
-    if (m_pAnimCtrl)
-    {
-        //アニメーション進行を止める
-        m_pAnimCtrl->AdvanceTime(0.0f, nullptr);
-
-        D3DXTRACK_DESC trackDesc;
-        m_pAnimCtrl->GetTrackDesc(0, &trackDesc);
-        trackDesc.Enable = FALSE;
-        m_pAnimCtrl->SetTrackDesc(0, &trackDesc);
-    }
-}
-
-
 D3DXVECTOR3 Player::GetHitCenter() const
 {
-    //プレイヤーモデルの位置 (m_vPosition) にオフセットを加算して返す
-    return m_vPosition + m_HitCenterOffset;
+    //プレイヤーモデルの位置 (m_Position) にオフセットを加算して返す
+    return m_Position + m_HitCenterOffset;
 }
 
 D3DXVECTOR3 Player::Player_WS(float RotationY) const

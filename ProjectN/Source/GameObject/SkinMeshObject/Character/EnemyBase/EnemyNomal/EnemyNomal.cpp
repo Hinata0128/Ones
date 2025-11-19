@@ -3,11 +3,6 @@
 #include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
 #include "System/02_Singleton/Timer//Timer.h"
 
-// Time.h が D3DX を使用している前提で、Timer::GetInstance().DeltaTime() を使用
-// BossMoveState のコードでは Time::GetInstance().GetDeltaTime() を使用していましたが、
-// EnemyNomal の既存のコードに合わせて Timer::GetInstance().DeltaTime() を使用します。
-
-
 constexpr float zero = 0.0f;
 
 EnemyNomal::EnemyNomal()
@@ -31,7 +26,7 @@ EnemyNomal::EnemyNomal()
 
     m_pENShotManager = EnemyNomalShotManager::GetInstance();
 
-    m_BSphere.SetRadius(0.5f);
+    m_BSphere.SetRadius(1.0f);
 
     //当たり判定の位置を変更.
     m_HitCenterOffset = D3DXVECTOR3(zero, 3.0f, zero);
@@ -193,9 +188,9 @@ D3DXVECTOR3 EnemyNomal::Enemy_WS() const
 {
     D3DXVECTOR3 dir;
 
-    dir.x = sinf(m_vRotation.y);
+    dir.x = sinf(m_Rotation.y);
     dir.y = zero;
-    dir.z = -cosf(m_vRotation.y);
+    dir.z = -cosf(m_Rotation.y);
     return dir;
 }
 
@@ -206,9 +201,9 @@ void EnemyNomal::AutoShot()
     {
         // 変換行列作成
         D3DXMATRIX matS, matR, matT, enemyWorldMatrix;
-        D3DXMatrixScaling(&matS, m_vScale.x, m_vScale.y, m_vScale.z);
-        D3DXMatrixRotationYawPitchRoll(&matR, m_vRotation.y, m_vRotation.x, m_vRotation.z);
-        D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+        D3DXMatrixScaling(&matS, m_Scale.x, m_Scale.y, m_Scale.z);
+        D3DXMatrixRotationYawPitchRoll(&matR, m_Rotation.y, m_Rotation.x, m_Rotation.z);
+        D3DXMatrixTranslation(&matT, m_Position.x, m_Position.y, m_Position.z);
         D3DXMatrixMultiply(&enemyWorldMatrix, &matS, &matR);
         D3DXMatrixMultiply(&enemyWorldMatrix, &enemyWorldMatrix, &matT);
 
@@ -230,6 +225,6 @@ void EnemyNomal::AutoShot()
 
 D3DXVECTOR3 EnemyNomal::GetHitCenter() const
 {
-    // プレイヤーモデルの位置 (m_vPosition) にオフセットを加算して返す
-    return m_vPosition + m_HitCenterOffset;
+    // プレイヤーモデルの位置 (m_Position) にオフセットを加算して返す
+    return m_Position + m_HitCenterOffset;
 }

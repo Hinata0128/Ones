@@ -49,9 +49,9 @@ void SkinMeshObject::Draw()
 	auto& renderer = Renderer::GetInstance();
 
 	// 座標・回転・スケール反映
-	m_pMesh->SetPosition(m_vPosition);
-	m_pMesh->SetRotation(m_vRotation);
-	m_pMesh->SetScale(m_vScale);
+	m_pMesh->SetPosition(m_Position);
+	m_pMesh->SetRotation(m_Rotation);
+	m_pMesh->SetScale(m_Scale);
 
 	D3DXVECTOR3 camPos = renderer.GetCamera().vPosition; // 型を確認
 

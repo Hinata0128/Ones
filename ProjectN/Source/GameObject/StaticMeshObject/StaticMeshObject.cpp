@@ -5,7 +5,7 @@
 StaticMeshObject::StaticMeshObject()
 	: m_pMesh(nullptr)
 {
-	// m_vPosition, m_vRotation, m_vScale など、GameObject のメンバ変数の初期化が必要です
+	// m_Position, m_Rotation, m_Scale など、GameObject のメンバ変数の初期化が必要です
 	// (GameObject のコンストラクタで初期化されていることを前提とします)
 }
 
@@ -32,10 +32,10 @@ void StaticMeshObject::Draw()
 	auto& renderer = Renderer::GetInstance();
 
 	// 座標・回転・スケールを反映
-	// m_vPosition などのメンバー変数が GameObject クラスで定義されていることを前提とします。
-	m_pMesh->SetPosition(m_vPosition);
-	m_pMesh->SetRotation(m_vRotation);
-	m_pMesh->SetScale(m_vScale);
+	// m_Position などのメンバー変数が GameObject クラスで定義されていることを前提とします。
+	m_pMesh->SetPosition(m_Position);
+	m_pMesh->SetRotation(m_Rotation);
+	m_pMesh->SetScale(m_Scale);
 
 	// Render呼び出し
 	// Rendererのゲッターと StaticMesh::Render の引数が const 参照 (const T&) で

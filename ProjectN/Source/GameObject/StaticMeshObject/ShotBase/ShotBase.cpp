@@ -30,16 +30,16 @@ void ShotBase::Draw()
 
 void ShotBase::Init()
 {
-	m_vPosition = D3DXVECTOR3(0.0f, -50.0f, 0.0f);
-	m_vScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_vRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Position = D3DXVECTOR3(0.0f, -50.0f, 0.0f);
+	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	m_Disp = false;
 	m_IsActive = false;
 
 	if (m_BSphere)
 	{
-		m_BSphere->SetPosition(m_vPosition);
+		m_BSphere->SetPosition(m_Position);
 	}
 }
 
@@ -47,7 +47,7 @@ void ShotBase::UpdateBPosition()
 {
 	if (m_BSphere)
 	{
-		m_BSphere->SetPosition(m_vPosition);
+		m_BSphere->SetPosition(m_Position);
 	}
 }
 

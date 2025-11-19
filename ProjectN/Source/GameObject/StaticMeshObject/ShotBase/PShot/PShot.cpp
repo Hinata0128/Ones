@@ -16,17 +16,17 @@ PShot::~PShot()
 
 void PShot::Update()
 {
-	constexpr float MaxRange = 150.0f;
+	constexpr float MaxRange = 15000.0f;
 
 	if (!m_IsActive) return;
 
 	if (m_Disp)
 	{
 		// 位置更新
-		m_vPosition += m_Direction * m_Speed;
+		m_Position += m_Direction * m_Speed;
 
 		// 一定距離を超えたらリセット
-		if (D3DXVec3Length(&m_vPosition) >= MaxRange)
+		if (D3DXVec3Length(&m_Position) >= MaxRange)
 		{
 			Init();
 			return;
@@ -50,12 +50,12 @@ void PShot::Init()
 	ShotBase::Init();
 
 	// 見た目の大きさ（プレイヤーの弾）
-	m_vScale = D3DXVECTOR3(5.0f, 5.0f, 5.0f);
+	m_Scale = D3DXVECTOR3(5.0f, 5.0f, 5.0f);
 
 	// 当たり判定の大きさ（スケールに合わせて）
 	if (m_BSphere)
 	{
-		m_BSphere->SetRadius(0.3f); // スケールの半分
+		m_BSphere->SetRadius(1.0f); // スケールの半分
 	}
 }
 
@@ -64,7 +64,7 @@ void PShot::Reload(
 	const D3DXVECTOR3& direction,
 	float speed)
 {
-	m_vPosition = pos;
+	m_Position = pos;
 	m_Direction = direction;
 	m_Speed		= speed;
 
@@ -73,7 +73,7 @@ void PShot::Reload(
 
 	if (m_BSphere)
 	{
-		m_BSphere->SetPosition(m_vPosition);
+		m_BSphere->SetPosition(m_Position);
 		m_BSphere->SetRadius(0.5f);
 	}
 }

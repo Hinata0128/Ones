@@ -26,6 +26,13 @@ public:
 	//セット・ゲット関数.
 	//アニメーションの再生用セット関数.
 	void SetIsLoop(const bool& IsLoop);
+
+	//接続メッシュ名を取得.
+	const std::weak_ptr<SkinMesh> GetAttachMesh() const
+	{
+		return m_pMesh;
+	}
+
 protected:
 	std::shared_ptr<SkinMesh>	m_pMesh;
 	LPD3DXANIMATIONCONTROLLER	m_pAnimCtrl;	//アニメーションコントローラ

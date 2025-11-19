@@ -15,6 +15,7 @@ PlayerMove::PlayerMove(Player* pOwner)
     , step      (enStep::none)
     , LStep     (enLeftStep::none)
     , Move      (enMove::Idol)
+    , m_Key     (std::make_unique<InputKeyManager>())
 {
     //初期化を書いている.
     Init();
@@ -44,11 +45,19 @@ void PlayerMove::Execute()
     D3DXVECTOR3 ForwardAndBackward = m_pOwner->Player_WS(ctx.Rotation.y);
     D3DXVECTOR3 LeftAndRight = m_pOwner->Player_AD(ctx.Rotation.y);
 
+    m_Key->Update();
+
     //移動処理.
     //第一引数にPlayerContext.
     //第二引数にWSの関数.
     //第三引数にADの関数.
     HandleMove(ctx, ForwardAndBackward, LeftAndRight);
+
+    ////スペースキーで回転をさせる.
+    //if (m_Key->HoldDownKey() == true)
+    //{
+    //    ctx.Rotation.y += add_value;
+    //}
 
     //ステートの共通処理.
     PlayerState::Execute();
@@ -72,15 +81,17 @@ void PlayerMove::Draw()
 
 void PlayerMove::Init()
 {
-
+    m_Key->SetAnyKey(0x20);
     PlayerState::Init();
 }
 
 //型をboolに変更させたのでbreckではなくreturn false/trueで返す.
 bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 {
+    float deltaTime = Timer::GetInstance().DeltaTime();
+
     // 右クリック押されたら初期ステップへ
-    if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000)
     {
         if (step == enStep::none)
         {
@@ -96,48 +107,54 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             //アニメーション切り替え.
             ctx.AnimNo = 8; //アニメーション番号.
             ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+            m_IsShot = false;
             ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
             step = enStep::run;
             return true;
         case enStep::run:
         {
+            //アニメーションの停止を良い位置でさせるため.
             float period = ctx.Mesh->GetAnimPeriod(6);
             if (ctx.AnimTime > period)
             {
-                step = enStep::end;
+                ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
+
+
+                if (!(GetAsyncKeyState(VK_SPACE) & 0x8000))
+                {
+                    step = enStep::end;
+                }
             }
             else
             {
                 ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
-                ctx.AnimTime += ctx.AnimSpeed;
             }
             return true;
         }
         case enStep::end:
+            //アニメーションの停止.
             ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Long);
-
-            if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000))
+            if (!(GetAsyncKeyState(VK_SPACE) & 0x8000))
             {
                 step = enStep::release_anim;
             }
             return true;
         case enStep::release_anim:
         {
-            float period = ctx.Mesh->GetAnimPeriod(6);
-            if (ctx.AnimTime >= period)
-            {
+            ctx.AnimTime += deltaTime * ctx.AnimSpeed;
+
                 ctx.AnimNo = 0;
                 ctx.AnimTime = 0.0f;
                 ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
                 step = enStep::none;
-            }
             return true;
         }
     }
     return false;
 }
+
 
 //左クリックを押したときの近距離攻撃.
 bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
@@ -189,6 +206,9 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
                 ctx.AnimNo = 0;
                 ctx.AnimTime = 0.0f;
                 ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+
+                m_IsShot = true;
+
                 LStep = enLeftStep::none;
             }
             return true;
@@ -226,6 +246,7 @@ void PlayerMove::HandleMove(
         //原因の解決をするけれども今ctx.AnimTime += ctx.AnimSpeedを書いていると丁度でいいところでアニメーションが停止する.
         case enMove::Idol:
         {
+            ApplyMoveAnimation(0);
             ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
