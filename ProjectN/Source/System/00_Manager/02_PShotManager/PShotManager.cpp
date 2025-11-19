@@ -1,8 +1,6 @@
 #include "PShotManager.h"
 #include "GameObject/SkinMeshObject/Character/Player/Player.h"
 
-// PShotManager* PShotManager::m_pInstance = nullptr; // ššš íœÏ‚İ ššš
-
 PShotManager::PShotManager()
 {
 }

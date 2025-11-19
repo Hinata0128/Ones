@@ -26,9 +26,9 @@ void UIObject::Draw()
 	}
 
 	// 描画直前で座標・回転・スケールを反映
-	m_pSprite->SetPosition(m_vPosition);
-	m_pSprite->SetRotation(m_vRotation);
-	m_pSprite->SetScale(m_vScale);
+	m_pSprite->SetPosition(m_Position);
+	m_pSprite->SetRotation(m_Rotation);
+	m_pSprite->SetScale(m_Scale);
 
 	// パターン番号設定
 	m_pSprite->SetPatternNo(m_PatternNo.x, m_PatternNo.y);

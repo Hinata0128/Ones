@@ -75,25 +75,25 @@ public:
 	void Render();
 
 	//座標情報を設定.
-	void SetPosition(const D3DXVECTOR3& vPos) {	m_vPosition = vPos;	}
+	void SetPosition(const D3DXVECTOR3& vPos) {	m_Position = vPos;	}
 	//座標xを設定.
-	void SetPositionX( float x ){ m_vPosition.x = x; }
+	void SetPositionX( float x ){ m_Position.x = x; }
 	//座標yを設定.
-	void SetPositionY( float y ){ m_vPosition.y = y; }
+	void SetPositionY( float y ){ m_Position.y = y; }
 	//座標zを設定.
-	void SetPositionZ( float z ){ m_vPosition.z = z; }
+	void SetPositionZ( float z ){ m_Position.z = z; }
 
 	//回転情報を設定.
-	void SetRotation(const D3DXVECTOR3& vRot){	m_vRotation = vRot;	}
+	void SetRotation(const D3DXVECTOR3& vRot){	m_Rotation = vRot;	}
 	//回転軸Yを設定(Yaw).
-	void SetRotationY(float y){	m_vRotation.y = y;	}
+	void SetRotationY(float y){	m_Rotation.y = y;	}
 	//回転軸Xを設定(Pitch).
-	void SetRotationX(float x){	m_vRotation.x = x;	}
+	void SetRotationX(float x){	m_Rotation.x = x;	}
 	//回転軸Zを設定(Roll).
-	void SetRotationZ(float z){	m_vRotation.z = z;	}
+	void SetRotationZ(float z){	m_Rotation.z = z;	}
 
 	//拡大縮小情報を設定
-	void SetScale(const D3DXVECTOR3& vScale) { m_vScale = vScale; }
+	void SetScale(const D3DXVECTOR3& vScale) { m_Scale = vScale; }
 
 	//a値を設定
 	void Setalpha(float alpha) { m_Alpha = alpha; }
@@ -122,9 +122,9 @@ private:
 	ID3D11ShaderResourceView*	m_pTexture;			//テクスチャ.
 	ID3D11SamplerState*			m_pSampleLinear;	//サンプラ:テクスチャに各種フィルタをかける.
 
-	D3DXVECTOR3		m_vPosition;	//座標.
-	D3DXVECTOR3		m_vRotation;	//回転
-	D3DXVECTOR3		m_vScale;		//拡縮.
+	D3DXVECTOR3		m_Position;	//座標.
+	D3DXVECTOR3		m_Rotation;	//回転
+	D3DXVECTOR3		m_Scale;		//拡縮.
 
 	D3DXVECTOR2		m_UV;		//テクスチャUV座標.
 

@@ -237,9 +237,11 @@
     <ClCompile Include="Source\System\00_Manager\05_EnemyNomalManager\EnemyNomalManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\06_CollisionManager\CollisionManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\07_PlayerAttackManager\PlayerAttackManager.cpp" />
+    <ClCompile Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\ManagerBase.cpp" />
     <ClCompile Include="Source\System\01_Renderer\Renderer.cpp" />
     <ClCompile Include="Source\System\02_Singleton\Timer\Timer.cpp" />
+    <ClCompile Include="Source\System\04_Input\InputKey\InputKey.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -307,10 +309,12 @@
     <ClInclude Include="Source\System\00_Manager\05_EnemyNomalManager\EnemyNomalManager.h" />
     <ClInclude Include="Source\System\00_Manager\06_CollisionManager\CollisionManager.h" />
     <ClInclude Include="Source\System\00_Manager\07_PlayerAttackManager\PlayerAttackManager.h" />
+    <ClInclude Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.h" />
     <ClInclude Include="Source\System\00_Manager\ManagerBase.h" />
     <ClInclude Include="Source\System\01_Renderer\Renderer.h" />
     <ClInclude Include="Source\System\02_Singleton\Timer\Timer.h" />
     <ClInclude Include="Source\System\03_Base\StateBase\StateBase.h" />
+    <ClInclude Include="Source\System\04_Input\InputKey\InputKey.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Ray.hlsl">

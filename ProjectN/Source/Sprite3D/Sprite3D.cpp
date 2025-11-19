@@ -15,9 +15,9 @@ Sprite3D::Sprite3D()
 	, m_pVertexBuffer	( nullptr )
 	, m_pSampleLinear	( nullptr )
 	, m_pTexture		( nullptr )
-	, m_vPosition		()
-	, m_vRotation		()
-	, m_vScale			( 1.0f, 1.0f, 1.0f )
+	, m_Position		()
+	, m_Rotation		()
+	, m_Scale			( 1.0f, 1.0f, 1.0f )
 	, m_UV				( 0.0f, 0.0f )
 	, m_Alpha			( 1.0f )
 	, m_SpriteState		()
@@ -337,19 +337,19 @@ void Sprite3D::Render(
 
 	//拡大縮小行列.
 	D3DXMatrixScaling( &mScale,
-		m_vScale.x, m_vScale.y, m_vScale.z );
+		m_Scale.x, m_Scale.y, m_Scale.z );
 
 	//回転行列.
 	D3DXMATRIX mYaw, mPitch, mRoll;
-	D3DXMatrixRotationY( &mYaw,		m_vRotation.y );
-	D3DXMatrixRotationX( &mPitch,	m_vRotation.x );
-	D3DXMatrixRotationZ( &mRoll,	m_vRotation.z );
+	D3DXMatrixRotationY( &mYaw,		m_Rotation.y );
+	D3DXMatrixRotationX( &mPitch,	m_Rotation.x );
+	D3DXMatrixRotationZ( &mRoll,	m_Rotation.z );
 	mRot = mYaw * mPitch * mRoll;
 	//※Yaw, Pitch, Roll の掛ける順番を変えると結果も変わる.
 
 	//平行行列（平行移動）.
 	D3DXMatrixTranslation(&mTrans,
-		m_vPosition.x, m_vPosition.y, m_vPosition.z );
+		m_Position.x, m_Position.y, m_Position.z );
 
 	//ワールド座標変換.
 	//重要: 拡縮行列 * 回転行列 * 平行行列.

@@ -27,9 +27,9 @@ void SpriteObject::Draw()
 	}
 
 	// 座標や回転情報などをスプライトに反映
-	m_pSprite->SetPosition(m_vPosition);
-	m_pSprite->SetRotation(m_vRotation);
-	m_pSprite->SetScale(m_vScale);
+	m_pSprite->SetPosition(m_Position);
+	m_pSprite->SetRotation(m_Rotation);
+	m_pSprite->SetScale(m_Scale);
 
 	// 設定済みのView・Proj行列を使用して描画
 	m_pSprite->Render(m_View, m_Proj);
