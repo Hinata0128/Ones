@@ -2,6 +2,11 @@
 
 InputKeyManager::InputKeyManager()
 {
+	m_Keys["W"].SetAnyKey(0x57); // 'W'
+	m_Keys["A"].SetAnyKey(0x41); // 'A'
+	m_Keys["S"].SetAnyKey(0x53); // 'S'
+	m_Keys["D"].SetAnyKey(0x44);
+
 	m_Keys["Space"].SetAnyKey(0x20);
 }
 
@@ -61,4 +66,14 @@ bool InputKeyManager::ReleaseKey()
 		}
 	}
 	return false;
+}
+
+const InputKey* InputKeyManager::GetKey(const std::string& keyName) const
+{
+	auto it = m_Keys.find(keyName);
+	if (it != m_Keys.end())
+	{
+		return &it->second;
+	}
+	return nullptr; // Œ©‚Â‚©‚ç‚È‚©‚Á‚½‚çnullptr‚ð•Ô‚·
 }

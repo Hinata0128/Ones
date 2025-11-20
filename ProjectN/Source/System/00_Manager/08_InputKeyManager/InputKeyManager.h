@@ -26,6 +26,9 @@ public:
 	//キーを離した瞬間.
 	bool ReleaseKey();
 
+	//特定のキーの状態を取得するための関数.
+	const InputKey* GetKey(const std::string& keyName) const;
+
 private:
 	//第一要素が型名(キー).
 	//第二要素がクラス名(値).

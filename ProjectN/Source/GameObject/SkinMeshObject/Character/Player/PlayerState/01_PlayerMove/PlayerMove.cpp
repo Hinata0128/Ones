@@ -81,7 +81,7 @@ void PlayerMove::Draw()
 
 void PlayerMove::Init()
 {
-    m_Key->SetAnyKey(0x20);
+    //m_Key->SetAnyKey(0x20);
     PlayerState::Init();
 }
 
@@ -91,7 +91,7 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
     float deltaTime = Timer::GetInstance().DeltaTime();
 
     // 右クリック押されたら初期ステップへ
-    if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+    if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
     {
         if (step == enStep::none)
         {
@@ -119,12 +119,7 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             if (ctx.AnimTime > period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
-
-
-                if (!(GetAsyncKeyState(VK_SPACE) & 0x8000))
-                {
-                    step = enStep::end;
-                }
+                step = enStep::end;
             }
             else
             {
@@ -136,7 +131,7 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             //アニメーションの停止.
             ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Long);
-            if (!(GetAsyncKeyState(VK_SPACE) & 0x8000))
+            if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000))
             {
                 step = enStep::release_anim;
             }
@@ -366,11 +361,12 @@ void PlayerMove::HandleMove(
 //Playerの動作[GetAsyncKeyState()]を書く関数.
 PlayerMove::enMove PlayerMove::GetMoveInput()
 {
-    //WASDの動作.
-    bool W = (GetAsyncKeyState('W') & 0x8000);
-    bool A = (GetAsyncKeyState('A') & 0x8000);
-    bool S = (GetAsyncKeyState('S') & 0x8000);
-    bool D = (GetAsyncKeyState('D') & 0x8000);
+    // WASDの動作.
+    // Managerを使ってキーの状態を取得します。
+    bool W = (m_Key->GetKey("W") && m_Key->GetKey("W")->HoldDownKey());
+    bool A = (m_Key->GetKey("A") && m_Key->GetKey("A")->HoldDownKey());
+    bool S = (m_Key->GetKey("S") && m_Key->GetKey("S")->HoldDownKey());
+    bool D = (m_Key->GetKey("D") && m_Key->GetKey("D")->HoldDownKey());
 
     //斜め優先判定.
     if (W && D) return enMove::ForWardAAndRight;

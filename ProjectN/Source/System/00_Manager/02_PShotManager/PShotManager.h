@@ -36,6 +36,5 @@ private:
 	PShotManager& operator=(const PShotManager& rhs) = delete;
 
 private:
-	// static PShotManager* m_pInstance;	// ★★★ 削除済み：GetInstance()でローカル静的変数を使用するため不要 ★★★
 	std::vector<std::unique_ptr<PShot>> m_PlayerShot;	//弾リスト.
 };

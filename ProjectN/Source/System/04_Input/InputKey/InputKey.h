@@ -21,7 +21,7 @@ public:
 	//キーを押した瞬間.
 	bool NowPressKey();
 	//キーを押し続けている間.
-	bool HoldDownKey();
+	bool HoldDownKey() const;
 	//キーを離した瞬間.
 	bool ReleaseKey();
 public:

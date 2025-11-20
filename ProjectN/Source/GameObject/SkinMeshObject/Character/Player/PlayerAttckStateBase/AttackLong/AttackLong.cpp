@@ -99,7 +99,7 @@ void AttackLong::ExecuteAttack(Player* player)
     if (m_ShotCoolDown > 0.0f) return;
 
     //右クリックで発射.
-    if (!(GetAsyncKeyState(VK_SPACE) & 0x8000)) return;
+    if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000)) return;
 
     //SkinMeshの取得.
     if (player->GetAttachMesh().expired()) return;

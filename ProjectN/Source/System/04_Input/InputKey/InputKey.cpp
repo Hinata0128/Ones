@@ -29,7 +29,7 @@ bool InputKey::NowPressKey()
 	return false;
 }
 //ƒL[‚ğ‰Ÿ‚µ‘±‚¯‚Ä‚¢‚éŠÔ.
-bool InputKey::HoldDownKey()
+bool InputKey::HoldDownKey() const
 {
 	return m_NowKey;
 }
