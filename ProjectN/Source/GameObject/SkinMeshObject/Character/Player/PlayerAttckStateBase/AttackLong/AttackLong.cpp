@@ -23,6 +23,7 @@ void AttackLong::Enter(Player* player)
 	m_ShotCoolDown = 0.0f;
 }
 
+#if 0
 //void AttackLong::ExecuteAttack(Player* player)
 //{
 //	constexpr float zero = 0.0f;
@@ -88,6 +89,7 @@ void AttackLong::Enter(Player* player)
 //		}
 //	}
 //}
+#endif
 
 void AttackLong::ExecuteAttack(Player* player)
 {
