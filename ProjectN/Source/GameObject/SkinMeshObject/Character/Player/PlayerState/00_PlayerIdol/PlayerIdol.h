@@ -21,12 +21,11 @@ public:
 	//初期化処理
 	void Enter() override;
 	//毎フレーム入る処理
-	void Execute() override;
+	void Update() override;
 	//Stateから出るときに入る処理.
 	void Exit() override;
 
 	//継承させているから使用しない.
-	void Update() override;
 	void Draw() override;
 	void Init() override;
 private:

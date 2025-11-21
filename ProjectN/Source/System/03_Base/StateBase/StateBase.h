@@ -15,11 +15,10 @@ public:
 	//‰Šú‰»ˆ—
 	virtual void Enter() = 0;
 	//–ˆƒtƒŒ[ƒ€“ü‚éˆ—
-	virtual void Execute() = 0;
+	virtual void Update() = 0;
 	//State‚©‚ço‚é‚Æ‚«‚É“ü‚éˆ—.
 	virtual void Exit() = 0;
 
-	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Init() = 0;
 protected:

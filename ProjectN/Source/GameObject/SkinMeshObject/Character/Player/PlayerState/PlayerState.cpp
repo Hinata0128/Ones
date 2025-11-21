@@ -6,8 +6,8 @@
 constexpr float zero = 0.0f;
 
 PlayerState::PlayerState(Player* pOwner)
-	: StateBase()
-	, m_pOwner(pOwner)
+	: StateBase	()
+	, m_pOwner	(pOwner)
 {
 }
 
@@ -19,15 +19,11 @@ void PlayerState::Enter()
 {
 }
 
-void PlayerState::Execute()
+void PlayerState::Update()
 {
 }
 
 void PlayerState::Exit()
-{
-}
-
-void PlayerState::Update()
 {
 }
 

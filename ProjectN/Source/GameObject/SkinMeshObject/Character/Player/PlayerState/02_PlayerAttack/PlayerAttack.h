@@ -17,11 +17,10 @@ public:
 	//‰Šú‰»ˆ—
 	void Enter() override;
 	//–ˆƒtƒŒ[ƒ€“ü‚éˆ—
-	void Execute() override;
+	void Update() override;
 	//State‚©‚ço‚é‚Æ‚«‚É“ü‚éˆ—.
 	void Exit() override;
 
-	void Update() override;
 	void Draw() override;
 	void Init() override;
 protected:

@@ -19,7 +19,7 @@ void PlayerIdol::Enter()
 {
 }
 
-void PlayerIdol::Execute()
+void PlayerIdol::Update()
 {
     PlayerContext ctx(m_pOwner);
 
@@ -52,16 +52,11 @@ void PlayerIdol::Execute()
         //}
     }
     //最初はIdolでその中で毎フレームUpdata()が回っている.
-    m_pPlayerMove->Execute();
+    m_pPlayerMove->Update();
 }
 
 void PlayerIdol::Exit()
 {
-}
-
-void PlayerIdol::Update()
-{
-    PlayerState::Update();
 }
 
 void PlayerIdol::Draw()
