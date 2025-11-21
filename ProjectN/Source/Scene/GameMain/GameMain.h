@@ -7,7 +7,9 @@
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
 #include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyNomal//EnemyNomal.h"
 
-#include "System/00_Manager/05_EnemyNomalManager/EnemyNomalManager.h"
+//#include "System/00_Manager/05_EnemyNomalManager/EnemyNomalManager.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
+
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
 #include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
 
