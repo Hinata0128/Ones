@@ -50,6 +50,9 @@ public:
 	D3DXVECTOR3 Player_AD(float RotationY) const;
 
 	void ChangeAttackType(PlayerAttackManager::enAttack type);
+	void CleanUpAttackState(PlayerAttackManager::enAttack type);
+
+
 private:
 	PShotManager*	m_pShotManager;
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;

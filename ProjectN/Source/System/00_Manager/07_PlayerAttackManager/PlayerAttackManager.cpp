@@ -4,6 +4,7 @@
 
 #include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/AttackLong/AttackLong.h" 
 #include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/AttackShort/AttackShort.h"
+#include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/NoAttack/NoAttack.h"
 
 // ---------------------------------------------------------------------
 
@@ -47,6 +48,11 @@ void PlayerAttackManager::Release()
     ManagerBase::Release();
 }
 
+void PlayerAttackManager::CleanUpState(enAttack en)
+{
+    m_StateMap[en]->Enter(m_pOwner);
+}
+
 // ---------------------------------------------------------------------
 
 void PlayerAttackManager::ChangeAttackState(enAttack type)
@@ -75,4 +81,5 @@ void PlayerAttackManager::RegisterStates()
 {
     m_StateMap.emplace(enAttack::Long, std::make_unique<AttackLong>());
     m_StateMap.emplace(enAttack::Short, std::make_unique<AttackShort>());
+    m_StateMap.emplace(enAttack::NoAttack, std::make_unique<NoAttack>());
 }

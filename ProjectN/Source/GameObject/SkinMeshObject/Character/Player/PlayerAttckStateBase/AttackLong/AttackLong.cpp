@@ -20,7 +20,7 @@ AttackLong::~AttackLong()
 
 void AttackLong::Enter(Player* player)
 {
-	m_ShotCoolDown = 0.0f;
+	m_ShotCoolDown = m_CoolTime;
 }
 
 #if 0
@@ -100,9 +100,6 @@ void AttackLong::ExecuteAttack(Player* player)
     m_ShotCoolDown -= deltaTime;
     if (m_ShotCoolDown > 0.0f) return;
 
-    //右クリックで発射.
-    if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000)) return;
-
     //SkinMeshの取得.
     if (player->GetAttachMesh().expired()) return;
     //dynamic_pointer_castを使用してSkinMeshClassの関数を取得する.
@@ -142,7 +139,7 @@ void AttackLong::ExecuteAttack(Player* player)
     //ボーンのローカルオフセットを回転させる  
     D3DXVECTOR3 FinalShotPos = BoneWorldPos;
 
-    //弾の向き（Player の正面など。必要なら bone の forward に変更可）
+    //弾の向き.
     D3DXVECTOR3 Dir = player->Player_WS(rot.y);
     //正規化.
     D3DXVec3Normalize(&Dir, &Dir);

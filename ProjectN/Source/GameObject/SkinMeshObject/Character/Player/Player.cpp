@@ -173,3 +173,13 @@ void Player::ChangeAttackType(PlayerAttackManager::enAttack type)
         m_pAttackManager->ChangeAttackState(type);
     }
 }
+
+void Player::CleanUpAttackState(PlayerAttackManager::enAttack type)
+{
+    if (m_pAttackManager)
+    {
+        // 実際のステート切り替え処理はAttackManagerに任せる
+        m_pAttackManager->CleanUpState(type);
+    }
+
+}

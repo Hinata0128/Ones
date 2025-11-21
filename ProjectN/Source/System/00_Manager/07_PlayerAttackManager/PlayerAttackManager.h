@@ -7,6 +7,7 @@
 #include "GameObject/SkinMeshObject/Character/Player/PlayerAttckStateBase/PlayerAttckStateBase.h" 
 class AttackLong;
 class AttackShort;
+class NoAttack;
 class Player;
 
 /***************************************************************************
@@ -28,6 +29,9 @@ public:
 		//‹ß‹——£UŒ‚.
 		Short,
 
+		//‰½‚àUŒ‚‚µ‚Ä‚¢‚È‚¢.
+		NoAttack,
+
 		max,
 	};
 public:
@@ -38,6 +42,8 @@ public:
 	void Draw() override;
 	void Create() override;
 	void Release() override;
+
+	void CleanUpState(enAttack en);
 
 	//UŒ‚‚ÌState‚ÌØ‚è‘Ö‚¦
 	void ChangeAttackState(enAttack tyep);
