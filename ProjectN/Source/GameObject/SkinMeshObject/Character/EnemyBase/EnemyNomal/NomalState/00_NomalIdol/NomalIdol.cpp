@@ -1,22 +1,22 @@
-#include "NomlIdol.h"
+#include "NomalIdol.h"
 
 #include "..//..//EnemyNomal.h"
 #include "..//..//NomalContext//NomalContext.h"
 
-NomlIdol::NomlIdol(EnemyNomal* pOwner)
+NomalIdol::NomalIdol(EnemyNomal* pOwner)
 	: NomalState	(pOwner)
 {
 }
 
-NomlIdol::~NomlIdol()
+NomalIdol::~NomalIdol()
 {
 }
 
-void NomlIdol::Enter()
+void NomalIdol::Enter()
 {
 }
 
-void NomlIdol::Update()
+void NomalIdol::Update()
 {
 //EnemyÇÃIdolèÛë‘ÇÃèàóù.
 #if 0
@@ -48,17 +48,17 @@ void NomlIdol::Update()
 #endif
 }
 
-void NomlIdol::Exit()
+void NomalIdol::Exit()
 {
 	NomalState::Exit();
 }
 
-void NomlIdol::Draw()
+void NomalIdol::Draw()
 {
 	NomalState::Draw();
 }
 
-void NomlIdol::Init()
+void NomalIdol::Init()
 {
 	NomalState::Init();
 }

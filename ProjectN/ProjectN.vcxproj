@@ -188,7 +188,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyBase.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\EnemyNomal.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalContext\NomalContext.cpp" />
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\00_NomlIdol\NomlIdol.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\00_NomalIdol\NomalIdol.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\NomalState.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\Player.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\AttackLong\AttackLong.cpp" />
@@ -267,7 +267,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyBase.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\EnemyNomal.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalContext\NomalContext.h" />
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\00_NomlIdol\NomlIdol.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\00_NomalIdol\NomalIdol.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyNomal\NomalState\NomalState.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\Player.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\AttackLong\AttackLong.h" />

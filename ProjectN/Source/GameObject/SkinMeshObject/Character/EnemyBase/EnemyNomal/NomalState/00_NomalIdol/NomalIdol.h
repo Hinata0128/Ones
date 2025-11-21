@@ -8,12 +8,12 @@ class NomalContext;
 *	NomalIdolClass(“G‚ÌƒAƒCƒhƒ‹ó‘Ô).
 **/
 
-class NomlIdol final
+class NomalIdol final
 	: public NomalState
 {
 public:
-	NomlIdol(EnemyNomal* pOwner);
-	~NomlIdol() override;
+	NomalIdol(EnemyNomal* pOwner);
+	~NomalIdol() override;
 
 	//‰Šú‰»ˆ—.
 	void Enter() override;
