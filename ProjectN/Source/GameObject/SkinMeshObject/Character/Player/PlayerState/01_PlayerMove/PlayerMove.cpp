@@ -143,6 +143,9 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             ctx.AnimTime = 0.0f;
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
             step = enStep::none;
+
+            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+
             break;
         }
     }
