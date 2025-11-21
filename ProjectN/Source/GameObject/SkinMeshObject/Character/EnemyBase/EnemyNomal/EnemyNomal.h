@@ -6,6 +6,8 @@
 class EnemyNomalShotManager;
 class Timer;
 
+class NomalContext;
+
 //敵クラスに敵のHP現象を作成.
 //将来的には、jsonファイルでHP関係を管理する.
 //このクラスで敵の攻撃範囲を作成して攻撃を実装する.
@@ -13,6 +15,9 @@ class Timer;
 class EnemyNomal final
 	: public EnemyBase // public継承を推奨 (private継承の場合は、外部からのアクセスに注意)
 {
+public:
+	friend NomalContext;
+
 public:
 	EnemyNomal();
 	~EnemyNomal() override;
@@ -45,8 +50,6 @@ private:
 private:
 	EnemyNomalShotManager* m_pENShotManager;
 
-	// *** 追記したメンバー変数 ***
-	D3DXVECTOR3 m_BonePos;          // ボーン座標 ('entotu_Joint')
 	D3DXVECTOR3 m_ShotOffset;       // 弾の発射位置オフセット
 
 	float m_ShotCoolDown;           // 弾の発射クールダウンタイマー

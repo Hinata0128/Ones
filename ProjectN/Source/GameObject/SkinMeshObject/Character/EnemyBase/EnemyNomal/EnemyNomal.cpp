@@ -3,6 +3,8 @@
 #include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
 #include "System/02_Singleton/Timer//Timer.h"
 
+#include "NomalContext//NomalContext.h"
+
 constexpr float zero = 0.0f;
 
 EnemyNomal::EnemyNomal()

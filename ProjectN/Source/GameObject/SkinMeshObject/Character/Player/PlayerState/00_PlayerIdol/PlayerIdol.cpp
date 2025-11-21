@@ -23,15 +23,6 @@ void PlayerIdol::Update()
 {
     PlayerContext ctx(m_pOwner);
 
-    //PlayerClassとfriendになったのでメンバ変数を設定できるようにした.
-    D3DXVECTOR3& Position = ctx.Position;
-    D3DXVECTOR3& Rotation = ctx.Rotation;
-    int& AnimNo = ctx.AnimNo;
-    double& AnimTime = ctx.AnimTime;
-    SkinMesh* Mesh = ctx.Mesh;
-    LPD3DXANIMATIONCONTROLLER AnimCtrl = ctx.AnimCtrl;
-    D3DXVECTOR3& BonePos = ctx.BonePos;
-
     bool isMoving = false; //移動しているかフラグ.
     const int IDOL_ANIM_NO = 0;
 
@@ -39,15 +30,15 @@ void PlayerIdol::Update()
     if (!isMoving)
     {
         //// 現在のアニメーション番号が7番でない場合のみ切り替える
-        //if (AnimNo != IDOL_ANIM_NO)
+        //if (ctx.AnimNo != IDOL_ANIM_NO)
         //{
-        //    AnimNo = IDOL_ANIM_NO;
-        //    AnimTime = 0.0f; // アニメーション時間をリセット
+        //    ctx.AnimNo = IDOL_ANIM_NO;
+        //    ctx.AnimTime = 0.0f; // アニメーション時間をリセット
 
-        //    if (Mesh && AnimCtrl)
+        //    if (ctx.Mesh && ctx.AnimCtrl)
         //    {
         //        // アニメーションコントローラに7番をセット
-        //        Mesh->ChangeAnimSet(IDOL_ANIM_NO, AnimCtrl);
+        //        ctx.Mesh->ChangeAnimSet(IDOL_ANIM_NO, ctx.AnimCtrl);
         //    }
         //}
     }

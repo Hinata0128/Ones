@@ -1,0 +1,17 @@
+#include "NomalContext.h"
+
+#include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyNomal//EnemyNomal.h"
+#include "SkinMesh//SkinMesh.h"
+
+NomalContext::NomalContext(EnemyNomal* nomal)
+    : Position  (nomal->m_Position)
+    , Rotation  (nomal->m_Rotation)
+    , Scale     (nomal->m_Scale)
+    , AnimNo    (nomal->m_AnimNo)
+    , AnimTime  (nomal->m_AnimTime)
+    , AnimSpeed (nomal->m_AnimSpeed)
+    , Mesh      (nomal->m_pMesh.get())
+    , AnimCtrl  (nomal->m_pAnimCtrl)
+    , BonePos   (nomal->m_BonePos)
+{
+}
