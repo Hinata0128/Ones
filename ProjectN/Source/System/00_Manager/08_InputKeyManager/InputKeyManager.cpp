@@ -2,9 +2,9 @@
 
 InputKeyManager::InputKeyManager()
 {
-	m_Keys["W"].SetAnyKey(0x57); // 'W'
-	m_Keys["A"].SetAnyKey(0x41); // 'A'
-	m_Keys["S"].SetAnyKey(0x53); // 'S'
+	m_Keys["W"].SetAnyKey(0x57); 
+	m_Keys["A"].SetAnyKey(0x41); 
+	m_Keys["S"].SetAnyKey(0x53); 
 	m_Keys["D"].SetAnyKey(0x44);
 
 	m_Keys["Space"].SetAnyKey(0x20);

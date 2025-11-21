@@ -69,7 +69,7 @@ public:
 	void Init() override;
 
 	//Playerの右クリックの攻撃関数.
-	bool RbuttonAttackStep(PlayerContext& ctx);
+	void RbuttonAttackStep(PlayerContext& ctx);
 	//Playerの左クリックの攻撃関数.
 	//引数を書かないといけないけれども一旦関数を作成するために書いていない.
 	bool LButtonAttackStep(PlayerContext& ctx);
@@ -98,4 +98,7 @@ private:
 	bool m_IsShot = false;
 	//InputKeyのメンバ変数.
 	std::unique_ptr<InputKeyManager> m_Key;
+
+	//攻撃状態をboolで管理させる.
+	bool IsRAttacking = false;
 };

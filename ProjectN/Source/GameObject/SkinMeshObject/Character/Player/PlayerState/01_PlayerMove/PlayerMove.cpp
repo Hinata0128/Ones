@@ -10,12 +10,12 @@ constexpr float add_value = 0.1f;
 //テストbranch作成しました
 
 PlayerMove::PlayerMove(Player* pOwner)
-    : PlayerState(pOwner)
-    , FastAnim  (false)
-    , step      (enStep::none)
-    , LStep     (enLeftStep::none)
-    , Move      (enMove::Idol)
-    , m_Key     (std::make_unique<InputKeyManager>())
+    : PlayerState   (pOwner)
+    , FastAnim      (false)
+    , step          (enStep::none)
+    , LStep         (enLeftStep::none)
+    , Move          (enMove::Idol)
+    , m_Key         (std::make_unique<InputKeyManager>())
 {
     //初期化を書いている.
     Init();
@@ -36,7 +36,8 @@ void PlayerMove::Execute()
 
     float deltaTime = Timer::GetInstance().DeltaTime();
     //右クリックの攻撃の関数.
-    bool RAttacking = RbuttonAttackStep(ctx);
+    RbuttonAttackStep(ctx);
+    bool RAttack = IsRAttacking;
     bool LAttacking = LButtonAttackStep(ctx);
     //WASDの入力取得.
     Move = GetMoveInput();
@@ -47,17 +48,17 @@ void PlayerMove::Execute()
 
     m_Key->Update();
 
-    //移動処理.
+    //Playerの移動処理.
     //第一引数にPlayerContext.
     //第二引数にWSの関数.
     //第三引数にADの関数.
     HandleMove(ctx, ForwardAndBackward, LeftAndRight);
 
-    ////スペースキーで回転をさせる.
-    //if (m_Key->HoldDownKey() == true)
-    //{
-    //    ctx.Rotation.y += add_value;
-    //}
+    //スペースキーで回転をさせる.
+    if (m_Key->GetKey("Space") && m_Key->GetKey("Space")->HoldDownKey())
+    {
+        ctx.Rotation.y += add_value;
+    }
 
     //ステートの共通処理.
     PlayerState::Execute();
@@ -81,12 +82,12 @@ void PlayerMove::Draw()
 
 void PlayerMove::Init()
 {
-    //m_Key->SetAnyKey(0x20);
     PlayerState::Init();
 }
 
 //型をboolに変更させたのでbreckではなくreturn false/trueで返す.
-bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
+//右クリックの遠距離攻撃.
+void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 {
     float deltaTime = Timer::GetInstance().DeltaTime();
 
@@ -96,13 +97,15 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
         if (step == enStep::none)
         {
             step = enStep::first;
+            IsRAttacking = true;
         }
     }
 
     switch (step) 
     {
         case enStep::none:
-            return false; //攻撃していない→移動処理に移動.
+            IsRAttacking = false;
+            break; //攻撃していない→移動処理に移動.
         case enStep::first:
             //アニメーション切り替え.
             ctx.AnimNo = 8; //アニメーション番号.
@@ -111,23 +114,23 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
             step = enStep::run;
-            return true;
+            break;
         case enStep::run:
         {
             //アニメーションの停止を良い位置でさせるため.
-            float period = ctx.Mesh->GetAnimPeriod(6);
-            if (ctx.AnimTime > period)
+            float Period = ctx.Mesh->GetAnimPeriod(6);
+            if (ctx.AnimTime > Period)
             {
-                ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
                 step = enStep::end;
             }
             else
             {
                 ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
             }
-            return true;
+            break;
         }
         case enStep::end:
+        {
             //アニメーションの停止.
             ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Long);
@@ -135,19 +138,19 @@ bool PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             {
                 step = enStep::release_anim;
             }
-            return true;
+            break;
+        }
         case enStep::release_anim:
         {
             ctx.AnimTime += deltaTime * ctx.AnimSpeed;
 
-                ctx.AnimNo = 0;
-                ctx.AnimTime = 0.0f;
-                ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
-                step = enStep::none;
-            return true;
+            ctx.AnimNo = 0;
+            ctx.AnimTime = 0.0f;
+            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+            step = enStep::none;
+            break;
         }
     }
-    return false;
 }
 
 
@@ -358,7 +361,7 @@ void PlayerMove::HandleMove(
     }
 }
 
-//Playerの動作[GetAsyncKeyState()]を書く関数.
+//Playerの動作[InputKeyManagerを使用して]書く関数.
 PlayerMove::enMove PlayerMove::GetMoveInput()
 {
     // WASDの動作.

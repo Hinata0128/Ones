@@ -81,22 +81,6 @@ void Main::Update()
 	ImGuiManager::GetInstance()->NewFrameSetting();
 
 	SceneManager::GetInstance()->Update();
-
-	ImGui::Begin("My Debug Window");
-	ImGui::Text("Hello, ImGui!");
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-	if (ImGui::Button("Test Button"))
-	{
-		OutputDebugString(_T("Test Button Clicked!\n"));
-	}
-	// ★ ImGuiの初期位置設定（移動できない場合はこれをコメントアウトしてください）
-	// ImGui::SetNextWindowPos(ImVec2(100, 100), ImGuiCond_Once); 
-
-	ImGui::SliderFloat("Float Value", &m_SomeFloatValue, 0.0f, 100.0f);
-	ImGui::Checkbox("Enable Feature", &m_bFeatureEnabled);
-
-	ImGui::End();
 }
 
 //=================================================
