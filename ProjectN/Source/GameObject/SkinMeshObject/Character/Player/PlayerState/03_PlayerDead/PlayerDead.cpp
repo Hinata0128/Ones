@@ -30,23 +30,18 @@ void PlayerDead::Enter()
 	PlayerState::Enter();
 }
 
-void PlayerDead::Execute()
+void PlayerDead::Update()
 {
 	//Player‚Ì’e‚ðˆêÄ‚Éclear‚É‚·‚é.
 	//í‚É‚·‚é‚Ì‚Å‚Í‚È‚­PlayerDead‚É“ü‚Á‚½Žž‚É‚±‚ÌŠÖ”‚Ì’†‚É“ü‚é.
 	PShotManager::GetInstance()->ClearPlayerShot();
 
-	PlayerState::Execute();
+	PlayerState::Update();
 }
 
 void PlayerDead::Exit()
 {
 	PlayerState::Exit();
-}
-
-void PlayerDead::Update()
-{
-	PlayerState::Update();
 }
 
 void PlayerDead::Draw()

@@ -13,15 +13,11 @@ void PlayerAttack::Enter()
 {
 }
 
-void PlayerAttack::Execute()
+void PlayerAttack::Update()
 {
 }
 
 void PlayerAttack::Exit()
-{
-}
-
-void PlayerAttack::Update()
 {
 }
 

@@ -30,7 +30,7 @@ void PlayerMove::Enter()
     PlayerState::Enter();
 }
 
-void PlayerMove::Execute()
+void PlayerMove::Update()
 {
     PlayerContext ctx(m_pOwner);
 
@@ -61,18 +61,13 @@ void PlayerMove::Execute()
     }
 
     //ステートの共通処理.
-    PlayerState::Execute();
+    PlayerState::Update();
 }
 
 
 void PlayerMove::Exit()
 {
     PlayerState::Exit();
-}
-
-void PlayerMove::Update()
-{
-    PlayerState::Update();
 }
 
 void PlayerMove::Draw()

@@ -17,11 +17,11 @@ public:
 	//初期化処理
 	virtual void Enter() override;
 	//毎フレーム入る処理
-	virtual void Execute() override;
+	virtual void Update() override;
 	//Stateから出るときに入る処理.
 	virtual void Exit() override;
 
-	virtual void Update() override;
+	//エフェクトを入れるときに使用する.
 	virtual void Draw() override;
 	virtual void Init() override;
 

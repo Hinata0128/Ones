@@ -54,7 +54,7 @@ void Player::Update()
     //これでその時のStateに入る.
     if (m_pCurrentState)
     {
-        m_pCurrentState->Execute();
+        m_pCurrentState->Update();
     }
 
     //アニメーション更新
