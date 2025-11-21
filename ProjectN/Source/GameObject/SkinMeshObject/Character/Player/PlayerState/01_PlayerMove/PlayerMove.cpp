@@ -113,7 +113,7 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
         case enStep::run:
         {
             //アニメーションの停止を良い位置でさせるため.
-            float Period = ctx.Mesh->GetAnimPeriod(6);
+            float Period = static_cast<float>(ctx.Mesh->GetAnimPeriod(6));
             if (ctx.AnimTime > Period)
             {
                 step = enStep::end;
@@ -174,7 +174,7 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
             return true;
         case enLeftStep::Attack:
         {
-            float period = ctx.Mesh->GetAnimPeriod(12);
+            double period = ctx.Mesh->GetAnimPeriod(12);
             if (ctx.AnimTime > period)
             {
                 LStep = enLeftStep::end;
@@ -193,7 +193,7 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
             return true;
         case enLeftStep::release_anim:
         {
-            float period = ctx.Mesh->GetAnimPeriod(6);
+            double period = ctx.Mesh->GetAnimPeriod(6);
             if (ctx.AnimTime >= period)
             {
                 ctx.AnimNo = 0;
@@ -251,7 +251,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -277,7 +277,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -293,7 +293,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -310,7 +310,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
@@ -326,7 +326,7 @@ void PlayerMove::HandleMove(
             // アニメーション進行
             ctx.AnimTime += ctx.AnimSpeed;
             // 最後まで再生されたかチェック
-            float period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime >= period)
             {
                 ctx.Mesh->SetAnimSpeed(0.0, ctx.AnimCtrl);
