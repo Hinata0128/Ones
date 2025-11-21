@@ -1,4 +1,5 @@
 #include "NomalState.h"
+#include "..//EnemyNomal.h"
 
 NomalState::NomalState(EnemyNomal* pOwner)
 	: StateBase	()
@@ -32,5 +33,5 @@ void NomalState::Init()
 
 EnemyNomal* NomalState::GetOwner() const
 {
-	return nullptr;
+	return m_pOwner;
 }

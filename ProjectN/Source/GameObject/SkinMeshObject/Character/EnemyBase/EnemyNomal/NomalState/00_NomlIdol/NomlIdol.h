@@ -1,0 +1,29 @@
+#pragma once
+#include "..//NomalState.h"
+
+class EnemyNomal;
+class NomalContext;
+
+/*****************************************************************
+*	NomalIdolClass(敵のアイドル状態).
+**/
+
+class NomlIdol final
+	: public NomalState
+{
+public:
+	NomlIdol(EnemyNomal* pOwner);
+	~NomlIdol() override;
+
+	//初期化処理.
+	void Enter() override;
+	//毎フレーム入る処理.
+	void Update() override;
+	//Stateから出るときに入る処理.
+	void Exit() override;
+
+	//継承されているから使用しない.
+	void Draw() override;
+	void Init() override;
+private:
+};
