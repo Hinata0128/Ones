@@ -9,7 +9,7 @@ class PlayerContext;
 class PlayerDead;
 //class PlayerAttackManager;
 #include "System/00_Manager/07_PlayerAttackManager/PlayerAttackManager.h"
-
+#include "..//Player/PlayerAttckStateBase/AttackShort/AttackShort.h"
 
 /**************************************************
 *	プレイヤークラス.
@@ -56,6 +56,9 @@ public:
 	bool GetBonePosition(const char* boneName, D3DXVECTOR3* outPos) const;
 
 	D3DXVECTOR3 GetShortAttackCenter() const;
+	AttackShort* GetShortAttackState() const;
+
+	PlayerAttackManager* GetAttackManager() const { return m_pAttackManager.get(); }
 
 private:
 	PShotManager*	m_pShotManager;

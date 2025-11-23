@@ -47,6 +47,8 @@ public:
 
 	//UŒ‚‚ÌState‚ÌØ‚è‘Ö‚¦
 	void ChangeAttackState(enAttack tyep);
+
+	AttackShort* GetCurrentShortAttack() const;
 private:
 	Player* m_pOwner;
 	PlayerAttckStateBase* m_pCurrentAttackState;

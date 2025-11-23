@@ -87,6 +87,21 @@ void PlayerAttackManager::ChangeAttackState(enAttack type)
     }
 }
 
+AttackShort* PlayerAttackManager::GetCurrentShortAttack() const
+{
+    // マップに enAttack::Short が存在するか確認
+    if (m_StateMap.count(enAttack::Short) == 0)
+    {
+        return nullptr;
+    }
+
+    // マップから該当する unique_ptr を取得し、その raw ポインタを取得
+    PlayerAttckStateBase* baseState = m_StateMap.at(enAttack::Short).get();
+
+    // 取得したポインタを AttackShort* にダウンキャストして返す
+    // dynamic_cast を使用すると、安全に型チェックを行えます。
+    return dynamic_cast<AttackShort*>(baseState);
+}
 // ---------------------------------------------------------------------
 
 void PlayerAttackManager::RegisterStates()

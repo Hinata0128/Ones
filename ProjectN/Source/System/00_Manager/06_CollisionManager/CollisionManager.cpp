@@ -149,30 +149,30 @@ void CollisionManager::AllCollider()
         }
     }
 
-    //----------------------------------------------
-        // 近距離攻撃（剣） vs 敵
-        //----------------------------------------------
-    if (m_pShortAttackSphere)
-    {
-        // ① 剣の当たり判定位置を更新
-        m_pShortAttackSphere->SetPosition(m_pPlayer->GetShortAttackCenter());
+    // ----------------------------------------------
+    // 近距離攻撃（剣） vs 敵
+    // ----------------------------------------------
+    // Playerクラス経由でAttackShortインスタンスを取得 (実装済みの関数を使用)
+    AttackShort* pShortAttack = m_pPlayer->GetShortAttackState();
 
+    // pShortAttack が有効で、かつ AttackShort ステートがヒット判定を有効にしている場合のみ実行
+    if (pShortAttack && pShortAttack->IsHitActive())
+    {
+        // ① 剣の当たり判定情報を取得 (参照で宣言しても、pShortAttack が有効なら初期化済み)
+        const BoundingSphere& swordSphere = pShortAttack->GetHitBox();
+
+        // 衝突時の処理用のリスポーン位置
         const D3DXVECTOR3 kRespawnPos(0.f, 0.f, 20.f);
 
         for (auto enemy : m_vEnemies)
         {
             if (!enemy) continue;
 
-            // ② リスポーン直後の敵は無視
-            D3DXVECTOR3 diff = enemy->GetPosition() - kRespawnPos;
-            float dist = D3DXVec3Length(&diff);
-            if (dist < 0.1f) continue;
-
-            // ③ 敵の当たり判定更新
+            // ② 敵の当たり判定更新
             enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
 
-            // ④ 剣の当たりと比較
-            if (m_pShortAttackSphere->IsHit(enemy->GetBoundingSphere()))
+            // ③ 剣の当たりと比較
+            if (swordSphere.IsHit(enemy->GetBoundingSphere())) // 判定実行
             {
                 // 敵リスポーン
                 enemy->SetPosition(kRespawnPos);

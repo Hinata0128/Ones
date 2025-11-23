@@ -26,6 +26,9 @@ public:
 
 	void Draw(Player* player);
 
+	// 攻撃判定の状態を取得する関数
+	bool IsHitActive() const { return m_IsHitActive; }
+	const BoundingSphere& GetHitBox() const { return m_SwordHitBox; }
 
 private:
 	//近距離攻撃のクールタイム.
@@ -39,7 +42,7 @@ private:
 	//剣先のボーン名.
 	const char* BoneName = "blade_r_head";
 	//剣先の当たり判定の半径
-	float Radius = 1.0f;
+	float Radius = 3.0f;
 
 	//攻撃判定が有効な期間がどうかを確認するフラグ.
 	bool m_IsHitActive = false;

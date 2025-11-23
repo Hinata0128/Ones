@@ -208,3 +208,14 @@ D3DXVECTOR3 Player::GetShortAttackCenter() const
 
     return center + offset;
 }
+
+AttackShort* Player::GetShortAttackState() const
+{
+    // m_pAttackManager は std::unique_ptr なので get() で生のポインタを取得
+    if (m_pAttackManager)
+    {
+        // PlayerAttackManager の新しいメンバ関数を呼び出す
+        return m_pAttackManager->GetCurrentShortAttack();
+    }
+    return nullptr;
+}
