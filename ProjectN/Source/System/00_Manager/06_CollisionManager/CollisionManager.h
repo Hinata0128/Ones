@@ -41,6 +41,8 @@ public:
 	void SetPlayerShots(const std::vector<PShot*>& shots) { m_PlayerShots = shots; }
 	void SetEnemyShots(const std::vector<EnemyNomalShot*>& shots) { m_EnemyShots = shots; }
 
+	void SetShortAttackSphere(const std::shared_ptr<BoundingSphere>& sphere) { m_pShortAttackSphere = sphere; }
+
 private:
 	//当たり判定の関数をここに書きます
 	bool CheckSphereSphere(const BoundingSphere& a, const BoundingSphere& b);	//スフィア同士の判定. 
@@ -55,4 +57,6 @@ private:
 	std::vector<EnemyNomal*> m_vEnemies;	
 	std::vector<PShot*> m_PlayerShots;
 	std::vector<EnemyNomalShot*> m_EnemyShots;
+	
+	std::shared_ptr<BoundingSphere> m_pShortAttackSphere;
 };

@@ -87,7 +87,7 @@ void Player::Update()
 void Player::Draw()
 {
 	//m_pMesh->SetAnimSpeed(m_AnimSpeed);
-
+    m_pAttackManager->Draw();
 	Character::Draw();
 }
 
@@ -182,4 +182,29 @@ void Player::CleanUpAttackState(PlayerAttackManager::enAttack type)
         m_pAttackManager->CleanUpState(type);
     }
 
+}
+
+bool Player::GetBonePosition(const char* boneName, D3DXVECTOR3* outPos) const
+{
+    if (m_pMesh)
+    {
+        return m_pMesh->GetPosFromBone(boneName, outPos);
+    }
+
+    return false;
+}
+
+D3DXVECTOR3 Player::GetShortAttackCenter() const
+{
+    D3DXVECTOR3 center = m_BonePos;
+
+    // 剣の先端方向へ 0.3 くらい前に出す（Z 方向はモデルの向きで変化）
+    D3DXVECTOR3 offset(0.f, 0.f, 0.3f);
+
+    // プレイヤーの回転に合わせて offset を回転
+    D3DXMATRIX rot;
+    D3DXMatrixRotationY(&rot, m_Rotation.y);
+    D3DXVec3TransformCoord(&offset, &offset, &rot);
+
+    return center + offset;
 }

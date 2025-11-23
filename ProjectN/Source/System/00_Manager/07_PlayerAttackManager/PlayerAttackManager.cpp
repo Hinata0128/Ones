@@ -35,6 +35,18 @@ void PlayerAttackManager::Update()
 
 void PlayerAttackManager::Draw()
 {
+    // m_pCurrentAttackState は PlayerAttckStateBase* 型
+    if (m_pCurrentAttackState && m_pOwner)
+    {
+        // 現在のステートが AttackShort であるかを確認し、ダウンキャスト
+        if (auto pShort = dynamic_cast<AttackShort*>(m_pCurrentAttackState))
+        {
+            // AttackShort に固有の Draw 関数を呼び出す
+            pShort->Draw(m_pOwner); // ★ 呼び出し場所
+        }
+    }
+    // Baseクラスの処理を呼ぶ（あれば）
+    ManagerBase::Draw();
 }
 
 void PlayerAttackManager::Create()

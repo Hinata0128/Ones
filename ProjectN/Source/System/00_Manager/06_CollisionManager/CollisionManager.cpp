@@ -148,6 +148,42 @@ void CollisionManager::AllCollider()
             break;
         }
     }
+
+    //----------------------------------------------
+        // ‹ß‹——£UŒ‚iŒ•j vs “G
+        //----------------------------------------------
+    if (m_pShortAttackSphere)
+    {
+        // ‡@ Œ•‚Ì“–‚½‚è”»’èˆÊ’u‚ðXV
+        m_pShortAttackSphere->SetPosition(m_pPlayer->GetShortAttackCenter());
+
+        const D3DXVECTOR3 kRespawnPos(0.f, 0.f, 20.f);
+
+        for (auto enemy : m_vEnemies)
+        {
+            if (!enemy) continue;
+
+            // ‡A ƒŠƒXƒ|[ƒ“’¼Œã‚Ì“G‚Í–³Ž‹
+            D3DXVECTOR3 diff = enemy->GetPosition() - kRespawnPos;
+            float dist = D3DXVec3Length(&diff);
+            if (dist < 0.1f) continue;
+
+            // ‡B “G‚Ì“–‚½‚è”»’èXV
+            enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
+
+            // ‡C Œ•‚Ì“–‚½‚è‚Æ”äŠr
+            if (m_pShortAttackSphere->IsHit(enemy->GetBoundingSphere()))
+            {
+                // “GƒŠƒXƒ|[ƒ“
+                enemy->SetPosition(kRespawnPos);
+
+                // ƒGƒtƒFƒNƒg
+                Effect::Play(Effect::Test0, enemy->GetPosition());
+
+                OutputDebugStringA("Short Attack Hit Enemy!\n");
+            }
+        }
+    }
 }
 
 bool CollisionManager::CheckSphereSphere(const BoundingSphere& a, const BoundingSphere& b)

@@ -52,6 +52,10 @@ public:
 	void ChangeAttackType(PlayerAttackManager::enAttack type);
 	void CleanUpAttackState(PlayerAttackManager::enAttack type);
 
+	// ƒ{[ƒ“‚ÌˆÊ’u‚ğæ“¾‚·‚éŠÖ”
+	bool GetBonePosition(const char* boneName, D3DXVECTOR3* outPos) const;
+
+	D3DXVECTOR3 GetShortAttackCenter() const;
 
 private:
 	PShotManager*	m_pShotManager;
