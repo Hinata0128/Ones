@@ -3,6 +3,7 @@
 
 class EnemyNomal;
 class NomalContext;
+class NomalMove;
 
 /*****************************************************************
 *	NomalIdolClass(敵のアイドル状態).
@@ -26,4 +27,6 @@ public:
 	void Draw() override;
 	void Init() override;
 private:
+	//最終的にここにNomalMoveを呼ぶ.
+	std::shared_ptr<NomalMove> m_pMove;
 };

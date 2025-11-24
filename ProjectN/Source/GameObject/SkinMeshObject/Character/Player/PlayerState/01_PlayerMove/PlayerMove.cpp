@@ -11,7 +11,6 @@ constexpr float add_value = 0.1f;
 
 PlayerMove::PlayerMove(Player* pOwner)
     : PlayerState   (pOwner)
-    , FastAnim      (false)
     , step          (enStep::none)
     , LStep         (enLeftStep::none)
     , Move          (enMove::Idol)
