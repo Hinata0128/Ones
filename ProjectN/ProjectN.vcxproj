@@ -196,7 +196,6 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\NoAttack\NoAttack.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\00_PlayerIdol\PlayerIdol.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\01_PlayerMove\PlayerMove.cpp" />
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\02_PlayerAttack\PlayerAttack.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\PlayerAttckStateBase.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\03_PlayerDead\PlayerDead.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerContext\PlayerContxet.cpp" />
@@ -276,7 +275,6 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\NoAttack\NoAttack.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\00_PlayerIdol\PlayerIdol.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\01_PlayerMove\PlayerMove.h" />
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\02_PlayerAttack\PlayerAttack.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerAttckStateBase\PlayerAttckStateBase.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\03_PlayerDead\PlayerDead.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerContext\PlayerContext.h" />

@@ -177,7 +177,7 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
             return true;
         case enLeftStep::Attack:
         {
-            double period = ctx.Mesh->GetAnimPeriod(12);
+            double period = ctx.Mesh->GetAnimPeriod(18);
             if (ctx.AnimTime > period)
             {
                 LStep = enLeftStep::end;
