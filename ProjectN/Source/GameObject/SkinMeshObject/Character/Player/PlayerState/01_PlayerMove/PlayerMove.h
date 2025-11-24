@@ -91,9 +91,6 @@ private:
 
 	bool AttackType = false;
 
-	//アニメーションの変数.
-	bool FastAnim;
-
 	bool m_IsShot = false;
 	//InputKeyのメンバ変数.
 	std::unique_ptr<InputKeyManager> m_Key;

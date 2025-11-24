@@ -2,9 +2,11 @@
 
 #include "..//..//EnemyNomal.h"
 #include "..//..//NomalContext//NomalContext.h"
+#include "..//01_NomalMove/NomalMove.h"
 
 NomalIdol::NomalIdol(EnemyNomal* pOwner)
 	: NomalState	(pOwner)
+	, m_pMove		(std::make_shared<NomalMove>())
 {
 }
 
@@ -19,7 +21,7 @@ void NomalIdol::Enter()
 void NomalIdol::Update()
 {
 //Enemy‚ÌIdoló‘Ô‚Ìˆ—.
-#if 0
+#if 1
 	NomalContext ctx(m_pOwner);
 
 	//¡‚Í‰B‚µ‚Ä‚¨‚­.
@@ -44,6 +46,8 @@ void NomalIdol::Update()
 			}
 		}
 	}
+	m_pMove->Update();
+
 	NomalState::Update();
 #endif
 }
