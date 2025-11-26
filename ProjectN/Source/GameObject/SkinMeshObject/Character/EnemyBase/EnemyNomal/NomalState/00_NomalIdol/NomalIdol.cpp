@@ -6,7 +6,6 @@
 
 NomalIdol::NomalIdol(EnemyNomal* pOwner)
 	: NomalState	(pOwner)
-	, m_pMove		(std::make_shared<NomalMove>(pOwner))
 {
 }
 
@@ -46,7 +45,20 @@ void NomalIdol::Update()
 			}
 		}
 	}
-	m_pMove->Update();
+
+	EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
+
+	D3DXVECTOR3 diff = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
+	float distanceSq = D3DXVec3LengthSq(&diff);
+
+	const float changeDistance = 15.0f * 15.0f;   // 遷移距離(15m)
+
+	if (distanceSq < changeDistance)
+	{
+		// Moveステートへ切り替え
+		pEnemy->ChangeState(pEnemy->m_pMove.get());
+		return;
+	}
 
 	NomalState::Update();
 #endif
