@@ -47,6 +47,8 @@ void EnemyNomal::Update()
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
     float deltaTime = Timer::GetInstance().DeltaTime();
 
+    m_pENShotManager->Update();
+
     // クールタイム減算 
     m_ShotCoolDown -= deltaTime;
     if (m_ShotCoolDown < 0.0f) m_ShotCoolDown = 0.0f;
@@ -72,7 +74,7 @@ void EnemyNomal::Draw()
 {
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
     EnemyBase::Draw();
-    // m_pENShotManager->Draw();
+    m_pENShotManager->Draw();
 }
 
 void EnemyNomal::Init()
@@ -80,16 +82,6 @@ void EnemyNomal::Init()
     EnemyBase::Init();
 }
 
-// 弾の飛ぶ方向（常に -Z）
-D3DXVECTOR3 EnemyNomal::Enemy_WS() const
-{
-    D3DXVECTOR3 dir;
-
-    dir.x = sinf(m_Rotation.y);
-    dir.y = zero;
-    dir.z = -cosf(m_Rotation.y);
-    return dir;
-}
 
 void EnemyNomal::AutoShot()
 {

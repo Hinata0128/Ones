@@ -23,8 +23,6 @@ public:
 	void Init() override;
 
 public:
-	//W・Sの前進後退用関数.
-	D3DXVECTOR3 Enemy_WS() const;
 
 	BoundingSphere& GetBoundingSphere() { return m_BSphere; }
 
