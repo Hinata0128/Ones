@@ -10,9 +10,7 @@ constexpr float zero = 0.0f;
 EnemyNomal::EnemyNomal()
     : EnemyBase()
     , m_pENShotManager(nullptr)
-    // ★移動メンバの初期化を削除★
 
-    // ✅ NomalMove の初期化 (pOwner に this を渡す)
     , m_pMove(std::make_shared<NomalMove>(this))
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
