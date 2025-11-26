@@ -33,11 +33,8 @@ void NomalMove::Update()
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
-	// 1. 現在の位置とターゲット（プレイヤー）の位置を取得
 	const D3DXVECTOR3& EnemyPos = pEnemy->GetPosition();
 	const D3DXVECTOR3& PlayerPos = pEnemy->GetPlayerPos();
-
-	// --- 【円運動ロジック】 ---
 
 	// 2. デルタタイムを使用して回転角度を更新させる
 	float deltaAngle = m_RotationSpeed * deltaTime * m_RotationDirection;
@@ -72,11 +69,11 @@ void NomalMove::Update()
 	// 敵の位置を円軌道状に更新する処理.
 	// ------------------------------------
 
-	// (1) オフセットベクトルを計算 
+	// オフセットベクトルを計算 
 	D3DXVECTOR3 offsetVec;
 	D3DXVec3Scale(&offsetVec, &RotatedVec, ENEMY_NOMAL_RADIUS);
 
-	// (2) 新しい位置を計算: プレイヤーの位置 + オフセット (理想的なターゲット位置)
+	// 新しい位置を計算: プレイヤーの位置 + オフセット (理想的なターゲット位置)
 	D3DXVECTOR3 newEnemyPos;
 	D3DXVec3Add(&newEnemyPos, &PlayerPos, &offsetVec);
 
@@ -84,23 +81,23 @@ void NomalMove::Update()
 	// 理想的な円軌道上のターゲット位置へゆっくりと移動する.
 	//=========================================================
 
-	// (3) 理想位置までの差分ベクトルを計算
+	// 理想位置までの差分ベクトルを計算
 	D3DXVECTOR3 MoveDirection;
 	D3DXVec3Subtract(&MoveDirection, &newEnemyPos, &EnemyPos);
 
-	// (4) 距離チェック
+	// 距離チェック
 	float DistanceSq = D3DXVec3LengthSq(&MoveDirection);
 
 	if (DistanceSq > MIN_DISTANCE_SQ)
 	{
-		// (5) 移動ベクトルを正規化
+		// 移動ベクトルを正規化
 		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
-		// (6) 1フレームでの移動量を計算
+		// 1フレームでの移動量を計算
 		D3DXVECTOR3 MoveStep;
 		D3DXVec3Scale(&MoveStep, &MoveDirection, MOVE_SPEED * deltaTime);
 
-		// (7) 現在の位置に移動量を加算
+		// 現在の位置に移動量を加算
 		pEnemy->AddPosition(MoveStep);
 	}
 }

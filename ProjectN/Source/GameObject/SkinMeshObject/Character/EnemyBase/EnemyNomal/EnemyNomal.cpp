@@ -57,13 +57,9 @@ void EnemyNomal::Update()
     // アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
-    // ✅ 移動処理を先に実行し、方向ベクトルを更新する
     m_pMove->Update();
 
-    // ✅ 射撃処理を実行し、更新された方向ベクトルを使用する
     AutoShot();
-
-    // ★元の移動ロジックは NomalMove に完全に移動したため、この関数から削除★
 
     EnemyBase::Update();
 }
@@ -100,7 +96,6 @@ void EnemyNomal::AutoShot()
 
         D3DXVECTOR3 shotPos = worldBonePos + m_ShotOffset;
 
-        // ✅ 弾の発射方向は、m_pMove から取得する
         D3DXVECTOR3 Dir = m_pMove->GetDirectionToPlayer();
 
         // 弾を追加
