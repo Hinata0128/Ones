@@ -31,8 +31,8 @@ public:
 
 	D3DXVECTOR3 GetHitCenter() const;
 
-	// SetEnemyPosition は外部での使用のため残す
-	void SetEnemyPosition(const D3DXVECTOR3& pos) {
+	void SetEnemyPosition(const D3DXVECTOR3& pos) 
+	{
 		GameObject::SetPosition(pos);
 	}
 
@@ -41,30 +41,28 @@ public:
 		m_pPlayerPos = pos;
 	}
 
-	// NomalMove クラスがプレイヤーの位置を取得するためのアクセサ
+	//NomalMoveClassがプレイヤーの位置を取得するためのGet関数.
 	const D3DXVECTOR3& GetPlayerPos() const { return m_pPlayerPos; }
 public:
 	void ChangeState(NomalState* state);
 
 	void AutoShot();
-
+	//publicでStateの遷移をしている.
 	std::unique_ptr<NomalIdol> m_pIdol;
 	std::unique_ptr<NomalMove> m_pMove;
-
-private:
-
 private:
 	EnemyNomalShotManager* m_pENShotManager;
 
-	D3DXVECTOR3 m_ShotOffset;// 弾の発射位置オフセット
+	D3DXVECTOR3 m_ShotOffset;//弾の発射位置オフセット
 
-	float m_ShotCoolDown;// 弾の発射クールダウンタイマー
-	float m_CoolTime;// 弾の発射間隔（1.0fなど）
+	float m_ShotCoolDown;	//弾の発射クールダウンタイマー
+	float m_CoolTime;		//弾の発射間隔(1.0f)※コンストラクタで設定している.
 
-	BoundingSphere m_BSphere;// 敵用バウンディングスフィア
+	BoundingSphere m_BSphere;//敵用バウンディングスフィア
 
 	D3DXVECTOR3 m_HitCenterOffset;
 
-
+	//Stateで使用する.
+	//時間がなかったのでここで初期化をしている.
 	NomalState* m_pCurrentState = nullptr;
 };

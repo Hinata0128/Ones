@@ -106,18 +106,19 @@ void EnemyNomal::AutoShot()
 {
     if (m_ShotCoolDown == 0.0f)
     {
-        EnemyNomal* pEnemy = this; // 自分自身
+        EnemyNomal* pEnemy = this;
 
-        // プレイヤーとの距離計算
+        //プレイヤーとの距離計算
         D3DXVECTOR3 toPlayer = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
         float distance = D3DXVec3Length(&toPlayer);
 
-        // 発射距離の設定（例：5.0f以内で発射）
+        //発射距離の設定
+        //個々の数値を変更すると発射までの距離が変更できる.
         constexpr float SHOOT_DISTANCE = 20.0f;
 
         if (distance <= SHOOT_DISTANCE)
         {
-            // 変換行列作成
+            //変換行列作成
             D3DXMATRIX matS, matR, matT, enemyWorldMatrix;
             D3DXMatrixScaling(&matS, m_Scale.x, m_Scale.y, m_Scale.z);
             D3DXMatrixRotationYawPitchRoll(&matR, m_Rotation.y, m_Rotation.x, m_Rotation.z);
@@ -125,28 +126,27 @@ void EnemyNomal::AutoShot()
             D3DXMatrixMultiply(&enemyWorldMatrix, &matS, &matR);
             D3DXMatrixMultiply(&enemyWorldMatrix, &enemyWorldMatrix, &matT);
 
-            // ボーン座標をワールド座標に変換
+            //ボーン座標をワールド座標に変換
             D3DXVECTOR3 worldBonePos;
             D3DXVec3TransformCoord(&worldBonePos, &m_BonePos, &enemyWorldMatrix);
 
-            // 発射位置
+            //発射位置
             D3DXVECTOR3 shotPos = worldBonePos + m_ShotOffset;
 
-            // プレイヤー方向ベクトル
+            //プレイヤー方向ベクトル
             D3DXVECTOR3 dir = m_pMove->GetDirectionToPlayer();
             float len = D3DXVec3Length(&dir);
             if (len > 0.001f)
             {
                 D3DXVec3Normalize(&dir, &dir);
 
-                // 弾追加
+                //弾追加
                 m_pENShotManager->AddEnemyNomalShot(shotPos, dir);
 
-                // クールタイムリセット
+                //クールタイムリセット
                 m_ShotCoolDown = m_CoolTime;
             }
         }
-        // else: 距離が遠すぎたら発射しない
     }
 }
 

@@ -12,6 +12,11 @@ NomalMove::NomalMove(EnemyNomal* pOwner)
 	, m_RotationDirection(1.0f)
 	, m_RotationAngle(0.0f)
 	, m_DirectionToPlayer(0.0f, 0.0f, 0.0f)
+
+	, MIN_DISTANCE_SQ(0.01f * 0.01f)
+	, ENEMY_NOMAL_RADIUS(10.0f)
+	, SPECIFIED_RANGE_ANGLE(D3DX_PI / 4.0f)
+	, MOVE_SPEED(3.0f)
 {
 }
 
@@ -35,17 +40,17 @@ void NomalMove::Update()
 	const D3DXVECTOR3& EnemyPos = pEnemy->GetPosition();
 	const D3DXVECTOR3& PlayerPos = pEnemy->GetPlayerPos();
 
-	// 2. デルタタイムを使用して回転角度を更新させる
+	//デルタタイムを使用して回転角度を更新させる
 	float deltaAngle = m_RotationSpeed * deltaTime * m_RotationDirection;
 	m_RotationAngle += deltaAngle;
 
-	// 3. 角度が半径の範囲を超えたら回転方向を反転させる
+	//角度が半径の範囲を超えたら回転方向を反転させる
 	if (abs(m_RotationAngle) >= SPECIFIED_RANGE_ANGLE)
 	{
 		m_RotationDirection *= -1.0f;
 	}
 
-	// 4. 回転行列でオフセットベクトルを計算
+	//回転行列でオフセットベクトルを計算
 	D3DXMATRIX RotatedMatrix;
 	D3DXMatrixRotationY(&RotatedMatrix, m_RotationAngle);
 
@@ -54,7 +59,7 @@ void NomalMove::Update()
 	D3DXVec3TransformNormal(&RotatedVec, &InitialVec, &RotatedMatrix);
 	D3DXVec3Normalize(&RotatedVec, &RotatedVec);
 
-	// 5. 敵の向きを計算し、m_DirectionToPlayer と敵の Y 軸回転を更新
+	//敵の向きを計算し、m_DirectionToPlayer と敵の Y 軸回転を更新
 	D3DXVECTOR3 Direction;
 	D3DXVec3Subtract(&Direction, &PlayerPos, &EnemyPos);
 	D3DXVec3Normalize(&m_DirectionToPlayer, &Direction);
@@ -67,38 +72,36 @@ void NomalMove::Update()
 	// ------------------------------------
 	// 敵の位置を円軌道状に更新する処理.
 	// ------------------------------------
-
-	// オフセットベクトルを計算 
+	//ベクトルの計算.
 	D3DXVECTOR3 offsetVec;
 	D3DXVec3Scale(&offsetVec, &RotatedVec, ENEMY_NOMAL_RADIUS);
 
-	// 新しい位置を計算: プレイヤーの位置 + オフセット (理想的なターゲット位置)
+	//新しい位置を計算:プレイヤーの位置+オフセットで行う.
 	D3DXVECTOR3 newEnemyPos;
 	D3DXVec3Add(&newEnemyPos, &PlayerPos, &offsetVec);
 
 	//=========================================================
-	// 理想的な円軌道上のターゲット位置へゆっくりと移動する.
+	// 円軌道上のターゲット位置へゆっくりと移動する.
 	//=========================================================
-
-	// 理想位置までの差分ベクトルを計算
+	//差分ベクトルを計算
 	D3DXVECTOR3 MoveDirection;
 	D3DXVec3Subtract(&MoveDirection, &newEnemyPos, &EnemyPos);
 
-	// 距離チェック
+	//距離チェック
 	float DistanceSq = D3DXVec3LengthSq(&MoveDirection);
 
-	//if (DistanceSq > MIN_DISTANCE_SQ)
-	//{
-		// 移動ベクトルを正規化
+	if (DistanceSq > MIN_DISTANCE_SQ)
+	{
+		//移動ベクトルを正規化
 		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
-		// 1フレームでの移動量を計算
+		//1フレームでの移動量を計算
 		D3DXVECTOR3 MoveStep;
 		D3DXVec3Scale(&MoveStep, &MoveDirection, MOVE_SPEED * deltaTime);
 
-		// 現在の位置に移動量を加算
+		//現在の位置に移動量を加算
 		pEnemy->AddPosition(MoveStep);
-	//}
+	}
 
 	NomalState::Update();
 }
