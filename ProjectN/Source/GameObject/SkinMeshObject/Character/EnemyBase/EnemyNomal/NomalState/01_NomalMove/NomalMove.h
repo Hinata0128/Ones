@@ -7,13 +7,13 @@ class NomalContext;
 
 /********************************************************************
 *	NomalMoveClass
+* 
+*	IdolからMoveへの遷移時のエラーをなくす.
 **/
 class NomalMove final
 	: public NomalState
 {
 public:
-	// ★追加: デフォルトコンストラクタ (エラー対策)
-	NomalMove();
 
 	NomalMove(EnemyNomal* pOwner);
 	~NomalMove();

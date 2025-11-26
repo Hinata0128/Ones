@@ -6,7 +6,7 @@
 
 NomalIdol::NomalIdol(EnemyNomal* pOwner)
 	: NomalState	(pOwner)
-	, m_pMove		(std::make_shared<NomalMove>())
+	, m_pMove		(std::make_shared<NomalMove>(pOwner))
 {
 }
 

@@ -5,16 +5,6 @@
 #include "..//..//EnemyNomal.h" 
 #include <algorithm> // std::atan2 を使うため
 
-// ★追加: デフォルトコンストラクタの実装 (エラー対策)
-NomalMove::NomalMove()
-	: NomalState(m_pOwner) // NomalState にデフォルトコンストラクタがあることを前提
-	, m_RotationSpeed(0.2f)
-	, m_RotationDirection(1.0f)
-	, m_RotationAngle(0.0f)
-	, m_DirectionToPlayer(0.0f, 0.0f, 0.0f)
-{
-}
-
 // pOwner を取るコンストラクタ
 NomalMove::NomalMove(EnemyNomal* pOwner)
 	: NomalState(pOwner)
