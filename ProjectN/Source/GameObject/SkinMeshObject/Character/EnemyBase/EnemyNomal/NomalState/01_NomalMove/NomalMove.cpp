@@ -26,7 +26,6 @@ void NomalMove::Enter()
 
 void NomalMove::Update()
 {
-	NomalState::Update();
 
 	EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
 	if (!pEnemy) return;
@@ -88,8 +87,8 @@ void NomalMove::Update()
 	// 距離チェック
 	float DistanceSq = D3DXVec3LengthSq(&MoveDirection);
 
-	if (DistanceSq > MIN_DISTANCE_SQ)
-	{
+	//if (DistanceSq > MIN_DISTANCE_SQ)
+	//{
 		// 移動ベクトルを正規化
 		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
@@ -99,7 +98,9 @@ void NomalMove::Update()
 
 		// 現在の位置に移動量を加算
 		pEnemy->AddPosition(MoveStep);
-	}
+	//}
+
+	NomalState::Update();
 }
 
 void NomalMove::Exit()

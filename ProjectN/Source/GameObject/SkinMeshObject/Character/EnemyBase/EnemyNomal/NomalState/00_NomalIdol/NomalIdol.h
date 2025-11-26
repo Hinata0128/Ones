@@ -27,6 +27,4 @@ public:
 	void Draw() override;
 	void Init() override;
 private:
-	//ÅI“I‚É‚±‚±‚ÉNomalMove‚ğŒÄ‚Ô.
-	std::shared_ptr<NomalMove> m_pMove;
 };

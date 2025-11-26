@@ -4,9 +4,12 @@
 
 #include "..//EnemyNomal/NomalState/01_NomalMove/NomalMove.h" // NomalMove の定義が必要
 
+#include "..//EnemyNomal/NomalState/00_NomalIdol/NomalIdol.h"
+
 class EnemyNomalShotManager;
 class Timer;
 class NomalContext;
+class NomalState;
 
 class EnemyNomal final
 	: public EnemyBase
@@ -40,9 +43,15 @@ public:
 
 	// NomalMove クラスがプレイヤーの位置を取得するためのアクセサ
 	const D3DXVECTOR3& GetPlayerPos() const { return m_pPlayerPos; }
+public:
+	void ChangeState(NomalState* state);
+
+	void AutoShot();
+
+	std::unique_ptr<NomalIdol> m_pIdol;
+	std::unique_ptr<NomalMove> m_pMove;
 
 private:
-	void AutoShot();
 
 private:
 	EnemyNomalShotManager* m_pENShotManager;
@@ -56,7 +65,6 @@ private:
 
 	D3DXVECTOR3 m_HitCenterOffset;
 
-	// ★移動ロジック用のメンバ変数は NomalMove に移動したため削除★
 
-	std::shared_ptr<NomalMove> m_pMove;
+	NomalState* m_pCurrentState = nullptr;
 };
