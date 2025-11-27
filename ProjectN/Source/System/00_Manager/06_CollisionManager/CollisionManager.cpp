@@ -156,7 +156,7 @@ void CollisionManager::AllCollider()
     // pShortAttack が有効で、かつ AttackShort ステートがヒット判定を有効にしている場合のみ実行
     if (pShortAttack && pShortAttack->IsHitActive())
     {
-        // ① 剣の当たり判定情報を取得 (参照で宣言しても、pShortAttack が有効なら初期化済み)
+        //剣の当たり判定情報を取得 (参照で宣言しても、pShortAttack が有効なら初期化済み)
         const BoundingSphere& swordSphere = pShortAttack->GetHitBox();
 
         // 衝突時の処理用のリスポーン位置
@@ -166,10 +166,10 @@ void CollisionManager::AllCollider()
         {
             if (!enemy) continue;
 
-            // ② 敵の当たり判定更新
+            //敵の当たり判定更新
             enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
 
-            // ③ 剣の当たりと比較
+            //剣の当たりと比較
             if (swordSphere.IsHit(enemy->GetBoundingSphere())) // 判定実行
             {
                 // 敵リスポーン
