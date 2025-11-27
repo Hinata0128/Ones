@@ -15,6 +15,7 @@ EnemyNomal::EnemyNomal()
 
     , m_pIdol(std::make_unique<NomalIdol>(this))
     , m_pMove(std::make_unique<NomalMove>(this))
+    , m_pDead(std::make_unique<NomalDead>(this))
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -44,6 +45,8 @@ EnemyNomal::EnemyNomal()
     // クールタイム初期化
     m_CoolTime = 0.2f; // 1秒ごとに発射
     m_ShotCoolDown = m_CoolTime;
+    
+    Init();
 }
 
 EnemyNomal::~EnemyNomal()
@@ -89,7 +92,41 @@ void EnemyNomal::Draw()
 
 void EnemyNomal::Init()
 {
+    m_HitPoint = 100.0f;
+
     EnemyBase::Init();
+}
+
+void EnemyNomal::Hit()
+{
+    constexpr float ten = 10.0f;
+    //Playerのダメージ実装用のローカル変数.
+    constexpr float Dead_HP = zero;
+    constexpr float Damege_Hit = ten;
+
+    //くらった時のHPの減少.
+    m_HitPoint -= Damege_Hit;
+    if (m_HitPoint <= Dead_HP)
+    {
+        //ここでPlayerのHPが0になったらPlayerDeadClassを呼ぶ.
+        m_HitPoint = Dead_HP;
+
+        // nextState という名前に修正し、ステート遷移ロジックを実装
+        NomalState* nextState = m_pDead.get();
+
+        if (m_pCurrentState != nextState)
+        {
+            if (m_pCurrentState) {
+                m_pCurrentState->Exit();    //古いステートの終了処理
+            }
+            m_pCurrentState = nextState;    //ステートを切り替え
+            if (m_pCurrentState) {
+                m_pCurrentState->Enter();   //新しいステートの開始処理
+            }
+        }
+    }
+
+
 }
 
 
