@@ -19,6 +19,8 @@ GameMain::GameMain()
 	, m_pPlayer(std::make_shared<Player>())
 
 	, m_pCollisionManager(std::make_shared<CollisionManager>())
+
+	, m_pPortal(std::make_unique<Portal>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -142,6 +144,8 @@ void GameMain::Draw()
 	//地面表示.
 	m_pGround->Draw();
 	m_pPlayer->Draw();
+
+	m_pPortal->Draw();
 
 	PShotManager::GetInstance()->Draw();
 

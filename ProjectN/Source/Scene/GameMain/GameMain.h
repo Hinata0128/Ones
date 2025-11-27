@@ -17,6 +17,8 @@
 
 #include "Sprite3D//Sprite3D.h"
 
+#include "GameObject//StaticMeshObject//Portal//Portal.h"
+
 class Timer;
 
 
@@ -57,4 +59,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;
 
 	std::shared_ptr<CollisionManager> m_pCollisionManager;
+
+	//ポータルクラス.
+	std::unique_ptr<Portal> m_pPortal;
 };
