@@ -66,6 +66,7 @@ void AttackShort::Exit(Player* player)
 
 void AttackShort::Draw(Player* player)
 {
+#ifdef _DEBUG
 	// 1. 描画条件のチェック
 	if (m_IsHitActive && player)
 	{
@@ -86,4 +87,6 @@ void AttackShort::Draw(Player* player)
 			m_SwordHitBox.Draw();
 		}
 	}
+#endif
+
 }

@@ -2,6 +2,7 @@
 #include "GameObject//StaticMeshObject//StaticMeshObject.h"	//基底クラス.
 
 class StaticMeshManager;
+class ImGuiManager;
 
 /************************************************************
 *	陣地を守用のポータル
@@ -18,7 +19,11 @@ public:
 
 	void Update() override;
 	void Draw() override;
+	//初期化関数.
+	void Init();
 
 private:
+	//ポータルの範囲に入った時にパーセントを増やす.
+	int m_PortalIncrease;
 
 };
