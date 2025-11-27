@@ -21,6 +21,8 @@ GameMain::GameMain()
 	, m_pCollisionManager(std::make_shared<CollisionManager>())
 
 	, m_pPortal(std::make_unique<Portal>())
+
+	, m_pHpBar(std::make_unique<HPBar>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -169,11 +171,13 @@ void GameMain::Draw()
 #endif
 	//Effectクラス
 	Effect::GetInstance()->Draw();
+	m_pHpBar->Draw();
 
 }
 
 HRESULT GameMain::LoadData()
 {
+
 	return S_OK;
 }
 

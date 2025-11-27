@@ -6,7 +6,8 @@
 /************************************************************
 *	UIオブジェクトクラス.
 **/
-class UIObject : public GameObject
+class UIObject 
+	: public GameObject
 {
 public:
 	UIObject();
@@ -14,7 +15,8 @@ public:
 
 	// Update と Draw（引数なし）
 	virtual void Update() override;
-	virtual void Draw() override final; // ← ここでfinal指定OK！
+	virtual void Draw() override;
+
 
 	// スプライトを接続する
 	void AttachSprite(Sprite2D& pSprite) { m_pSprite = &pSprite; }
@@ -28,6 +30,6 @@ public:
 	}
 
 protected:
-	Sprite2D* m_pSprite;
+	Sprite2D*	m_pSprite;
 	POINTS		m_PatternNo;	// パターン番号(マス目)
 };

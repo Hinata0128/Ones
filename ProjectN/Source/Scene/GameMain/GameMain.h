@@ -5,9 +5,7 @@
 
 #include "GameObject//StaticMeshObject//Ground//Ground.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
-#include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyNomal//EnemyNomal.h"
 
-//#include "System/00_Manager/05_EnemyNomalManager/EnemyNomalManager.h"
 #include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
@@ -18,6 +16,8 @@
 #include "Sprite3D//Sprite3D.h"
 
 #include "GameObject//StaticMeshObject//Portal//Portal.h"
+
+#include "GameObject//UIObject//00_HPBar//HPBar.h"
 
 class Timer;
 
@@ -62,4 +62,9 @@ private:
 
 	//ポータルクラス.
 	std::unique_ptr<Portal> m_pPortal;
+
+	//HPBarクラス(Test).
+	std::unique_ptr<HPBar> m_pHpBar;
+
+
 };
