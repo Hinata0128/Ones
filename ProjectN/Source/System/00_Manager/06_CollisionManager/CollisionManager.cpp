@@ -106,16 +106,22 @@ void CollisionManager::AllCollider()
 
             if (pShot->GetBoundingSphere().IsHit(enemy->GetBoundingSphere()))
             {
+                enemy->Hit();
+
                 // プレイヤー弾の非表示化と移動
                 pShot->SetDisplay(false);
                 pShot->SetActive(false);
                 pShot->SetPosition(D3DXVECTOR3(0.f, -100.f, 0.f));
 
-                // 敵をリスポーン位置へ移動 (SetEnemyPosition -> SetPosition に修正)
-                enemy->SetPosition(D3DXVECTOR3(0.f, 0.f, 20.f));
+                if (enemy->GetEnemyHitPoint() <= 0.0f)
+                {
+                    // 敵をリスポーン位置へ移動 (SetEnemyPosition -> SetPosition に修正)
+                    enemy->SetPosition(D3DXVECTOR3(0.f, 0.f, 20.f));
 
-                // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
-                Effect::Play(Effect::Test0, enemy->GetPosition());
+                    // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
+                    Effect::Play(Effect::Test0, enemy->GetPosition());
+                }
+
 
                 // 衝突処理が完了したので、次の敵へ
                 break;
@@ -172,11 +178,15 @@ void CollisionManager::AllCollider()
             //剣の当たりと比較
             if (swordSphere.IsHit(enemy->GetBoundingSphere())) // 判定実行
             {
-                // 敵リスポーン
-                enemy->SetPosition(kRespawnPos);
+                enemy->Hit();
+                if (enemy->GetEnemyHitPoint() <= 0.0f)
+                {
+                    // 敵リスポーン
+                    enemy->SetPosition(kRespawnPos);
 
-                // エフェクト
-                Effect::Play(Effect::Test0, enemy->GetPosition());
+                    // エフェクト
+                    Effect::Play(Effect::Test0, enemy->GetPosition());
+                }
 
                 OutputDebugStringA("Short Attack Hit Enemy!\n");
             }

@@ -5,6 +5,7 @@
 #include "..//EnemyNomal/NomalState/01_NomalMove/NomalMove.h" // NomalMove の定義が必要
 
 #include "..//EnemyNomal/NomalState/00_NomalIdol/NomalIdol.h"
+#include "..//EnemyNomal/NomalState/02_NomalDead/NomalDead.h"
 
 class EnemyNomalShotManager;
 class Timer;
@@ -25,6 +26,8 @@ public:
 	void Draw() override;
 	void Init() override;
 
+	void Hit();
+
 public:
 
 	BoundingSphere& GetBoundingSphere() { return m_BSphere; }
@@ -43,6 +46,9 @@ public:
 
 	//NomalMoveClassがプレイヤーの位置を取得するためのGet関数.
 	const D3DXVECTOR3& GetPlayerPos() const { return m_pPlayerPos; }
+
+	//HPを取得する関数.
+	float GetEnemyHitPoint() const { return m_HitPoint; }
 public:
 	void ChangeState(NomalState* state);
 
@@ -50,6 +56,7 @@ public:
 	//publicでStateの遷移をしている.
 	std::unique_ptr<NomalIdol> m_pIdol;
 	std::unique_ptr<NomalMove> m_pMove;
+	std::unique_ptr<NomalDead> m_pDead;
 private:
 	EnemyNomalShotManager* m_pENShotManager;
 
