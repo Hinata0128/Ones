@@ -60,10 +60,12 @@ void Player::Update()
     //アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
+#ifdef _DEBUG
 
-    ImGui::Begin("debuga");
+    ImGui::Begin(JAPANESE("playerのポジションを変更"));
     ImGui::InputFloat3("pos", m_Position);
     ImGui::End();
+#endif
 
     //PlayerAttackManager の更新
     if (m_pAttackManager)

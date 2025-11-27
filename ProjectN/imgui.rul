@@ -21,16 +21,34 @@ Size=289,110
 Collapsed=0
 
 [Window][タイマー情報]
-ViewportPos=1583,79
-ViewportId=0x43D22195
-Size=171,112
+ViewportPos=1478,70
+ViewportId=0xA4D966FE
+Size=300,90
 Collapsed=0
+DockId=0x00000002,0
 
 [Window][debuga]
-ViewportPos=1338,209
+ViewportPos=1300,142
 ViewportId=0xA0692D4F
-Size=327,114
+Size=253,75
 Collapsed=0
 
+[Window][Portal : 増加量]
+ViewportPos=1478,247
+ViewportId=0x676244E3
+Size=204,112
+Collapsed=0
+
+[Window][playerのポジションを変更]
+ViewportPos=1478,70
+ViewportId=0xA4D966FE
+Pos=0,92
+Size=300,88
+Collapsed=0
+DockId=0x00000003,0
+
 [Docking][Data]
+DockNode    ID=0x00000001 Pos=1478,70 Size=300,180 Split=Y Selected=0xC03952A5
+  DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=300,90 Selected=0x660C8DAE
+  DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=300,88 Selected=0xC03952A5
 

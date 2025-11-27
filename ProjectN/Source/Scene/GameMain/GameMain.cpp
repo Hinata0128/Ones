@@ -134,6 +134,8 @@ void GameMain::Update()
 	m_pCollisionManager->SetEnemyShots(enemyShotMgr->GetShots()); // EnemyNomalShotManagerにGetShots()が必要です
 
 	m_pCollisionManager->Update();
+
+	m_pPortal->Update();
 }
 
 void GameMain::Draw()

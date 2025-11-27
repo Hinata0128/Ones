@@ -216,6 +216,7 @@
     <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\EnemyNomalShot\EnemyNomalShot.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\00_HPBar\HPBar.cpp" />
+    <ClCompile Include="Source\GameObject\UIObject\01_Point\Point.cpp" />
     <ClCompile Include="Source\Main\Main.cpp" />
     <ClCompile Include="Source\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\Ending\Ending.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\EnemyNomalShot\EnemyNomalShot.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.h" />
     <ClInclude Include="Source\GameObject\UIObject\00_HPBar\HPBar.h" />
+    <ClInclude Include="Source\GameObject\UIObject\01_Point\Point.h" />
     <ClInclude Include="Source\Main\Main.h" />
     <ClInclude Include="Source\SceneManager\SceneManager.h" />
     <ClInclude Include="Source\Scene\Ending\Ending.h" />
