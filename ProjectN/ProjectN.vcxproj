@@ -211,6 +211,7 @@
     </ClCompile>
     <ClCompile Include="Source\DirectX\DirectX9.cpp" />
     <ClCompile Include="Source\GameObject\GameObject.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\Portal\Portal.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\PShot\PShot.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\EnemyNomalShot\EnemyNomalShot.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="Source\DirectX\DirectX11.h" />
     <ClInclude Include="Source\DirectX\DirectX9.h" />
     <ClInclude Include="Source\GameObject\GameObject.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\Portal\Portal.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\PShot\PShot.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\EnemyNomalShot\EnemyNomalShot.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.h" />

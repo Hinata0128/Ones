@@ -18,6 +18,8 @@ public:
 		EnemyBullet,		//敵の弾.
 		BoxCollision,		//ボックスの当たり判定.
 
+		Portal,				//ポータルのメッシュ.
+
 		Max,
 	};
 
