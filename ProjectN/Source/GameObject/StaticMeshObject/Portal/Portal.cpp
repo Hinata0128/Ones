@@ -31,10 +31,25 @@ void Portal::Update()
 	// 100%になった時に確認のため一回EndingであるWin画面に遷移させるようにする.
 	//============================================================================================================
 
+	//個人的に敵の攻撃で使用しているコードをもとに作成するとPlayerの位置系統が実装できるのでパーセントの実装ができると思う.
 
 #ifdef _DEBUG
 
 	ImGui::Begin(JAPANESE("Portal : 増加量"));
+
+	// スライダーで % を操作
+	ImGui::SliderInt("Portal Gauge (%)", &m_PortalIncrease, 0, 100);
+
+	// 表示確認用
+	ImGui::Text("Current Gauge : %d %%", m_PortalIncrease);
+
+	// 100% に到達したらイベントなどを出せる
+	if (m_PortalIncrease >= 100)
+	{
+		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Portal FULL!");
+		//ここにシーン遷移をかく.
+	}
+
 	ImGui::End();
 #endif
 
