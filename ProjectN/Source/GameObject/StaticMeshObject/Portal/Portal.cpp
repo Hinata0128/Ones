@@ -2,6 +2,7 @@
 
 #include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
+#include "../..//..//System/02_Singleton/Timer/Timer.h"
 
 Portal::Portal()
 	: StaticMeshObject	()
@@ -33,24 +34,35 @@ void Portal::Update()
 
 	//個人的に敵の攻撃で使用しているコードをもとに作成するとPlayerの位置系統が実装できるのでパーセントの実装ができると思う.
 
+	static float elapsedTime = 0.0f;
+	float delta = Timer::GetInstance().DeltaTime(); // フレームの経過時間
+	elapsedTime += delta;
+
+	if (elapsedTime >= 1.0f)   // 1秒経過したら
+	{
+		elapsedTime = 0.0f;
+		m_PortalIncrease += 5; // 増加量（好きに調整OK）
+
+		if (m_PortalIncrease > 100)
+			m_PortalIncrease = 100;
+	}
+
 #ifdef _DEBUG
 
 	ImGui::Begin(JAPANESE("Portal : 増加量"));
 
-	// スライダーで % を操作
+	// スライダー（手動調整も可能）
 	ImGui::SliderInt("Portal Gauge (%)", &m_PortalIncrease, 0, 100);
 
-	// 表示確認用
 	ImGui::Text("Current Gauge : %d %%", m_PortalIncrease);
 
-	// 100% に到達したらイベントなどを出せる
 	if (m_PortalIncrease >= 100)
 	{
 		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Portal FULL!");
-		//ここにシーン遷移をかく.
+		// TODO: シーン遷移を書く
 	}
 
-	ImGui::End();
+	ImGui::End(); 
 #endif
 
 
