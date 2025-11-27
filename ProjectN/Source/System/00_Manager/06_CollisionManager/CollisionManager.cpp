@@ -53,14 +53,12 @@ void CollisionManager::Draw()
 #endif
 }
 
-//------------------------- Create -------------------------
 void CollisionManager::Create()
 {
     m_pBSphere.clear();	//スフィアクリア.
     m_pBBox.clear();	//ボックスクリア.
 }
 
-//------------------------- Release -------------------------
 void CollisionManager::Release()
 {
     m_pBSphere.clear();
