@@ -18,6 +18,7 @@ public:
 
 	void Update();	//弾の更新処理.
 	void Draw();	//弾の描画処理.
+	void Init();
 
 	void AddPlayerShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirection);	//プレイヤーの弾を追加.
 	void ReMovePlayerShot(size_t index);	//指定インデックスの弾を削除.

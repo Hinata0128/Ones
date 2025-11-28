@@ -4,6 +4,9 @@
 #include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
 #include "System/02_Singleton/Timer/Timer.h"
 #include "GameObject/SkinMeshObject/Character/Player/Player.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
+
+#include "SceneManager/SceneManager.h"
 
 Portal::Portal()
 	: StaticMeshObject	()
@@ -35,6 +38,8 @@ void Portal::Update()
 	// 100%になった時に確認のため一回EndingであるWin画面に遷移させるようにする.
 	//============================================================================================================
 
+	//Playerがポータルの範囲に入った時にImGuiのゲージを増加させる.
+#if 1
 	//今deltaTimeでポータルのパーセント取得をしている.
 	//今からしたいのはPlayerの距離でポータルのパーセントを進めれる設計にする.
 	if (auto player = m_pPlayer.lock())
@@ -42,7 +47,7 @@ void Portal::Update()
 		D3DXVECTOR3 diff = player->GetPosition() - GetPosition();
 		float distance = D3DXVec3Length(&diff);
 
-		constexpr float PORTAL_DISTANCE = 5.0f;
+		constexpr float PORTAL_DISTANCE = 20.0f;
 		float deltaTime = Timer::GetInstance().DeltaTime();
 
 		if (distance <= PORTAL_DISTANCE)
@@ -51,6 +56,30 @@ void Portal::Update()
 			if (m_PortalIncreaseF > 100.0f) m_PortalIncreaseF = 100.0f;
 
 			m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
+		}
+	}
+#endif
+
+	//敵がポータルの範囲に入った時ImGuiのゲージを増加させる.
+
+	if (auto enemy = m_pEnemy.lock())
+	{
+		D3DXVECTOR3 Diff = enemy->GetPosition() - GetPosition();
+		float Distance = D3DXVec3Length(&Diff);
+
+		constexpr float Portal_Distance  = 20.0f;
+		float deltaTime = Timer::GetInstance().DeltaTime();
+
+		if (Distance <= Portal_Distance)
+		{
+			m_PortalIncreaseF += deltaTime;
+			if (m_PortalIncreaseF > 100.0f)
+			{
+				m_PortalIncreaseF = 100.0f;
+
+				SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+				m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
+			}
 		}
 	}
 	

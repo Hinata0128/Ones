@@ -21,6 +21,11 @@ void Ending::Create()
 
 void Ending::Update()
 {
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		//EnterƒL[‚ÅMain‚Ö‚Ì‘JˆÚ.
+		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
+	}
 }
 
 void Ending::Draw()

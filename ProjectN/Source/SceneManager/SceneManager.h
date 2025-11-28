@@ -18,7 +18,7 @@ public:
 		//Title,
 		Main,
 		//GameOver,
-		//Ending,
+		Win,
 
 		max,
 	};

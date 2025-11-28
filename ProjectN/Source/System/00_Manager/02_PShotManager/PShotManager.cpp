@@ -42,6 +42,11 @@ void PShotManager::Draw()
 	}
 }
 
+void PShotManager::Init()
+{
+	m_PlayerShot.clear();
+}
+
 void PShotManager::AddPlayerShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirection)
 {
 	constexpr float Speed = 0.05f;	//’e‘¬.
