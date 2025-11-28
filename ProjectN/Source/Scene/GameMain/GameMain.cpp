@@ -18,6 +18,8 @@ GameMain::GameMain()
 
 	, m_pPlayer(std::make_shared<Player>())
 
+	, m_pEnemyNomal(std::make_shared<EnemyNomal>())
+
 	, m_pCollisionManager(std::make_shared<CollisionManager>())
 
 	, m_pPortal(std::make_unique<Portal>())
@@ -54,12 +56,6 @@ void GameMain::Initialize()
 
 void GameMain::Create()
 {
-	auto enemyMgr = EnemyNomalManager::GetInstace();
-
-	//敵の生成をしている.
-	auto enemy = std::make_unique<EnemyNomal>();
-	//GameMainで敵の数を変更したり配置関連も触っています
-	enemyMgr->AddEnemy(std::move(enemy), D3DXVECTOR3(5.0f, 0.f, 15.f));
 }
 
 void GameMain::Update()
@@ -94,22 +90,12 @@ void GameMain::Update()
 	m_pGround->Update();
 	m_pPlayer->Update();
 
-	// =========================================================================
-	// 敵へのプレイヤー位置連携処理 (新規実装) ★
-	// =========================================================================
 	{
-		// 1. プレイヤーの現在位置を取得
-		const D3DXVECTOR3& playerPos = m_pPlayer->GetPosition();
+		m_pEnemyNomal->Update();
 
-		// 2. 敵マネージャーを取得
-		auto enemyMgr = EnemyNomalManager::GetInstace();
-
-		// 3. マネージャー経由で全ての敵にプレイヤーの位置を渡す
-		enemyMgr->SetTargetPos(playerPos); // これがキーとなる処理
+		m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
 	}
 	// =========================================================================
-
-	EnemyNomalManager::GetInstace()->Update(); // 敵のUpdateが実行され、追跡処理が動く
 
 	//カメラをプレイヤーの初期位置の背後に設定する.
 	{
@@ -123,13 +109,12 @@ void GameMain::Update()
 		m_Camera.vLook = PlayerPos;
 	}
 
-	auto enemyMgr = EnemyNomalManager::GetInstace();
 	auto playerShotMgr = PShotManager::GetInstance();
 	auto enemyShotMgr = EnemyNomalShotManager::GetInstance();
 
 
 	m_pCollisionManager->SetPlayer(m_pPlayer); // shared_ptr を渡す
-	m_pCollisionManager->SetEnemies(enemyMgr->GetEnemies()); // EnemyNomalManagerにGetEnemies()が必要です
+	m_pCollisionManager->SetEnemies({m_pEnemyNomal.get()}); // EnemyNomalManagerにGetEnemies()が必要です
 	m_pCollisionManager->SetPlayerShots(playerShotMgr->GetShots()); // PShotManagerにGetShots()が必要です
 	m_pCollisionManager->SetEnemyShots(enemyShotMgr->GetShots()); // EnemyNomalShotManagerにGetShots()が必要です
 
@@ -153,19 +138,15 @@ void GameMain::Draw()
 
 	PShotManager::GetInstance()->Draw();
 
-	EnemyNomalManager::GetInstace()->Draw();
+	m_pEnemyNomal->Draw();
 
 #ifdef _DEBUG
 
 	// バウンディングスフィアの描画（デバッグ用）
 	m_pPlayer->GetBoundingSphere().Draw();
-	auto enemyMgr = EnemyNomalManager::GetInstace();
-	for (size_t i = 0; i < enemyMgr->GetEnemyNomalCount(); ++i)
-	{
-		EnemyNomal* enemy = enemyMgr->GetEnemyNomal(i);
-		if (!enemy) continue;
-		enemy->GetBoundingSphere().Draw();
-	}
+
+	m_pEnemyNomal->GetBoundingSphere().Draw();
+
 	ImGui::Begin(JAPANESE("タイマー情報"));
 	ImGui::Text(JAPANESE("デルタタイム: %.4f 秒"), Timer::GetInstance().DeltaTime());
 	ImGui::Text(JAPANESE("総経過時間: %.2f 秒"), Timer::GetInstance().ElapsedTime());
