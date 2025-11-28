@@ -43,7 +43,7 @@ EnemyNomal::EnemyNomal()
     m_ShotOffset = D3DXVECTOR3(zero, 1.5f, zero);
 
     // クールタイム初期化
-    m_CoolTime = 0.2f; // 1秒ごとに発射
+    m_CoolTime = 0.8f; // 1秒ごとに発射
     m_ShotCoolDown = m_CoolTime;
     
     Init();
@@ -143,10 +143,8 @@ void EnemyNomal::AutoShot()
 {
     if (m_ShotCoolDown == 0.0f)
     {
-        EnemyNomal* pEnemy = this;
-
         //プレイヤーとの距離計算
-        D3DXVECTOR3 toPlayer = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
+        D3DXVECTOR3 toPlayer = GetPlayerPos() - GetPosition();
         float distance = D3DXVec3Length(&toPlayer);
 
         //発射距離の設定

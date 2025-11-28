@@ -56,6 +56,8 @@ void GameMain::Initialize()
 
 void GameMain::Create()
 {
+	//これでGameMainにあるPlayerの位置を取得してポータルの増加を作成している.
+	m_pPortal->SetPlayer(m_pPlayer);
 }
 
 void GameMain::Update()
