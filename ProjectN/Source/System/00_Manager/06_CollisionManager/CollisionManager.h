@@ -6,9 +6,9 @@
 //当たり判定に使用するクラスをインクルード.
 #include "System//00_Manager//ManagerBase.h"
 #include "System//00_Manager//04_EnemyNomalShotManager//EnemyNomalShotManager.h"
-#include "System//00_Manager//05_EnemyNomalManager//EnemyNomalManager.h"
 #include "GameObject//StaticMeshObject//ShotBase//PShot//PShot.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.

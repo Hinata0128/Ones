@@ -58,6 +58,8 @@ private:
 	//プレイヤークラス.
 	std::shared_ptr<Player> m_pPlayer;
 
+	std::shared_ptr<EnemyNomal> m_pEnemyNomal;
+
 	std::shared_ptr<CollisionManager> m_pCollisionManager;
 
 	//ポータルクラス.

@@ -242,7 +242,6 @@
     <ClCompile Include="Source\System\00_Manager\02_PShotManager\PShotManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\03_ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\04_EnemyNomalShotManager\EnemyNomalShotManager.cpp" />
-    <ClCompile Include="Source\System\00_Manager\05_EnemyNomalManager\EnemyNomalManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\06_CollisionManager\CollisionManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\07_PlayerAttackManager\PlayerAttackManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.cpp" />
@@ -322,7 +321,6 @@
     <ClInclude Include="Source\System\00_Manager\02_PShotManager\PShotManager.h" />
     <ClInclude Include="Source\System\00_Manager\03_ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Source\System\00_Manager\04_EnemyNomalShotManager\EnemyNomalShotManager.h" />
-    <ClInclude Include="Source\System\00_Manager\05_EnemyNomalManager\EnemyNomalManager.h" />
     <ClInclude Include="Source\System\00_Manager\06_CollisionManager\CollisionManager.h" />
     <ClInclude Include="Source\System\00_Manager\07_PlayerAttackManager\PlayerAttackManager.h" />
     <ClInclude Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.h" />
