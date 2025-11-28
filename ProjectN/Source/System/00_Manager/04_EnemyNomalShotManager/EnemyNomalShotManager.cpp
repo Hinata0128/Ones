@@ -43,6 +43,11 @@ void EnemyNomalShotManager::Draw()
 	}
 }
 
+void EnemyNomalShotManager::Init()
+{
+	m_EnemyNomalShot.clear();
+}
+
 void EnemyNomalShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton)
 {
 	constexpr float Speed = 0.05f;	//íeÇÃë¨ìxê›íË.

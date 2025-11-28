@@ -14,6 +14,8 @@ public:
 	void Update();	//’e‚ÌXVˆ—.
 	void Draw();	//’e‚Ì•`‰æˆ—.
 
+	void Init();
+
 	void AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton);	//“G‚Ì’e‚ğì¬‚µ‚ÄŠÇ—ƒŠƒXƒg‚É’Ç‰Á.
 
 	void ReMoveEnemyNomalShot(size_t index);	//“G‚Ì’e‚ğíœ.

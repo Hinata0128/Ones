@@ -59,9 +59,9 @@ void SceneManager::MakeScene(List Scene)
 	//case SceneManager::GameOver:
 	//	m_pScene = std::make_unique<GameOver>();
 	//	break;
-	//case SceneManager::Ending:
-	//	m_pScene = std::make_unique<Ending>();
-	//	break;
+	case SceneManager::Win:
+		m_pScene = std::make_unique<Ending>();
+		break;
 	default:
 		break;
 	}

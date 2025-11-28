@@ -58,6 +58,11 @@ void GameMain::Create()
 {
 	//これでGameMainにあるPlayerの位置を取得してポータルの増加を作成している.
 	m_pPortal->SetPlayer(m_pPlayer);
+	//これでGameMainにあるEnemyNomalの位置を取得してポータルの増加を作成している.
+	m_pPortal->SetEnemyNomal(m_pEnemyNomal);
+
+	EnemyNomalShotManager::GetInstance()->Init();
+	PShotManager::GetInstance()->Init();
 }
 
 void GameMain::Update()
