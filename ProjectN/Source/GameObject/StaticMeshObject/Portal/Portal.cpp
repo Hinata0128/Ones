@@ -53,6 +53,7 @@ void Portal::Update()
 
 #ifdef _DEBUG
 
+	//表示するブロック.
 	ImGui::Begin(JAPANESE("Portal : 増加量"));
 
 	//スライダー(手動で触れるようにしている).
