@@ -63,6 +63,9 @@ void GameMain::Create()
 
 	EnemyNomalShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
+
+	//ポータルの初期化.
+	m_pPortal->Init();
 }
 
 void GameMain::Update()

@@ -22,7 +22,7 @@ EnemyNomal::EnemyNomal()
     AttachMesh(shared_mesh);
     //サイズの変更.
     SetScale(D3DXVECTOR3(0.004f, 0.004f, 0.004f));
-    SetPosition(5.0f, 0.f, 15.f);    
+    SetPosition(20.0f, 0.f, 15.f);    
 
     m_pIdol = std::make_unique<NomalIdol>(this);
     m_pMove = std::make_unique<NomalMove>(this);

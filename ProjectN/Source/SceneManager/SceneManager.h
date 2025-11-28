@@ -17,7 +17,7 @@ public:
 	{
 		//Title,
 		Main,
-		//GameOver,
+		Lose,
 		Win,
 
 		max,
