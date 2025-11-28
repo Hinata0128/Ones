@@ -2,11 +2,14 @@
 
 #include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
-#include "../..//..//System/02_Singleton/Timer/Timer.h"
+#include "System/02_Singleton/Timer/Timer.h"
+#include "GameObject/SkinMeshObject/Character/Player/Player.h"
 
 Portal::Portal()
 	: StaticMeshObject	()
+	, m_PortalIncreaseF(0.0f)
 	, m_PortalIncrease	(0)
+
 {
 	AttachMesh(*StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Portal));
 
@@ -34,7 +37,25 @@ void Portal::Update()
 
 	//今deltaTimeでポータルのパーセント取得をしている.
 	//今からしたいのはPlayerの距離でポータルのパーセントを進めれる設計にする.
+	if (auto player = m_pPlayer.lock())
+	{
+		D3DXVECTOR3 diff = player->GetPosition() - GetPosition();
+		float distance = D3DXVec3Length(&diff);
 
+		constexpr float PORTAL_DISTANCE = 5.0f;
+		float deltaTime = Timer::GetInstance().DeltaTime();
+
+		if (distance <= PORTAL_DISTANCE)
+		{
+			m_PortalIncreaseF += deltaTime;
+			if (m_PortalIncreaseF > 100.0f) m_PortalIncreaseF = 100.0f;
+
+			m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
+		}
+	}
+	
+	//時間経過での増加.
+#if 0
 	//経過時間を設定.
 	static float ElapsedTime = 0.0f;
 	//deltaTimeの取得.
@@ -53,6 +74,7 @@ void Portal::Update()
 			m_PortalIncrease = 100;
 		}
 	}
+#endif
 
 #ifdef _DEBUG
 
@@ -60,7 +82,7 @@ void Portal::Update()
 	ImGui::Begin(JAPANESE("Portal : 増加量"));
 
 	//スライダー(手動で触れるようにしている).
-	ImGui::SliderInt(JAPANESE("Portalの取得パーセント(%)"), &m_PortalIncrease, 0, 100);
+	ImGui::SliderFloat(JAPANESE("Portalの取得パーセント(%)"), &m_PortalIncreaseF, 0.0f, 100.0f);
 	//今進んでいるパーセンテージ.
 	ImGui::Text(JAPANESE("今のポータルのパーセント : %d"), m_PortalIncrease);
 

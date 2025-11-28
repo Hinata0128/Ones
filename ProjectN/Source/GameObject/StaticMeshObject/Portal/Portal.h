@@ -3,6 +3,7 @@
 
 class StaticMeshManager;
 class ImGuiManager;
+class Player;
 
 /************************************************************
 *	陣地を守用のポータル
@@ -21,9 +22,13 @@ public:
 	void Draw() override;
 	//初期化関数.
 	void Init();
-
+public:
+	void SetPlayer(std::shared_ptr<Player> player) { m_pPlayer = player; }
 private:
 	//ポータルの範囲に入った時にパーセントを増やす.
+	float m_PortalIncreaseF;
 	int m_PortalIncrease;
 
+	//Playerの位置の取得のためにメンバ変数としてしようする.
+	std::weak_ptr<Player> m_pPlayer;
 };
