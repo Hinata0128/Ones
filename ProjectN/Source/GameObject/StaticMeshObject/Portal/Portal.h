@@ -16,6 +16,14 @@ class Portal final
 	: public StaticMeshObject
 {
 public:
+	//列挙.
+	enum class PortalPriority : byte
+	{
+		None,		//誰も触っていない開幕の状態.
+		Player,		//Playerがポータルを触った時.
+		Enemy		//Enemyがポータルを触った時.
+	};
+public:
 	Portal();
 	~Portal() override;
 
@@ -33,6 +41,17 @@ public:
 	void SetPlayer(std::shared_ptr<Player> player) { m_pPlayer = player; }
 	//敵の位置を設定するSet関数.
 	void SetEnemyNomal(std::shared_ptr<EnemyNomal> nomal) { m_pEnemy = nomal; }
+
+	//ポータルのステートのSet関数.
+	void SetPortalState(PortalPriority state);
+
+	//ポータルの優先順位を入手する関数.
+	void ChackPriority();
+private:
+	//Playerのポータル周りのコード.
+	void PlayerToPortal();
+	//EnemyNomalのポータル周りのコード.
+	void EnemyToPortal();
 private:
 	//ポータルの範囲に入った時にパーセントを増やす.
 	float m_PortalIncreaseF;
@@ -42,4 +61,10 @@ private:
 	std::weak_ptr<Player> m_pPlayer;
 	//敵の位置の取得のためにメンバ変数として使用します
 	std::weak_ptr<EnemyNomal> m_pEnemy;
+
+	//ポータルの行動列挙.
+	PortalPriority m_pPortalState;
+
+	float m_IsPlayerPriority;
+	float m_IsEnemyPriority;
 };

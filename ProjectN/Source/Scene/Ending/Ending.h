@@ -3,6 +3,8 @@
 #include "GameObject/SpriteObject/SpriteObject.h"
 #include "SceneManager/SceneManager.h"
 
+#include "GameObject/StaticMeshObject/Portal/Portal.h"
+
 /*********************************************
 *	エンディング画像クラス.
 **/
@@ -20,5 +22,5 @@ public:
 	void Draw() override;
 
 private:
-
+	std::unique_ptr<Portal> m_pPortal;
 };

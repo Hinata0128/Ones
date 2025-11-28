@@ -3,6 +3,7 @@
 
 Ending::Ending()
 	: CSceneBase		()
+	, m_pPortal			(std::make_unique<Portal>())
 {
 
 }
@@ -23,6 +24,7 @@ void Ending::Update()
 {
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
+		m_pPortal->Init();
 		//EnterƒL[‚ÅMain‚Ö‚Ì‘JˆÚ.
 		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
 	}

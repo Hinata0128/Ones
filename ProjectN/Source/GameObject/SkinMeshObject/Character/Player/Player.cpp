@@ -97,7 +97,7 @@ void Player::Init()
 {
     //これでスケールの変更が可能になりました.
     SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-    SetPosition(0.f, 0.f, 0.f);
+    SetPosition(-20.f, 0.f, -15.f);
 
     m_HitPoint = 100.0f;
 
