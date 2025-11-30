@@ -5,6 +5,8 @@
 #include "Scene/GameOver/GameOver.h"
 #include "Scene/Ending/Ending.h"
 
+#include "..//GameObject/StaticMeshObject/Portal/Portal.h"
+
 /********************************************
 *	シーンマネージャークラス.
 **/
@@ -15,7 +17,7 @@ public:
 	//シーンリストの列挙型.
 	enum List
 	{
-		//Title,
+		OP,
 		Main,
 		Lose,
 		Win,
@@ -43,6 +45,28 @@ public:
 	//HWNDを取得.
 	HWND GetHWND() const;
 public:
+	void SetPortal(Portal* portal);
+	Portal* GetPortal() const;
+
+	void AddPlayerScore();
+	void AddEnemyScore();
+
+	int GetPlayerScore() const { return playerScore; }
+	int GetEnemyScore() const { return enemyScore; }
+
+	void ResetRound();
+
+	bool IsGameFinished() const
+	{
+		return (playerScore >= 2 || enemyScore >= 2);
+	}
+
+	void ResetScore()
+	{
+		playerScore = 0;
+		enemyScore = 0;
+	}
+public:
 	void SetDx11(DirectX11* Dx11) { m_pDx11 = Dx11; }
 	void SetDx9(DirectX9* pDx9) { m_pDx9 = pDx9; }
 private:
@@ -59,4 +83,9 @@ private:
 
 	DirectX11* m_pDx11;
 	DirectX9*	m_pDx9;
+
+	Portal* m_pPortal = nullptr;
+
+	int playerScore = 0;
+	int enemyScore = 0;
 };

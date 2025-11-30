@@ -1,6 +1,8 @@
 #include "SceneManager.h"
 #include "Sound/SoundManager.h"
 
+#include "..//System/00_Manager/03_ImGuiManager/ImGuiManager.h"
+
 SceneManager::SceneManager()
 	: m_pScene	( nullptr )
 	, m_hWnd	()
@@ -24,6 +26,25 @@ HRESULT SceneManager::Create(HWND hWnd)
 void SceneManager::Update()
 {
 	m_pScene->Update();
+
+#ifdef _DEBUG
+	//==============================
+	//  ImGui デバッグ表示：ポイント
+	//==============================
+	ImGui::Begin("Game Score");
+
+	ImGui::Text("Player Score : %d", playerScore);
+	ImGui::Text("Enemy  Score : %d", enemyScore);
+
+	// ポータルが存在していれば、進行状況も確認可能
+	if (m_pPortal)
+	{
+		ImGui::Separator();
+		ImGui::Text("Portal Progress : %d %%", m_pPortal->GetPortalPercent());
+	}
+
+	ImGui::End();
+#endif
 }
 
 void SceneManager::Draw()
@@ -45,14 +66,58 @@ HWND SceneManager::GetHWND() const
 	return m_hWnd;
 }
 
+void SceneManager::SetPortal(Portal* portal)
+{
+	m_pPortal = portal;
+}
+
+Portal* SceneManager::GetPortal() const
+{
+	return m_pPortal;
+}
+
+void SceneManager::AddPlayerScore()
+{
+	playerScore++;
+
+	if (playerScore >= 2)
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+		return;
+	}
+
+	ResetRound();
+}
+
+void SceneManager::AddEnemyScore()
+{
+	enemyScore++;
+
+	if (enemyScore >= 2)
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
+		return;
+	}
+
+	ResetRound();
+}
+
+void SceneManager::ResetRound()
+{
+	auto portal = SceneManager::GetInstance()->GetPortal();
+	if (portal)
+		portal->Init();
+
+	// ★ここに Player/Enemy の位置リセットも追加できる
+}
 //シーン作成.
 void SceneManager::MakeScene(List Scene)
 {
 	switch (Scene)
 	{
-	//case SceneManager::Title:
-	//	m_pScene = std::make_unique<Title>();
-	//	break;
+	case SceneManager::OP:
+		m_pScene = std::make_unique<Title>();
+		break;
 	case SceneManager::Main:
 		m_pScene = std::make_unique<GameMain>();
 		break;

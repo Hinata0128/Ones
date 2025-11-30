@@ -53,6 +53,12 @@ ViewportId=0x648623FD
 Size=307,147
 Collapsed=0
 
+[Window][Game Score]
+ViewportPos=1476,394
+ViewportId=0x7442DD1E
+Size=220,110
+Collapsed=0
+
 [Docking][Data]
 DockNode    ID=0x00000001 Pos=1478,70 Size=300,180 Split=Y Selected=0xC03952A5
   DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=300,90 Selected=0x660C8DAE

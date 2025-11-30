@@ -47,6 +47,8 @@ public:
 
 	//ポータルの優先順位を入手する関数.
 	void ChackPriority();
+
+	int GetPortalPercent() const { return m_PortalIncrease; }
 private:
 	//Playerのポータル周りのコード.
 	void PlayerToPortal();
@@ -69,4 +71,6 @@ private:
 
 	float m_IsPlayerPriority;
 	float m_IsEnemyPriority;
+
+	bool m_IsRoundFinished = false;
 };

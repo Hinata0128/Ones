@@ -139,6 +139,8 @@ void Portal::Init()
 	m_PortalIncreaseF = 0.0f;
 	//列挙の状態を初期化させる.
 	m_pPortalState = PortalPriority::None;
+
+	m_IsRoundFinished = false;
 }
 
 void Portal::SetPortalState(PortalPriority state)
@@ -233,26 +235,32 @@ void Portal::ChackPriority()
 //Playerのポータル周りのコード.
 void Portal::PlayerToPortal()
 {
+	if (m_IsRoundFinished)
+		return; // すでにラウンド終了している → スコアは増やさない
+
 	if (auto player = m_pPlayer.lock())
 	{
-		// 💡 【追加】Player がキャプチャ State 中はゲージ増加を停止
 		if (player->IsCapturingState())
 		{
-			return; // ゲージ増加処理をスキップ
+			return; // アニメーション中はここで処理を終了し、ゲージ増加を停止
 		}
 	}
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
-
-	m_PortalIncreaseF += deltaTime * 20.0f; // 💡 ゲージ速度を調整（以前の会話で20.0fを指定）
-
+	m_PortalIncreaseF += deltaTime * 20.0f;
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
 	if (m_PortalIncreaseF >= 100.0f)
 	{
 		m_PortalIncreaseF = 100.0f;
 		m_PortalIncrease = 100;
-		SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+
+		m_IsRoundFinished = true;  // ← ここでラウンド終了！
+
+		SceneManager::GetInstance()->AddPlayerScore();
+
+		SceneManager::GetInstance()->LoadScene(SceneManager::OP);
+
 		return;
 	}
 }
@@ -279,7 +287,9 @@ void Portal::EnemyToPortal()
 	{
 		m_PortalIncreaseF = 100.0f;
 		m_PortalIncrease = 100;
-		SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
+		SceneManager::GetInstance()->AddEnemyScore();
+
+		SceneManager::GetInstance()->LoadScene(SceneManager::OP);
 		return;
 	}
 }

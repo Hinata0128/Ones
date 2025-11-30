@@ -45,6 +45,9 @@ public:
 	//プロジェクション関数.
 	void Projection();
 
+	void AddPlayerPoint();
+	void AddEnemyNomalPoint();
+
 public:
 	//Playerの現在のポイント取得関数.
 	int GetPlayerPortalPoint() const;
@@ -52,6 +55,8 @@ public:
 	int GetEnemyNomalPortalPoint() const;
 	//1セットリセット用の関数.
 	void RestRound();
+
+
 private:
 	//ゲームで扱うスプライトデータ(使いまわす資源).
 	std::unique_ptr<Sprite3D> m_pSp3D;
