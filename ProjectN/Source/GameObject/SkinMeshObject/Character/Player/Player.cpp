@@ -15,6 +15,8 @@
 #include "GameObject//SkinMeshObject//Character//Player//PlayerContext//PlayerContext.h"
 #include "..//Player/PlayerState/03_PlayerDead/PlayerDead.h"
 
+#include "..//Player/PlayerState/02_PlayerPortalAnim/PlayerPortalAnim.h"
+
 
 Player::Player()
     :Character()
@@ -22,6 +24,7 @@ Player::Player()
     , m_pAttackManager(std::make_unique<PlayerAttackManager>(this))
     , m_pPlayerIdol     (std::make_shared<PlayerIdol>(this))
     , m_pPlayerDead     (std::make_shared<PlayerDead>(this))
+    , m_pPlayerAnim     (std::make_shared<PlayerPortalAnim>(this))
 
     , m_pCurrentState   (nullptr)
 
@@ -50,6 +53,29 @@ void Player::Update()
 {
     //スキンメッシュオブジェクトとしてアニメーション速度を設定.
     //m_pMesh->SetAnimSpeed(m_AnimSpeed);
+
+    if (IsCapturingState())
+    {
+        //タイマーの更新.
+        m_CaptureTimer -= Timer::GetInstance().DeltaTime();
+
+        if (m_CaptureTimer <= 0.0f)
+        {
+            //タイマー終了: StateをIdolに戻す.
+            PlayerState* nextState = m_pPlayerIdol.get();
+            
+            if (m_pCurrentState) {
+                m_pCurrentState->Exit(); // 古いステート(PortalAnim)の終了処理
+            }
+            m_pCurrentState = nextState; // ステートを切り替え
+            if (m_pCurrentState) {
+                m_pCurrentState->Enter(); // 新しいステート(Idol)の開始処理
+            }
+
+            m_CaptureTimer = 0.0f;
+        }
+        return;
+    }
 
     //これでその時のStateに入る.
     if (m_pCurrentState)
@@ -220,4 +246,30 @@ AttackShort* Player::GetShortAttackState() const
         return m_pAttackManager->GetCurrentShortAttack();
     }
     return nullptr;
+}
+
+void Player::SetCaptureState(float duration)
+{
+    PlayerState* nextState = m_pPlayerAnim.get();
+    if (m_pCurrentState == nextState)
+    {
+        return;
+    }
+
+    // タイマーをセット
+    m_CaptureTimer = duration;
+
+    // State 遷移ロジック
+    if (m_pCurrentState) {
+        m_pCurrentState->Exit();    // 古いステートの終了処理
+    }
+    m_pCurrentState = nextState;    // ステートを切り替え
+    if (m_pCurrentState) {
+        m_pCurrentState->Enter();   // 新しいステートの開始処理（PortalAnim::Enter() が呼ばれる）
+    }
+}
+
+bool Player::IsCapturingState() const
+{
+    return m_pCurrentState == m_pPlayerAnim.get();
 }

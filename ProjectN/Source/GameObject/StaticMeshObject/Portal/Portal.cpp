@@ -159,6 +159,7 @@ void Portal::SetPortalState(PortalPriority state)
 
 void Portal::ChackPriority()
 {
+	//ゲージの進む範囲.
 	constexpr float PORTAL_DISTANCE = 5.0f;
 	float playerDistance = 1000.0f;
 	float enemyDistance = 1000.0f;  
@@ -189,41 +190,61 @@ void Portal::ChackPriority()
 		}
 	}
 
-	//状態の切り替え (状態固定ロジック)
+	// 💡 【修正】時間優先ロジックとアニメーション起動
 	if (m_IsPlayerPriority && !m_IsEnemyPriority)
 	{
 		// Playerのみ範囲内: Playerに切り替え
+		if (m_pPortalState != PortalPriority::Player)
+		{
+			// 💡 状態が切り替わる瞬間: Playerを最初の侵入者として記録し、アニメーションをトリガー
+			if (auto player = m_pPlayer.lock())
+			{
+				player->SetCaptureState(1.0f); // 1.0秒間 State を固定
+			}
+			m_FirstEnterPriority = PortalPriority::Player;
+		}
 		m_pPortalState = PortalPriority::Player;
 	}
 	else if (!m_IsPlayerPriority && m_IsEnemyPriority)
 	{
 		// Enemyのみ範囲内: Enemyに切り替え
+		if (m_pPortalState != PortalPriority::Enemy)
+		{
+			// 💡 状態が切り替わる瞬間: Enemyを最初の侵入者として記録し、アニメーションをトリガー
+			if (auto enemy = m_pEnemy.lock())
+			{
+				// ここで Enemy の SetCaptureState() を呼び出します
+				// enemy->SetCaptureState(1.0f); 
+			}
+			m_FirstEnterPriority = PortalPriority::Enemy;
+		}
 		m_pPortalState = PortalPriority::Enemy;
 	}
 	else if (m_IsPlayerPriority && m_IsEnemyPriority)
 	{
-		//近い方を優先する
-		if (playerDistance < enemyDistance)
-		{
-			m_pPortalState = PortalPriority::Player;
-		}
-		else
-		{
-			m_pPortalState = PortalPriority::Enemy;
-		}
+		// 💡 【修正】競合時: 距離ではなく、先に範囲に入っていた人を優先する
+		m_pPortalState = m_FirstEnterPriority;
 	}
 	else
 	{
+		// 誰もいない時は、前回の状態を維持（m_pPortalState は変更しない）
 	}
 }
-
 //Playerのポータル周りのコード.
 void Portal::PlayerToPortal()
 {
+	if (auto player = m_pPlayer.lock())
+	{
+		// 💡 【追加】Player がキャプチャ State 中はゲージ増加を停止
+		if (player->IsCapturingState())
+		{
+			return; // ゲージ増加処理をスキップ
+		}
+	}
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
-	m_PortalIncreaseF += deltaTime; // 速度調整のため倍率を追加
+	m_PortalIncreaseF += deltaTime * 20.0f; // 💡 ゲージ速度を調整（以前の会話で20.0fを指定）
 
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
@@ -239,9 +260,18 @@ void Portal::PlayerToPortal()
 //EnemyNomalのポータル周りのコード.
 void Portal::EnemyToPortal()
 {
+	if (auto enemy = m_pEnemy.lock())
+	{
+		// 💡 【追加】Enemy がキャプチャ State 中はゲージ増加を停止
+		// if (enemy->IsCapturingState()) 
+		// {
+		//     return; // ゲージ増加処理をスキップ
+		// }
+	}
+
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
-	m_PortalIncreaseF += deltaTime; // 速度調整のため倍率を追加
+	m_PortalIncreaseF += deltaTime * 20.0f; // 💡 ゲージ速度を調整
 
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
