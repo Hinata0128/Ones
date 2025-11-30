@@ -192,16 +192,16 @@ void Portal::ChackPriority()
 		}
 	}
 
-	// 💡 【修正】時間優先ロジックとアニメーション起動
+	// アニメーション起動.
 	if (m_IsPlayerPriority && !m_IsEnemyPriority)
 	{
-		// Playerのみ範囲内: Playerに切り替え
+		//Playerのみ範囲内: Playerに切り替え
 		if (m_pPortalState != PortalPriority::Player)
 		{
-			// 💡 状態が切り替わる瞬間: Playerを最初の侵入者として記録し、アニメーションをトリガー
 			if (auto player = m_pPlayer.lock())
 			{
-				player->SetCaptureState(1.0f); // 1.0秒間 State を固定
+				//1秒間Stateを固定させる.
+				player->SetCaptureState(1.0f); 
 			}
 			m_FirstEnterPriority = PortalPriority::Player;
 		}
@@ -212,24 +212,18 @@ void Portal::ChackPriority()
 		// Enemyのみ範囲内: Enemyに切り替え
 		if (m_pPortalState != PortalPriority::Enemy)
 		{
-			// 💡 状態が切り替わる瞬間: Enemyを最初の侵入者として記録し、アニメーションをトリガー
-			if (auto enemy = m_pEnemy.lock())
-			{
-				// ここで Enemy の SetCaptureState() を呼び出します
-				// enemy->SetCaptureState(1.0f); 
-			}
+			//Playerと同じ感じのを作成する.
 			m_FirstEnterPriority = PortalPriority::Enemy;
 		}
 		m_pPortalState = PortalPriority::Enemy;
 	}
 	else if (m_IsPlayerPriority && m_IsEnemyPriority)
 	{
-		// 💡 【修正】競合時: 距離ではなく、先に範囲に入っていた人を優先する
+		//ポータルまでの競争時: 距離ではなく先に範囲に入っていたPlayer or EnemyNomalを優先にする.
 		m_pPortalState = m_FirstEnterPriority;
 	}
 	else
 	{
-		// 誰もいない時は、前回の状態を維持（m_pPortalState は変更しない）
 	}
 }
 //Playerのポータル周りのコード.
@@ -247,7 +241,7 @@ void Portal::PlayerToPortal()
 	}
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
-	m_PortalIncreaseF += deltaTime * 20.0f;
+	m_PortalIncreaseF += deltaTime;
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
 	if (m_PortalIncreaseF >= 100.0f)
@@ -255,7 +249,7 @@ void Portal::PlayerToPortal()
 		m_PortalIncreaseF = 100.0f;
 		m_PortalIncrease = 100;
 
-		m_IsRoundFinished = true;  // ← ここでラウンド終了！
+		m_IsRoundFinished = true;
 
 		SceneManager::GetInstance()->AddPlayerScore();
 
@@ -268,18 +262,10 @@ void Portal::PlayerToPortal()
 //EnemyNomalのポータル周りのコード.
 void Portal::EnemyToPortal()
 {
-	if (auto enemy = m_pEnemy.lock())
-	{
-		// 💡 【追加】Enemy がキャプチャ State 中はゲージ増加を停止
-		// if (enemy->IsCapturingState()) 
-		// {
-		//     return; // ゲージ増加処理をスキップ
-		// }
-	}
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
-	m_PortalIncreaseF += deltaTime * 20.0f; // 💡 ゲージ速度を調整
+	m_PortalIncreaseF += deltaTime;
 
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 

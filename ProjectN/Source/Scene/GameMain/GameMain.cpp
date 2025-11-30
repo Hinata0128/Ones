@@ -25,10 +25,6 @@ GameMain::GameMain()
 	, m_pPortal(std::make_unique<Portal>())
 
 	, m_pHpBar(std::make_unique<HPBar>())
-
-
-	, PlayerPoint		(0)
-	, EnemyNomalPoint	(0)
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -209,45 +205,3 @@ void GameMain::Projection()
 		far_z);		//遠いビュー平面のz値.
 }
 
-void GameMain::AddPlayerPoint()
-{
-	PlayerPoint++;
-
-	if (PlayerPoint >= 2)
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Win);
-		return;
-	}
-	RestRound();
-}
-
-void GameMain::AddEnemyNomalPoint()
-{
-	EnemyNomalPoint++;
-
-	if (EnemyNomalPoint >= 2)
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
-		return;
-	}
-	RestRound();
-}
-
-int GameMain::GetPlayerPortalPoint() const
-{
-	return PlayerPoint;
-}
-
-int GameMain::GetEnemyNomalPortalPoint() const
-{
-	return EnemyNomalPoint;
-}
-
-void GameMain::RestRound()
-{
-	auto Portal = SceneManager::GetInstance()->GetPortal();
-	if (Portal)
-	{
-		m_pPortal->Init();
-	}
-}
