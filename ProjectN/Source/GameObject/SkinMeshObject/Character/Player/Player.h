@@ -7,7 +7,10 @@ class PlayerState;
 class PlayerIdol;
 class PlayerContext;
 class PlayerDead;
-//class PlayerAttackManager;
+
+//ポータル取得時に再生するアニメーションのクラス.
+class PlayerPortalAnim;
+
 #include "System/00_Manager/07_PlayerAttackManager/PlayerAttackManager.h"
 #include "..//Player/PlayerAttckStateBase/AttackShort/AttackShort.h"
 
@@ -60,6 +63,13 @@ public:
 
 	PlayerAttackManager* GetAttackManager() const { return m_pAttackManager.get(); }
 
+public:
+	//ポータル系の関数をここに書く.
+	//PortalからStateを切り替えるため.
+	//セットキャプチャステート関数.
+	void SetCaptureState(float duration);
+	//Portalがゲージ増加停止を判定するための関数.
+	bool IsCapturingState() const;
 private:
 	PShotManager*	m_pShotManager;
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;
@@ -69,5 +79,9 @@ private:
 	std::shared_ptr<PlayerIdol>		m_pPlayerIdol;
 	std::shared_ptr<PlayerDead>		m_pPlayerDead;
 
+	std::shared_ptr<PlayerPortalAnim> m_pPlayerAnim;
+
 	PlayerState* m_pCurrentState;
+
+	float m_CaptureTimer = 0.0f;
 };

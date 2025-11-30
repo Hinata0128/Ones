@@ -52,6 +52,8 @@ private:
 	void PlayerToPortal();
 	//EnemyNomalのポータル周りのコード.
 	void EnemyToPortal();
+	//先に範囲に入った陣営を記録.
+	PortalPriority m_FirstEnterPriority = PortalPriority::None;
 private:
 	//ポータルの範囲に入った時にパーセントを増やす.
 	float m_PortalIncreaseF;
