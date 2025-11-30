@@ -45,6 +45,13 @@ public:
 	//プロジェクション関数.
 	void Projection();
 
+public:
+	//Playerの現在のポイント取得関数.
+	int GetPlayerPortalPoint() const;
+	//EnemyNomalの現在のポイント取得関数.
+	int GetEnemyNomalPortalPoint() const;
+	//1セットリセット用の関数.
+	void RestRound();
 private:
 	//ゲームで扱うスプライトデータ(使いまわす資源).
 	std::unique_ptr<Sprite3D> m_pSp3D;
@@ -68,5 +75,7 @@ private:
 	//HPBarクラス(Test).
 	std::unique_ptr<HPBar> m_pHpBar;
 
-
+	//PlayerToEnemyNopmalPointMember.
+	int PlayerPoint;
+	int EnemyNomalPoint;
 };
