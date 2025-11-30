@@ -48,19 +48,22 @@ public:
 	void SetPortal(Portal* portal);
 	Portal* GetPortal() const;
 
+	//Playerのポータル取得ポイント関数.
 	void AddPlayerScore();
+	//EnemyNomalのポータル取得ポイント関数.
 	void AddEnemyScore();
 
+	//PlayerとEnemyNomalのGet関数.
 	int GetPlayerScore() const { return playerScore; }
 	int GetEnemyScore() const { return enemyScore; }
-
+	//2点とった時に入る関数.
 	void ResetRound();
-
+	//試合が終了したかの確認.
 	bool IsGameFinished() const
 	{
 		return (playerScore >= 2 || enemyScore >= 2);
 	}
-
+	//PlayerとenemyNomalのポイントを初期化する.
 	void ResetScore()
 	{
 		playerScore = 0;

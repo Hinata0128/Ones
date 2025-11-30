@@ -69,6 +69,10 @@ private:
 	//ポータルの行動列挙.
 	PortalPriority m_pPortalState;
 
+	//======================================================
+	// ポータル周りに必要になるメンバ変数.
+	//======================================================
+
 	float m_IsPlayerPriority;
 	float m_IsEnemyPriority;
 

@@ -106,9 +106,9 @@ void SceneManager::ResetRound()
 {
 	auto portal = SceneManager::GetInstance()->GetPortal();
 	if (portal)
+	{
 		portal->Init();
-
-	// ★ここに Player/Enemy の位置リセットも追加できる
+	}
 }
 //シーン作成.
 void SceneManager::MakeScene(List Scene)
