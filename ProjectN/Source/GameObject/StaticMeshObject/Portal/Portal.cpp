@@ -45,7 +45,6 @@ void Portal::Update()
 
 	ChackPriority();
 
-	//enum classをしようしているのでswitchで作成する.
 	switch (m_pPortalState)
 	{
 		//誰も触っていないとき.
@@ -62,31 +61,6 @@ void Portal::Update()
 	default:
 		break;
 	}
-
-
-
-	//時間経過での増加.
-#if 0
-	//経過時間を設定.
-	static float ElapsedTime = 0.0f;
-	//deltaTimeの取得.
-	float deltaTime = Timer::GetInstance().DeltaTime();
-	//経過時間に今の時間をたす.
-	ElapsedTime += deltaTime;
-
-	//もし一秒経過したら.
-	if (ElapsedTime >= 1.0f)
-	{
-		ElapsedTime = 0.0f;
-		m_PortalIncrease += 1;	//時間経過で取得可能な数値.
-
-		if (m_PortalIncrease > 100)
-		{
-			m_PortalIncrease = 100;
-		}
-	}
-#endif
-
 #ifdef _DEBUG
 
 	//表示するブロック.
