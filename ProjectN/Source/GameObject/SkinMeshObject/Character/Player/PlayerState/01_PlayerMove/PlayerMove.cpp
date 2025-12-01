@@ -110,10 +110,9 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
             step = enStep::run;
             break;
         case enStep::run:
-        {
+        
             //アニメーションの停止を良い位置でさせるため.
-            float Period = static_cast<float>(ctx.Mesh->GetAnimPeriod(6));
-            if (ctx.AnimTime > Period)
+            if (ctx.AnimTime > ctx.Mesh->GetAnimPeriod(6))
             {
                 step = enStep::end;
             }
@@ -122,7 +121,7 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
                 ctx.Mesh->SetAnimSpeed(ctx.AnimSpeed, ctx.AnimCtrl);
             }
             break;
-        }
+        
         case enStep::end:
         {
             //アニメーションの停止.

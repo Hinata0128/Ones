@@ -1,6 +1,10 @@
 #pragma once
 #include "Scene//SceneBase.h"	//基底クラス.
 
+#include "GameObject/UIObject/UIObject.h"
+
+#include "Sprite2D/Sprite2D.h"
+
 /**************************************************************************************
 *	ファーストラウンド開始時に表示させる画像のクラス.
 *	
@@ -20,5 +24,7 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
-
+	//FirstRoundの2Dスプライト表示.
+	Sprite2D* m_pFirstRoundImg;
+	std::shared_ptr<UIObject> m_pFirstRound;
 };
