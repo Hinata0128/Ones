@@ -1,9 +1,9 @@
 #pragma once
 #include "Scene/SceneBase.h"
-#include "Scene/Title/Title.h"
-#include "Scene/GameMain/GameMain.h"
-#include "Scene/GameOver/GameOver.h"
-#include "Scene/Ending/Ending.h"
+#include "Scene/00_Title/Title.h"
+#include "Scene/04_GameMain/GameMain.h"
+#include "Scene/06_GameOver/GameOver.h"
+#include "Scene/05_Ending/Ending.h"
 
 #include "GameObject/StaticMeshObject/Portal/Portal.h"
 
