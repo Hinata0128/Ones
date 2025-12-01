@@ -223,7 +223,7 @@
     <ClCompile Include="Source\Scene\Ending\Ending.cpp" />
     <ClCompile Include="Source\Scene\GameMain\GameMain.cpp" />
     <ClCompile Include="Source\Scene\GameOver\GameOver.cpp" />
-    <ClCompile Include="Source\Scene\CSceneBase.cpp" />
+    <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\Title\Title.cpp" />
     <ClCompile Include="Source\System\00_Manager\00_SkinMeshManager\SkinMeshManager.cpp" />
     <ClCompile Include="Source\SkinMesh\SkinMesh.cpp" />
@@ -304,7 +304,7 @@
     <ClInclude Include="Source\Scene\Ending\Ending.h" />
     <ClInclude Include="Source\Scene\GameMain\GameMain.h" />
     <ClInclude Include="Source\Scene\GameOver\GameOver.h" />
-    <ClInclude Include="Source\Scene\CSceneBase.h" />
+    <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\Title\Title.h" />
     <ClInclude Include="Source\System\00_Manager\00_SkinMeshManager\SkinMeshManager.h" />
     <ClInclude Include="Source\SkinMesh\SkinMesh.h" />

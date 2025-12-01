@@ -2,7 +2,7 @@
 #include "Sound/SoundManager.h"
 
 Ending::Ending()
-	: CSceneBase		()
+	: SceneBase()
 	, m_pPortal			(std::make_unique<Portal>())
 {
 

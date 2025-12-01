@@ -10,11 +10,11 @@
 *	Šî’êƒNƒ‰ƒX.
 **/
 
-class CSceneBase	
+class SceneBase	
 {
 public:
-	CSceneBase();
-	virtual ~CSceneBase() {}
+	SceneBase();
+	virtual ~SceneBase() {}
 
 	virtual void Initialize() = 0;
 	virtual void Create() = 0;

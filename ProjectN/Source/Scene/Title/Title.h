@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Scene/CSceneBase.h"
+#include "Scene/SceneBase.h"
 #include "GameObject/SpriteObject/SpriteObject.h"
 #include "SceneManager/SceneManager.h"
 
@@ -8,7 +8,7 @@
 **/
 
 class Title
-	: public CSceneBase
+	: public SceneBase
 {
 public:
 	Title();

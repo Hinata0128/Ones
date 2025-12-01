@@ -1,11 +1,11 @@
 #pragma once
-#include "Scene/CSceneBase.h"
+#include "Scene/SceneBase.h"
 #include "Scene/Title/Title.h"
 #include "Scene/GameMain/GameMain.h"
 #include "Scene/GameOver/GameOver.h"
 #include "Scene/Ending/Ending.h"
 
-#include "..//GameObject/StaticMeshObject/Portal/Portal.h"
+#include "GameObject/StaticMeshObject/Portal/Portal.h"
 
 /********************************************
 *	シーンマネージャークラス.
@@ -17,12 +17,12 @@ public:
 	//シーンリストの列挙型.
 	enum List
 	{
-		OP,
-		Main,
-		Lose,
-		Win,
+		OP,		//Title.
+		Main,	//GameMain.
+		Lose,	//GameOver.
+		Win,	//Ending.
 
-		max,
+		max,	//何も書かない.
 	};
 
 public:
@@ -45,6 +45,16 @@ public:
 	//HWNDを取得.
 	HWND GetHWND() const;
 public:
+	//============================================================================
+	// ポータル周りの関数.
+	// PortalのGetSet関数.
+	// SetPortalでは、Portal = portalで代入させています.
+	// GetPortalでは、return Portalで返しています.
+	// PlayerとEnemyNomalの今の取得ポイント関数.
+	// PlayerPointとEnemyNomalPointのGet関数(pointをreturnで返す).
+	// 
+	//============================================================================
+	
 	void SetPortal(Portal* portal);
 	Portal* GetPortal() const;
 
@@ -54,21 +64,14 @@ public:
 	void AddEnemyScore();
 
 	//PlayerとEnemyNomalのGet関数.
-	int GetPlayerScore() const { return playerScore; }
-	int GetEnemyScore() const { return enemyScore; }
+	int GetPlayerScore() const;
+	int GetEnemyScore() const;
 	//2点とった時に入る関数.
 	void ResetRound();
 	//試合が終了したかの確認.
-	bool IsGameFinished() const
-	{
-		return (playerScore >= 2 || enemyScore >= 2);
-	}
+	bool IsGameFinished() const;
 	//PlayerとenemyNomalのポイントを初期化する.
-	void ResetScore()
-	{
-		playerScore = 0;
-		enemyScore = 0;
-	}
+	void ResetScore();
 public:
 	void SetDx11(DirectX11* Dx11) { m_pDx11 = Dx11; }
 	void SetDx9(DirectX9* pDx9) { m_pDx9 = pDx9; }
@@ -81,14 +84,14 @@ private:
 	SceneManager& operator = (const SceneManager& rhs) = delete;
 
 private:
-	std::unique_ptr<CSceneBase> m_pScene;
+	std::unique_ptr<SceneBase> m_pScene;
 	HWND m_hWnd;
 
 	DirectX11* m_pDx11;
 	DirectX9*	m_pDx9;
 
-	Portal* m_pPortal = nullptr;
+	Portal* m_pPortal;
 
-	int playerScore = 0;
-	int enemyScore = 0;
+	int m_PlayerPoint = 0;
+	int m_EnemyNomalPoint = 0;
 };
