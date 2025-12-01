@@ -1,6 +1,6 @@
-#include "CSceneBase.h"
+#include "SceneBase.h"
 
-CSceneBase::CSceneBase()
+SceneBase::SceneBase()
 	: m_pMesh	(nullptr)
 	, m_pDx11	(DirectX11::GetInstance())
 	, m_pDx9	(DirectX9::GetInstance())
@@ -10,7 +10,7 @@ CSceneBase::CSceneBase()
 {
 }
 
-void CSceneBase::PreDraw()
+void SceneBase::PreDraw()
 {
 	Renderer::GetInstance().SetDrawParameters(
 		m_mView,

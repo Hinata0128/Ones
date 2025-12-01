@@ -2,7 +2,7 @@
 #include "Sound/SoundManager.h"
 
 Title::Title()
-	: CSceneBase				()
+	: SceneBase()
 {
 	
 }
@@ -23,13 +23,13 @@ void Title::Update()
 {
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-        // ★2点先取チェック：勝敗がついていたら完全リセット
+        //2点先取チェック：勝敗がついていたら完全リセット
         if (SceneManager::GetInstance()->IsGameFinished())
         {
             SceneManager::GetInstance()->ResetScore();
         }
 
-        // ★次のゲームへ
+        //次のゲームへ.
         SceneManager::GetInstance()->LoadScene(SceneManager::Main);
     }
 }

@@ -1,5 +1,8 @@
 #pragma once
-#include "Scene//CSceneBase.h"
+
+//ここも継承させているわけではないのでSceneBaseだけインクルードして
+//他は前方宣言をしておく.
+#include "Scene//SceneBase.h"
 #include "GameObject//SpriteObject//SpriteObject.h"
 #include "SceneManager//SceneManager.h"
 
@@ -27,7 +30,7 @@ class Timer;
 **/
 
 class GameMain
-	: public CSceneBase
+	: public SceneBase
 {
 public:
 	GameMain();

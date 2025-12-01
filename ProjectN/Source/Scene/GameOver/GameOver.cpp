@@ -2,7 +2,7 @@
 #include "Sound/SoundManager.h"
 
 GameOver::GameOver()
-	: CSceneBase		()
+	: SceneBase()
 	, m_pHpBarSprite(nullptr)
 	, m_pHpBar(std::make_shared<UIObject>())
 {

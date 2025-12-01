@@ -4,10 +4,14 @@
 #include "..//System/00_Manager/03_ImGuiManager/ImGuiManager.h"
 
 SceneManager::SceneManager()
-	: m_pScene	( nullptr )
-	, m_hWnd	()
-	, m_pDx11	()
-	, m_pDx9	()
+	: m_pScene			( nullptr )
+	, m_hWnd			()
+	, m_pDx11			()
+	, m_pDx9			()
+
+	, m_pPortal			( nullptr )
+	, m_PlayerPoint		( 0 )
+	, m_EnemyNomalPoint	( 0 )
 {
 
 }
@@ -28,13 +32,13 @@ void SceneManager::Update()
 	m_pScene->Update();
 
 #ifdef _DEBUG
-	//==============================
-	//  ImGui デバッグ表示：ポイント
-	//==============================
+	//========================================================================================================
+	//	ImGuiを使用して今PlayerとEnemyNomalが取得しているポイントを表示しています.
+	//========================================================================================================
 	ImGui::Begin("Game Score");
 
-	ImGui::Text("Player Score : %d", playerScore);
-	ImGui::Text("Enemy  Score : %d", enemyScore);
+	ImGui::Text("Player Score : %d", m_PlayerPoint);
+	ImGui::Text("Enemy  Score : %d", m_EnemyNomalPoint);
 
 	// ポータルが存在していれば、進行状況も確認可能
 	if (m_pPortal)
@@ -76,11 +80,12 @@ Portal* SceneManager::GetPortal() const
 	return m_pPortal;
 }
 
+//Playerのポータル取得ポイント関数.
 void SceneManager::AddPlayerScore()
 {
-	playerScore++;
+	m_PlayerPoint++;
 
-	if (playerScore >= 2)
+	if (m_PlayerPoint >= 2)
 	{
 		SceneManager::GetInstance()->LoadScene(SceneManager::Win);
 		return;
@@ -89,17 +94,28 @@ void SceneManager::AddPlayerScore()
 	ResetRound();
 }
 
+//EnemyNomalのポータル取得ポイント関数.
 void SceneManager::AddEnemyScore()
 {
-	enemyScore++;
+	m_EnemyNomalPoint++;
 
-	if (enemyScore >= 2)
+	if (m_EnemyNomalPoint >= 2)
 	{
 		SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
 		return;
 	}
 
 	ResetRound();
+}
+
+int SceneManager::GetPlayerScore() const
+{
+	return m_PlayerPoint;
+}
+
+int SceneManager::GetEnemyScore() const
+{
+	return m_EnemyNomalPoint;
 }
 
 void SceneManager::ResetRound()
@@ -110,6 +126,18 @@ void SceneManager::ResetRound()
 		portal->Init();
 	}
 }
+
+bool SceneManager::IsGameFinished() const
+{
+	return (m_PlayerPoint >= 2 || m_EnemyNomalPoint >= 2);
+
+}
+void SceneManager::ResetScore()
+{
+	m_PlayerPoint = 0;
+	m_EnemyNomalPoint = 0;
+}
+
 //シーン作成.
 void SceneManager::MakeScene(List Scene)
 {

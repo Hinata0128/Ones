@@ -11,7 +11,7 @@
 #include "GameObject//SkinMeshObject//Character//Player//Player.h" 
 
 GameMain::GameMain()
-	: CSceneBase()
+	: SceneBase()
 	, m_pStcMeshObj(std::make_unique<StaticMeshObject>())
 
 	, m_pGround(std::make_unique<Ground>())

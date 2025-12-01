@@ -61,6 +61,8 @@ void Portal::Update()
 	default:
 		break;
 	}
+
+//DEBUG時にだけ表示されるImGuiの確認コード.
 #ifdef _DEBUG
 
 	//表示するブロック.
@@ -69,28 +71,31 @@ void Portal::Update()
 	const char* owner_text;
 	switch (m_pPortalState) {
 	case PortalPriority::Player:
-		owner_text = "Player (プレイヤー)";
-		// プレイヤーが触っているときの色（例: 青）
+		owner_text = "Player";
+		//プレイヤーが触っているときの色(青).
 		ImGui::TextColored(ImVec4(0.0f, 0.0f, 1.0f, 1.0f), JAPANESE("現在の占有者: %s"), owner_text);
 		break;
 	case PortalPriority::Enemy:
-		owner_text = "Enemy (敵)";
-		// 敵が触っているときの色（例: 赤）
+		owner_text = "Enemy";
+		//敵が触っているときの色(赤).
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), JAPANESE("現在の占有者: %s"), owner_text);
 		break;
 	case PortalPriority::None:
 	default:
-		owner_text = "None (誰もいない/競合)";
-		// 誰も触っていないときの色（例: 黄色）
-		ImGui::TextColored(ImVec4(1.8f, 1.8f, 0.0f, 1.0f), JAPANESE("現在の占有者: %s"), owner_text);
+		owner_text = "None";
+		//誰も触っていないときの色(緑).
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), JAPANESE("現在の占有者: %s"), owner_text);
 		break;
 	}
 
 	//スライダー(手動で触れるようにしている).
+	//floatで表示させている.
 	ImGui::SliderFloat(JAPANESE("Portalの取得パーセント(%)"), &m_PortalIncreaseF, 0.0f, 100.0f);
 	//今進んでいるパーセンテージ.
+	//スライダーの下にint型で表示している.
 	ImGui::Text(JAPANESE("今のポータルのパーセント : %d"), m_PortalIncrease);
 
+	//ポータルの取得パーセントが100%になったら文字が表示される.
 	if (m_PortalIncrease >= 100)
 	{
 		//ポータルが100%になった時に表示してくれるもの.
@@ -198,14 +203,19 @@ void Portal::ChackPriority()
 	}
 	else
 	{
+		//何も書かない.
 	}
 }
-//Playerのポータル周りのコード.
+//Playerのポータル周りのコード(触った時とか・触った後の主導権).
 void Portal::PlayerToPortal()
 {
 	if (m_IsRoundFinished)
-		return; // すでにラウンド終了している → スコアは増やさない
+	{
+		//すでにラウンド終了している、スコアは増やさない.
+		return; 
+	}
 
+	//Playerがポータルを触っているとき.
 	if (auto player = m_pPlayer.lock())
 	{
 		if (player->IsCapturingState())
@@ -233,7 +243,7 @@ void Portal::PlayerToPortal()
 	}
 }
 
-//EnemyNomalのポータル周りのコード.
+//EnemyNomalのポータル周りのコード(触った時とか・触った後の主導権).
 void Portal::EnemyToPortal()
 {
 
