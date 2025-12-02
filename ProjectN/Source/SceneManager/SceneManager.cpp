@@ -146,6 +146,9 @@ void SceneManager::MakeScene(List Scene)
 	case SceneManager::OP:
 		m_pScene = std::make_unique<Title>();
 		break;
+		case SceneManager::First:
+		m_pScene = std::make_unique<FirstRound>();
+		break;
 	case SceneManager::Main:
 		m_pScene = std::make_unique<GameMain>();
 		break;

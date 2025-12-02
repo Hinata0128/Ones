@@ -19,8 +19,8 @@ public:
 
 
 	// スプライトを接続する
-	void AttachSprite(Sprite2D& pSprite) { m_pSprite = &pSprite; }
-	void DetachSprite() { m_pSprite = nullptr; }
+	void AttachSprite(std::shared_ptr<Sprite2D> pSprite) { m_pSprite = std::move(pSprite); }
+	void DetachSprite() { m_pSprite.reset(); }
 
 	// パターン番号を設定
 	void SetPatternNo(SHORT x, SHORT y)
@@ -30,6 +30,8 @@ public:
 	}
 
 protected:
-	Sprite2D*	m_pSprite;
+	//Sprite2D*	m_pSprite;
+	std::shared_ptr<Sprite2D> m_pSprite;
+
 	POINTS		m_PatternNo;	// パターン番号(マス目)
 };

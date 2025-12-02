@@ -24,8 +24,7 @@ public:
 
 private:
 	//HPバーの2Dスプライト.
-	Sprite2D* m_pHpBarSprite;
+	std::shared_ptr<Sprite2D> m_pHpBarSprite;
 	//UIObject* m_pHpBar;
 	std::shared_ptr<UIObject> m_pHpBar;
-
 };

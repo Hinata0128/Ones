@@ -21,7 +21,8 @@ void UIObject::Update()
 //ˆø”‚È‚µ‚ÌDraw()ŠÖ”
 void UIObject::Draw()
 {
-	if (m_pSprite == nullptr) {
+	if (!m_pSprite) 
+	{
 		return;
 	}
 
