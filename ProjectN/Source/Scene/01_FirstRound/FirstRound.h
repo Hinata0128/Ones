@@ -25,6 +25,10 @@ public:
 	void Draw() override;
 private:
 	//FirstRoundの2Dスプライト表示.
-	Sprite2D* m_pFirstRoundImg;
-	std::shared_ptr<UIObject> m_pFirstRound;
+	//Sprite2D* m_pFirstRoundImg;
+	//std::shared_ptr<UIObject> m_pFirstRound;
+
+	std::shared_ptr<Sprite2D> m_pSpriteTitle;
+	std::shared_ptr<UIObject> m_pTitleObj;
+
 };

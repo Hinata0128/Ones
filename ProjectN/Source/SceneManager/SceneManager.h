@@ -7,6 +7,8 @@
 
 #include "GameObject/StaticMeshObject/Portal/Portal.h"
 
+#include "Scene/01_FirstRound/FirstRound.h"
+
 /********************************************
 *	シーンマネージャークラス.
 **/
@@ -18,6 +20,7 @@ public:
 	enum List
 	{
 		OP,		//Title.
+		First,	//一ラウンド.
 		Main,	//GameMain.
 		Lose,	//GameOver.
 		Win,	//Ending.
