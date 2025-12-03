@@ -1,5 +1,8 @@
 #include "FirstRound.h"
 
+#include "SceneManager/SceneManager.h"
+
+
 FirstRound::FirstRound()
 	: SceneBase			()
 	//, m_pFirstRoundImg	( nullptr)
@@ -37,25 +40,13 @@ void FirstRound::Create()
 
 void FirstRound::Update()
 {
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
+	}
 }
 
 void FirstRound::Draw()
 {
-
-
 	m_pTitleObj->Draw();
-
-
-	//m_pFirstRoundImg = new Sprite2D;
-	////タイトル構造体.
-	//Sprite2D::SPRITE_STATE SSTitle =
-	//{ 1280.f, 720.f, 896.f, 560.f, 896.f , 560.f };
-
-	////タイトルスプライト読み込み.
-	//m_pFirstRoundImg->Init(_T("Data\\Texture\\FirstRoundImg.png"), SSTitle);
-
-
-	//m_pFirstRound->AttachSprite(*m_pFirstRoundImg);
-
-	//m_pFirstRound->Draw();
 }

@@ -66,6 +66,8 @@ void GameMain::Create()
 
 	//ポータルの初期化.
 	m_pPortal->Init();
+
+	UpdateCamera();
 }
 
 void GameMain::Update()
@@ -99,6 +101,7 @@ void GameMain::Update()
 	//地面.
 	m_pGround->Update();
 	m_pPlayer->Update();
+	UpdateCamera();
 
 	{
 		m_pEnemyNomal->Update();
@@ -107,17 +110,6 @@ void GameMain::Update()
 	}
 	// =========================================================================
 
-	//カメラをプレイヤーの初期位置の背後に設定する.
-	{
-		//ローカル変数.
-		constexpr float Ten = 10.0f;
-		constexpr float Fifteen = 15.0f;
-
-		D3DXVECTOR3 PlayerPos = m_pPlayer->GetPosition();
-		//いったんカメラの位置をここに固定しています.
-		m_Camera.vPosition = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + Ten, PlayerPos.z - Fifteen);
-		m_Camera.vLook = PlayerPos;
-	}
 
 	auto playerShotMgr = PShotManager::GetInstance();
 	auto enemyShotMgr = EnemyNomalShotManager::GetInstance();
@@ -131,6 +123,11 @@ void GameMain::Update()
 	m_pCollisionManager->Update();
 
 	m_pPortal->Update();
+
+	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::First);
+	}
 }
 
 void GameMain::Draw()
@@ -203,5 +200,18 @@ void GameMain::Projection()
 		aspect,		//アスペクト.
 		near_z,		//近いビュー平面のz値.
 		far_z);		//遠いビュー平面のz値.
+}
+
+//カメラをPlayerの背後に設定する.
+void GameMain::UpdateCamera()
+{
+	//ローカル変数.
+	constexpr float Ten = 10.0f;
+	constexpr float Fifteen = 15.0f;
+
+	D3DXVECTOR3 PlayerPos = m_pPlayer->GetPosition();
+	//いったんカメラの位置をここに固定しています.
+	m_Camera.vPosition = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + Ten, PlayerPos.z - Fifteen);
+	m_Camera.vLook = PlayerPos;
 }
 
