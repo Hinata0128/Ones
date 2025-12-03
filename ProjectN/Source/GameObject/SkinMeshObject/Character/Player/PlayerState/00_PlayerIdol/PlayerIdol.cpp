@@ -57,5 +57,6 @@ void PlayerIdol::Draw()
 
 void PlayerIdol::Init()
 {
+    m_pPlayerMove->Init();
     PlayerState::Init();
 }

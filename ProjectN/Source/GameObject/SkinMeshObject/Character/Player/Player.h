@@ -45,6 +45,8 @@ public:
 	//HPを取得する関数.
 	float GetHitPoint() const { return m_HitPoint; }
 
+	void InitializePlayerMove();
+
 public:
 	//Playerの動作用関数.
 	//W・Sの前進後退用関数.

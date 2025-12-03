@@ -51,8 +51,12 @@ Player::~Player()
 
 void Player::Update()
 {
-    //スキンメッシュオブジェクトとしてアニメーション速度を設定.
-    //m_pMesh->SetAnimSpeed(m_AnimSpeed);
+    //最初に書いておかないと、ポータルを触った時に弾が進まない.
+    if (m_pShotManager)
+    {
+        m_pShotManager->Update(); // 弾の移動処理を実行
+    }
+
 
     if (IsCapturingState())
     {
@@ -77,6 +81,15 @@ void Player::Update()
         return;
     }
 
+
+
+    //PlayerAttackManager の更新
+    if (m_pAttackManager)
+    {
+        m_pAttackManager->Update();
+    }
+
+
     //これでその時のStateに入る.
     if (m_pCurrentState)
     {
@@ -92,16 +105,6 @@ void Player::Update()
     ImGui::InputFloat3("pos", m_Position);
     ImGui::End();
 #endif
-
-    //PlayerAttackManager の更新
-    if (m_pAttackManager)
-    {
-        m_pAttackManager->Update();
-    }
-    if (m_pShotManager)
-    {
-        m_pShotManager->Update(); // 弾の移動処理を実行
-    }
 
     //ボーン座標の取得.
     //弾の発射位置を計算するために使用.
@@ -121,15 +124,17 @@ void Player::Draw()
 
 void Player::Init()
 {
-    //これでスケールの変更が可能になりました.
+    //Playerのサイズの変更.
     SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+    //Playerの初期位置の変更.
     SetPosition(-20.f, 0.f, -15.f);
 
+    //Playerの体力.
     m_HitPoint = 100.0f;
 
     //アニメーションの速度.
     m_AnimSpeed = 1.0f / 60.0f;
-
+    //当たり判定のサイズ
     m_BSphere.SetRadius(0.7f);
 
     //当たり判定の位置を変更.
@@ -173,6 +178,12 @@ D3DXVECTOR3 Player::GetHitCenter() const
 {
     //プレイヤーモデルの位置 (m_Position) にオフセットを加算して返す
     return m_Position + m_HitCenterOffset;
+}
+
+void Player::InitializePlayerMove()
+{
+    m_pAttackManager->CleanUpState(PlayerAttackManager::enAttack::Long);
+    m_pPlayerIdol->Init();
 }
 
 D3DXVECTOR3 Player::Player_WS(float RotationY) const

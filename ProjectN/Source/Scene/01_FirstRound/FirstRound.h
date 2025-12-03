@@ -31,4 +31,8 @@ private:
 	std::shared_ptr<Sprite2D> m_pSpriteTitle;
 	std::shared_ptr<UIObject> m_pTitleObj;
 
+	//時間経過でシーンを遷移する.
+	//タイマーのメンバ変数.
+	float m_Timer;
+
 };
