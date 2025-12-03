@@ -17,6 +17,8 @@ public:
 	virtual void Update() override;
 	virtual void Draw() override;
 
+	virtual void Create();
+
 
 	// スプライトを接続する
 	void AttachSprite(std::shared_ptr<Sprite2D> pSprite) { m_pSprite = std::move(pSprite); }

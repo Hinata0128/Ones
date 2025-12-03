@@ -37,3 +37,7 @@ void UIObject::Draw()
 	// ƒŒƒ“ƒ_ƒŠƒ“ƒO
 	m_pSprite->Render();
 }
+
+void UIObject::Create()
+{
+}

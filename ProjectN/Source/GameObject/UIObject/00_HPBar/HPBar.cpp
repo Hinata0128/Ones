@@ -8,6 +8,9 @@ HPBar::HPBar()
 	, m_pHpBarSprite	( std::make_shared<Sprite2D>() )
 	, m_pHpBar			( std::make_shared<UIObject>() )
 {
+	//今はコンストラクタで書いている.
+	//場所が違うならDraw()に書く.
+	Create();
 }
 
 HPBar::~HPBar()
@@ -21,11 +24,17 @@ void HPBar::Update()
 
 void HPBar::Draw()
 {
+	//これでHPBarを表示する.
+	m_pHpBar->Draw();
+}
+
+void HPBar::Create()
+{
 	const float Size = 64.0;
-	
+
 	//HPBarの構造体.
 	Sprite2D::SPRITE_STATE SSHPBar =
-	{ 
+	{
 		Size * 6,	//横の長さを設定.
 		Size,		//縦の長さ.
 		Size,		//画像の区切り.		
@@ -47,8 +56,5 @@ void HPBar::Draw()
 
 	//HPの表示位置を変更する.
 	m_pHpBar->SetPosition(size * 0.5f, pos_y, 0.f);
-
-	//これでHPBarを表示する.
-	m_pHpBar->Draw();
 }
 
