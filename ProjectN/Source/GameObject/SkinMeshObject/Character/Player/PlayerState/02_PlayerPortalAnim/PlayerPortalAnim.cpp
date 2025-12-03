@@ -3,6 +3,8 @@
 #include "..//..//Player.h"
 #include "..//..//PlayerContext/PlayerContext.h"
 
+#include "System/00_Manager/02_PShotManager/PShotManager.h"
+
 PlayerPortalAnim::PlayerPortalAnim(Player* pOwner)
 	: PlayerState	( pOwner )
 {
@@ -24,6 +26,9 @@ void PlayerPortalAnim::Enter()
     ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 
     PlayerState::Enter();
+
+    m_pOwner->InitializePlayerMove();
+
 }
 
 void PlayerPortalAnim::Update()

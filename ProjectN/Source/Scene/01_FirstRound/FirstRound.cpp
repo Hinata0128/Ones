@@ -1,6 +1,7 @@
 #include "FirstRound.h"
 
 #include "SceneManager/SceneManager.h"
+#include "System/02_Singleton/Timer/Timer.h"
 
 
 FirstRound::FirstRound()
@@ -10,6 +11,8 @@ FirstRound::FirstRound()
 
 	, m_pSpriteTitle(std::make_shared<Sprite2D>())
 	, m_pTitleObj(std::make_shared<UIObject>())
+	
+	, m_Timer	(0.0f)
 
 {
 }
@@ -40,10 +43,25 @@ void FirstRound::Create()
 
 void FirstRound::Update()
 {
+	//タイマーの動作関数.
+	//Mainクラスで書くと、弾の発射が機能しなくなったのでここで呼ぶ.
+	Timer::GetInstance().Update();
+
+	float deltaTime = Timer::GetInstance().DeltaTime();
+
+	m_Timer += deltaTime;
+
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
 	}
+
+	if (m_Timer >= 0.5f)
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
+		return;
+	}
+
 }
 
 void FirstRound::Draw()

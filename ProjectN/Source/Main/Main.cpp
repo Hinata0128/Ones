@@ -81,6 +81,7 @@ void Main::Update()
 	ImGuiManager::GetInstance()->NewFrameSetting();
 
 	SceneManager::GetInstance()->Update();
+	Timer::GetInstance().Update();
 }
 
 //=================================================

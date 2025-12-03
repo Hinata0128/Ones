@@ -26,6 +26,11 @@ PlayerMove::~PlayerMove()
 
 void PlayerMove::Enter()
 {
+
+
+
+
+
     PlayerState::Enter();
 }
 
@@ -76,6 +81,10 @@ void PlayerMove::Draw()
 
 void PlayerMove::Init()
 {
+    PlayerContext ctx(m_pOwner);
+    step = enStep::none;
+    ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+    m_IsShot = false;
     PlayerState::Init();
 }
 

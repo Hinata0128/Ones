@@ -19,7 +19,7 @@ public:
     SkinMesh*                   Mesh;
     LPD3DXANIMATIONCONTROLLER   AnimCtrl;
     D3DXVECTOR3&                BonePos;
-
+    
     PlayerContext(Player* player);
 private:
 };
