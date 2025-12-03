@@ -48,6 +48,8 @@ public:
 	//プロジェクション関数.
 	void Projection();
 
+	void UpdateCamera();
+
 private:
 	//ゲームで扱うスプライトデータ(使いまわす資源).
 	std::unique_ptr<Sprite3D> m_pSp3D;
