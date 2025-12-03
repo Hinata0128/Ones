@@ -20,6 +20,8 @@ public:
 	void Update() override;
 	//表示関数.
 	void Draw() override;
+
+	void Create() override;
 private:
 	//HPバーの2Dスプライト.
 	std::shared_ptr<Sprite2D> m_pHpBarSprite;

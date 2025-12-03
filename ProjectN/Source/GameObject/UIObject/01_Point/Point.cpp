@@ -15,3 +15,7 @@ void Point::Update()
 void Point::Draw()
 {
 }
+
+void Point::Create()
+{
+}
