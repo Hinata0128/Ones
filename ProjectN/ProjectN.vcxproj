@@ -221,8 +221,9 @@
     <ClCompile Include="Source\Main\Main.cpp" />
     <ClCompile Include="Source\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\01_FirstRound\FirstRound.cpp" />
+    <ClCompile Include="Source\Scene\04_SecondRound\SecondRound.cpp" />
     <ClCompile Include="Source\Scene\05_Ending\Ending.cpp" />
-    <ClCompile Include="Source\Scene\04_GameMain\GameMain.cpp" />
+    <ClCompile Include="Source\Scene\02_GameMain\GameMain.cpp" />
     <ClCompile Include="Source\Scene\06_GameOver\GameOver.cpp" />
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\00_Title\Title.cpp" />
@@ -303,8 +304,9 @@
     <ClInclude Include="Source\Main\Main.h" />
     <ClInclude Include="Source\SceneManager\SceneManager.h" />
     <ClInclude Include="Source\Scene\01_FirstRound\FirstRound.h" />
+    <ClInclude Include="Source\Scene\04_SecondRound\SecondRound.h" />
     <ClInclude Include="Source\Scene\05_Ending\Ending.h" />
-    <ClInclude Include="Source\Scene\04_GameMain\GameMain.h" />
+    <ClInclude Include="Source\Scene\02_GameMain\GameMain.h" />
     <ClInclude Include="Source\Scene\06_GameOver\GameOver.h" />
     <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\00_Title\Title.h" />

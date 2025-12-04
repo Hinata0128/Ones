@@ -12,7 +12,7 @@
 * 
 **/
 
-class FirstRound
+class FirstRound final
 	: public SceneBase
 {
 public:
