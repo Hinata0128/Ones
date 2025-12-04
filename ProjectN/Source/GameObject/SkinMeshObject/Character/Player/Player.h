@@ -44,7 +44,10 @@ public:
 
 	//HPを取得する関数.
 	float GetHitPoint() const { return m_HitPoint; }
-
+	// Playerの動作の初期化用関数.
+	// 攻撃マネージャークラスの遠距離攻撃の初期化.
+	// PlayerIdolの初期化.
+	// 他の方法で作成するやり方を調べて実装する.
 	void InitializePlayerMove();
 
 public:
