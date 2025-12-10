@@ -153,6 +153,7 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
 
+
             break;
         }
     }
@@ -213,6 +214,9 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
                 m_IsShot = true;
 
                 LStep = enLeftStep::none;
+
+               // m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+
             }
             return true;
         }
