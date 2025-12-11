@@ -42,7 +42,8 @@ void PlayerMove::Update()
     //右クリックの攻撃の関数.
     RbuttonAttackStep(ctx);
     bool RAttack = IsRAttacking;
-    bool LAttacking = LButtonAttackStep(ctx);
+    LButtonAttackStep(ctx);
+    bool LAttacking = IsLAttacking;
     //WASDの入力取得.
     Move = GetMoveInput();
 
@@ -161,28 +162,30 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 
 
 //左クリックを押したときの近距離攻撃.
-bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
+void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 {
     //左クリックを押したら次のステップに入る.
-    if (GetAsyncKeyState(VK_LBUTTON) & 0x0001)
+    if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
     {
         if (LStep == enLeftStep::none)
         {
             LStep = enLeftStep::first;
+            IsLAttacking = true;
         }
     }
 
     switch (LStep)
     {
         case enLeftStep::none:
-            return false; //攻撃していない→移動処理に移動.
+            IsLAttacking = false;
+            break;//攻撃していない→移動処理に移動.
         case enLeftStep::first:
             //アニメーション切り替え.
             ctx.AnimNo = 6; //アニメーション番号.
             ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
             LStep = enLeftStep::Attack;
-            return true;
+            break;
         case enLeftStep::Attack:
         {
             double period = ctx.Mesh->GetAnimPeriod(18);
@@ -194,14 +197,14 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
             {
                 ctx.AnimTime += ctx.AnimSpeed;
             }
-            return true;
+            break;
         }
         case enLeftStep::end:
             ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
 
             LStep = enLeftStep::release_anim;
-            return true;
+            break;
         case enLeftStep::release_anim:
         {
             double period = ctx.Mesh->GetAnimPeriod(6);
@@ -218,10 +221,9 @@ bool PlayerMove::LButtonAttackStep(PlayerContext& ctx)
                // m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
 
             }
-            return true;
+            break;
         }
     }
-    return false;
 }
 
 void PlayerMove::HandleMove(
