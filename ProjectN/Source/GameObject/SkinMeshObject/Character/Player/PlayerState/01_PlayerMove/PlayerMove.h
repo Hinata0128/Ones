@@ -10,7 +10,6 @@ class PlayerContext;
 
 /******************************************************************
 *	PlayerMoveClass.
-* エラーが出たので新しい環境に変更しました
 **/
 
 class PlayerMove final
@@ -71,7 +70,7 @@ public:
 	void RbuttonAttackStep(PlayerContext& ctx);
 	//Playerの左クリックの攻撃関数.
 	//引数を書かないといけないけれども一旦関数を作成するために書いていない.
-	bool LButtonAttackStep(PlayerContext& ctx);
+	void LButtonAttackStep(PlayerContext& ctx);
 
 	//Playerの動作[GetAsyncKeyState()]を書く関数.
 	void HandleMove(
@@ -97,4 +96,6 @@ private:
 
 	//攻撃状態をboolで管理させる.
 	bool IsRAttacking = false;
+	//右クリックの攻撃状態をboolで管理する.
+	bool IsLAttacking = false;
 };
