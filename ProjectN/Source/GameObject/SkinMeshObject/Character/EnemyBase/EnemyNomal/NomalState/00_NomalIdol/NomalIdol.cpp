@@ -4,6 +4,8 @@
 #include "..//..//NomalContext//NomalContext.h"
 #include "..//01_NomalMove/NomalMove.h"
 
+#include "System/02_Singleton/Timer/Timer.h"
+
 NomalIdol::NomalIdol(EnemyNomal* pOwner)
 	: NomalState	(pOwner)
 {
@@ -19,49 +21,39 @@ void NomalIdol::Enter()
 
 void NomalIdol::Update()
 {
-//EnemyのIdol状態の処理.
-#if 1
-	NomalContext ctx(m_pOwner);
+    NomalContext ctx(m_pOwner);
 
-	//今は隠しておく.
-	//移動しているかフラグ.
-	bool IsMoving = false;
-	//待機のアニメーションの変数.
-	const int Idol_Anim_No = 0;
+    const int IDLE_ANIM_NO = 2;
 
-	if (!IsMoving)
-	{
-		//現在のアニメーション番号が0番でない場合のみ切り替える.
-		if (ctx.AnimNo != Idol_Anim_No)
-		{
-			ctx.AnimNo = Idol_Anim_No;
-			//アニメション時間をリセット.
-			ctx.AnimTime = 0.0;
+    // アニメ番号が違うときだけセット（1回だけ実行される）
+    if (ctx.AnimNo != IDLE_ANIM_NO)
+    {
+        ctx.AnimNo = IDLE_ANIM_NO;
+        ctx.AnimTime = 0.0f;
 
-			if (ctx.Mesh && ctx.AnimCtrl)
-			{
-				//アニメションコントローラーに0番をセット.
-				ctx.Mesh->ChangeAnimSet(Idol_Anim_No, ctx.AnimCtrl);
-			}
-		}
-	}
+        ctx.Mesh->ChangeAnimSet(IDLE_ANIM_NO, ctx.AnimCtrl);
+    }
 
-	EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
+    // アニメーションを前進
+    float delta = Timer::GetInstance().DeltaTime();
+    ctx.AnimTime += ctx.AnimSpeed * delta;
 
-	D3DXVECTOR3 diff = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
-	float distanceSq = D3DXVec3LengthSq(&diff);
+    // 共通更新
+    NomalState::Update();
 
-	const float changeDistance = 15.0f * 15.0f;   // 遷移距離(15m)
+    // 距離で移動ステートへ遷移
+    EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
 
-	if (distanceSq < changeDistance)
-	{
-		// Moveステートへ切り替え
-		pEnemy->ChangeState(pEnemy->m_pMove.get());
-		return;
-	}
+    D3DXVECTOR3 diff = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
+    float distanceSq = D3DXVec3LengthSq(&diff);
 
-	NomalState::Update();
-#endif
+    const float changeDistance = 15.0f * 15.0f;
+
+    if (distanceSq < changeDistance)
+    {
+        pEnemy->ChangeState(pEnemy->m_pMove.get());
+        return;
+    }
 }
 
 void NomalIdol::Exit()

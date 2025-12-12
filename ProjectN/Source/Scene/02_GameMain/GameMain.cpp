@@ -108,6 +108,7 @@ void GameMain::Update()
 
 		m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
 	}
+
 	// =========================================================================
 
 
@@ -146,6 +147,7 @@ void GameMain::Draw()
 	PShotManager::GetInstance()->Draw();
 
 	m_pEnemyNomal->Draw();
+
 
 #ifdef _DEBUG
 

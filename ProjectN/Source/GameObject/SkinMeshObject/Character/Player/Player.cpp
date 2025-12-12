@@ -109,6 +109,7 @@ void Player::Update()
     //ボーン座標の取得.
     //弾の発射位置を計算するために使用.
     m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
+    //m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
 
     //基底クラスの更新処理.
@@ -126,8 +127,10 @@ void Player::Init()
 {
     //Playerのサイズの変更.
     SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+    //SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
     //Playerの初期位置の変更.
     SetPosition(-20.f, 0.f, -15.f);
+    
 
     //Playerの体力.
     m_HitPoint = 100.0f;

@@ -13,7 +13,14 @@ class NomalMove final
 	: public NomalState
 {
 public:
-
+	//移動のアニメーション用の列挙.
+	enum class enRunAnimation : byte
+	{
+		none,		//何もしない.
+		Right_Run,	//右の移動.
+		Left_Run,	//左の移動.
+	};
+public:
 	NomalMove(EnemyNomal* pOwner);
 	~NomalMove();
 
@@ -42,4 +49,9 @@ private:
 	float ENEMY_NOMAL_RADIUS;
 	float SPECIFIED_RANGE_ANGLE;
 	float MOVE_SPEED;
+
+	enRunAnimation m_RunList;
+
+	//右歩きの時のアニメーション関数.
+	void RightRunAnim(NomalContext& ctx);
 };

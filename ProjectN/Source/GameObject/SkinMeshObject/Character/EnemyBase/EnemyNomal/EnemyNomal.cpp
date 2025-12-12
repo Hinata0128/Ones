@@ -1,10 +1,8 @@
 ﻿#include "EnemyNomal.h"
 #include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 #include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
-#include "System/02_Singleton/Timer//Timer.h"
-
-#include "NomalContext//NomalContext.h"
-
+#include "System/02_Singleton/Timer/Timer.h"
+#include "NomalContext/NomalContext.h"
 #include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/NomalState/NomalState.h"
 
 constexpr float zero = 0.0f;
@@ -12,7 +10,6 @@ constexpr float zero = 0.0f;
 EnemyNomal::EnemyNomal()
     : EnemyBase()
     , m_pENShotManager(nullptr)
-
     , m_pIdol(std::make_unique<NomalIdol>(this))
     , m_pMove(std::make_unique<NomalMove>(this))
     , m_pDead(std::make_unique<NomalDead>(this))
@@ -20,30 +17,29 @@ EnemyNomal::EnemyNomal()
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
     AttachMesh(shared_mesh);
-    //サイズの変更.
+
+    // サイズと位置
     SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
-    SetPosition(20.0f, 0.f, 15.f);    
+    SetPosition(20.0f, 0.f, 15.f);
 
-    m_pIdol = std::make_unique<NomalIdol>(this);
-    m_pMove = std::make_unique<NomalMove>(this);
-
+    // ステートセット
     m_pCurrentState = m_pIdol.get();
-    m_pCurrentState->Enter();
+    if (m_pCurrentState)
+    {
+        m_pCurrentState->Enter();
+    }
 
-
-    m_AnimSpeed = 0.0002f;
+    //アニメーションの再生速度.
+    m_AnimSpeed = 1.0f / 60.0f;
 
     m_pENShotManager = EnemyNomalShotManager::GetInstance();
 
     m_BSphere.SetRadius(1.0f);
+    m_HitCenterOffset = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 
-    //当たり判定の位置を変更.
-    m_HitCenterOffset = D3DXVECTOR3(zero, 3.0f, zero);
-
-    // クールタイム初期化
-    m_CoolTime = 0.8f; // 1秒ごとに発射
+    m_CoolTime = 0.8f;
     m_ShotCoolDown = m_CoolTime;
-    
+
     Init();
 }
 
@@ -51,32 +47,51 @@ EnemyNomal::~EnemyNomal()
 {
 }
 
+void EnemyNomal::Init()
+{
+    m_HitPoint = 100.0f;
+
+    //待機アニメーションを再生.
+    const int IDLE_ANIM = 0;
+    if (m_pMesh && m_pAnimCtrl)
+    {
+        m_pMesh->ChangeAnimSet(IDLE_ANIM, m_pAnimCtrl);
+        m_pMesh->SetAnimSpeed(m_AnimSpeed);
+    }
+
+
+    EnemyBase::Init();
+}
+
 void EnemyNomal::Update()
 {
-    m_pMesh->SetAnimSpeed(m_AnimSpeed);
     float deltaTime = Timer::GetInstance().DeltaTime();
 
     m_pENShotManager->Update();
 
-
-    // クールタイム減算 
+    // クールタイム
     m_ShotCoolDown -= deltaTime;
-    if (m_ShotCoolDown < 0.0f) m_ShotCoolDown = 0.0f;
 
-    // ボーン座標取得
-    m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
+    if (m_ShotCoolDown < 0.0f)
+    {
+        m_ShotCoolDown = 0.0f;
+    }
 
-    // アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
     if (m_pCurrentState)
     {
-        //Idol/Moveを入る.
         m_pCurrentState->Update();
     }
-    
 
-    AutoShot();
+
+    //今敵の攻撃が邪魔だからコメントで消しておく.
+    //AutoShot();
+
+
+
+    // ボーン座標取得
+    m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
     EnemyBase::Update();
 }
@@ -84,57 +99,39 @@ void EnemyNomal::Update()
 void EnemyNomal::Draw()
 {
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
+
     EnemyBase::Draw();
     m_pENShotManager->Draw();
 }
 
-void EnemyNomal::Init()
-{
-    m_HitPoint = 100.0f;
-
-    EnemyBase::Init();
-}
-
 void EnemyNomal::Hit()
 {
-    constexpr float ten = 10.0f;
-    //Playerのダメージ実装用のローカル変数.
-    constexpr float Dead_HP = zero;
-    constexpr float Damege_Hit = ten;
+    m_HitPoint -= 10.0f;
 
-    //くらった時のHPの減少.
-    m_HitPoint -= Damege_Hit;
-    if (m_HitPoint <= Dead_HP)
+    if (m_HitPoint <= 0.0f)
     {
-        //ここでPlayerのHPが0になったらPlayerDeadClassを呼ぶ.
-        m_HitPoint = Dead_HP;
+        m_HitPoint = 0.0f;
 
-        // nextState という名前に修正し、ステート遷移ロジックを実装
         NomalState* nextState = m_pDead.get();
 
         if (m_pCurrentState != nextState)
         {
-            if (m_pCurrentState) {
-                m_pCurrentState->Exit();    //古いステートの終了処理
-            }
-            m_pCurrentState = nextState;    //ステートを切り替え
-            if (m_pCurrentState) {
-                m_pCurrentState->Enter();   //新しいステートの開始処理
-            }
+            if (m_pCurrentState) m_pCurrentState->Exit();
+            m_pCurrentState = nextState;
+            if (m_pCurrentState) m_pCurrentState->Enter();
         }
     }
-
-
 }
-
 
 void EnemyNomal::ChangeState(NomalState* state)
 {
     if (m_pCurrentState == state) return;
 
-    m_pCurrentState->Exit();
+    if (m_pCurrentState) m_pCurrentState->Exit();
+
     m_pCurrentState = state;
-    m_pCurrentState->Enter();
+
+    if (m_pCurrentState) m_pCurrentState->Enter();
 }
 
 void EnemyNomal::AutoShot()
@@ -185,6 +182,5 @@ void EnemyNomal::AutoShot()
 
 D3DXVECTOR3 EnemyNomal::GetHitCenter() const
 {
-    // プレイヤーモデルの位置 (m_Position) にオフセットを加算して返す
     return m_Position + m_HitCenterOffset;
 }
