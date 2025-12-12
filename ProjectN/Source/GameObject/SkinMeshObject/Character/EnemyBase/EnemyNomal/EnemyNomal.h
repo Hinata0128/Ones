@@ -17,7 +17,6 @@ class EnemyNomal final
 {
 public:
 	friend NomalContext;
-
 public:
 	EnemyNomal();
 	~EnemyNomal() override;
@@ -34,7 +33,7 @@ public:
 
 	D3DXVECTOR3 GetHitCenter() const;
 
-	void SetEnemyPosition(const D3DXVECTOR3& pos) 
+	void SetEnemyPosition(const D3DXVECTOR3& pos)
 	{
 		GameObject::SetPosition(pos);
 	}

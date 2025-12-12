@@ -13,7 +13,7 @@ EnemyNomalShot::~EnemyNomalShot() {}
 
 void EnemyNomalShot::Update()
 {
-    constexpr float MaxRange = 30.0f;
+    constexpr float MaxRange = 9999.0f;
     if (!m_IsActive) return;
 
     if (m_Disp)
@@ -24,7 +24,10 @@ void EnemyNomalShot::Update()
     }
 }
 
-void EnemyNomalShot::Draw() { ShotBase::Draw(); }
+void EnemyNomalShot::Draw() 
+{
+    ShotBase::Draw(); 
+}
 
 void EnemyNomalShot::Init()
 {

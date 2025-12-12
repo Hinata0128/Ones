@@ -17,6 +17,8 @@ NomalMove::NomalMove(EnemyNomal* pOwner)
 	, ENEMY_NOMAL_RADIUS(10.0f)
 	, SPECIFIED_RANGE_ANGLE(D3DX_PI / 4.0f)
 	, MOVE_SPEED(3.0f)
+
+	, m_RunList	(enRunAnimation::none)
 {
 }
 
@@ -36,6 +38,10 @@ void NomalMove::Update()
 	if (!pEnemy) return;
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
+
+
+	NomalContext ctx(m_pOwner);
+
 
 	const D3DXVECTOR3& EnemyPos = pEnemy->GetPosition();
 	const D3DXVECTOR3& PlayerPos = pEnemy->GetPlayerPos();
@@ -103,6 +109,34 @@ void NomalMove::Update()
 		pEnemy->AddPosition(MoveStep);
 	}
 
+	// 右・左移動のアニメ番号
+	const int RIGHT_RUN_ANIM = 8;
+	const int LEFT_RUN_ANIM = 9;
+
+	// 回転方向で判定
+	//自分たちから見てのアニメーション
+	if (m_RotationDirection > 0)
+	{
+		// → 右移動アニメ
+		if (ctx.AnimNo != LEFT_RUN_ANIM)
+		{
+			ctx.AnimNo = LEFT_RUN_ANIM;
+			ctx.AnimTime = 0.0f;
+			ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+		}
+	}
+	else
+	{
+		// → 左移動アニメ
+		if (ctx.AnimNo != RIGHT_RUN_ANIM)
+		{
+			ctx.AnimNo = RIGHT_RUN_ANIM;
+			ctx.AnimTime = 0.0f;
+			ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+		}
+	}
+
+
 	NomalState::Update();
 }
 
@@ -119,4 +153,9 @@ void NomalMove::Draw()
 void NomalMove::Init()
 {
 	NomalState::Init();
+}
+
+void NomalMove::RightRunAnim(NomalContext& ctx)
+{
+	
 }
