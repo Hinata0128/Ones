@@ -28,7 +28,8 @@ void SkinMeshManager::Create()
 	MeshList SList[] =
 	{
 		{ static_cast<int>(SkinList::Player),	_T("Data\\Mesh\\Skin\\EXTINGER\\extinger.X") },
-		{ static_cast<int>(SkinList::Enemy),	_T("Data\\Mesh\\Skin\\zako\\zako.X") },
+		{ static_cast<int>(SkinList::Enemy),	_T("Data\\Mesh\\Skin\\boss\\boss.X") },
+		{ static_cast<int>(SkinList::zako),	_T("Data\\Mesh\\Skin\\zako\\zako.X") },
 	};
 
 	//”z—ñ‚Ì—v‘f”‚ğæ“¾.

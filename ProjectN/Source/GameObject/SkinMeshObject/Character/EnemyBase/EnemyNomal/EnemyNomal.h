@@ -60,8 +60,6 @@ public:
 private:
 	EnemyNomalShotManager* m_pENShotManager;
 
-	D3DXVECTOR3 m_ShotOffset;//弾の発射位置オフセット
-
 	float m_ShotCoolDown;	//弾の発射クールダウンタイマー
 	float m_CoolTime;		//弾の発射間隔(1.0f)※コンストラクタで設定している.
 

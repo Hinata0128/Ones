@@ -18,6 +18,7 @@ public:
 	{
 		Player,		// ƒvƒŒƒCƒ„[.
 		Enemy,		// ‰¼‚Ì“G‚Å‚·.
+		zako,
 
 		Max
 	};
