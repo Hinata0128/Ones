@@ -1,7 +1,7 @@
 #include "NomalState.h"
-#include "..//EnemyNomal.h"
+#include "..//Boss.h"
 
-NomalState::NomalState(EnemyNomal* pOwner)
+NomalState::NomalState(Boss* pOwner)
 	: StateBase	()
 	, m_pOwner	(pOwner)
 {
@@ -31,7 +31,7 @@ void NomalState::Init()
 {
 }
 
-EnemyNomal* NomalState::GetOwner() const
+Boss* NomalState::GetOwner() const
 {
 	return m_pOwner;
 }

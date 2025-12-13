@@ -4,7 +4,7 @@
 //----------------------------------
 // EnemyNomalClassの前方宣言.
 //----------------------------------
-class EnemyNomal;
+class Boss;
 
 /**********************************************************
 *	EnemyNomalStateBase
@@ -18,7 +18,7 @@ class NomalState
 public:
 	//引数アリのコンストラクタを使用します.
 	//引数にEnemyの情報を取得する.
-	NomalState(EnemyNomal* pOwner);
+	NomalState(Boss* pOwner);
 	virtual ~NomalState() override;
 
 	//初期化
@@ -34,8 +34,8 @@ public:
 
 protected:
 	//派生クラスからOwnerを取得.
-	EnemyNomal* GetOwner() const;
+	Boss* GetOwner() const;
 
-	EnemyNomal* m_pOwner;
+	Boss* m_pOwner;
 
 };

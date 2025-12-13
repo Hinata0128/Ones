@@ -4,7 +4,7 @@
 class StaticMeshManager;
 class ImGuiManager;
 class Player;
-class EnemyNomal;
+class Boss;
 
 /************************************************************
 *	陣地を守用のポータル
@@ -40,7 +40,7 @@ public:
 	//Playerの位置を設定するSet関数.
 	void SetPlayer(std::shared_ptr<Player> player) { m_pPlayer = player; }
 	//敵の位置を設定するSet関数.
-	void SetEnemyNomal(std::shared_ptr<EnemyNomal> nomal) { m_pEnemy = nomal; }
+	void SetEnemyNomal(std::shared_ptr<Boss> nomal) { m_pEnemy = nomal; }
 
 	//ポータルのステートのSet関数.
 	void SetPortalState(PortalPriority state);
@@ -64,7 +64,7 @@ private:
 	//Playerの位置の取得のためにメンバ変数としてしようする.
 	std::weak_ptr<Player> m_pPlayer;
 	//敵の位置の取得のためにメンバ変数として使用します
-	std::weak_ptr<EnemyNomal> m_pEnemy;
+	std::weak_ptr<Boss> m_pEnemy;
 
 	//ポータルの行動列挙.
 	PortalPriority m_pPortalState;

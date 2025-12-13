@@ -2,24 +2,24 @@
 #include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyBase.h"	//ベースクラス.
 #include "..//..//..//..//..//Collision/BoundingSphere/BoundingSphere.h" // BoundingSphereの定義が必要
 
-#include "..//EnemyNomal/NomalState/01_NomalMove/NomalMove.h" // NomalMove の定義が必要
+#include "..//00_Boss/NomalState/01_NomalMove/NomalMove.h" // NomalMove の定義が必要
 
-#include "..//EnemyNomal/NomalState/00_NomalIdol/NomalIdol.h"
-#include "..//EnemyNomal/NomalState/02_NomalDead/NomalDead.h"
+#include "..//00_Boss/NomalState/00_NomalIdol/NomalIdol.h"
+#include "..//00_Boss/NomalState/02_NomalDead/NomalDead.h"
 
-class EnemyNomalShotManager;
+class BossShotManager;
 class Timer;
 class NomalContext;
 class NomalState;
 
-class EnemyNomal final
+class Boss final
 	: public EnemyBase
 {
 public:
 	friend NomalContext;
 public:
-	EnemyNomal();
-	~EnemyNomal() override;
+	Boss();
+	~Boss() override;
 
 	void Update() override;
 	void Draw() override;
@@ -57,7 +57,7 @@ public:
 	std::unique_ptr<NomalMove> m_pMove;
 	std::unique_ptr<NomalDead> m_pDead;
 private:
-	EnemyNomalShotManager* m_pENShotManager;
+	BossShotManager* m_pENShotManager;
 
 	float m_ShotCoolDown;	//弾の発射クールダウンタイマー
 	float m_CoolTime;		//弾の発射間隔(1.0f)※コンストラクタで設定している.

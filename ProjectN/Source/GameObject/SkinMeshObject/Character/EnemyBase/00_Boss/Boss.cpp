@@ -1,13 +1,13 @@
-﻿#include "EnemyNomal.h"
+﻿#include "Boss.h"
 #include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
-#include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
+#include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 #include "System/02_Singleton/Timer/Timer.h"
 #include "NomalContext/NomalContext.h"
-#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/NomalState/NomalState.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/NomalState/NomalState.h"
 
 constexpr float zero = 0.0f;
 
-EnemyNomal::EnemyNomal()
+Boss::Boss()
     : EnemyBase()
     , m_pENShotManager(nullptr)
     , m_pIdol(std::make_unique<NomalIdol>(this))
@@ -32,7 +32,7 @@ EnemyNomal::EnemyNomal()
     //アニメーションの再生速度.
     m_AnimSpeed = 1.0f / 60.0f;
 
-    m_pENShotManager = EnemyNomalShotManager::GetInstance();
+    m_pENShotManager = BossShotManager::GetInstance();
 
     m_BSphere.SetRadius(1.0f);
     m_HitCenterOffset = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
@@ -43,11 +43,11 @@ EnemyNomal::EnemyNomal()
     Init();
 }
 
-EnemyNomal::~EnemyNomal()
+Boss::~Boss()
 {
 }
 
-void EnemyNomal::Init()
+void Boss::Init()
 {
     m_HitPoint = 100.0f;
 
@@ -63,7 +63,7 @@ void EnemyNomal::Init()
     EnemyBase::Init();
 }
 
-void EnemyNomal::Update()
+void Boss::Update()
 {
     float deltaTime = Timer::GetInstance().DeltaTime();
 
@@ -96,7 +96,7 @@ void EnemyNomal::Update()
     EnemyBase::Update();
 }
 
-void EnemyNomal::Draw()
+void Boss::Draw()
 {
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
 
@@ -104,7 +104,7 @@ void EnemyNomal::Draw()
     m_pENShotManager->Draw();
 }
 
-void EnemyNomal::Hit()
+void Boss::Hit()
 {
     m_HitPoint -= 10.0f;
 
@@ -123,7 +123,7 @@ void EnemyNomal::Hit()
     }
 }
 
-void EnemyNomal::ChangeState(NomalState* state)
+void Boss::ChangeState(NomalState* state)
 {
     if (m_pCurrentState == state) return;
 
@@ -134,7 +134,7 @@ void EnemyNomal::ChangeState(NomalState* state)
     if (m_pCurrentState) m_pCurrentState->Enter();
 }
 
-void EnemyNomal::AutoShot()
+void Boss::AutoShot()
 {
     if (m_ShotCoolDown == 0.0f)
     {
@@ -180,7 +180,7 @@ void EnemyNomal::AutoShot()
     }
 }
 
-D3DXVECTOR3 EnemyNomal::GetHitCenter() const
+D3DXVECTOR3 Boss::GetHitCenter() const
 {
     return m_Position + m_HitCenterOffset;
 }

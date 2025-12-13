@@ -6,7 +6,7 @@
 #include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
-#include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
+#include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 #include "System/00_Manager/06_CollisionManager/CollisionManager.h" 
 #include "GameObject//SkinMeshObject//Character//Player//Player.h" 
 
@@ -18,7 +18,7 @@ GameMain::GameMain()
 
 	, m_pPlayer(std::make_shared<Player>())
 
-	, m_pEnemyNomal(std::make_shared<EnemyNomal>())
+	, m_pEnemyNomal(std::make_shared<Boss>())
 
 	, m_pCollisionManager(std::make_shared<CollisionManager>())
 
@@ -61,7 +61,7 @@ void GameMain::Create()
 	//これでGameMainにあるEnemyNomalの位置を取得してポータルの増加を作成している.
 	m_pPortal->SetEnemyNomal(m_pEnemyNomal);
 
-	EnemyNomalShotManager::GetInstance()->Init();
+	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
 
 	//ポータルの初期化.
@@ -113,7 +113,7 @@ void GameMain::Update()
 
 
 	auto playerShotMgr = PShotManager::GetInstance();
-	auto enemyShotMgr = EnemyNomalShotManager::GetInstance();
+	auto enemyShotMgr = BossShotManager::GetInstance();
 
 
 	m_pCollisionManager->SetPlayer(m_pPlayer); // shared_ptr を渡す

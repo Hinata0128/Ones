@@ -1,22 +1,22 @@
-#include "EnemyNomalShotManager.h"
+#include "BossShotManager.h"
 
-EnemyNomalShotManager* EnemyNomalShotManager::m_pInstance = nullptr;
+BossShotManager* BossShotManager::m_pInstance = nullptr;
 
-EnemyNomalShotManager::EnemyNomalShotManager()
+BossShotManager::BossShotManager()
 {
 }
 
-EnemyNomalShotManager::~EnemyNomalShotManager()
+BossShotManager::~BossShotManager()
 {
 }
 
-EnemyNomalShotManager* EnemyNomalShotManager::GetInstance()
+BossShotManager* BossShotManager::GetInstance()
 {
-	static EnemyNomalShotManager s_Instance;	//唯一のインスタンス生成.
+	static BossShotManager s_Instance;	//唯一のインスタンス生成.
 	return &s_Instance;
 }
 
-void EnemyNomalShotManager::Update()
+void BossShotManager::Update()
 {
 	for (auto it = m_EnemyNomalShot.begin(); it != m_EnemyNomalShot.end();)
 	{
@@ -33,7 +33,7 @@ void EnemyNomalShotManager::Update()
 	}
 }
 
-void EnemyNomalShotManager::Draw()
+void BossShotManager::Draw()
 {
 	for (std::unique_ptr<EnemyNomalShot>& ENomalShot : m_EnemyNomalShot)
 	{
@@ -43,12 +43,12 @@ void EnemyNomalShotManager::Draw()
 	}
 }
 
-void EnemyNomalShotManager::Init()
+void BossShotManager::Init()
 {
 	m_EnemyNomalShot.clear();
 }
 
-void EnemyNomalShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton)
+void BossShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton)
 {
 	constexpr float Speed = 0.05f;	//弾の速度設定.
 
@@ -61,7 +61,7 @@ void EnemyNomalShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DX
 	m_EnemyNomalShot.push_back(std::move(ENomalShot));	//リストに追加.
 }
 
-void EnemyNomalShotManager::ReMoveEnemyNomalShot(size_t index)
+void BossShotManager::ReMoveEnemyNomalShot(size_t index)
 {
 	if (index < m_EnemyNomalShot.size())
 	{
@@ -69,12 +69,12 @@ void EnemyNomalShotManager::ReMoveEnemyNomalShot(size_t index)
 	}
 }
 
-const std::vector<std::unique_ptr<EnemyNomalShot>>& EnemyNomalShotManager::GetEnemyNomalShot() const
+const std::vector<std::unique_ptr<EnemyNomalShot>>& BossShotManager::GetEnemyNomalShot() const
 {
 	return m_EnemyNomalShot;	//弾リスト返却.
 }
 
-EnemyNomalShot* EnemyNomalShotManager::GetEnemyNomalShot(size_t No)
+EnemyNomalShot* BossShotManager::GetEnemyNomalShot(size_t No)
 {
 	if (No < m_EnemyNomalShot.size())
 	{
@@ -83,12 +83,12 @@ EnemyNomalShot* EnemyNomalShotManager::GetEnemyNomalShot(size_t No)
 	return nullptr;
 }
 
-size_t EnemyNomalShotManager::GetEnemyNomalShotCount() const
+size_t BossShotManager::GetEnemyNomalShotCount() const
 {
 	return m_EnemyNomalShot.size();	//弾数返却.
 }
 
-std::vector<EnemyNomalShot*> EnemyNomalShotManager::GetShots()
+std::vector<EnemyNomalShot*> BossShotManager::GetShots()
 {
 	// 生のポインタを格納するための新しいベクターを宣言
 	std::vector<EnemyNomalShot*> rawPointers;

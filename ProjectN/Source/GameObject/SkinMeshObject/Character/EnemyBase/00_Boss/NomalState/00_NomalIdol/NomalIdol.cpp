@@ -1,12 +1,12 @@
 #include "NomalIdol.h"
 
-#include "..//..//EnemyNomal.h"
+#include "..//..//Boss.h"
 #include "..//..//NomalContext//NomalContext.h"
 #include "..//01_NomalMove/NomalMove.h"
 
 #include "System/02_Singleton/Timer/Timer.h"
 
-NomalIdol::NomalIdol(EnemyNomal* pOwner)
+NomalIdol::NomalIdol(Boss* pOwner)
 	: NomalState	(pOwner)
 {
 }
@@ -42,7 +42,7 @@ void NomalIdol::Update()
     NomalState::Update();
 
     // 距離で移動ステートへ遷移
-    EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
+    Boss* pEnemy = dynamic_cast<Boss*>(m_pOwner);
 
     D3DXVECTOR3 diff = pEnemy->GetPlayerPos() - pEnemy->GetPosition();
     float distanceSq = D3DXVec3LengthSq(&diff);

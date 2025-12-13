@@ -1,9 +1,9 @@
 #include "NomalDead.h"
 
-#include "..//..//EnemyNomal.h"
+#include "..//..//Boss.h"
 #include "..//..//NomalContext/NomalContext.h"
 
-NomalDead::NomalDead(EnemyNomal* pOwner)
+NomalDead::NomalDead(Boss* pOwner)
 	: NomalState	(pOwner)
 {
 }
