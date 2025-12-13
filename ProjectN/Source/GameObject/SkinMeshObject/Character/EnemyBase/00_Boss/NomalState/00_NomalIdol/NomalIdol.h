@@ -1,7 +1,7 @@
 #pragma once
 #include "..//NomalState.h"
 
-class EnemyNomal;
+class Boss;
 class NomalContext;
 class NomalMove;
 
@@ -13,7 +13,7 @@ class NomalIdol final
 	: public NomalState
 {
 public:
-	NomalIdol(EnemyNomal* pOwner);
+	NomalIdol(Boss* pOwner);
 	~NomalIdol() override;
 
 	//‰Šú‰»ˆ—.

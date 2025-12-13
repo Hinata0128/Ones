@@ -5,14 +5,14 @@
 *	“G‚Ì€–SƒNƒ‰ƒX.
 **/
 
-class EnemyNomal;
+class Boss;
 class EnemyContext;
 
 class NomalDead final
 	: public NomalState
 {
 public:
-	NomalDead(EnemyNomal* pOwner);
+	NomalDead(Boss* pOwner);
 	~NomalDead();
 
 	//‰Šú‰»ˆ—

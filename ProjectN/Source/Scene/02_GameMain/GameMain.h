@@ -9,10 +9,10 @@
 #include "GameObject//StaticMeshObject//Ground//Ground.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
 
-#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
-#include "System/00_Manager/04_EnemyNomalShotManager/EnemyNomalShotManager.h"
+#include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 
 #include "System/00_Manager/06_CollisionManager/CollisionManager.h"
 
@@ -63,7 +63,7 @@ private:
 	//プレイヤークラス.
 	std::shared_ptr<Player> m_pPlayer;
 
-	std::shared_ptr<EnemyNomal> m_pEnemyNomal;
+	std::shared_ptr<Boss> m_pEnemyNomal;
 
 	std::shared_ptr<CollisionManager> m_pCollisionManager;
 

@@ -4,12 +4,12 @@
 /*****************************************************************
 *	敵の通常攻撃マネージャークラス.
 **/
-class EnemyNomalShotManager
+class BossShotManager final
 {
 public:
-	~EnemyNomalShotManager();
+	~BossShotManager();
 
-	static EnemyNomalShotManager* GetInstance();
+	static BossShotManager* GetInstance();
 
 	void Update();	//弾の更新処理.
 	void Draw();	//弾の描画処理.
@@ -28,12 +28,12 @@ public:
 
 	std::vector<EnemyNomalShot*> GetShots();
 private:
-	EnemyNomalShotManager();
+	BossShotManager();
 
-	EnemyNomalShotManager(const EnemyNomalShotManager& rhs) = delete;	//コピー禁止.
-	EnemyNomalShotManager& operator = (const EnemyNomalShotManager& rhs) = delete;	//代入禁止.
+	BossShotManager(const BossShotManager& rhs) = delete;	//コピー禁止.
+	BossShotManager& operator = (const BossShotManager& rhs) = delete;	//代入禁止.
 private:
-	static EnemyNomalShotManager* m_pInstance;	//シングルトンインスタンス.
+	static BossShotManager* m_pInstance;	//シングルトンインスタンス.
 
 	std::vector<std::unique_ptr<EnemyNomalShot>> m_EnemyNomalShot;	//敵弾の管理配列.
 };

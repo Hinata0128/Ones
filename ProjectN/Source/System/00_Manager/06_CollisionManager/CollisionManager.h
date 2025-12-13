@@ -5,10 +5,10 @@
 
 //当たり判定に使用するクラスをインクルード.
 #include "System//00_Manager//ManagerBase.h"
-#include "System//00_Manager//04_EnemyNomalShotManager//EnemyNomalShotManager.h"
+#include "System//00_Manager//04_BossShotManager//BossShotManager.h"
 #include "GameObject//StaticMeshObject//ShotBase//PShot//PShot.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
-#include "GameObject/SkinMeshObject/Character/EnemyBase/EnemyNomal/EnemyNomal.h"
+#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.
@@ -37,7 +37,7 @@ public:
 
 public:
 	void SetPlayer(const std::shared_ptr<Player>& player) { m_pPlayer = player; }
-	void SetEnemies(const std::vector<EnemyNomal*>& enemies) { m_vEnemies = enemies; }
+	void SetEnemies(const std::vector<Boss*>& enemies) { m_vEnemies = enemies; }
 	void SetPlayerShots(const std::vector<PShot*>& shots) { m_PlayerShots = shots; }
 	void SetEnemyShots(const std::vector<EnemyNomalShot*>& shots) { m_EnemyShots = shots; }
 
@@ -54,7 +54,7 @@ private:
 	std::vector<std::shared_ptr<BoundingBox>>		m_pBBox;
 
 	std::shared_ptr<Player> m_pPlayer;
-	std::vector<EnemyNomal*> m_vEnemies;	
+	std::vector<Boss*> m_vEnemies;	
 	std::vector<PShot*> m_PlayerShots;
 	std::vector<EnemyNomalShot*> m_EnemyShots;
 	

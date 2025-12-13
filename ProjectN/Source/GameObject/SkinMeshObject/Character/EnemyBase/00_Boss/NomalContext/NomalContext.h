@@ -1,6 +1,6 @@
 #pragma once
 
-class EnemyNomal;
+class Boss;
 class SkinMesh;
 
 /************************************************************************
@@ -20,6 +20,6 @@ public:
 	LPD3DXANIMATIONCONTROLLER		AnimCtrl;
 	D3DXVECTOR3&					BonePos;
 
-	NomalContext(EnemyNomal* nomal);
+	NomalContext(Boss* nomal);
 private:
 };

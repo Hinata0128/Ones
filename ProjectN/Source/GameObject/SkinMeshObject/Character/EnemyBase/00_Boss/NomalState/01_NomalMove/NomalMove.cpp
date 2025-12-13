@@ -2,11 +2,11 @@
 
 #include "..//..//NomalContext/NomalContext.h"
 #include "..//..//..//..//..//..//..//System/02_Singleton/Timer/Timer.h"
-#include "..//..//EnemyNomal.h" 
+#include "..//..//Boss.h" 
 #include <algorithm> // std::atan2 を使うため
 
 // pOwner を取るコンストラクタ
-NomalMove::NomalMove(EnemyNomal* pOwner)
+NomalMove::NomalMove(Boss* pOwner)
 	: NomalState(pOwner)
 	, m_RotationSpeed(0.2f)
 	, m_RotationDirection(1.0f)
@@ -34,7 +34,7 @@ void NomalMove::Enter()
 void NomalMove::Update()
 {
 
-	EnemyNomal* pEnemy = dynamic_cast<EnemyNomal*>(m_pOwner);
+	Boss* pEnemy = dynamic_cast<Boss*>(m_pOwner);
 	if (!pEnemy) return;
 
 	float deltaTime = Timer::GetInstance().DeltaTime();

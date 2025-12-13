@@ -2,7 +2,7 @@
 #include "..//NomalState.h"	//Šî’êƒNƒ‰ƒX.
 #include <d3dx9.h> 
 
-class EnemyNomal;
+class Boss;
 class NomalContext;
 
 /********************************************************************
@@ -21,7 +21,7 @@ public:
 		Left_Run,	//¶‚ÌˆÚ“®.
 	};
 public:
-	NomalMove(EnemyNomal* pOwner);
+	NomalMove(Boss* pOwner);
 	~NomalMove();
 
 	void Enter() override;
