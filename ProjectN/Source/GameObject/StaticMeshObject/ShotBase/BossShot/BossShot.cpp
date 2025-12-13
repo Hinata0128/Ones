@@ -1,17 +1,17 @@
-#include "EnemyNomalShot.h"
+#include "BossShot.h"
 #include "System/00_Manager/01_StaticMeshManager/StaticMeshManager.h"
 
 
-EnemyNomalShot::EnemyNomalShot()
+BossShot::BossShot()
 {
     AttachMesh(*StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::EnemyBullet));
 
     Init();
 }
 
-EnemyNomalShot::~EnemyNomalShot() {}
+BossShot::~BossShot() {}
 
-void EnemyNomalShot::Update()
+void BossShot::Update()
 {
     constexpr float MaxRange = 9999.0f;
     if (!m_IsActive) return;
@@ -24,12 +24,12 @@ void EnemyNomalShot::Update()
     }
 }
 
-void EnemyNomalShot::Draw() 
+void BossShot::Draw()
 {
     ShotBase::Draw(); 
 }
 
-void EnemyNomalShot::Init()
+void BossShot::Init()
 {
     ShotBase::Init();
 
@@ -37,7 +37,7 @@ void EnemyNomalShot::Init()
     if (m_BSphere) m_BSphere->SetRadius(0.3f); 
 }
 
-void EnemyNomalShot::Reload(const D3DXVECTOR3& pos, const D3DXVECTOR3& direction, float speed)
+void BossShot::Reload(const D3DXVECTOR3& pos, const D3DXVECTOR3& direction, float speed)
 {
     m_Position = pos;
     m_Direction = direction;

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject/StaticMeshObject/ShotBase/EnemyNomalShot/EnemyNomalShot.h"
+#include "GameObject/StaticMeshObject/ShotBase/BossShot/BossShot.h"
 
 /*****************************************************************
 *	敵の通常攻撃マネージャークラス.
@@ -20,13 +20,13 @@ public:
 
 	void ReMoveEnemyNomalShot(size_t index);	//敵の弾を削除.
 
-	const std::vector<std::unique_ptr<EnemyNomalShot>>& GetEnemyNomalShot() const;	//敵の弾リスト取得.
+	const std::vector<std::unique_ptr<BossShot>>& GetEnemyNomalShot() const;	//敵の弾リスト取得.
 
-	EnemyNomalShot* GetEnemyNomalShot(size_t No);	//敵の弾取得.
+	BossShot* GetEnemyNomalShot(size_t No);	//敵の弾取得.
 
 	size_t GetEnemyNomalShotCount() const;	//敵の弾数取得.
 
-	std::vector<EnemyNomalShot*> GetShots();
+	std::vector<BossShot*> GetShots();
 private:
 	BossShotManager();
 
@@ -35,5 +35,5 @@ private:
 private:
 	static BossShotManager* m_pInstance;	//シングルトンインスタンス.
 
-	std::vector<std::unique_ptr<EnemyNomalShot>> m_EnemyNomalShot;	//敵弾の管理配列.
+	std::vector<std::unique_ptr<BossShot>> m_pBossShot;	//敵弾の管理配列.
 };

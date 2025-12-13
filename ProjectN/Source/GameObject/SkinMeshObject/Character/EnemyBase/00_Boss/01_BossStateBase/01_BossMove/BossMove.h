@@ -1,16 +1,16 @@
 #pragma once
-#include "..//NomalState.h"	//基底クラス.
+#include "..//BossStateBase.h"	//基底クラス.
 #include <d3dx9.h> 
 
 class Boss;
-class NomalContext;
+class BossContext;
 
 /********************************************************************
 *	NomalMoveClass
 *	攻撃の実装をする.
 **/
-class NomalMove final
-	: public NomalState
+class BossMove final
+	: public BossStateBase
 {
 public:
 	//移動のアニメーション用の列挙.
@@ -21,8 +21,8 @@ public:
 		Left_Run,	//左の移動.
 	};
 public:
-	NomalMove(Boss* pOwner);
-	~NomalMove();
+	BossMove(Boss* pOwner);
+	~BossMove();
 
 	void Enter() override;
 	void Update() override;
@@ -51,7 +51,4 @@ private:
 	float MOVE_SPEED;
 
 	enRunAnimation m_RunList;
-
-	//右歩きの時のアニメーション関数.
-	void RightRunAnim(NomalContext& ctx);
 };

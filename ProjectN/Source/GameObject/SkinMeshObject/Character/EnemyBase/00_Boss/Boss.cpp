@@ -2,17 +2,17 @@
 #include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 #include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 #include "System/02_Singleton/Timer/Timer.h"
-#include "NomalContext/NomalContext.h"
-#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/NomalState/NomalState.h"
+#include "..//00_Boss/00_BossContext/BossContext.h"
+#include "..//00_Boss/01_BossStateBase/BossStateBase.h"
 
 constexpr float zero = 0.0f;
 
 Boss::Boss()
     : EnemyBase()
     , m_pENShotManager(nullptr)
-    , m_pIdol(std::make_unique<NomalIdol>(this))
-    , m_pMove(std::make_unique<NomalMove>(this))
-    , m_pDead(std::make_unique<NomalDead>(this))
+    , m_pIdol(std::make_unique<BossIdol>(this))
+    , m_pMove(std::make_unique<BossMove>(this))
+    , m_pDead(std::make_unique<BossDead>(this))
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -112,7 +112,7 @@ void Boss::Hit()
     {
         m_HitPoint = 0.0f;
 
-        NomalState* nextState = m_pDead.get();
+        BossStateBase* nextState = m_pDead.get();
 
         if (m_pCurrentState != nextState)
         {
@@ -123,7 +123,7 @@ void Boss::Hit()
     }
 }
 
-void Boss::ChangeState(NomalState* state)
+void Boss::ChangeState(BossStateBase* state)
 {
     if (m_pCurrentState == state) return;
 

@@ -2,21 +2,21 @@
 #include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyBase.h"	//ベースクラス.
 #include "..//..//..//..//..//Collision/BoundingSphere/BoundingSphere.h" // BoundingSphereの定義が必要
 
-#include "..//00_Boss/NomalState/01_NomalMove/NomalMove.h" // NomalMove の定義が必要
+#include "..//00_Boss/01_BossStateBase/01_BossMove/BossMove.h" // NomalMove の定義が必要
 
-#include "..//00_Boss/NomalState/00_NomalIdol/NomalIdol.h"
-#include "..//00_Boss/NomalState/02_NomalDead/NomalDead.h"
+#include "..//00_Boss/01_BossStateBase/00_BossIdol/BossIdol.h"
+#include "..//00_Boss/01_BossStateBase/02_BossDead/BossDead.h"
 
 class BossShotManager;
 class Timer;
-class NomalContext;
-class NomalState;
+class BossContext;
+class BossStateBase;
 
 class Boss final
 	: public EnemyBase
 {
 public:
-	friend NomalContext;
+	friend BossContext;
 public:
 	Boss();
 	~Boss() override;
@@ -49,13 +49,13 @@ public:
 	//HPを取得する関数.
 	float GetEnemyHitPoint() const { return m_HitPoint; }
 public:
-	void ChangeState(NomalState* state);
+	void ChangeState(BossStateBase* state);
 
 	void AutoShot();
 	//publicでStateの遷移をしている.
-	std::unique_ptr<NomalIdol> m_pIdol;
-	std::unique_ptr<NomalMove> m_pMove;
-	std::unique_ptr<NomalDead> m_pDead;
+	std::unique_ptr<BossIdol> m_pIdol;
+	std::unique_ptr<BossMove> m_pMove;
+	std::unique_ptr<BossDead> m_pDead;
 private:
 	BossShotManager* m_pENShotManager;
 
@@ -68,5 +68,5 @@ private:
 
 	//Stateで使用する.
 	//時間がなかったのでここで初期化をしている.
-	NomalState* m_pCurrentState = nullptr;
+	BossStateBase* m_pCurrentState = nullptr;
 };
