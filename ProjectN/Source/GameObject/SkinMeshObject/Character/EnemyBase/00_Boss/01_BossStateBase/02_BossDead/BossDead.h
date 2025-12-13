@@ -1,19 +1,19 @@
 #pragma once
-#include "..//NomalState.h"
+#include "..//BossStateBase.h"
 
 /******************************************************************
 *	“G‚Ì€–SƒNƒ‰ƒX.
 **/
 
 class Boss;
-class EnemyContext;
+class BossContext;
 
-class NomalDead final
-	: public NomalState
+class BossDead final
+	: public BossStateBase
 {
 public:
-	NomalDead(Boss* pOwner);
-	~NomalDead();
+	BossDead(Boss* pOwner);
+	~BossDead();
 
 	//‰Šú‰»ˆ—
 	void Enter() override;

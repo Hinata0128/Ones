@@ -1,9 +1,9 @@
-#include "NomalContext.h"
+#include "BossContext.h"
 
 #include "GameObject//SkinMeshObject//Character//EnemyBase//00_Boss//Boss.h"
 #include "SkinMesh//SkinMesh.h"
 
-NomalContext::NomalContext(Boss* nomal)
+BossContext::BossContext(Boss* nomal)
     : Position  (nomal->m_Position)
     , Rotation  (nomal->m_Rotation)
     , Scale     (nomal->m_Scale)

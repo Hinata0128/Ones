@@ -1,20 +1,20 @@
 #pragma once
-#include "..//NomalState.h"
+#include "..//BossStateBase.h"
 
 class Boss;
-class NomalContext;
-class NomalMove;
+class BossContext;
+class BossMove;
 
 /*****************************************************************
 *	NomalIdolClass(“G‚ÌƒAƒCƒhƒ‹ó‘Ô).
 **/
 
-class NomalIdol final
-	: public NomalState
+class BossIdol final
+	: public BossStateBase
 {
 public:
-	NomalIdol(Boss* pOwner);
-	~NomalIdol() override;
+	BossIdol(Boss* pOwner);
+	~BossIdol() override;
 
 	//‰Šú‰»ˆ—.
 	void Enter() override;

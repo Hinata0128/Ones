@@ -1,13 +1,13 @@
-#include "NomalMove.h"
+#include "BossMove.h"
 
-#include "..//..//NomalContext/NomalContext.h"
+#include "..//..//00_BossContext/BossContext.h"
 #include "..//..//..//..//..//..//..//System/02_Singleton/Timer/Timer.h"
 #include "..//..//Boss.h" 
 #include <algorithm> // std::atan2 を使うため
 
 // pOwner を取るコンストラクタ
-NomalMove::NomalMove(Boss* pOwner)
-	: NomalState(pOwner)
+BossMove::BossMove(Boss* pOwner)
+	: BossStateBase(pOwner)
 	, m_RotationSpeed(0.2f)
 	, m_RotationDirection(1.0f)
 	, m_RotationAngle(0.0f)
@@ -22,16 +22,16 @@ NomalMove::NomalMove(Boss* pOwner)
 {
 }
 
-NomalMove::~NomalMove()
+BossMove::~BossMove()
 {
 }
 
-void NomalMove::Enter()
+void BossMove::Enter()
 {
-	NomalState::Enter();
+	BossStateBase::Enter();
 }
 
-void NomalMove::Update()
+void BossMove::Update()
 {
 
 	Boss* pEnemy = dynamic_cast<Boss*>(m_pOwner);
@@ -40,7 +40,7 @@ void NomalMove::Update()
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
 
-	NomalContext ctx(m_pOwner);
+	BossContext ctx(m_pOwner);
 
 
 	const D3DXVECTOR3& EnemyPos = pEnemy->GetPosition();
@@ -137,25 +137,20 @@ void NomalMove::Update()
 	}
 
 
-	NomalState::Update();
+	BossStateBase::Update();
 }
 
-void NomalMove::Exit()
+void BossMove::Exit()
 {
-	NomalState::Exit();
+	BossStateBase::Exit();
 }
 
-void NomalMove::Draw()
+void BossMove::Draw()
 {
-	NomalState::Draw();
+	BossStateBase::Draw();
 }
 
-void NomalMove::Init()
+void BossMove::Init()
 {
-	NomalState::Init();
-}
-
-void NomalMove::RightRunAnim(NomalContext& ctx)
-{
-	
+	BossStateBase::Init();
 }

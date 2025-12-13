@@ -7,7 +7,7 @@ class SkinMesh;
 *	NomalStateと攻撃用のステートを使用する時に必要なコードを書く.
 **/
 
-class NomalContext
+class BossContext
 {
 public:
 	D3DXVECTOR3&					Position;
@@ -20,6 +20,6 @@ public:
 	LPD3DXANIMATIONCONTROLLER		AnimCtrl;
 	D3DXVECTOR3&					BonePos;
 
-	NomalContext(Boss* nomal);
+	BossContext(Boss* nomal);
 private:
 };

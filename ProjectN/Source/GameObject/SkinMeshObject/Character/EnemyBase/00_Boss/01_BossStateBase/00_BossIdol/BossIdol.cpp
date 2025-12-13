@@ -1,27 +1,27 @@
-#include "NomalIdol.h"
+#include "BossIdol.h"
 
 #include "..//..//Boss.h"
-#include "..//..//NomalContext//NomalContext.h"
-#include "..//01_NomalMove/NomalMove.h"
+#include "..//..//00_BossContext//BossContext.h"
+#include "..//01_BossMove/BossMove.h"
 
 #include "System/02_Singleton/Timer/Timer.h"
 
-NomalIdol::NomalIdol(Boss* pOwner)
-	: NomalState	(pOwner)
+BossIdol::BossIdol(Boss* pOwner)
+	: BossStateBase(pOwner)
 {
 }
 
-NomalIdol::~NomalIdol()
+BossIdol::~BossIdol()
 {
 }
 
-void NomalIdol::Enter()
+void BossIdol::Enter()
 {
 }
 
-void NomalIdol::Update()
+void BossIdol::Update()
 {
-    NomalContext ctx(m_pOwner);
+    BossContext ctx(m_pOwner);
 
     const int IDLE_ANIM_NO = 2;
 
@@ -39,7 +39,7 @@ void NomalIdol::Update()
     ctx.AnimTime += ctx.AnimSpeed * delta;
 
     // 共通更新
-    NomalState::Update();
+    BossStateBase::Update();
 
     // 距離で移動ステートへ遷移
     Boss* pEnemy = dynamic_cast<Boss*>(m_pOwner);
@@ -56,17 +56,17 @@ void NomalIdol::Update()
     }
 }
 
-void NomalIdol::Exit()
+void BossIdol::Exit()
 {
-	NomalState::Exit();
+    BossStateBase::Exit();
 }
 
-void NomalIdol::Draw()
+void BossIdol::Draw()
 {
-	NomalState::Draw();
+    BossStateBase::Draw();
 }
 
-void NomalIdol::Init()
+void BossIdol::Init()
 {
-	NomalState::Init();
+    BossStateBase::Init();
 }

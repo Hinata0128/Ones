@@ -7,19 +7,19 @@
 class Boss;
 
 /**********************************************************
-*	EnemyNomalStateBase
+*	BossStateBase
 *	ノーマル敵のステートクラスの作成.
 *	このクラスは基底クラスになっています.
 **/
 
-class NomalState
+class BossStateBase
 	: public StateBase
 {
 public:
 	//引数アリのコンストラクタを使用します.
 	//引数にEnemyの情報を取得する.
-	NomalState(Boss* pOwner);
-	virtual ~NomalState() override;
+	BossStateBase(Boss* pOwner);
+	virtual ~BossStateBase() override;
 
 	//初期化
 	virtual void Enter() override;

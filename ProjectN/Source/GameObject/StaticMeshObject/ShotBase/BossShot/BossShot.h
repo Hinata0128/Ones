@@ -7,12 +7,12 @@ class StaticMeshManager;
 *	“G’Êí’eƒNƒ‰ƒX.
 **/
 
-class EnemyNomalShot
+class BossShot
 	: public ShotBase
 {
 public:
-	EnemyNomalShot();
-	~EnemyNomalShot() override;
+	BossShot();
+	~BossShot() override;
 
 	void Update() override;
 	void Draw() override;

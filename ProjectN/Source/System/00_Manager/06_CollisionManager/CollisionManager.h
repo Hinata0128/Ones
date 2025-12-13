@@ -39,7 +39,7 @@ public:
 	void SetPlayer(const std::shared_ptr<Player>& player) { m_pPlayer = player; }
 	void SetEnemies(const std::vector<Boss*>& enemies) { m_vEnemies = enemies; }
 	void SetPlayerShots(const std::vector<PShot*>& shots) { m_PlayerShots = shots; }
-	void SetEnemyShots(const std::vector<EnemyNomalShot*>& shots) { m_EnemyShots = shots; }
+	void SetEnemyShots(const std::vector<BossShot*>& shots) { m_EnemyShots = shots; }
 
 	void SetShortAttackSphere(const std::shared_ptr<BoundingSphere>& sphere) { m_pShortAttackSphere = sphere; }
 
@@ -56,7 +56,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;
 	std::vector<Boss*> m_vEnemies;	
 	std::vector<PShot*> m_PlayerShots;
-	std::vector<EnemyNomalShot*> m_EnemyShots;
+	std::vector<BossShot*> m_EnemyShots;
 	
 	std::shared_ptr<BoundingSphere> m_pShortAttackSphere;
 };

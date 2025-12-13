@@ -18,13 +18,13 @@ BossShotManager* BossShotManager::GetInstance()
 
 void BossShotManager::Update()
 {
-	for (auto it = m_EnemyNomalShot.begin(); it != m_EnemyNomalShot.end();)
+	for (auto it = m_pBossShot.begin(); it != m_pBossShot.end();)
 	{
 		(*it)->Update();	//弾の更新処理.
 
 		if (!(*it)->IsActive())	//非アクティブな弾は削除.
 		{
-			it = m_EnemyNomalShot.erase(it);
+			it = m_pBossShot.erase(it);
 		}
 		else
 		{
@@ -35,7 +35,7 @@ void BossShotManager::Update()
 
 void BossShotManager::Draw()
 {
-	for (std::unique_ptr<EnemyNomalShot>& ENomalShot : m_EnemyNomalShot)
+	for (std::unique_ptr<BossShot>& ENomalShot : m_pBossShot)
 	{
 		ENomalShot->Draw();	//弾の描画処理.
 		ENomalShot->GetBoundingSphere().Draw();
@@ -45,56 +45,56 @@ void BossShotManager::Draw()
 
 void BossShotManager::Init()
 {
-	m_EnemyNomalShot.clear();
+	m_pBossShot.clear();
 }
 
 void BossShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton)
 {
 	constexpr float Speed = 0.05f;	//弾の速度設定.
 
-	auto ENomalShot = std::make_unique<EnemyNomalShot>();	//弾の生成.
+	auto ENomalShot = std::make_unique<BossShot>();	//弾の生成.
 
 	ENomalShot->Reload(Pos, InitDirecton, Speed);	//弾の初期化.
 
 	ENomalShot->SetDisplay(true);	//表示有効化.
 
-	m_EnemyNomalShot.push_back(std::move(ENomalShot));	//リストに追加.
+	m_pBossShot.push_back(std::move(ENomalShot));	//リストに追加.
 }
 
 void BossShotManager::ReMoveEnemyNomalShot(size_t index)
 {
-	if (index < m_EnemyNomalShot.size())
+	if (index < m_pBossShot.size())
 	{
-		m_EnemyNomalShot.erase(m_EnemyNomalShot.begin() + index);	//指定弾削除.
+		m_pBossShot.erase(m_pBossShot.begin() + index);	//指定弾削除.
 	}
 }
 
-const std::vector<std::unique_ptr<EnemyNomalShot>>& BossShotManager::GetEnemyNomalShot() const
+const std::vector<std::unique_ptr<BossShot>>& BossShotManager::GetEnemyNomalShot() const
 {
-	return m_EnemyNomalShot;	//弾リスト返却.
+	return m_pBossShot;	//弾リスト返却.
 }
 
-EnemyNomalShot* BossShotManager::GetEnemyNomalShot(size_t No)
+BossShot* BossShotManager::GetEnemyNomalShot(size_t No)
 {
-	if (No < m_EnemyNomalShot.size())
+	if (No < m_pBossShot.size())
 	{
-		return m_EnemyNomalShot[No].get();	//指定弾返却.
+		return m_pBossShot[No].get();	//指定弾返却.
 	}
 	return nullptr;
 }
 
 size_t BossShotManager::GetEnemyNomalShotCount() const
 {
-	return m_EnemyNomalShot.size();	//弾数返却.
+	return m_pBossShot.size();	//弾数返却.
 }
 
-std::vector<EnemyNomalShot*> BossShotManager::GetShots()
+std::vector<BossShot*> BossShotManager::GetShots()
 {
 	// 生のポインタを格納するための新しいベクターを宣言
-	std::vector<EnemyNomalShot*> rawPointers;
+	std::vector<BossShot*> rawPointers;
 
 	// 内部の unique_ptr のリストを走査
-	for (const auto& shot : m_EnemyNomalShot)
+	for (const auto& shot : m_pBossShot)
 	{
 		// unique_ptr が有効な場合、生のポインタを取得して新しいベクターに追加
 		if (shot)
