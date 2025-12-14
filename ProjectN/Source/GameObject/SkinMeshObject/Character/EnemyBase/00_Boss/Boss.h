@@ -12,11 +12,14 @@ class Timer;
 class BossContext;
 class BossStateBase;
 
+class AIContoller;
+
 class Boss final
 	: public EnemyBase
 {
 public:
 	friend BossContext;
+	friend AIContoller;
 public:
 	Boss();
 	~Boss() override;

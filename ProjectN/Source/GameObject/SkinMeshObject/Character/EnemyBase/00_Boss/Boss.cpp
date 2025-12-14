@@ -5,6 +5,8 @@
 #include "..//00_Boss/00_BossContext/BossContext.h"
 #include "..//00_Boss/01_BossStateBase/BossStateBase.h"
 
+#include "..//00_Boss/02_AIController/AIController.h"
+
 constexpr float zero = 0.0f;
 
 Boss::Boss()
