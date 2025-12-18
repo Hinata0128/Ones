@@ -185,7 +185,6 @@
     <ClCompile Include="Source\Collision\BoundingSphere\BoundingSphere.cpp" />
     <ClCompile Include="Source\Effect\Effect.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Character.cpp" />
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\02_AIController\AIController.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyBase.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\Boss.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\00_BossContext\BossContext.cpp" />
@@ -273,7 +272,6 @@
     <ClInclude Include="Source\Effekseer\include\Effekseer.SIMD.h" />
     <ClInclude Include="Source\Effekseer\include\EffekseerRendererDX11.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Character.h" />
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\02_AIController\AIController.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\EnemyBase.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\Boss.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\EnemyBase\00_Boss\00_BossContext\BossContext.h" />
