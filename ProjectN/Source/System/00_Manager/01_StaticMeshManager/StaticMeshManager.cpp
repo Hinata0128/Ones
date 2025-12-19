@@ -35,6 +35,7 @@ void StaticMeshManager::Create()
 		{ static_cast<int>(CMeshList::EnemyBullet),		_T("Data\\Mesh\\Static\\Bullet\\EnemyBullet.x") },
 		{ static_cast<int>(CMeshList::BoxCollision),	_T("Data\\Mesh\\Static\\Collision\\Box.x")},
 		{ static_cast<int>(CMeshList::Portal),			_T("Data\\Mesh\\Static\\Portal\\Portal.x")},
+		{ static_cast<int>(CMeshList::SkyBox),			_T("Data\\Mesh\\Static\\SkyBox\\SkyBox.x")},
 	};
 
 	//”z—ñ‚Ì—v‘f”‚ğæ“¾.

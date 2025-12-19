@@ -20,6 +20,8 @@ public:
 
 		Portal,				//ポータルのメッシュ.
 
+		SkyBox,				//背景画像の導入.
+
 		Max,
 	};
 

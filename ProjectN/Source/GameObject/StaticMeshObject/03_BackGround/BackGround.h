@@ -7,15 +7,19 @@
 * 
 **/
 
-#include "GameObject//GameObject.h"
+#include "GameObject//StaticMeshObject//StaticMeshObject.h"	//Šî’êƒNƒ‰ƒX.
+
+class StaticMeshManager;
 
 class BackGround final
-	: public GameObject
+	: public StaticMeshObject
 {
 public:
 	BackGround();
-	~BackGround();
+	~BackGround() override;
 
+	void Update() override;
+	void Draw() override;
 private:
 	
 };

@@ -1,8 +1,10 @@
 #include "BossAI.h"
 
+#include "..//Boss.h"
 #include "GameObject//StaticMeshObject//01_Portal//Portal.h"
 
 BossAI::BossAI()
+	: m_pPortal	(std::make_shared<Portal>())
 {
 }
 
