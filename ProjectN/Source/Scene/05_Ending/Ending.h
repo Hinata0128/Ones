@@ -3,7 +3,7 @@
 #include "GameObject/SpriteObject/SpriteObject.h"
 #include "SceneManager/SceneManager.h"
 
-#include "GameObject/StaticMeshObject/Portal/Portal.h"
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
 
 /*********************************************
 *	エンディング画像クラス.

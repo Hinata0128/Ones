@@ -6,7 +6,7 @@
 #include "GameObject//SpriteObject//SpriteObject.h"
 #include "SceneManager//SceneManager.h"
 
-#include "GameObject//StaticMeshObject//Ground//Ground.h"
+#include "GameObject//StaticMeshObject//00_Ground//Ground.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
 
 #include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
@@ -18,7 +18,7 @@
 
 #include "Sprite3D//Sprite3D.h"
 
-#include "GameObject//StaticMeshObject//Portal//Portal.h"
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
 
 #include "GameObject//UIObject//00_HPBar//HPBar.h"
 

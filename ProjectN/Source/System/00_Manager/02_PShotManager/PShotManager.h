@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject/StaticMeshObject/ShotBase/PShot/PShot.h"
+#include "GameObject/StaticMeshObject/02_ShotBase/PShot/PShot.h"
 #include <vector>
 #include <memory> // std::unique_ptr ‚Ì‚½‚ß
 

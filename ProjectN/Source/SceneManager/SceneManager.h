@@ -5,7 +5,7 @@
 #include "Scene/06_GameOver/GameOver.h"
 #include "Scene/05_Ending/Ending.h"
 
-#include "GameObject/StaticMeshObject/Portal/Portal.h"
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
 
 #include "Scene/01_FirstRound/FirstRound.h"
 

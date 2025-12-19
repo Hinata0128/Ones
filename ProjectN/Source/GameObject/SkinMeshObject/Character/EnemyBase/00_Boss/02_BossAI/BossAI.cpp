@@ -1,6 +1,6 @@
 #include "BossAI.h"
 
-#include "GameObject//StaticMeshObject//Portal//Portal.h"
+#include "GameObject//StaticMeshObject//01_Portal//Portal.h"
 
 BossAI::BossAI()
 {

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GameObject//StaticMeshObject//ShotBase//ShotBase.h"
+#include "GameObject//StaticMeshObject//02_ShotBase//ShotBase.h"
 
 #include "GameObject//StaticMeshObject//StaticMeshObject.h"
 #include "Collision//BoundingSphere/BoundingSphere.h"

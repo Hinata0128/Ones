@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject/StaticMeshObject/StaticMeshObject.h"
-#include "GameObject//StaticMeshObject//ShotBase//ShotBase.h"
+#include "GameObject//StaticMeshObject//02_ShotBase//ShotBase.h"
 
 class StaticMeshManager;
 

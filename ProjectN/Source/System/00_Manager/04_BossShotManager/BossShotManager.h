@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject/StaticMeshObject/ShotBase/BossShot/BossShot.h"
+#include "GameObject/StaticMeshObject/02_ShotBase/BossShot/BossShot.h"
 
 /*****************************************************************
 *	敵の通常攻撃マネージャークラス.

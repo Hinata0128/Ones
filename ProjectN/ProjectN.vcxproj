@@ -205,7 +205,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerContext\PlayerContxet.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\PlayerState.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\SkinMeshObject.cpp" />
-    <ClCompile Include="Source\GameObject\StaticMeshObject\Ground\Ground.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\00_Ground\Ground.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\SpriteObject.cpp" />
     <ClCompile Include="Source\DirectX\DirectX11.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</ForcedIncludeFiles>
@@ -213,10 +213,10 @@
     </ClCompile>
     <ClCompile Include="Source\DirectX\DirectX9.cpp" />
     <ClCompile Include="Source\GameObject\GameObject.cpp" />
-    <ClCompile Include="Source\GameObject\StaticMeshObject\Portal\Portal.cpp" />
-    <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\PShot\PShot.cpp" />
-    <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\BossShot\BossShot.cpp" />
-    <ClCompile Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\01_Portal\Portal.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\PShot\PShot.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\BossShot\BossShot.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\ShotBase.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\00_HPBar\HPBar.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\01_Point\Point.cpp" />
     <ClCompile Include="Source\Main\Main.cpp" />
@@ -293,15 +293,15 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerContext\PlayerContext.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\PlayerState.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\SkinMeshObject.h" />
-    <ClInclude Include="Source\GameObject\StaticMeshObject\Ground\Ground.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\00_Ground\Ground.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\SpriteObject.h" />
     <ClInclude Include="Source\DirectX\DirectX11.h" />
     <ClInclude Include="Source\DirectX\DirectX9.h" />
     <ClInclude Include="Source\GameObject\GameObject.h" />
-    <ClInclude Include="Source\GameObject\StaticMeshObject\Portal\Portal.h" />
-    <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\PShot\PShot.h" />
-    <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\BossShot\BossShot.h" />
-    <ClInclude Include="Source\GameObject\StaticMeshObject\ShotBase\ShotBase.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\01_Portal\Portal.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\PShot\PShot.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\BossShot\BossShot.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\ShotBase.h" />
     <ClInclude Include="Source\GameObject\UIObject\00_HPBar\HPBar.h" />
     <ClInclude Include="Source\GameObject\UIObject\01_Point\Point.h" />
     <ClInclude Include="Source\Main\Main.h" />
