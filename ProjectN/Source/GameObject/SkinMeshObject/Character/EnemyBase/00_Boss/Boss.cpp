@@ -15,6 +15,7 @@ Boss::Boss()
     , m_pIdol(std::make_unique<BossIdol>(this))
     , m_pMove(std::make_unique<BossMove>(this))
     , m_pDead(std::make_unique<BossDead>(this))
+    , m_pAI(std::make_unique<BossAI>(this))
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -89,6 +90,8 @@ void Boss::Update()
 
     //今敵の攻撃が邪魔だからコメントで消しておく.
     //AutoShot();
+
+    m_pAI->Update();
 
 
 

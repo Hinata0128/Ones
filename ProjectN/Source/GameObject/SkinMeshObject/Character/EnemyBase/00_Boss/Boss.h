@@ -74,4 +74,6 @@ private:
 	//State‚Åg—p‚·‚é.
 	//ŠÔ‚ª‚È‚©‚Á‚½‚Ì‚Å‚±‚±‚Å‰Šú‰»‚ğ‚µ‚Ä‚¢‚é.
 	BossStateBase* m_pCurrentState = nullptr;
+
+	std::unique_ptr<BossAI> m_pAI;
 };
