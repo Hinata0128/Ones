@@ -27,6 +27,7 @@ GameMain::GameMain()
 	, m_pHpBar(std::make_unique<HPBar>())
 
 	, m_pSkyBox(std::make_unique<BackGround>())
+
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -126,6 +127,7 @@ void GameMain::Update()
 	m_pCollisionManager->Update();
 
 	m_pPortal->Update();
+
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{

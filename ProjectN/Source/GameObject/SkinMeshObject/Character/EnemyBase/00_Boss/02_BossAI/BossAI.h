@@ -11,13 +11,13 @@
 *	こんな感じの順番で実装していく.
 **/
 
-class Boss;
 class Portal;
+class Boss;
 
 class BossAI
 {
 public:
-	BossAI();
+	BossAI(Boss* pOwner);
 	~BossAI();
 
 	//ボスのAIを毎フレーム実装.
@@ -29,6 +29,7 @@ private:
 	//1. 優先度1の処理を書く関数.
 	void PortalToBoss();
 private:
-	Boss* m_pOwner;
 	std::shared_ptr<Portal> m_pPortal;
+
+	Boss* m_pOwner;
 };
