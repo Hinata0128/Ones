@@ -217,6 +217,7 @@
     <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\PShot\PShot.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\BossShot\BossShot.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\02_ShotBase\ShotBase.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\03_BackGround\BackGround.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\00_HPBar\HPBar.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\01_Point\Point.cpp" />
     <ClCompile Include="Source\Main\Main.cpp" />
@@ -302,6 +303,7 @@
     <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\PShot\PShot.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\BossShot\BossShot.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\02_ShotBase\ShotBase.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\03_BackGround\BackGround.h" />
     <ClInclude Include="Source\GameObject\UIObject\00_HPBar\HPBar.h" />
     <ClInclude Include="Source\GameObject\UIObject\01_Point\Point.h" />
     <ClInclude Include="Source\Main\Main.h" />
