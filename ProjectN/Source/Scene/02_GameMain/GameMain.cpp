@@ -25,6 +25,8 @@ GameMain::GameMain()
 	, m_pPortal(std::make_unique<Portal>())
 
 	, m_pHpBar(std::make_unique<HPBar>())
+
+	, m_pSkyBox(std::make_unique<BackGround>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -138,6 +140,9 @@ void GameMain::Draw()
 
 	PreDraw();
 
+	//背景の表示.
+	m_pSkyBox->Draw();
+
 	//地面表示.
 	m_pGround->Draw();
 	m_pPlayer->Draw();
@@ -193,7 +198,7 @@ void GameMain::Projection()
 	//アスペクト（幅÷高さ）.
 	float aspect = static_cast<FLOAT>(WND_W) / static_cast<FLOAT>(WND_H);
 	float near_z = 0.1f;
-	float far_z = 100.0f;
+	float far_z = 999.9;
 
 	//プロジェクション（射影）変換.
 	D3DXMatrixPerspectiveFovLH(
@@ -208,7 +213,7 @@ void GameMain::Projection()
 void GameMain::UpdateCamera()
 {
 	//ローカル変数.
-	constexpr float Ten = 10.0f;
+	constexpr float Ten = 5.0f;
 	constexpr float Fifteen = 15.0f;
 
 	D3DXVECTOR3 PlayerPos = m_pPlayer->GetPosition();

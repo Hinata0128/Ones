@@ -11,6 +11,7 @@
 *	‚±‚ñ‚ÈŠ´‚¶‚Ì‡”Ô‚ÅÀ‘•‚µ‚Ä‚¢‚­.
 **/
 
+class Boss;
 class Portal;
 
 class BossAI
@@ -28,5 +29,6 @@ private:
 	//1. —Dæ“x1‚Ìˆ—‚ğ‘‚­ŠÖ”.
 	void PortalToBoss();
 private:
-
+	Boss* m_pOwner;
+	std::shared_ptr<Portal> m_pPortal;
 };

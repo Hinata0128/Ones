@@ -22,6 +22,8 @@
 
 #include "GameObject//UIObject//00_HPBar//HPBar.h"
 
+#include "GameObject/StaticMeshObject/03_BackGround/BackGround.h"
+
 class Timer;
 
 
@@ -73,4 +75,6 @@ private:
 	//HPBarクラス(Test).
 	std::unique_ptr<HPBar> m_pHpBar;
 
+	//背景クラス.
+	std::unique_ptr<BackGround> m_pSkyBox;
 };
