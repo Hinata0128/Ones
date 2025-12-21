@@ -9,13 +9,13 @@
 
 constexpr float zero = 0.0f;
 
-Boss::Boss()
+Boss::Boss(std::shared_ptr<Portal> pPortal)
     : EnemyBase()
     , m_pENShotManager(nullptr)
     , m_pIdol(std::make_unique<BossIdol>(this))
     , m_pMove(std::make_unique<BossMove>(this))
     , m_pDead(std::make_unique<BossDead>(this))
-    , m_pAI(std::make_unique<BossAI>(this))
+    , m_pAI(std::make_unique<BossAI>(this, pPortal))
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -107,6 +107,7 @@ void Boss::Draw()
 
     EnemyBase::Draw();
     m_pENShotManager->Draw();
+    m_pAI->DrawDebugImGui();
 }
 
 void Boss::Hit()

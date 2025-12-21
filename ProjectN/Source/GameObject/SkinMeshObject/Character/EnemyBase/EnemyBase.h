@@ -26,4 +26,7 @@ public:
 	D3DXVECTOR3 GetTargetPos();
 protected:
 	D3DXVECTOR3 m_pPlayerPos;
+
+	//ポータルの位置の取得.
+	D3DXVECTOR3 m_pPortalPos;
 };

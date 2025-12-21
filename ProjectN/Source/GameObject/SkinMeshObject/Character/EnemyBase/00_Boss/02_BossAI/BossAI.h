@@ -17,17 +17,27 @@ class Boss;
 class BossAI
 {
 public:
-	BossAI(Boss* pOwner);
+	BossAI(
+		Boss* pOwner,
+		std::shared_ptr<Portal> pPortal);
 	~BossAI();
 
 	//ボスのAIを毎フレーム実装.
 	void Update();
-	//ボスのAIの行動用の関数.
-	void AIUpdate();
+
+	//デバッグで表示する.
+	void DrawDebugImGui();
 
 private:
-	//1. 優先度1の処理を書く関数.
-	void PortalToBoss();
+	//決定アクション.
+	void DecideAction();
+
+	//優先度1: ポータルへの移動関数.
+	void MoveToPortl();
+	//優先度2: 攻撃(プレイヤーがポータルを取得しているとき).
+	void PlayerAttack();
+	//優先度2: 防衛(自分がポータルを取得しているとき).
+	void Defense();
 private:
 	std::shared_ptr<Portal> m_pPortal;
 

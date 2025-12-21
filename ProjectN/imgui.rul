@@ -21,7 +21,7 @@ Size=289,110
 Collapsed=0
 
 [Window][タイマー情報]
-ViewportPos=1480,72
+ViewportPos=1596,80
 ViewportId=0xA4D966FE
 Size=300,90
 Collapsed=0
@@ -40,7 +40,7 @@ Size=314,112
 Collapsed=0
 
 [Window][playerのポジションを変更]
-ViewportPos=1480,72
+ViewportPos=1596,80
 ViewportId=0xA4D966FE
 Pos=0,92
 Size=300,88
@@ -48,19 +48,24 @@ Collapsed=0
 DockId=0x00000003,0
 
 [Window][Portal : 増加量/占有者]
-ViewportPos=1476,250
+ViewportPos=1593,258
 ViewportId=0x648623FD
 Size=307,147
 Collapsed=0
 
 [Window][Game Score]
-ViewportPos=1476,394
+ViewportPos=1589,407
 ViewportId=0x7442DD1E
 Size=220,110
 Collapsed=0
 
+[Window][BossAI: 内部ステータス]
+Pos=60,60
+Size=208,124
+Collapsed=0
+
 [Docking][Data]
-DockNode    ID=0x00000001 Pos=1480,72 Size=300,180 Split=Y Selected=0xC03952A5
+DockNode    ID=0x00000001 Pos=1596,80 Size=300,180 Split=Y Selected=0xC03952A5
   DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=300,90 Selected=0x660C8DAE
   DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=300,88 Selected=0xC03952A5
 
