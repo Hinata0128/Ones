@@ -49,6 +49,11 @@ public:
 	void ChackPriority();
 
 	int GetPortalPercent() const { return m_PortalIncrease; }
+
+	//敵のAIでのだれがポータルを取得しているか分かるようにするGet関数.
+	PortalPriority GetPortalState() const {
+		return m_pPortalState;
+	}
 private:
 	//Playerのポータル周りのコード.
 	void PlayerToPortal();

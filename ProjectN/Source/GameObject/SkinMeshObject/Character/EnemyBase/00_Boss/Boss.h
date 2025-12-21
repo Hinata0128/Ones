@@ -14,6 +14,8 @@ class BossStateBase;
 
 class BossAI;
 
+#include "..//..//..//..//StaticMeshObject/01_Portal/Portal.h"
+
 
 
 class Boss final
@@ -23,7 +25,7 @@ public:
 	friend BossContext;
 	friend BossAI;
 public:
-	Boss();
+	Boss(std::shared_ptr<Portal> pPortal);
 	~Boss() override;
 
 	void Update() override;
@@ -50,6 +52,15 @@ public:
 
 	//NomalMoveClassがプレイヤーの位置を取得するためのGet関数.
 	const D3DXVECTOR3& GetPlayerPos() const { return m_pPlayerPos; }
+
+	//ポータルの位置を取得する.
+	void SetPortalPos(const D3DXVECTOR3& portalpos)
+	{
+		m_pPortalPos = portalpos;
+	}
+
+	//AIの処理で必要になる.
+	const D3DXVECTOR3& GetPortalPos() const { return m_pPortalPos; }
 
 	//HPを取得する関数.
 	float GetEnemyHitPoint() const { return m_HitPoint; }

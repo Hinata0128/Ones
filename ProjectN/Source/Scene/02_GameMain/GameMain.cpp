@@ -18,11 +18,11 @@ GameMain::GameMain()
 
 	, m_pPlayer(std::make_shared<Player>())
 
-	, m_pEnemyNomal(std::make_shared<Boss>())
+	, m_pPortal(std::make_unique<Portal>())
+
+	, m_pEnemyNomal(std::make_shared<Boss>(m_pPortal))
 
 	, m_pCollisionManager(std::make_shared<CollisionManager>())
-
-	, m_pPortal(std::make_unique<Portal>())
 
 	, m_pHpBar(std::make_unique<HPBar>())
 

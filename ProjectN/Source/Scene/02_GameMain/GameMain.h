@@ -66,12 +66,14 @@ private:
 	//プレイヤークラス.
 	std::shared_ptr<Player> m_pPlayer;
 
+	// 1. ポータルを先に宣言し、shared_ptr に変える
+	std::shared_ptr<Portal> m_pPortal;
+
+	// 2. ボスをポータルの後に宣言する
 	std::shared_ptr<Boss> m_pEnemyNomal;
 
 	std::shared_ptr<CollisionManager> m_pCollisionManager;
 
-	//ポータルクラス.
-	std::unique_ptr<Portal> m_pPortal;
 
 	//HPBarクラス(Test).
 	std::unique_ptr<HPBar> m_pHpBar;
