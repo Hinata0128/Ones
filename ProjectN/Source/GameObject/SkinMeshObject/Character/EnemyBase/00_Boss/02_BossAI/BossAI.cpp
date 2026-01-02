@@ -109,7 +109,7 @@ void BossAI::DecideAction()
 	{
 		if (m_pOwner->GetEnemyHitPoint() > 90.0f)
 		{
-			//プレイヤー攻撃.
+			//プレイヤー攻撃状態に入る.
 			PlayerAttack();
 		}
 		else
