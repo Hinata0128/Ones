@@ -119,6 +119,7 @@ void BossAI::DecideAction()
 		}
 	}
 	//優先度2: プレイヤーが取得している、または、強奪が必要な場合.
+
 	else if (PortalState == Portal::PortalPriority::Player)
 	{
 		PlayerAttack();
