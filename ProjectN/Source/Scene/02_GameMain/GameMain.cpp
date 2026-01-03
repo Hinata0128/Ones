@@ -64,6 +64,9 @@ void GameMain::Create()
 	//これでGameMainにあるEnemyNomalの位置を取得してポータルの増加を作成している.
 	m_pPortal->SetEnemyNomal(m_pEnemyNomal);
 
+	m_pHpBar->SetTargetPlayer(m_pPlayer.get());
+	m_pHpBar->Create();
+
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
 
@@ -127,6 +130,8 @@ void GameMain::Update()
 	m_pCollisionManager->Update();
 
 	m_pPortal->Update();
+
+	m_pHpBar->Update();
 
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)

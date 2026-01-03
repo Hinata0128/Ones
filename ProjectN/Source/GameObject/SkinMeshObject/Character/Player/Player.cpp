@@ -51,6 +51,14 @@ Player::~Player()
 
 void Player::Update()
 {
+
+    // デバッグ用：Kキーを押すと10ダメージ
+    if (GetAsyncKeyState('K') & 0x0001)
+    {
+        m_HitPoint -= 10.0f;
+        if (m_HitPoint < 0.0f) m_HitPoint = 0.0f;
+    }
+
     //最初に書いておかないと、ポータルを触った時に弾が進まない.
     if (m_pShotManager)
     {
