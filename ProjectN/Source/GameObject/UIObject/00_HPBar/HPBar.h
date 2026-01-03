@@ -3,6 +3,7 @@
 #include "..//UIObject.h"
 #include <memory>
 #include <vector>
+#include "GameObject/SkinMeshObject/Character/Player/Player.h"
 
 class Sprite2D;
 
@@ -21,6 +22,12 @@ public:
 	void Draw() override;
 	void Create() override;
 
+
+	// 参照するプレイヤーをセットする関数
+	void SetTargetPlayer(Player* player) { m_pTargetPlayer = player; }
+
+	Player* m_pTargetPlayer = nullptr;
+	float m_maxBarScaleX = 0.0f;
 private:
 	// 各パーツ用のSprite
 	std::shared_ptr<Sprite2D> m_spBaseSprite;   // HPBase (枠)
