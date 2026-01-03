@@ -221,7 +221,6 @@
     <ClCompile Include="Source\GameObject\UIObject\00_HPBar\HPBar.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\01_Point\Point.cpp" />
     <ClCompile Include="Source\Main\Main.cpp" />
-    <ClCompile Include="Source\NoneFirl\CordTest.cpp" />
     <ClCompile Include="Source\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\01_FirstRound\FirstRound.cpp" />
     <ClCompile Include="Source\Scene\04_SecondRound\SecondRound.cpp" />
