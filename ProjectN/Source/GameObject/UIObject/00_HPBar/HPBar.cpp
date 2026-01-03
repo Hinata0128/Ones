@@ -1,15 +1,18 @@
 #include "HPBar.h"
-
 #include "Sprite2D//Sprite2D.h"
-
+#include "DirectX/DirectX11.h"
 
 HPBar::HPBar()
-	: UIObject			()
-	, m_pHpBarSprite	( std::make_shared<Sprite2D>() )
-	, m_pHpBar			( std::make_shared<UIObject>() )
+	: UIObject()
+	, m_spBaseSprite(std::make_shared<Sprite2D>())
+	, m_spBackSprite(std::make_shared<Sprite2D>())
+	, m_spDamageSprite(std::make_shared<Sprite2D>())
+	, m_spGaugeSprite(std::make_shared<Sprite2D>())
+	, m_upBase(std::make_shared<UIObject>())
+	, m_upBack(std::make_shared<UIObject>())
+	, m_upDamage(std::make_shared<UIObject>())
+	, m_upGauge(std::make_shared<UIObject>())
 {
-	//今はコンストラクタで書いている.
-	//場所が違うならDraw()に書く.
 	Create();
 }
 
@@ -17,44 +20,70 @@ HPBar::~HPBar()
 {
 }
 
-
 void HPBar::Update()
 {
 }
 
 void HPBar::Draw()
 {
-	//これでHPBarを表示する.
-	m_pHpBar->Draw();
+	DirectX11::GetInstance()->SetDepth(false);
+	// 描画順が重要（下から順に描画）
+	m_upBack->Draw();   // 1. 灰色の背景
+	m_upDamage->Draw(); // 2. 赤色のダメージバー
+	m_upGauge->Draw();  // 3. 緑色のHPバー
+	m_upBase->Draw();   // 4. 一番手前の枠
+	DirectX11::GetInstance()->SetDepth(true);
 }
 
 void HPBar::Create()
 {
-	const float Size = 64.0;
+	// 各画像の元のサイズ
+	const float baseW = 460.0f;
+	const float baseH = 64.0f;
+	const float barW = 1000.0f;
+	const float barH = 34.0f;
 
-	//HPBarの構造体.
-	Sprite2D::SPRITE_STATE SSHPBar =
-	{
-		Size * 6,	//横の長さを設定.
-		Size,		//縦の長さ.
-		Size,		//画像の区切り.		
-		Size,		//画像の縦の区切り
-		Size,		//表示する画像の幅
-		Size		//画像の高さ(黒い枠)
-	};
+	// 調整用パラメータ：枠の左右の縁の幅（仮定値）
+	// ※この値を大きくするとバーがより内側に入ります
+	const float paddingX = 8.0f;
 
-	//HPBarの表示位置の変更.
-	const float size = SSHPBar.Disp.w * 0.5f;
-	const float pos_y = static_cast<float>(WND_H - Size) - SSHPBar.Disp.h;
+	// バーが実際に表示されるべき内側の幅を計算
+	const float innerBarW = baseW - (paddingX * 2.0f);
 
+	// 表示基準位置
+	const float posX = 50.0f;
+	const float posY = static_cast<float>(WND_H - 100.0f);
 
-	//HPBarの表示.
-	m_pHpBarSprite->Init(_T("Data\\Texture\\HPBar.png"), SSHPBar);
+	// 1. HPBase (枠) の設定
+	Sprite2D::SPRITE_STATE ssBase = { baseW, baseH, baseW, baseH, baseW, baseH };
+	m_spBaseSprite->Init(_T("Data\\Image\\Buttle\\HPBase.png"), ssBase);
+	m_upBase->AttachSprite(m_spBaseSprite);
+	m_upBase->SetPosition(posX, posY, 0.0f);
 
-	//HPBarのスプライトを表示する.
-	m_pHpBar->AttachSprite(m_pHpBarSprite);
+	// 2. バーの共通設定と計算
+	// 上下中央合わせのためのオフセット
+	float offsetY = (baseH - barH) * 0.5f;
+	// バーの幅を「内側の幅」に合わせるためのスケールを計算
+	float barScaleX = innerBarW / barW;
 
-	//HPの表示位置を変更する.
-	m_pHpBar->SetPosition(size * 0.5f, pos_y, 0.f);
+	Sprite2D::SPRITE_STATE ssBar = { barW, barH, barW, barH, barW, barH };
+
+	// GaugeBack (背景)
+	m_spBackSprite->Init(_T("Data\\Image\\Buttle\\GaugeBack.png"), ssBar);
+	m_upBack->AttachSprite(m_spBackSprite);
+	// X座標を paddingX 分だけ右にずらす
+	m_upBack->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
+	m_upBack->SetScale(D3DXVECTOR3(barScaleX, 1.0f, 1.0f));
+
+	// HPDamage (赤)
+	m_spDamageSprite->Init(_T("Data\\Image\\Buttle\\HPDamage.png"), ssBar);
+	m_upDamage->AttachSprite(m_spDamageSprite);
+	m_upDamage->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
+	m_upDamage->SetScale(D3DXVECTOR3(barScaleX, 1.0f, 1.0f));
+
+	// HPGauge (緑)
+	m_spGaugeSprite->Init(_T("Data\\Image\\Buttle\\HPGauge.png"), ssBar);
+	m_upGauge->AttachSprite(m_spGaugeSprite);
+	m_upGauge->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
+	m_upGauge->SetScale(D3DXVECTOR3(barScaleX, 1.0f, 1.0f));
 }
-
