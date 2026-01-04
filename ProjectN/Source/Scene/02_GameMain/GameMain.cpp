@@ -28,6 +28,7 @@ GameMain::GameMain()
 
 	, m_pSkyBox(std::make_unique<BackGround>())
 
+	, m_pPointUI(std::make_unique<Point>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -66,6 +67,8 @@ void GameMain::Create()
 
 	m_pHpBar->SetTargetPlayer(m_pPlayer.get());
 	m_pHpBar->Create();
+
+	m_pPointUI->Create();
 
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
@@ -129,14 +132,54 @@ void GameMain::Update()
 
 	m_pCollisionManager->Update();
 
-	m_pPortal->Update();
 
 	m_pHpBar->Update();
+
+	// ==========================================================
+	// 【修正】SceneManagerから「累計スコア」を取得してUIに送る
+	// ==========================================================
+	// SceneManagerに GetPlayerScore() という関数がある前提です。
+	// もし名前が違ったら、実際の関数名に合わせてください。
+	int totalPlayerScore = SceneManager::GetInstance()->GetPlayerScore();
+
+	// 累計スコアが1以上なら1つ目を点灯
+	if (totalPlayerScore >= 1) {
+		m_pPointUI->SetPlayerPointActive(0, true);
+	}
+	// 累計スコアが2以上なら2つ目を点灯
+	if (totalPlayerScore >= 2) {
+		m_pPointUI->SetPlayerPointActive(1, true);
+	}
+
+	// 敵のスコアも同様に反映させる場合
+	int totalEnemyScore = SceneManager::GetInstance()->GetEnemyScore();
+	// if (totalEnemyScore >= 1) m_pPointUI->SetEnemyPointActive(0, true);
+	// ==========================================================
+
+		// 累計スコアが1以上なら1つ目を点灯
+	if (totalEnemyScore >= 1) {
+		m_pPointUI->SetBossPointActive(0, true);
+	}
+	// 累計スコアが2以上なら2つ目を点灯
+	if (totalEnemyScore >= 2) {
+		m_pPointUI->SetBossPointActive(1, true);
+	}
+
+
+	m_pPointUI->Update();
+
+	// ポータルの更新（ここで100%判定とシーン遷移が行われる）
+	m_pPortal->Update();
 
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		SceneManager::GetInstance()->LoadScene(SceneManager::First);
+	}
+
+	// 0x8000 を使うことで、キーが「押されている状態」を検知します
+	if (GetAsyncKeyState('P') & 0x8000) {
+		m_pPointUI->SetPlayerPointActive(0, true);
 	}
 }
 
@@ -176,6 +219,7 @@ void GameMain::Draw()
 	//Effectクラス
 	Effect::GetInstance()->Draw();
 	m_pHpBar->Draw();
+	m_pPointUI->Draw();
 
 }
 

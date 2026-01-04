@@ -87,13 +87,9 @@ void Boss::Update()
         m_pCurrentState->Update();
     }
 
-
-    //今敵の攻撃が邪魔だからコメントで消しておく.
-    //AutoShot();
-
+    //AIの処理を呼んでいる.
+    //ToDo : UI作成中のためコメント化している.
     m_pAI->Update();
-
-
 
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);

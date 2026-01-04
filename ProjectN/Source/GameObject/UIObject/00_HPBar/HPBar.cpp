@@ -5,18 +5,19 @@
 
 HPBar::HPBar()
 	: UIObject()
-	, m_spBaseSprite(std::make_shared<Sprite2D>())
-	, m_spBackSprite(std::make_shared<Sprite2D>())
-	, m_spDamageSprite(std::make_shared<Sprite2D>())
-	, m_spGaugeSprite(std::make_shared<Sprite2D>())
-	, m_upBase(std::make_shared<UIObject>())
-	, m_upBack(std::make_shared<UIObject>())
-	, m_upDamage(std::make_shared<UIObject>())
-	, m_upGauge(std::make_shared<UIObject>())
+
+	, m_pTargetPlayer		(nullptr)
+	, m_maxBarScaleX		(0.0f)
+
+	, m_spBaseSprite		(std::make_shared<Sprite2D>())
+	, m_spBackSprite		(std::make_shared<Sprite2D>())
+	, m_spDamageSprite		(std::make_shared<Sprite2D>())
+	, m_spGaugeSprite		(std::make_shared<Sprite2D>())
+	, m_upBase				(std::make_shared<UIObject>())
+	, m_upBack				(std::make_shared<UIObject>())
+	, m_upDamage			(std::make_shared<UIObject>())
+	, m_upGauge				(std::make_shared<UIObject>())
 {
-	// ここで呼ぶとまだ画像パスなどの準備ができていない場合があるため、
-	// 通常はGameMainなどのCreateから呼ぶのが安全ですが、
-	// コンストラクタで呼ぶ仕様を維持します。
 	Create();
 }
 
@@ -26,13 +27,13 @@ HPBar::~HPBar()
 
 void HPBar::Update()
 {
-	// ターゲット（Player）が設定されていない場合は何もしない
-	if (!m_pTargetPlayer) return;
+	//ターゲットが設定されていなかったら返す.
+	if (!m_pTargetPlayer)
+	{
+		return;
+	}
 
-	// -----------------------------------------------------------
-	// 1. 現在のHPから「目標となるスケール」を計算
-	// -----------------------------------------------------------
-	// 最大HP100と仮定して割合(0.0～1.0)を算出
+	//最大HP100と仮定して割合(0.0～1.0)を算出
 	float hpRate = m_pTargetPlayer->GetHitPoint() / 100.0f;
 	hpRate = max(0.0f, min(1.0f, hpRate)); // 0～1の範囲にクランプ
 
@@ -56,9 +57,9 @@ void HPBar::Update()
 	{
 		D3DXVECTOR3 redScale = m_upDamage->GetScale();
 
-		// 線形補間(Lerp)の計算
-		// (目標値 - 現在の値) * 速度。 0.05f を小さくするとよりゆっくり消えます。
-		float interpolationSpeed = 0.05f;
+		//線形補間(Lerp)の計算
+		//0.02f を小さくするとよりゆっくり消えます。
+		float interpolationSpeed = 0.02f;
 		redScale.x += (targetScaleX - redScale.x) * interpolationSpeed;
 
 		// 赤が緑より小さくならないように補正（計算誤差対策）
@@ -70,10 +71,10 @@ void HPBar::Update()
 	}
 
 	// 各UIパーツのUpdateを呼ぶ（アニメーション等がある場合用）
-	if (m_upBase)   m_upBase->Update();
-	if (m_upBack)   m_upBack->Update();
-	if (m_upDamage) m_upDamage->Update();
-	if (m_upGauge)  m_upGauge->Update();
+	if (m_upBase) { m_upBase->Update(); }
+	if (m_upBack) { m_upBack->Update(); }
+	if (m_upDamage) { m_upDamage->Update(); }
+	if (m_upGauge) { m_upGauge->Update(); }
 }
 
 void HPBar::Draw()
@@ -149,7 +150,4 @@ void HPBar::Create()
 	m_upGauge->AttachSprite(m_spGaugeSprite);
 	m_upGauge->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
 	m_upGauge->SetScale(initialScale);
-
-	// ※以前ここで m_maxBarScaleX = 1.0f; と上書きしていたため巨大化していました。
-	// その一行を削除し、計算した正しい比率を保持したまま終了します。
 }
