@@ -82,4 +82,8 @@ private:
 	float m_IsEnemyPriority;
 
 	bool m_IsRoundFinished = false;
+
+	float m_TransitionTimer = 0.0f;      // 遷移用のタイマー
+	const float WAIT_TIME = 2.0f;        // 待機時間（秒）例：2.0秒
+	bool m_IsTransitionStarted = false;  // 遷移プロセスが始まったかどうかのフラグ
 };

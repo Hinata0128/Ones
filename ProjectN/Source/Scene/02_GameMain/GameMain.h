@@ -24,6 +24,8 @@
 
 #include "GameObject/StaticMeshObject/03_BackGround/BackGround.h"
 
+#include "GameObject/UIObject/01_Point/Point.h"
+
 class Timer;
 
 
@@ -81,4 +83,5 @@ private:
 	//”wŒiƒNƒ‰ƒX.
 	std::unique_ptr<BackGround> m_pSkyBox;
 
+	std::unique_ptr<Point> m_pPointUI;
 };

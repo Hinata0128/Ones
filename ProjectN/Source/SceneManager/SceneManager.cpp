@@ -85,11 +85,6 @@ void SceneManager::AddPlayerScore()
 {
 	m_PlayerPoint++;
 
-	if (m_PlayerPoint >= 2)
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Win);
-		return;
-	}
 
 	ResetRound();
 }
@@ -99,11 +94,6 @@ void SceneManager::AddEnemyScore()
 {
 	m_EnemyNomalPoint++;
 
-	if (m_EnemyNomalPoint >= 2)
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
-		return;
-	}
 
 	ResetRound();
 }

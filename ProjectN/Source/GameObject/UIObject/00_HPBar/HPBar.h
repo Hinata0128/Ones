@@ -12,7 +12,8 @@ class Sprite2D;
 *	4枚の画像を重ねてHPバーを構成します
 **/
 
-class HPBar : public UIObject
+class HPBar
+	: public UIObject
 {
 public:
 	HPBar();
@@ -24,10 +25,11 @@ public:
 
 
 	// 参照するプレイヤーをセットする関数
+	//体力減少に必要.
 	void SetTargetPlayer(Player* player) { m_pTargetPlayer = player; }
 
-	Player* m_pTargetPlayer = nullptr;
-	float m_maxBarScaleX = 0.0f;
+	Player* m_pTargetPlayer;
+	float m_maxBarScaleX;
 private:
 	// 各パーツ用のSprite
 	std::shared_ptr<Sprite2D> m_spBaseSprite;   // HPBase (枠)

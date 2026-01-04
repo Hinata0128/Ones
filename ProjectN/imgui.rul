@@ -60,8 +60,15 @@ Size=220,110
 Collapsed=0
 
 [Window][BossAI: 内部ステータス]
-Pos=60,60
+ViewportPos=1356,70
+ViewportId=0xA1104547
 Size=208,124
+Collapsed=0
+
+[Window][Portal System]
+ViewportPos=1594,264
+ViewportId=0x7916E0CB
+Size=292,112
 Collapsed=0
 
 [Docking][Data]
