@@ -6,6 +6,8 @@
 #include "GameObject/SkinMeshObject/Character/Player/Player.h"
 #include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
 
+#include "GameObject/UIObject/03_PortalGauge/PortalGauge.h"
+
 #include "SceneManager/SceneManager.h"
 
 Portal::Portal()
@@ -13,6 +15,9 @@ Portal::Portal()
 	, m_PortalIncreaseF(0.0f)
 	, m_PortalIncrease(0)
 	, m_pPortalState(PortalPriority::None)
+
+	, m_spPortalGauge(std::make_shared<PortalGauge>())
+
 	, m_IsPlayerPriority(false)
 	, m_IsEnemyPriority(false)
 	, m_IsTransitionStarted(false)
@@ -109,6 +114,15 @@ void Portal::Update()
 		}
 	}
 
+	if (m_spPortalGauge)
+	{
+		// Portal側は0.0~100.0f、UI側は0.0~1.0fなので変換して渡す
+		m_spPortalGauge->SetPercent(m_PortalIncreaseF / 100.0f);
+
+		// UI側のUpdateを呼び出す（もしManager側で一括管理していない場合）
+		m_spPortalGauge->Update();
+	}
+
 	//DEBUG ImGui
 #ifdef _DEBUG
 	ImGui::Begin(JAPANESE("Portal System"));
@@ -195,11 +209,6 @@ void Portal::PlayerToPortal()
 {
 	if (m_IsRoundFinished) return;
 
-	if (auto player = m_pPlayer.lock())
-	{
-		if (player->IsCapturingState()) return;
-	}
-
 	float deltaTime = Timer::GetInstance().DeltaTime();
 	m_PortalIncreaseF += deltaTime;
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
@@ -223,7 +232,7 @@ void Portal::EnemyToPortal()
 	if (m_IsRoundFinished) return;
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
-	m_PortalIncreaseF += deltaTime;
+	m_PortalIncreaseF += deltaTime * 2.0f;
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
 	if (m_PortalIncreaseF >= 100.0f)

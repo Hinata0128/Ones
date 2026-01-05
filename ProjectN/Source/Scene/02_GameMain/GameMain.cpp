@@ -29,6 +29,8 @@ GameMain::GameMain()
 	, m_pSkyBox(std::make_unique<BackGround>())
 
 	, m_pPointUI(std::make_unique<Point>())
+
+	, m_pPortalGauge(std::make_shared<PortalGauge>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -65,10 +67,13 @@ void GameMain::Create()
 	//これでGameMainにあるEnemyNomalの位置を取得してポータルの増加を作成している.
 	m_pPortal->SetEnemyNomal(m_pEnemyNomal);
 
+	m_pPortal->SetPortalGauge(m_pPortalGauge);
+
 	m_pHpBar->SetTargetPlayer(m_pPlayer.get());
 	m_pHpBar->Create();
 
 	m_pPointUI->Create();
+	m_pPortalGauge->Create();
 
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
@@ -220,6 +225,7 @@ void GameMain::Draw()
 	Effect::GetInstance()->Draw();
 	m_pHpBar->Draw();
 	m_pPointUI->Draw();
+	m_pPortalGauge->Draw();
 
 }
 

@@ -6,6 +6,8 @@ class ImGuiManager;
 class Player;
 class Boss;
 
+class PortalGauge;
+
 /************************************************************
 *	陣地を守用のポータル
 *	取り合いのゲームだから1個で作成していく.
@@ -54,6 +56,9 @@ public:
 	PortalPriority GetPortalState() const {
 		return m_pPortalState;
 	}
+
+	// UIをセットする関数を追加
+	void SetPortalGauge(std::shared_ptr<PortalGauge> gauge) { m_spPortalGauge = gauge; }
 private:
 	//Playerのポータル周りのコード.
 	void PlayerToPortal();
@@ -73,6 +78,8 @@ private:
 
 	//ポータルの行動列挙.
 	PortalPriority m_pPortalState;
+
+	std::shared_ptr<PortalGauge> m_spPortalGauge;
 
 	//======================================================
 	// ポータル周りに必要になるメンバ変数.
