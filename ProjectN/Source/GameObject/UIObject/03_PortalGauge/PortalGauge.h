@@ -25,14 +25,15 @@ public:
 
 private:
 	//ゲージのメンバ変数.
-	std::shared_ptr<Sprite2D> m_spBase;
-	std::shared_ptr<Sprite2D> m_spGauge;
+	std::shared_ptr<Sprite2D> m_spBaseSprite;  // 外枠
+	std::shared_ptr<Sprite2D> m_spGaugeSprite; // ゲージ本体
 
-	//ゲージのメンバ変数.
-	std::shared_ptr<UIObject> m_upPortalGaugeBaseUI;
-	std::shared_ptr<UIObject> m_upPortalGaugeUI;
+	// UIオブジェクト
+	std::shared_ptr<UIObject> m_upBase;
+	std::shared_ptr<UIObject> m_upGauge;
 
-	float m_maxBarScaleX;
-	float m_percent;
-	float m_barWidth;
+	float m_maxBarScaleX; // 枠に収まる最大スケール
+	float m_percent;      // 目標進捗率
+	float m_currentScaleX; // 現在の表示スケール (アニメーション用)
+	float m_barWidth;     // ゲージテクスチャの元幅
 };
