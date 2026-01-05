@@ -24,7 +24,6 @@ Point::~Point()
 
 void Point::Create()
 {
-	// 画像サイズを 32x32 に変更
 	const float size = 32.0f;
 	const float margin = 5.0f;// サイズが小さくなったので隙間も調整
 	const float groupSpacing = 100.0f; // 間隔も調整
@@ -35,7 +34,6 @@ void Point::Create()
 	// SPRITE_STATE も 32x32 に合わせる
 	Sprite2D::SPRITE_STATE ss = { size, size, size, size, size, size };
 
-	// 重要：パスが "Data\\Image\\..." ではないですか？ フォルダを確認してください。
 	m_spBaseSprite->Init(_T("Data\\Texture\\PointBase.png"), ss);
 	m_spActiveSprite->Init(_T("Data\\Texture\\PointActive.png"), ss);
 

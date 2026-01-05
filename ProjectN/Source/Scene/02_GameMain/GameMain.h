@@ -26,6 +26,8 @@
 
 #include "GameObject/UIObject/01_Point/Point.h"
 
+#include "GameObject/UIObject/03_PortalGauge/PortalGauge.h"
+
 class Timer;
 
 
@@ -84,4 +86,6 @@ private:
 	std::unique_ptr<BackGround> m_pSkyBox;
 
 	std::unique_ptr<Point> m_pPointUI;
+
+	std::shared_ptr<PortalGauge> m_pPortalGauge;
 };
