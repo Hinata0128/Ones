@@ -28,6 +28,8 @@
 
 #include "GameObject/UIObject/03_PortalGauge/PortalGauge.h"
 
+#include "GameObject/UIObject/04_LimitTime/LimitTime.h"
+
 class Timer;
 
 
@@ -88,4 +90,6 @@ private:
 	std::unique_ptr<Point> m_pPointUI;
 
 	std::shared_ptr<PortalGauge> m_pPortalGauge;
+
+	std::unique_ptr<LimitTime> m_pLimitTime;
 };

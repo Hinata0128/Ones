@@ -89,7 +89,7 @@ void Boss::Update()
 
     //AIの処理を呼んでいる.
     //ToDo : UI作成中のためコメント化している.
-    m_pAI->Update();
+    //m_pAI->Update();
 
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
