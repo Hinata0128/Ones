@@ -31,6 +31,8 @@ GameMain::GameMain()
 	, m_pPointUI(std::make_unique<Point>())
 
 	, m_pPortalGauge(std::make_shared<PortalGauge>())
+
+	, m_pLimitTime(std::make_unique<LimitTime>())
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -74,6 +76,8 @@ void GameMain::Create()
 
 	m_pPointUI->Create();
 	m_pPortalGauge->Create();
+
+	m_pLimitTime->Create();
 
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
@@ -226,7 +230,7 @@ void GameMain::Draw()
 	m_pHpBar->Draw();
 	m_pPointUI->Draw();
 	m_pPortalGauge->Draw();
-
+	m_pLimitTime->Draw();
 }
 
 HRESULT GameMain::LoadData()
