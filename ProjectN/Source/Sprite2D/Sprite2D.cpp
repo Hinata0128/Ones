@@ -333,6 +333,7 @@ void Sprite2D::Render()
 	D3DXMATRIX	mWorld;
 	D3DXMATRIX	mTrans, mRot, mScale;
 
+
 	//ägëÂèkè¨çsóÒ.
 	D3DXMatrixScaling( &mScale,
 		m_Scale.x, m_Scale.y, m_Scale.z );

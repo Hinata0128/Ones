@@ -32,7 +32,6 @@ public:
 	}
 
 protected:
-	//Sprite2D*	m_pSprite;
 	std::shared_ptr<Sprite2D> m_pSprite;
 
 	POINTS		m_PatternNo;	// パターン番号(マス目)
