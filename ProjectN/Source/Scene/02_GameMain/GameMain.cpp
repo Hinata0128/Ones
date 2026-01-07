@@ -93,10 +93,7 @@ void GameMain::Update()
 	//Timer更新
 	Timer::GetInstance().Update();
 
-	//Effect制御 (省略)
 	{
-		//エフェクトのインスタンスごとに必要なハンドル
-		//※３つ表示して制御するなら３つ必要になる
 		static ::EsHandle hEffect = -1;
 
 		if (GetAsyncKeyState('Y') & 0x0001) {
@@ -144,6 +141,8 @@ void GameMain::Update()
 
 	m_pHpBar->Update();
 
+	m_pLimitTime->Update();
+
 	// ==========================================================
 	// 【修正】SceneManagerから「累計スコア」を取得してUIに送る
 	// ==========================================================
@@ -190,6 +189,14 @@ void GameMain::Update()
 	if (GetAsyncKeyState('P') & 0x8000) {
 		m_pPointUI->SetPlayerPointActive(0, true);
 	}
+
+	//時間切れの時のシーン移動.
+	if (m_pLimitTime->IsTimeUp())
+	{
+		SceneManager::GetInstance()->LoadScene(SceneManager::First);
+		return;
+	}
+
 }
 
 void GameMain::Draw()
@@ -200,7 +207,7 @@ void GameMain::Draw()
 	PreDraw();
 
 	//背景の表示.
-	m_pSkyBox->Draw();
+	//m_pSkyBox->Draw();
 
 	//地面表示.
 	m_pGround->Draw();

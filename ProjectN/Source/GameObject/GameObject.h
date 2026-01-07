@@ -74,8 +74,11 @@ public:
 		m_Position += delta;
 	}
 
+
 protected://protectedは子クラスのみアクセス可能.
 	D3DXVECTOR3	m_Position;
 	D3DXVECTOR3	m_Rotation;
 	D3DXVECTOR3	m_Scale;
+
+
 };
