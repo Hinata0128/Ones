@@ -95,4 +95,5 @@ private:
 
 	//プレイヤーとボスのリスポーン時間の設定.
 	float m_PlayerRespawnTimer;
+	float m_BossRespawnTimer;
 };

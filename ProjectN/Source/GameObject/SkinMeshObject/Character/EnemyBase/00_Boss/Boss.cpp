@@ -16,6 +16,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_pMove(std::make_unique<BossMove>(this))
     , m_pDead(std::make_unique<BossDead>(this))
     , m_pAI(std::make_unique<BossAI>(this, pPortal))
+    
+    , m_InitialPosition {}
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -23,8 +25,11 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
 
     // サイズと位置
     SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
-    //SetPosition(20.0f, 0.f, 15.f);
-    SetPosition(0.0f, 0.0f, 0.0f);
+
+    m_InitialPosition = D3DXVECTOR3(20.0f, 0.f, 15.f);
+    //m_InitialPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    SetPosition(m_InitialPosition);
+    //SetPosition(0.0f, 0.0f, 0.0f);
 
     // ステートセット
     m_pCurrentState = m_pIdol.get();
@@ -90,9 +95,11 @@ void Boss::Update()
 
     //AIの処理を呼んでいる.
     //ToDo : UI作成中のためコメント化している.
-    //m_pAI->Update();
-
-    //AutoShot();
+    
+    if (!IsDaed())
+    {
+        m_pAI->Update();
+    }
 
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
@@ -126,6 +133,25 @@ void Boss::Hit()
             if (m_pCurrentState) m_pCurrentState->Enter();
         }
     }
+}
+
+void Boss::Respawn()
+{
+    // 1. 位置を初期位置にリセット
+    SetPosition(m_InitialPosition);
+
+    // 2. ステートを待機（Idol）に強制的に戻す
+    if (m_pCurrentState) m_pCurrentState->Exit();
+    m_pCurrentState = m_pIdol.get();
+    if (m_pCurrentState) m_pCurrentState->Enter();
+
+    // 3. パラメータの回復
+    m_HitPoint = 100.0f;
+
+    // 4. クールタイム等のリセット
+
+    // 5. Initを呼び出して内部変数を初期化
+    Init();
 }
 
 void Boss::ChangeState(BossStateBase* state)
