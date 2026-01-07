@@ -23,7 +23,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
 
     // サイズと位置
     SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
-    SetPosition(20.0f, 0.f, 15.f);
+    //SetPosition(20.0f, 0.f, 15.f);
+    SetPosition(0.0f, 0.0f, 0.0f);
 
     // ステートセット
     m_pCurrentState = m_pIdol.get();

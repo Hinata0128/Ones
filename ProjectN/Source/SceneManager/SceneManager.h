@@ -75,6 +75,15 @@ public:
 	bool IsGameFinished() const;
 	//PlayerとenemyNomalのポイントを初期化する.
 	void ResetScore();
+
+
+
+	// 遷移の準備ができたか
+	bool IsReadyToLoad() const { return m_IsReadyToLoad; }
+	// 次のシーンを取得
+	SceneManager::List GetNextScene() const { return m_NextScene; }
+
+
 public:
 	void SetDx11(DirectX11* Dx11) { m_pDx11 = Dx11; }
 	void SetDx9(DirectX9* pDx9) { m_pDx9 = pDx9; }
@@ -97,4 +106,8 @@ private:
 
 	int m_PlayerPoint = 0;
 	int m_EnemyNomalPoint = 0;
+
+	bool m_IsReadyToLoad = false;
+	SceneManager::List m_NextScene = SceneManager::max;
+
 };

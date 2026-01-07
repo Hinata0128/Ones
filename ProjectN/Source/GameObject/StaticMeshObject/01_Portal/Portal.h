@@ -59,6 +59,21 @@ public:
 
 	// UIをセットする関数を追加
 	void SetPortalGauge(std::shared_ptr<PortalGauge> gauge) { m_spPortalGauge = gauge; }
+
+	//アクセス違反対策関数.
+	//ToDo : 制限時間よりも先にポータルを100%にすると
+	//		 アクセス違反になるのでそれの対策.
+	bool IsTransitionStarted() const { return m_IsTransitionStarted; }
+
+	//次に遷移するシーンIDの取得.
+	int GetNextSceneID() const { return m_NextSceneID; }
+
+
+	// 遷移の準備ができたか
+	bool IsReadyToLoad() const { return m_IsReadyToLoad; }
+	// 次のシーンを取得（循環参照を避けるためintで返す）
+	int GetNextScene() const { return m_NextScene; }
+
 private:
 	//Playerのポータル周りのコード.
 	void PlayerToPortal();
@@ -93,4 +108,11 @@ private:
 	float m_TransitionTimer = 0.0f;      // 遷移用のタイマー
 	const float WAIT_TIME = 2.0f;        // 待機時間（秒）例：2.0秒
 	bool m_IsTransitionStarted = false;  // 遷移プロセスが始まったかどうかのフラグ
+
+	int m_NextSceneID = -1;
+
+	bool m_IsReadyToLoad = false;
+
+	int m_NextScene = -1; // -1 は遷移なし
+
 };

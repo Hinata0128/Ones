@@ -60,14 +60,14 @@ void Portal::Update()
 			{
 				SceneManager::GetInstance()->ResetScore();
 				Init();
-				SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+				m_NextScene = SceneManager::Win;
 			}
 			// 2. 敵（ボス）が2勝した（0-2 または 1-2）
 			else if (eScore >= 2)
 			{
 				SceneManager::GetInstance()->ResetScore();
 				Init();
-				SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
+				m_NextScene = SceneManager::Lose;
 			}
 			// 3. まだ決着がついていない場合（1-0, 0-1, 1-1）
 			else
@@ -79,20 +79,24 @@ void Portal::Update()
 					// 「最後に100%にした人」の判定（PortalStateに現在の占有者が入っています）
 					if (m_pPortalState == PortalPriority::Player) {
 						// プレイヤーが追いついて1-1にした場合
-						SceneManager::GetInstance()->LoadScene(SceneManager::First);
+						//ここにはFinalRoundに入る処理.
+						m_NextScene = SceneManager::First;
 					}
 					else {
 						// ボスが追いついて1-1にした場合
-						SceneManager::GetInstance()->LoadScene(SceneManager::First);
+						//ここにはFinalRoundに入る処理.
+						m_NextScene = SceneManager::First;
 					}
 				}
 				else
 				{
 					// 初めての1ポイント取得時 (1-0 または 0-1)
 					Init();
-					SceneManager::GetInstance()->LoadScene(SceneManager::First);
+					//ここではSecondRoundに入る処理.
+					m_NextScene = SceneManager::First;
 				}
 			}
+			m_IsReadyToLoad = true;
 			return;
 		}
 	}
@@ -155,6 +159,9 @@ void Portal::Init()
 	m_IsRoundFinished = false;      // 100%判定をリセット
 	m_IsTransitionStarted = false;  // 遷移中フラグをリセット
 	m_TransitionTimer = 0.0f;       // タイマーを0にリセット
+
+	m_IsReadyToLoad = false;
+	m_NextScene = -1;
 }
 
 void Portal::SetPortalState(PortalPriority state)
@@ -210,7 +217,10 @@ void Portal::PlayerToPortal()
 	if (m_IsRoundFinished) return;
 
 	float deltaTime = Timer::GetInstance().DeltaTime();
-	m_PortalIncreaseF += deltaTime;
+
+	float SpeedMultiplier = (m_PortalIncreaseF <= 50.0f) ? 2.0f : 1.0f;
+
+	m_PortalIncreaseF += deltaTime * SpeedMultiplier;
 	m_PortalIncrease = static_cast<int>(m_PortalIncreaseF);
 
 	if (m_PortalIncreaseF >= 100.0f)
