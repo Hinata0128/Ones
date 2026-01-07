@@ -23,9 +23,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
 
     // サイズと位置
     SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
-    SetPosition(20.0f, 0.f, 15.f);
-    //ToDo : ポータルの確認用.
-    //SetPosition(0.0f, 0.0f, 0.0f);
+    //SetPosition(20.0f, 0.f, 15.f);
+    SetPosition(0.0f, 0.0f, 0.0f);
 
     // ステートセット
     m_pCurrentState = m_pIdol.get();
@@ -92,6 +91,8 @@ void Boss::Update()
     //AIの処理を呼んでいる.
     //ToDo : UI作成中のためコメント化している.
     //m_pAI->Update();
+
+    //AutoShot();
 
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);

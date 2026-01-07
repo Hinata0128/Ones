@@ -92,4 +92,7 @@ private:
 	std::shared_ptr<PortalGauge> m_pPortalGauge;
 
 	std::unique_ptr<LimitTime> m_pLimitTime;
+
+	//プレイヤーとボスのリスポーン時間の設定.
+	float m_PlayerRespawnTimer;
 };

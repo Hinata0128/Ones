@@ -28,6 +28,8 @@ Player::Player()
 
     , m_pCurrentState   (nullptr)
 
+    , m_InitialPosition {}
+
 {
 	SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Player);
 	auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh,[](SkinMesh*){});
@@ -137,7 +139,8 @@ void Player::Init()
     SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
     //SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
     //Playerの初期位置の変更.
-    SetPosition(-20.f, 0.f, -15.f);
+    m_InitialPosition = D3DXVECTOR3(-20.f, 0.f, -15.f);
+    SetPosition(m_InitialPosition);
     
 
     //Playerの体力.
@@ -195,6 +198,29 @@ void Player::InitializePlayerMove()
 {
     m_pAttackManager->CleanUpState(PlayerAttackManager::enAttack::Long);
     m_pPlayerIdol->Init();
+}
+
+void Player::Respawn()
+{
+    //初期位置に戻す.
+    SetPosition(m_InitialPosition);
+
+    //ステートをIdolに戻す.
+    if (m_pCurrentState)
+    {
+        m_pCurrentState->Exit();
+    }
+    m_pCurrentState = m_pPlayerIdol.get();
+    if (m_pCurrentState) {
+        m_pCurrentState->Enter(); // ここで Idle アニメーションに切り替わる
+    }
+    
+    // 3. パラメータのリセット
+    m_HitPoint = 100.0f;
+    m_CaptureTimer = 0.0f;
+
+    // 4. 攻撃マネージャー等の初期化（既存の関数を利用）
+    InitializePlayerMove();
 }
 
 D3DXVECTOR3 Player::Player_WS(float RotationY) const
@@ -261,7 +287,6 @@ D3DXVECTOR3 Player::GetShortAttackCenter() const
 
 AttackShort* Player::GetShortAttackState() const
 {
-    // m_pAttackManager は std::unique_ptr なので get() で生のポインタを取得
     if (m_pAttackManager)
     {
         // PlayerAttackManager の新しいメンバ関数を呼び出す

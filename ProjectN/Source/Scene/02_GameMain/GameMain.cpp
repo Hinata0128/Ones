@@ -33,6 +33,8 @@ GameMain::GameMain()
 	, m_pPortalGauge(std::make_shared<PortalGauge>())
 
 	, m_pLimitTime(std::make_unique<LimitTime>())
+
+	, m_PlayerRespawnTimer(0.0f)
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -118,11 +120,25 @@ void GameMain::Update()
 	m_pPlayer->Update();
 	UpdateCamera();
 
+	// リスポーン管理
+	if (m_pPlayer->IsDead()) // PlayerDeadステートにいるか？
 	{
-		m_pEnemyNomal->Update();
+		// 静的変数またはメンバ変数でタイマーを管理
+		m_PlayerRespawnTimer += Timer::GetInstance().DeltaTime();
 
-		m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
+		// 3秒経過したら復活
+		if (m_PlayerRespawnTimer >= 3.0f)
+		{
+			m_pPlayer->Respawn();
+			m_PlayerRespawnTimer = 0.0f;
+		}
 	}
+
+
+	m_pEnemyNomal->Update();
+
+	m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
+
 
 	// =========================================================================
 
