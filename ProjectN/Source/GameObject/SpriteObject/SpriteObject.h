@@ -17,6 +17,8 @@ public:
 	virtual void Update() override;
 	// 引数なしDraw（オーバーライド）
 	virtual void Draw() override;
+	//構築関数.
+	virtual void Create() {}
 
 	// スプライトを接続する
 	void AttachSprite(Sprite3D& pSprite) {

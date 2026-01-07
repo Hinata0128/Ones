@@ -299,7 +299,7 @@ void GameMain::Projection()
 	//アスペクト（幅÷高さ）.
 	float aspect = static_cast<FLOAT>(WND_W) / static_cast<FLOAT>(WND_H);
 	float near_z = 0.1f;
-	float far_z = 999.9;
+	float far_z = 999.9f;
 
 	//プロジェクション（射影）変換.
 	D3DXMatrixPerspectiveFovLH(
