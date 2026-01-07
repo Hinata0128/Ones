@@ -14,6 +14,8 @@ class PlayerPortalAnim;
 #include "System/00_Manager/07_PlayerAttackManager/PlayerAttackManager.h"
 #include "..//Player/PlayerAttckStateBase/AttackShort/AttackShort.h"
 
+#include "GameObject/SpriteObject/00_Shadow/Shadow.h"
+
 /**************************************************
 *	プレイヤークラス.
 **/
@@ -77,6 +79,8 @@ public:
 	void SetCaptureState(float duration);
 	//Portalがゲージ増加停止を判定するための関数.
 	bool IsCapturingState() const;
+
+	Shadow* GetShadow() const { return m_pShadow.get(); }
 private:
 	PShotManager*	m_pShotManager;
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;
@@ -93,4 +97,6 @@ private:
 	float m_CaptureTimer = 0.0f;
 
 	D3DXVECTOR3 m_InitialPosition;
+
+	std::unique_ptr<Shadow> m_pShadow;
 };

@@ -2,8 +2,13 @@
 #include "System/00_Manager/01_StaticMeshManager/StaticMeshManager.h"
 
 PShot::PShot()
+	: ShotBase()
+	, m_pShadow(std::make_unique<Shadow>())
 {
 	AttachMesh(*StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Bullet));
+
+	m_pShadow->Create();
+	m_pShadow->SetTargetShadowPos(this);
 
 	// コンストラクタで初期化
 	Init();
@@ -33,6 +38,9 @@ void PShot::Update()
 		}
 		// バウンディングスフィアの位置同期
 		UpdateBPosition();
+
+		//影の実装.
+		m_pShadow->Update();
 	}
 }
 
@@ -41,6 +49,7 @@ void PShot::Draw()
 	if (m_Disp)
 	{
 		ShotBase::Draw();
+		m_pShadow->Draw();
 	}
 }
 
@@ -76,4 +85,6 @@ void PShot::Reload(
 		m_BSphere->SetPosition(m_Position);
 		m_BSphere->SetRadius(0.5f);
 	}
+
+	m_pShadow->SetTargetShadowPos(this);
 }

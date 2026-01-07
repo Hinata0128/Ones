@@ -30,6 +30,7 @@ Player::Player()
 
     , m_InitialPosition {}
 
+    , m_pShadow(std::make_unique<Shadow>())
 {
 	SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Player);
 	auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh,[](SkinMesh*){});
@@ -121,6 +122,8 @@ void Player::Update()
     m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
     //m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
+    m_pShadow->Update();
+
 
     if (GetAsyncKeyState('L') & 0x8000)
     {
@@ -136,6 +139,7 @@ void Player::Draw()
 	//m_pMesh->SetAnimSpeed(m_AnimSpeed);
     m_pAttackManager->Draw();
 	Character::Draw();
+    m_pShadow->Draw();
 }
 
 void Player::Init()
@@ -158,6 +162,9 @@ void Player::Init()
 
     //当たり判定の位置を変更.
     m_HitCenterOffset = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+
+    m_pShadow->Create();
+    m_pShadow->SetTargetShadowPos(this);
 
     Character::Init();
 }
