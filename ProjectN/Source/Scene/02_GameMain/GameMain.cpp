@@ -141,7 +141,6 @@ void GameMain::Update()
 
 	m_pHpBar->Update();
 
-	m_pLimitTime->Update();
 
 	// ==========================================================
 	// 【修正】SceneManagerから「累計スコア」を取得してUIに送る
@@ -179,24 +178,27 @@ void GameMain::Update()
 	// ポータルの更新（ここで100%判定とシーン遷移が行われる）
 	m_pPortal->Update();
 
-
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	if (m_pPortal->IsReadyToLoad())
 	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::First);
-	}
+		int nextID = m_pPortal->GetNextScene();
 
-	// 0x8000 を使うことで、キーが「押されている状態」を検知します
-	if (GetAsyncKeyState('P') & 0x8000) {
-		m_pPointUI->SetPlayerPointActive(0, true);
-	}
-
-	//時間切れの時のシーン移動.
-	if (m_pLimitTime->IsTimeUp())
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::First);
+		// ここで static_cast を使って型を合わせる
+		SceneManager::GetInstance()->LoadScene(static_cast<SceneManager::List>(nextID));
+		// LoadScene を呼んだ瞬間に GameMain は破棄されるので、
+		// 直後に return することで「死んだ後のメモリ」へのアクセスを防ぐ
 		return;
 	}
 
+	// 3. タイムアップ判定（ポータルが決着していない時のみ実行）
+	if (!m_pPortal->IsTransitionStarted())
+	{
+		m_pLimitTime->Update();
+		if (m_pLimitTime->IsTimeUp())
+		{
+			SceneManager::GetInstance()->LoadScene(SceneManager::First);
+			return;
+		}
+	}
 }
 
 void GameMain::Draw()
