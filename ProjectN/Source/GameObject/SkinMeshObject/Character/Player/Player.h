@@ -50,6 +50,9 @@ public:
 	// 他の方法で作成するやり方を調べて実装する.
 	void InitializePlayerMove();
 
+	void Respawn();
+	bool IsDead() const { return m_pCurrentState == (PlayerState*)m_pPlayerDead.get(); }
+
 public:
 	//Playerの動作用関数.
 	//W・Sの前進後退用関数.
@@ -67,7 +70,6 @@ public:
 	AttackShort* GetShortAttackState() const;
 
 	PlayerAttackManager* GetAttackManager() const { return m_pAttackManager.get(); }
-
 public:
 	//ポータル系の関数をここに書く.
 	//PortalからStateを切り替えるため.
@@ -89,4 +91,6 @@ private:
 	PlayerState* m_pCurrentState;
 
 	float m_CaptureTimer = 0.0f;
+
+	D3DXVECTOR3 m_InitialPosition;
 };
