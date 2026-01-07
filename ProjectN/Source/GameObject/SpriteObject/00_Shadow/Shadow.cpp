@@ -18,4 +18,5 @@ void Shadow::Draw()
 
 void Shadow::Create()
 {
+	//
 }
