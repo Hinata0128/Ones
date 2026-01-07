@@ -115,8 +115,6 @@ void CollisionManager::AllCollider()
 
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
-                    // 敵をリスポーン位置へ移動 (SetEnemyPosition -> SetPosition に修正)
-                    enemy->SetPosition(D3DXVECTOR3(0.f, 0.f, 20.f));
 
                     // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
                     Effect::Play(Effect::Test0, enemy->GetPosition());
@@ -165,8 +163,6 @@ void CollisionManager::AllCollider()
         //剣の当たり判定情報を取得 (参照で宣言しても、pShortAttack が有効なら初期化済み)
         const BoundingSphere& swordSphere = pShortAttack->GetHitBox();
 
-        // 衝突時の処理用のリスポーン位置
-        const D3DXVECTOR3 kRespawnPos(0.f, 0.f, 20.f);
 
         for (auto enemy : m_vEnemies)
         {
@@ -181,8 +177,6 @@ void CollisionManager::AllCollider()
                 enemy->Hit();
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
-                    // 敵リスポーン
-                    enemy->SetPosition(kRespawnPos);
 
                     // エフェクト
                     Effect::Play(Effect::Test0, enemy->GetPosition());

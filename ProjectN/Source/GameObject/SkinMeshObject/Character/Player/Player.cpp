@@ -122,6 +122,11 @@ void Player::Update()
     //m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
 
+    if (GetAsyncKeyState('L') & 0x8000)
+    {
+        SetPosition(m_InitialPosition);
+    }
+
     //基底クラスの更新処理.
     Character::Update();
 }

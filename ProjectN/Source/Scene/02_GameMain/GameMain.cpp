@@ -35,6 +35,7 @@ GameMain::GameMain()
 	, m_pLimitTime(std::make_unique<LimitTime>())
 
 	, m_PlayerRespawnTimer(0.0f)
+	, m_BossRespawnTimer(0.0f)
 {
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
@@ -138,6 +139,19 @@ void GameMain::Update()
 	m_pEnemyNomal->Update();
 
 	m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
+
+	if (m_pEnemyNomal->IsDaed())
+	{
+		// メンバ変数 m_BossRespawnTimer を使用（GameMain.h で定義してください）
+		m_BossRespawnTimer += Timer::GetInstance().DeltaTime();
+
+		// 5秒後に復活させる
+		if (m_BossRespawnTimer >= 5.0f)
+		{
+			m_pEnemyNomal->Respawn();
+			m_BossRespawnTimer = 0.0f; // タイマーリセット
+		}
+	}
 
 
 	// =========================================================================

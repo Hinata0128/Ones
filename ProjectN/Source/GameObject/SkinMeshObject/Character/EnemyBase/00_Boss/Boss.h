@@ -64,6 +64,10 @@ public:
 
 	//HP‚ğæ“¾‚·‚éŠÖ”.
 	float GetEnemyHitPoint() const { return m_HitPoint; }
+
+	//€–S‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©.
+	bool IsDaed() const { return m_pCurrentState == (BossStateBase*)m_pDead.get(); }
+	void Respawn();
 public:
 	void ChangeState(BossStateBase* state);
 
@@ -87,4 +91,6 @@ private:
 	BossStateBase* m_pCurrentState = nullptr;
 
 	std::unique_ptr<BossAI> m_pAI;
+
+	D3DXVECTOR3 m_InitialPosition;
 };

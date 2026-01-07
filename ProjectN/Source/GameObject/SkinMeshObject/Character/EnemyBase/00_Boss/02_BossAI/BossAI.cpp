@@ -94,7 +94,12 @@ void BossAI::DecideAction()
 	//ローカル変数(ポータルを触る距離).
 	float PortalGet = 5.0f;
 
-	//ポータルの現在の情報えお取得する.
+	if (Pos_Lenght > PortalGet)
+	{
+		MoveToPortl();
+	}
+
+	//ポータルの現在の情報を取得する.
 	//ポータルクラスの中の列挙を呼んでいる.
 	Portal::PortalPriority PortalState = m_pPortal->GetPortalState();
 
