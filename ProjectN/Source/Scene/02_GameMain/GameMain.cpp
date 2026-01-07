@@ -195,8 +195,9 @@ void GameMain::Update()
 		m_pLimitTime->Update();
 		if (m_pLimitTime->IsTimeUp())
 		{
-			SceneManager::GetInstance()->LoadScene(SceneManager::First);
-			return;
+			m_pPortal->ForceFinishByTimeUp();
+			//SceneManager::GetInstance()->LoadScene(SceneManager::First);
+			//return;
 		}
 	}
 }

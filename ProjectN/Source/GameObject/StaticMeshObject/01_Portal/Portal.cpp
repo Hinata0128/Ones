@@ -164,6 +164,27 @@ void Portal::Init()
 	m_NextScene = -1;
 }
 
+void Portal::ForceFinishByTimeUp()
+{
+	// すでに100%で決着がついている場合は何もしない
+	if (m_IsRoundFinished) return;
+
+	// 現在のポータルの状態を見てスコアを加算
+	if (m_pPortalState == PortalPriority::Player)
+	{
+		SceneManager::GetInstance()->AddPlayerScore();
+	}
+	else
+	{
+		SceneManager::GetInstance()->AddEnemyScore();
+	}
+
+	// 終了フラグを立てて、2秒間の待機演出に入る
+	m_IsRoundFinished = true;
+	m_IsTransitionStarted = true;
+	m_TransitionTimer = 0.0f;
+}
+
 void Portal::SetPortalState(PortalPriority state)
 {
 	if (m_pPortalState == state) return;
