@@ -33,6 +33,9 @@ public:
 	void Draw() override;
 	//初期化関数.
 	void Init();
+
+	//タイムアップ時に強制的に決着をつける関数.
+	void ForceFinishByTimeUp();
 public:
 	//===============================================================================
 	// ポータルを触るときにPlayerとEnemyNomalの位置が必要なので
@@ -65,14 +68,11 @@ public:
 	//		 アクセス違反になるのでそれの対策.
 	bool IsTransitionStarted() const { return m_IsTransitionStarted; }
 
-	//次に遷移するシーンIDの取得.
-	int GetNextSceneID() const { return m_NextSceneID; }
-
-
 	// 遷移の準備ができたか
 	bool IsReadyToLoad() const { return m_IsReadyToLoad; }
 	// 次のシーンを取得（循環参照を避けるためintで返す）
 	int GetNextScene() const { return m_NextScene; }
+
 
 private:
 	//Playerのポータル周りのコード.
