@@ -34,10 +34,11 @@ void PShotManager::Update()
 	}
 }
 
-void PShotManager::Draw()
+void PShotManager::Draw(const D3DXMATRIX& view, const D3DXMATRIX& proj)
 {
 	for (auto& shot : m_PlayerShot)
 	{
+		shot->SetMatrices(view, proj);
 		shot->Draw();	//’e‚Ì•`‰æˆ—.
 	}
 }

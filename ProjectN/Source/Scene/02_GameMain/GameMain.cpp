@@ -82,6 +82,7 @@ void GameMain::Create()
 
 	m_pLimitTime->Create();
 
+
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
 
@@ -239,6 +240,11 @@ void GameMain::Draw()
 
 	PreDraw();
 
+	if (m_pPlayer && m_pPlayer->GetShadow()) {
+		m_pPlayer->GetShadow()->SetViewMatrix(m_mView);
+		m_pPlayer->GetShadow()->SetProjMatrix(m_mProj);
+	}
+
 	//背景の表示.
 	//m_pSkyBox->Draw();
 
@@ -248,7 +254,7 @@ void GameMain::Draw()
 
 	m_pPortal->Draw();
 
-	PShotManager::GetInstance()->Draw();
+	PShotManager::GetInstance()->Draw(m_mView, m_mProj);
 
 	m_pEnemyNomal->Draw();
 
