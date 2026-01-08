@@ -8,6 +8,8 @@ class Boss;
 
 class PortalGauge;
 
+#include "Collision/BoundingBox/BoundingBox.h"
+
 /************************************************************
 *	陣地を守用のポータル
 *	取り合いのゲームだから1個で作成していく.
@@ -73,6 +75,7 @@ public:
 	// 次のシーンを取得（循環参照を避けるためintで返す）
 	int GetNextScene() const { return m_NextScene; }
 
+	const BoundingBox& GetBoundingBox() const { return m_BBox; }
 
 private:
 	//Playerのポータル周りのコード.
@@ -114,5 +117,7 @@ private:
 	bool m_IsReadyToLoad = false;
 
 	int m_NextScene = -1; // -1 は遷移なし
+
+	BoundingBox m_BBox;
 
 };
