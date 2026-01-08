@@ -136,10 +136,10 @@ void Player::Update()
 
 void Player::Draw()
 {
-	//m_pMesh->SetAnimSpeed(m_AnimSpeed);
     m_pAttackManager->Draw();
-	Character::Draw();
+    //ToDo : 影の表示は先.
     m_pShadow->Draw();
+	Character::Draw();
 }
 
 void Player::Init()
@@ -148,7 +148,7 @@ void Player::Init()
     SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
     //SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
     //Playerの初期位置の変更.
-    m_InitialPosition = D3DXVECTOR3(-20.f, 0.5f, -15.f);
+    m_InitialPosition = D3DXVECTOR3(-20.f, 0.0f, -15.f);
     SetPosition(m_InitialPosition);
     
 

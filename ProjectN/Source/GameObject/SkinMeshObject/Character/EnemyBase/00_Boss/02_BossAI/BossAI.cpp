@@ -112,10 +112,17 @@ void BossAI::DecideAction()
 	Portal::PortalPriority PortalState = m_pPortal->GetPortalState();
 
 	//優先度1: 誰もポータルをとっていない、かつ、遠い場合はまず移動させる.
-	if (PortalState == Portal::PortalPriority::None && Pos_Lenght > PortalGet)
+	if (PortalState == Portal::PortalPriority::None )
 	{
 		//ポータルの取得用関数に入る.
-		MoveToPortl();
+		if (Pos_Lenght > PortalGet)
+		{
+			MoveToPortl();
+		}
+		else
+		{
+			MoveToPortl();
+		}
 	}
 	//優先度2: 自分がポータルを取得していたら[防衛].
 	else if (PortalState == Portal::PortalPriority::Enemy)
@@ -136,6 +143,10 @@ void BossAI::DecideAction()
 
 	else if (PortalState == Portal::PortalPriority::Player)
 	{
+		if (Pos_Lenght > PortalGet) 
+		{
+			MoveToPortl(); // 取り返すために近づく
+		}
 		PlayerAttack();
 	}
 }
@@ -204,6 +215,7 @@ void BossAI::PlayerAttack()
 	m_pOwner->AutoShot();
 }
 
+#if 0
 void BossAI::Defense()
 {
 	//守っているとき.
@@ -211,3 +223,58 @@ void BossAI::Defense()
 	//防衛中敵が近くにいてるときに攻撃をする.
 	m_pOwner->AutoShot();
 }
+#else
+void BossAI::Defense()
+{
+	//時間を取得.
+	float deltaTime = Timer::GetInstance().DeltaTime();
+
+	//防衛時のパラメータ.
+	static float Timer = 0.0f;
+	//ToDo : 1.0: 右 , -1.0: 左.
+	static float CurrentOrbitDir = 1.0f;
+	//速度の揺らぎ.
+	static float SpeedVar = 1.0f;
+
+	//加算.
+	Timer += deltaTime;
+
+	if (Timer > 1.5f)
+	{
+		//どっちかの行動をする.
+		if (rand() % 2 == 0)
+		{
+			CurrentOrbitDir = 1.0;
+		}
+		else
+		{
+			CurrentOrbitDir = -1.0f;
+		}
+
+		SpeedVar = 0.5f + (static_cast<float>(rand() % 100) / 100.0f);
+		//タイマーの初期化.
+		Timer = 0.0f;
+	}
+
+	//ボスのポジション.
+	D3DXVECTOR3 BossPos_v = m_pOwner->GetPosition();
+	//ポータルのポジション.
+	D3DXVECTOR3 PortalPos_v = m_pPortal->GetPosition();
+	//プレイヤーのポジション.
+	D3DXVECTOR3 PlayerPos_v = m_pOwner->GetPlayerPos();
+
+	//プレイヤーを注視する.
+	D3DXVECTOR3 Player = PlayerPos_v - BossPos_v;
+	Player.y = 0.0f;
+	float AnglePlayer = std::atan2f(-Player.x, -Player.z);
+	m_pOwner->SetRotationY(AnglePlayer);
+
+	//プレイヤーへの方向ベクトル.
+	D3DXVECTOR3 PlayerNormal;
+	D3DXVec3Normalize(&PlayerNormal, &Player);
+
+	//プレイヤーに対してのベクトルを計算.
+
+
+}
+#endif

@@ -44,7 +44,7 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     m_pENShotManager = BossShotManager::GetInstance();
 
     m_BSphere.SetRadius(1.0f);
-    m_HitCenterOffset = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
+    m_HitCenterOffset = D3DXVECTOR3(0.0f, 3.5f, 0.0f);
 
     m_CoolTime = 0.8f;
     m_ShotCoolDown = m_CoolTime;
