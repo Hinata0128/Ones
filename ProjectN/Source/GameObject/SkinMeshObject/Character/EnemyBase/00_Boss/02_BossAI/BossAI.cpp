@@ -6,11 +6,15 @@
 
 #include "..//..//..//..//..//..//System/00_Manager/03_ImGuiManager/ImGuiManager.h"
 
+#include "System/02_Singleton/Timer/Timer.h"
+
 BossAI::BossAI(
 	Boss* pOwner,
 	std::shared_ptr<Portal> pPortal)
 	: m_pPortal	(pPortal)
 	, m_pOwner(pOwner)
+
+	, m_MoveSpeed(1.5f)
 {
 }
 
@@ -20,6 +24,9 @@ BossAI::~BossAI()
 
 void BossAI::Update()
 {
+	//ポータルの座標を取得.
+
+
 	DecideAction();
 }
 
@@ -112,6 +119,7 @@ void BossAI::DecideAction()
 	//優先度2: 自分がポータルを取得していたら[防衛].
 	else if (PortalState == Portal::PortalPriority::Enemy)
 	{
+		//DEBUG用で、体力の数値をいじっている.
 		if (m_pOwner->GetEnemyHitPoint() > 90.0f)
 		{
 			//プレイヤー攻撃状態に入る.
@@ -129,28 +137,46 @@ void BossAI::DecideAction()
 	{
 		PlayerAttack();
 	}
-	//その他()
-	else
-	{
-		// その場で待機して占有ゲージが貯まるのを待つ
-		if (m_pOwner->m_pCurrentState == m_pOwner->m_pMove.get())
-		{
-			m_pOwner->ChangeState(m_pOwner->m_pIdol.get());
-		}
-	}
 }
 
 void BossAI::MoveToPortl()
 {
+	//時間の取得.
+	float deltaTime = Timer::GetInstance().DeltaTime();
+
+	//ボスの位置を取得.
+	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
 	//ポータルの位置を取得している.
 	D3DXVECTOR3 PortalPos = m_pPortal->GetPosition();
+
+	//向きの計算.
+	D3DXVECTOR3 BossToPortal = PortalPos - BossPos;
+
+	//ポータルまでの距離を測る.
+	float Dist = D3DXVec3Length(&BossToPortal);
+
+	//歩くアニメションの再生.
+
+
+	//ポータルまで近づく.
+	if (Dist > 5.0f)
+	{
+		//正規化.
+		D3DXVECTOR3 dir;
+		D3DXVec3Normalize(&dir, &BossToPortal);
+
+			//移動量の計算.
+		D3DXVECTOR3 Velocity = dir * m_MoveSpeed *  deltaTime;
+
+		//ボスの位置の取得.
+		m_pOwner->AddPosition(Velocity);
+
+		//体の向きをポータルに合わせる.
+		float Angle = std::atan2f(-dir.x, -dir.z);
+		m_pOwner->SetRotationY(Angle);
+	}
 	//ポータルの位置を指示する.
 	m_pOwner->SetPortalPos(PortalPos);
-
-	if (m_pOwner->m_pCurrentState == m_pOwner->m_pIdol.get())
-	{
-		m_pOwner->ChangeState(m_pOwner->m_pMove.get());
-	}
 }
 
 void BossAI::PlayerAttack()
