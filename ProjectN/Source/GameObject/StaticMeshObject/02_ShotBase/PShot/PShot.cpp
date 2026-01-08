@@ -89,4 +89,8 @@ void PShot::Reload(
 	}
 
 	m_pShadowSmall->SetTargetShadowSmallPos(this);
+	if (m_pShadowSmall)
+	{
+		m_pShadowSmall->Update();
+	}
 }
