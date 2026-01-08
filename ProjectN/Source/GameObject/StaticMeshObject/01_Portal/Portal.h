@@ -77,8 +77,6 @@ public:
 	// 次のシーンを取得（循環参照を避けるためintで返す）
 	int GetNextScene() const { return m_NextScene; }
 
-	const BoundingBox& GetBoundingBox() const { return m_BBox; }
-
 private:
 	//Playerのポータル周りのコード.
 	void PlayerToPortal();

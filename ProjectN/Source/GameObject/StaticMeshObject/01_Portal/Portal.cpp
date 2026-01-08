@@ -126,10 +126,24 @@ void Portal::Update()
 
 	if (m_spPortalGauge)
 	{
-		// Portal側は0.0~100.0f、UI側は0.0~1.0fなので変換して渡す
+		// 進捗率を渡す (0.0~1.0)
 		m_spPortalGauge->SetPercent(m_PortalIncreaseF / 100.0f);
 
-		// UI側のUpdateを呼び出す（もしManager側で一括管理していない場合）
+		// 現在の占有状態を見て、UIの表示モード（色）を切り替える
+		if (m_pPortalState == PortalPriority::Player)
+		{
+			m_spPortalGauge->SetGaugeMode(PortalGauge::GaugeMode::Player);
+		}
+		else if (m_pPortalState == PortalPriority::Enemy)
+		{
+			m_spPortalGauge->SetGaugeMode(PortalGauge::GaugeMode::Boss);
+		}
+		else
+		{
+			m_spPortalGauge->SetGaugeMode(PortalGauge::GaugeMode::None);
+		}
+
+		// UIの更新
 		m_spPortalGauge->Update();
 	}
 

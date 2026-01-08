@@ -7,12 +7,18 @@ PortalGauge::PortalGauge()
 	: UIObject()
 	, m_spBaseSprite(std::make_shared<Sprite2D>())
 	, m_spGaugeSprite(std::make_shared<Sprite2D>())
+	, m_spBossGaugeSprite(std::make_shared<Sprite2D>())
+
 	, m_upBase(std::make_shared<UIObject>())
 	, m_upGauge(std::make_shared<UIObject>())
+	, m_upBossGauge(std::make_shared<UIObject>())
+
 	, m_maxBarScaleX(0.0f)
 	, m_percent(0.0f)
 	, m_currentScaleX(0.0f)
 	, m_barWidth(0.0f)
+
+	, m_mode(GaugeMode::None)
 {
 	Create();
 }
@@ -60,9 +66,21 @@ void PortalGauge::Create()
 	m_spGaugeSprite->Init(_T("Data\\Image\\Buttle\\PortalGauge.png"), ssBar);
 	m_upGauge->AttachSprite(m_spGaugeSprite);
 
-	// 【重要】HPBarと同じく、posX + paddingX で座標を一度だけ固定する
 	m_upGauge->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
 	m_upGauge->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+
+	// -----------------------------------------------------------
+	// 3. ゲージ (Gauge) の設定
+	// -----------------------------------------------------------
+	// HPBarと同じく、上下中央に来るオフセットを計算
+
+	m_spBossGaugeSprite->Init(_T("Data\\Image\\Buttle\\PortalBossGauge.png"), ssBar);
+	m_upBossGauge->AttachSprite(m_spBossGaugeSprite);
+
+	m_upBossGauge->SetPosition(posX + paddingX, posY + offsetY, 0.0f);
+	m_upBossGauge->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+
+
 }
 
 void PortalGauge::Update()
@@ -86,8 +104,10 @@ void PortalGauge::Update()
 	}
 
 	// 各UIパーツのUpdateを呼ぶ
+	D3DXVECTOR3 scale(m_currentScaleX, 1.0f, 1.0f);
+	if (m_upGauge) { m_upGauge->SetScale(scale);     m_upGauge->Update(); }
+	if (m_upBossGauge) { m_upBossGauge->SetScale(scale); m_upBossGauge->Update(); }
 	if (m_upBase) { m_upBase->Update(); }
-	if (m_upGauge) { m_upGauge->Update(); }
 }
 
 void PortalGauge::Draw()
@@ -95,9 +115,16 @@ void PortalGauge::Draw()
 	DirectX11::GetInstance()->SetDepth(false);
 
 	// HPBarのDrawと同じ重なり順：中身(下) -> 枠(上)
-	if (m_upGauge && m_currentScaleX > 0.001f)
+	if (m_upBossGauge && m_currentScaleX > 0.001f)
 	{
-		m_upGauge->Draw();
+		if (m_mode == GaugeMode::Player && m_upGauge) 
+		{
+			m_upGauge->Draw();
+		}
+		else if (m_mode == GaugeMode::Boss && m_upBossGauge) 
+		{
+			m_upBossGauge->Draw();
+		}
 	}
 	if (m_upBase)
 	{
