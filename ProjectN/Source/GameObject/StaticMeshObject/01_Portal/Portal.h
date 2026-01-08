@@ -38,6 +38,8 @@ public:
 
 	//タイムアップ時に強制的に決着をつける関数.
 	void ForceFinishByTimeUp();
+
+	void RestrictEntry();
 public:
 	//===============================================================================
 	// ポータルを触るときにPlayerとEnemyNomalの位置が必要なので

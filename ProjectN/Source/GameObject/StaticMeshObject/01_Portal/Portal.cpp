@@ -46,6 +46,8 @@ Portal::~Portal()
 
 void Portal::Update()
 {
+	RestrictEntry();
+
 	// 1. 100%に達した後の遷移待ち処理
 	if (m_IsTransitionStarted)
 	{
@@ -187,6 +189,60 @@ void Portal::ForceFinishByTimeUp()
 	m_IsRoundFinished = true;
 	m_IsTransitionStarted = true;
 	m_TransitionTimer = 0.0f;
+}
+
+void Portal::RestrictEntry()
+{
+	// 進入を禁止する距離（中心から1.0f）
+	const float LIMIT_DISTANCE = 3.0f;
+
+	// --- プレイヤーの押し戻し ---
+	if (auto player = m_pPlayer.lock())
+	{
+		D3DXVECTOR3 pos = player->GetPosition();
+		D3DXVECTOR3 portalPos = GetPosition();
+
+		D3DXVECTOR3 diff = pos - portalPos;
+		float distance = D3DXVec3Length(&diff);
+
+		// 1.0f以内に入っていたら強制移動
+		if (distance < LIMIT_DISTANCE)
+		{
+			// 中心から外側に向かう方向ベクトルを正規化
+			D3DXVECTOR3 direction;
+			D3DXVec3Normalize(&direction, &diff);
+
+			// 距離がゼロ（真ん中）にいる場合は、適当な方向（前方など）に逃がす
+			if (distance < 0.001f) direction = D3DXVECTOR3(0, 0, 1);
+
+			// 制限距離の場所まで強制的に押し出す
+			D3DXVECTOR3 newPos = portalPos + direction * LIMIT_DISTANCE;
+
+			// Y軸（高さ）はプレイヤーの現在の高さを維持（ポータルが空中にある場合など）
+			newPos.y = pos.y;
+
+			player->SetPosition(newPos);
+		}
+	}
+
+	// --- 敵（ボス）の押し戻し（必要であれば） ---
+	if (auto enemy = m_pEnemy.lock())
+	{
+		D3DXVECTOR3 pos = enemy->GetPosition();
+		D3DXVECTOR3 portalPos = GetPosition();
+		D3DXVECTOR3 diff = pos - portalPos;
+		float distance = D3DXVec3Length(&diff);
+
+		if (distance < LIMIT_DISTANCE)
+		{
+			D3DXVECTOR3 direction;
+			D3DXVec3Normalize(&direction, &diff);
+			if (distance < 0.001f) direction = D3DXVECTOR3(0, 0, 1);
+			D3DXVECTOR3 newPos = portalPos + direction * LIMIT_DISTANCE;
+			newPos.y = pos.y;
+			enemy->SetPosition(newPos);
+		}
+	}
 }
 
 void Portal::SetPortalState(PortalPriority state)
