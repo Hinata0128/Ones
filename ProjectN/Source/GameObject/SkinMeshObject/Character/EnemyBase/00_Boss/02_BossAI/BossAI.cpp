@@ -128,7 +128,7 @@ void BossAI::DecideAction()
 	else if (PortalState == Portal::PortalPriority::Enemy)
 	{
 		//DEBUG用で、体力の数値をいじっている.
-		if (m_pOwner->GetEnemyHitPoint() > 90.0f)
+		if (m_pOwner->GetEnemyHitPoint() < 90.0f)
 		{
 			//プレイヤー攻撃状態に入る.
 			PlayerAttack();
@@ -273,8 +273,42 @@ void BossAI::Defense()
 	D3DXVECTOR3 PlayerNormal;
 	D3DXVec3Normalize(&PlayerNormal, &Player);
 
-	//プレイヤーに対してのベクトルを計算.
+	//プレイヤーに対しての横のベクトルを計算.
+	D3DXVECTOR3 SizeVec;
+	D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+	D3DXVec3Cross(&SizeVec, &PlayerNormal, &up);
 
+	//移動ベクトルの合成.
+	float MoveSpeed = m_MoveSpeed * SpeedVar;
+	D3DXVECTOR3 velocity = SizeVec * CurrentOrbitDir * MoveSpeed;
+
+	D3DXVECTOR3 Portal = PortalPos_v - BossPos_v;
+	Portal.y = 0.0f;
+	float DistToPortal = D3DXVec3Length(&Portal);
+
+	//半径8.0f以上なら引き戻す.
+	if (DistToPortal > 8.0f)
+	{
+		D3DXVECTOR3 ReturnDir;
+		D3DXVec3Normalize(&ReturnDir, &Portal);
+		velocity += ReturnDir * MoveSpeed;
+	}
+
+	//座標の更新とアニメーション.
+	m_pOwner->AddPosition(velocity * deltaTime);
+
+	BossContext ctx(m_pOwner);
+
+	const int WALK_ANIM = 2;
+
+	if (ctx.AnimNo != WALK_ANIM) 
+	{
+		ctx.AnimNo = WALK_ANIM;
+		ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+	}
+
+	// 攻撃実行
+	m_pOwner->AutoShot();
 
 }
 #endif

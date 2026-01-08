@@ -33,6 +33,10 @@ Portal::Portal()
 	SetPosition(Pos);
 	SetScale(D3DXVECTOR3(Scale));
 
+	D3DXVECTOR3 center = GetPosition();
+	m_BBox.SetMinPosition(center + D3DXVECTOR3(-0.5f, 0.0f, -0.5f));
+	m_BBox.SetMaxPosition(center + D3DXVECTOR3(0.5f, 3.0f, 0.5f));
+
 	Init();
 }
 
