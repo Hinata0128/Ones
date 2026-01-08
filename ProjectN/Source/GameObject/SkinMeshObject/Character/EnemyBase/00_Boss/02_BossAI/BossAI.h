@@ -16,6 +16,8 @@ class Boss;
 
 class Timer;
 
+class BossContext;
+
 class BossAI
 {
 public:

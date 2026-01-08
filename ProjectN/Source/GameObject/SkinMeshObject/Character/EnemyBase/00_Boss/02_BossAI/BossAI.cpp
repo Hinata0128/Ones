@@ -8,6 +8,8 @@
 
 #include "System/02_Singleton/Timer/Timer.h"
 
+#include "..//00_BossContext/BossContext.h"
+
 BossAI::BossAI(
 	Boss* pOwner,
 	std::shared_ptr<Portal> pPortal)
@@ -24,7 +26,6 @@ BossAI::~BossAI()
 
 void BossAI::Update()
 {
-	//ポータルの座標を取得.
 
 
 	DecideAction();
@@ -144,6 +145,7 @@ void BossAI::MoveToPortl()
 	//時間の取得.
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
+
 	//ボスの位置を取得.
 	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
 	//ポータルの位置を取得している.
@@ -155,8 +157,8 @@ void BossAI::MoveToPortl()
 	//ポータルまでの距離を測る.
 	float Dist = D3DXVec3Length(&BossToPortal);
 
-	//歩くアニメションの再生.
-
+	//ポータルの座標を取得.
+	BossContext ctx(m_pOwner);
 
 	//ポータルまで近づく.
 	if (Dist > 5.0f)
@@ -174,7 +176,24 @@ void BossAI::MoveToPortl()
 		//体の向きをポータルに合わせる.
 		float Angle = std::atan2f(-dir.x, -dir.z);
 		m_pOwner->SetRotationY(Angle);
+
+		const int WALK_ANIM = 2;
+		if (ctx.AnimNo != WALK_ANIM)
+		{
+			ctx.AnimNo = WALK_ANIM;
+			ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+		}
 	}
+	else
+	{
+		const int IDLE_ANIM = 0; 
+		if (ctx.AnimNo != IDLE_ANIM)
+		{
+			ctx.AnimNo = IDLE_ANIM;
+			ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+		}
+	}
+
 	//ポータルの位置を指示する.
 	m_pOwner->SetPortalPos(PortalPos);
 }
