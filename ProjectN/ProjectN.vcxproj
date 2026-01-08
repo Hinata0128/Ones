@@ -206,6 +206,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\PlayerState.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\SkinMeshObject.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\00_Shadow\Shadow.cpp" />
+    <ClCompile Include="Source\GameObject\SpriteObject\01_ShadowSmall\ShadowSmall.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\00_Ground\Ground.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\SpriteObject.cpp" />
     <ClCompile Include="Source\DirectX\DirectX11.cpp">
@@ -298,6 +299,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Character\Player\PlayerState\PlayerState.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\SkinMeshObject.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\00_Shadow\Shadow.h" />
+    <ClInclude Include="Source\GameObject\SpriteObject\01_ShadowSmall\ShadowSmall.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\00_Ground\Ground.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\SpriteObject.h" />
     <ClInclude Include="Source\DirectX\DirectX11.h" />

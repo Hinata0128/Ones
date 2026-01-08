@@ -4,11 +4,13 @@
 PShot::PShot()
 	: ShotBase()
 	, m_pShadow(std::make_unique<Shadow>())
+
+	, m_pShadowSmall(std::make_unique<ShadowSmall>())
 {
 	AttachMesh(*StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Bullet));
 
-	m_pShadow->Create();
-	m_pShadow->SetTargetShadowPos(this);
+	m_pShadowSmall->Create();
+	m_pShadowSmall->SetTargetShadowSmallPos(this);
 
 	// コンストラクタで初期化
 	Init();
@@ -40,7 +42,7 @@ void PShot::Update()
 		UpdateBPosition();
 
 		//影の実装.
-		m_pShadow->Update();
+		m_pShadowSmall->Update();
 	}
 }
 
@@ -49,7 +51,7 @@ void PShot::Draw()
 	if (m_Disp)
 	{
 		ShotBase::Draw();
-		m_pShadow->Draw();
+		m_pShadowSmall->Draw();
 	}
 }
 
@@ -86,5 +88,5 @@ void PShot::Reload(
 		m_BSphere->SetRadius(0.5f);
 	}
 
-	m_pShadow->SetTargetShadowPos(this);
+	m_pShadowSmall->SetTargetShadowSmallPos(this);
 }

@@ -4,6 +4,8 @@
 
 #include "GameObject/SpriteObject/00_Shadow/Shadow.h"
 
+#include "GameObject/SpriteObject/01_ShadowSmall/ShadowSmall.h"
+
 class StaticMeshManager;
 
 /******************************************************************
@@ -31,13 +33,13 @@ public:
 
 public:
 	void SetMatrices(const D3DXMATRIX& view, const D3DXMATRIX& proj) {
-		if (m_pShadow) {
-			// SpriteObject(親)が持っている行列セット関数を呼ぶ
-			m_pShadow->SetViewMatrix(view);
-			m_pShadow->SetProjMatrix(proj);
+		if (m_pShadowSmall) {
+			m_pShadowSmall->SetViewMatrix(view);
+			m_pShadowSmall->SetProjMatrix(proj);
 		}
 	}
 
 private:
 	std::unique_ptr<Shadow> m_pShadow;
+	std::unique_ptr<ShadowSmall> m_pShadowSmall;
 };

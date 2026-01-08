@@ -32,11 +32,11 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     //SetPosition(0.0f, 0.0f, 0.0f);
 
     // ステートセット
-    m_pCurrentState = m_pIdol.get();
-    if (m_pCurrentState)
-    {
-        m_pCurrentState->Enter();
-    }
+    //m_pCurrentState = m_pIdol.get();
+    //if (m_pCurrentState)
+    //{
+    //    m_pCurrentState->Enter();
+    //}
 
     //アニメーションの再生速度.
     m_AnimSpeed = 1.0f / 60.0f;
@@ -88,10 +88,10 @@ void Boss::Update()
 
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
-    if (m_pCurrentState)
-    {
-        m_pCurrentState->Update();
-    }
+    //if (m_pCurrentState)
+    //{
+    //    m_pCurrentState->Update();
+    //}
 
     //AIの処理を呼んでいる.
     //ToDo : UI作成中のためコメント化している.
@@ -141,9 +141,9 @@ void Boss::Respawn()
     SetPosition(m_InitialPosition);
 
     // 2. ステートを待機（Idol）に強制的に戻す
-    if (m_pCurrentState) m_pCurrentState->Exit();
-    m_pCurrentState = m_pIdol.get();
-    if (m_pCurrentState) m_pCurrentState->Enter();
+    //if (m_pCurrentState) m_pCurrentState->Exit();
+    //m_pCurrentState = m_pIdol.get();
+    //if (m_pCurrentState) m_pCurrentState->Enter();
 
     // 3. パラメータの回復
     m_HitPoint = 100.0f;
@@ -195,7 +195,7 @@ void Boss::AutoShot()
             D3DXVECTOR3 shotPos = GetPosition() + D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 
             //プレイヤー方向ベクトル
-            D3DXVECTOR3 dir = m_pMove->GetDirectionToPlayer();
+            D3DXVECTOR3 dir = toPlayer;
             float len = D3DXVec3Length(&dir);
             if (len > 0.001f)
             {

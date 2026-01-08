@@ -82,7 +82,6 @@ void GameMain::Create()
 
 	m_pLimitTime->Create();
 
-
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
 

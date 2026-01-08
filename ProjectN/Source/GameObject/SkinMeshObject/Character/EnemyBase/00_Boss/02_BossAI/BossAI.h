@@ -14,6 +14,8 @@
 class Portal;
 class Boss;
 
+class Timer;
+
 class BossAI
 {
 public:
@@ -42,4 +44,7 @@ private:
 	std::shared_ptr<Portal> m_pPortal;
 
 	Boss* m_pOwner;
+
+	//ƒ{ƒX‚Ì•à‚­‘¬“x.
+	float m_MoveSpeed;
 };
