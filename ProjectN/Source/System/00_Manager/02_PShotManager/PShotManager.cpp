@@ -54,6 +54,8 @@ void PShotManager::AddPlayerShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Init
 	PlayerShot->Reload(Pos, InitDirection, Speed);	//位置・方向・速度を設定.
 	PlayerShot->SetDisplay(true);	//描画ON.
 
+	PlayerShot->Update();
+
 	m_PlayerShot.push_back(std::move(PlayerShot));	//リストに追加.
 }
 
