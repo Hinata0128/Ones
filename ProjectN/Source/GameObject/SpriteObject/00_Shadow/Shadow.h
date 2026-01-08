@@ -28,5 +28,5 @@ public:
 private:
 	GameObject* m_pTarget;
 
-	std::shared_ptr<Sprite3D> m_ShadowSprite;
+	std::shared_ptr<Sprite3D> m_pShadowSprite;
 };

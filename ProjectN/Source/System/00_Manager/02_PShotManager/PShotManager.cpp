@@ -19,13 +19,11 @@ void PShotManager::Update()
 {
 	for (auto it = m_PlayerShot.begin(); it != m_PlayerShot.end();)
 	{
-		// std::unique_ptr<PShot> のポインタを通じて PShot::Update() を呼び出す。
-		// m_pInstanceの矛盾解消により、コンテナの破壊を防ぐ。
-		(*it)->Update();	//弾の更新処理.
+		(*it)->Update();	
 
-		if (!(*it)->IsActive())	//無効になった弾は削除.
+		if (!(*it)->IsActive())	
 		{
-			it = m_PlayerShot.erase(it); // unique_ptrが自動でdeleteを呼び出すため安全
+			it = m_PlayerShot.erase(it);
 		}
 		else
 		{
@@ -39,7 +37,7 @@ void PShotManager::Draw(const D3DXMATRIX& view, const D3DXMATRIX& proj)
 	for (auto& shot : m_PlayerShot)
 	{
 		shot->SetMatrices(view, proj);
-		shot->Draw();	//弾の描画処理.
+		shot->Draw();	
 	}
 }
 
