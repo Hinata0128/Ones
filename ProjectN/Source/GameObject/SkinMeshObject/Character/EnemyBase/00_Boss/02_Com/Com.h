@@ -18,13 +18,13 @@ class Timer;
 
 class BossContext;
 
-class BossAI
+class Com
 {
 public:
-	BossAI(
+	Com(
 		Boss* pOwner,
 		std::shared_ptr<Portal> pPortal);
-	~BossAI();
+	~Com();
 
 	//ボスのAIを毎フレーム実装.
 	void Update();

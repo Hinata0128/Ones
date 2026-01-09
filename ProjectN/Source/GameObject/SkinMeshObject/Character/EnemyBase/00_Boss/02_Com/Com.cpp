@@ -1,4 +1,4 @@
-#include "BossAI.h"
+#include "Com.h"
 
 #include "GameObject//StaticMeshObject//01_Portal//Portal.h"
 
@@ -10,7 +10,7 @@
 
 #include "..//00_BossContext/BossContext.h"
 
-BossAI::BossAI(
+Com::Com(
 	Boss* pOwner,
 	std::shared_ptr<Portal> pPortal)
 	: m_pPortal	(pPortal)
@@ -20,21 +20,21 @@ BossAI::BossAI(
 {
 }
 
-BossAI::~BossAI()
+Com::~Com()
 {
 }
 
-void BossAI::Update()
+void Com::Update()
 {
 
 
 	DecideAction();
 }
 
-void BossAI::DrawDebugImGui()
+void Com::DrawDebugImGui()
 {
 #ifdef _DEBUG
-	ImGui::Begin(JAPANESE("BossAI: 内部ステータス"));
+	ImGui::Begin(JAPANESE("Com: 内部ステータス"));
 
 	// 1. ポータルの認識状態
 	Portal::PortalPriority PortalState = m_pPortal->GetPortalState();
@@ -86,7 +86,7 @@ void BossAI::DrawDebugImGui()
 }
 
 //1. 優先度1の処理を書く関数.
-void BossAI::DecideAction()
+void Com::DecideAction()
 {
 	//敵の位置を取得する.
 	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
@@ -151,7 +151,7 @@ void BossAI::DecideAction()
 	}
 }
 
-void BossAI::MoveToPortl()
+void Com::MoveToPortl()
 {
 	//時間の取得.
 	float deltaTime = Timer::GetInstance().DeltaTime();
@@ -209,14 +209,14 @@ void BossAI::MoveToPortl()
 	m_pOwner->SetPortalPos(PortalPos);
 }
 
-void BossAI::PlayerAttack()
+void Com::PlayerAttack()
 {
 	//攻撃状態になったら遠距離攻撃を開始する.
 	m_pOwner->AutoShot();
 }
 
 #if 0
-void BossAI::Defense()
+void Com::Defense()
 {
 	//守っているとき.
 	MoveToPortl();
@@ -224,7 +224,7 @@ void BossAI::Defense()
 	m_pOwner->AutoShot();
 }
 #else
-void BossAI::Defense()
+void Com::Defense()
 {
 	//時間を取得.
 	float deltaTime = Timer::GetInstance().DeltaTime();

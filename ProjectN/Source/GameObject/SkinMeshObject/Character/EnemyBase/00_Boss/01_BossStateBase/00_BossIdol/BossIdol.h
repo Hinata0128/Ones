@@ -5,7 +5,7 @@ class Boss;
 class BossContext;
 class BossMove;
 
-class BossAI;
+class Com;
 
 /*****************************************************************
 *	NomalIdolClass(“G‚ÌƒAƒCƒhƒ‹ó‘Ô).

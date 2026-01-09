@@ -5,7 +5,7 @@
 #include "..//00_Boss/00_BossContext/BossContext.h"
 #include "..//00_Boss/01_BossStateBase/BossStateBase.h"
 
-#include "02_BossAI/BossAI.h"
+#include "02_Com/Com.h"
 
 constexpr float zero = 0.0f;
 
@@ -15,7 +15,7 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_pIdol(std::make_unique<BossIdol>(this))
     , m_pMove(std::make_unique<BossMove>(this))
     , m_pDead(std::make_unique<BossDead>(this))
-    , m_pAI(std::make_unique<BossAI>(this, pPortal))
+    , m_pCom(std::make_unique<Com>(this, pPortal))
     
     , m_InitialPosition {}
 {
@@ -98,7 +98,7 @@ void Boss::Update()
     
     if (!IsDaed())
     {
-        m_pAI->Update();
+        m_pCom->Update();
     }
 
     // ボーン座標取得
@@ -113,7 +113,7 @@ void Boss::Draw()
 
     EnemyBase::Draw();
     m_pENShotManager->Draw();
-    m_pAI->DrawDebugImGui();
+    m_pCom->DrawDebugImGui();
 }
 
 void Boss::Hit()

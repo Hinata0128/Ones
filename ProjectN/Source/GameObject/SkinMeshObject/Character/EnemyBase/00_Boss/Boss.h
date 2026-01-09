@@ -12,7 +12,7 @@ class Timer;
 class BossContext;
 class BossStateBase;
 
-class BossAI;
+class Com;
 
 #include "..//..//..//..//StaticMeshObject/01_Portal/Portal.h"
 
@@ -23,7 +23,7 @@ class Boss final
 {
 public:
 	friend BossContext;
-	friend BossAI;
+	friend Com;
 public:
 	Boss(std::shared_ptr<Portal> pPortal);
 	~Boss() override;
@@ -90,7 +90,7 @@ private:
 	//ŠÔ‚ª‚È‚©‚Á‚½‚Ì‚Å‚±‚±‚Å‰Šú‰»‚ğ‚µ‚Ä‚¢‚é.
 	BossStateBase* m_pCurrentState = nullptr;
 
-	std::unique_ptr<BossAI> m_pAI;
+	std::unique_ptr<Com> m_pCom;
 
 	D3DXVECTOR3 m_InitialPosition;
 };
