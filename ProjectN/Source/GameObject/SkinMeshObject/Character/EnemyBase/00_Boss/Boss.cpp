@@ -167,7 +167,7 @@ void Boss::RequestShot()
 void Boss::SetShotInterval(float time)
 {
     m_CoolTime = time;
-    m_ShotCoolDown = time;
+    //m_ShotCoolDown = time;
 }
 
 void Boss::StartNextRound(int nextround)
