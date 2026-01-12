@@ -135,6 +135,29 @@ void Boss::Hit()
     }
 }
 
+bool Boss::CanShot() const
+{
+    return m_ShotCoolDown <= 0.0f;
+}
+
+void Boss::RequestShot()
+{
+    if (!CanShot())
+    {
+        return;
+    }
+
+    AutoShot();
+    //クールタイムのリセット.
+    //ToDo : 攻撃できるように.
+    m_ShotCoolDown = m_CoolTime;
+}
+
+void Boss::SetShotInterval(float time)
+{
+    m_CoolTime = time;
+}
+
 void Boss::Respawn()
 {
     // 1. 位置を初期位置にリセット
@@ -167,8 +190,6 @@ void Boss::ChangeState(BossStateBase* state)
 
 void Boss::AutoShot()
 {
-    if (m_ShotCoolDown == 0.0f)
-    {
         //プレイヤーとの距離計算
         D3DXVECTOR3 toPlayer = GetPlayerPos() - GetPosition();
         float distance = D3DXVec3Length(&toPlayer);
@@ -203,12 +224,8 @@ void Boss::AutoShot()
 
                 //弾追加
                 m_pENShotManager->AddEnemyNomalShot(shotPos, dir);
-
-                //クールタイムリセット
-                m_ShotCoolDown = m_CoolTime;
             }
         }
-    }
 }
 
 D3DXVECTOR3 Boss::GetHitCenter() const

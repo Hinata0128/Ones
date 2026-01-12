@@ -104,7 +104,7 @@ void Com::DecideAction()
 
 	if (Pos_Lenght > PortalGet)
 	{
-		MoveToPortl();
+		MoveToPortal();
 	}
 
 	//ƒ|[ƒ^ƒ‹‚ÌŒ»Ý‚Ìî•ñ‚ðŽæ“¾‚·‚é.
@@ -117,11 +117,11 @@ void Com::DecideAction()
 		//ƒ|[ƒ^ƒ‹‚ÌŽæ“¾—pŠÖ”‚É“ü‚é.
 		if (Pos_Lenght > PortalGet)
 		{
-			MoveToPortl();
+			MoveToPortal();
 		}
 		else
 		{
-			MoveToPortl();
+			MoveToPortal();
 		}
 	}
 	//—Dæ“x2: Ž©•ª‚ªƒ|[ƒ^ƒ‹‚ðŽæ“¾‚µ‚Ä‚¢‚½‚ç[–h‰q].
@@ -145,13 +145,13 @@ void Com::DecideAction()
 	{
 		if (Pos_Lenght > PortalGet) 
 		{
-			MoveToPortl(); // Žæ‚è•Ô‚·‚½‚ß‚É‹ß‚Ã‚­
+			MoveToPortal(); // Žæ‚è•Ô‚·‚½‚ß‚É‹ß‚Ã‚­
 		}
 		PlayerAttack();
 	}
 }
 
-void Com::MoveToPortl()
+void Com::MoveToPortal()
 {
 	//ŽžŠÔ‚ÌŽæ“¾.
 	float deltaTime = Timer::GetInstance().DeltaTime();
@@ -212,14 +212,14 @@ void Com::MoveToPortl()
 void Com::PlayerAttack()
 {
 	//UŒ‚ó‘Ô‚É‚È‚Á‚½‚ç‰“‹——£UŒ‚‚ðŠJŽn‚·‚é.
-	m_pOwner->AutoShot();
+	m_pOwner->RequestShot();
 }
 
 #if 0
 void Com::Defense()
 {
 	//Žç‚Á‚Ä‚¢‚é‚Æ‚«.
-	MoveToPortl();
+	MoveToPortal();
 	//–h‰q’†“G‚ª‹ß‚­‚É‚¢‚Ä‚é‚Æ‚«‚ÉUŒ‚‚ð‚·‚é.
 	m_pOwner->AutoShot();
 }
@@ -308,7 +308,7 @@ void Com::Defense()
 	}
 
 	// UŒ‚ŽÀs
-	m_pOwner->AutoShot();
+	m_pOwner->RequestShot();
 
 }
 #endif

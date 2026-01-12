@@ -34,6 +34,14 @@ public:
 
 	void Hit();
 
+	//弾のクールタイムを管理.
+	bool CanShot() const;
+	//弾の発射準備確認.
+	//ToDO : 発射可能になったら飛ばす.
+	void RequestShot();
+
+	void SetShotInterval(float time);
+	
 public:
 
 	BoundingSphere& GetBoundingSphere() { return m_BSphere; }

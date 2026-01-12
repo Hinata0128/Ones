@@ -37,7 +37,7 @@ private:
 	void DecideAction();
 
 	//優先度1: ポータルへの移動関数.
-	void MoveToPortl();
+	void MoveToPortal();
 	//優先度2: 攻撃(プレイヤーがポータルを取得しているとき).
 	void PlayerAttack();
 	//優先度2: 防衛(自分がポータルを取得しているとき).
