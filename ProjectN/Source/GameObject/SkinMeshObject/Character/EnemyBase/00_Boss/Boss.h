@@ -34,6 +34,18 @@ public:
 
 	void Hit();
 
+	//弾のクールタイムを管理.
+	bool CanShot() const;
+	//弾の発射準備確認.
+	//ToDO : 発射可能になったら飛ばす.
+	void RequestShot();
+
+	void SetShotInterval(float time);
+
+	void StartNextRound(int nextround);
+
+	void Respawn();
+	
 public:
 
 	BoundingSphere& GetBoundingSphere() { return m_BSphere; }
@@ -67,7 +79,10 @@ public:
 
 	//死亡しているかどうか.
 	bool IsDaed() const { return m_pCurrentState == (BossStateBase*)m_pDead.get(); }
-	void Respawn();
+	
+	//今のラウンドを確認する用の関数.
+	int GetCurrentRound() const { return m_CurrentRound; }
+
 public:
 	void ChangeState(BossStateBase* state);
 
@@ -93,4 +108,6 @@ private:
 	std::unique_ptr<Com> m_pCom;
 
 	D3DXVECTOR3 m_InitialPosition;
+	//現在のラウンド数(開始は1から).
+	int m_CurrentRound;
 };

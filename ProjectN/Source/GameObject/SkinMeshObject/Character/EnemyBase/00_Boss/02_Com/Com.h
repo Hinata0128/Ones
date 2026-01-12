@@ -21,6 +21,14 @@ class BossContext;
 class Com
 {
 public:
+	//ボスの難易度の列挙.
+	enum class BossDifficulty : byte
+	{
+		Easy,	//1.2ラウンド目.
+		Hard,	//1.2ラウンド目.
+		Final	//3ラウンド目限定.
+	};
+public:
 	Com(
 		Boss* pOwner,
 		std::shared_ptr<Portal> pPortal);
@@ -31,22 +39,41 @@ public:
 
 	//デバッグで表示する.
 	void DrawDebugImGui();
+	//ラウンドごとに難易度を設定.
+	void DecideDifficultyByRound(int raund);
+
+public:
+	//難易度用Set関数.
+	void SetDifficulty(BossDifficulty diff);
+
+	//難易度を反映させる.
+	void ApplyDifficultyParam();
 
 private:
 	//決定アクション.
 	void DecideAction();
 
 	//優先度1: ポータルへの移動関数.
-	void MoveToPortl();
+	void MoveToPortal();
 	//優先度2: 攻撃(プレイヤーがポータルを取得しているとき).
 	void PlayerAttack();
 	//優先度2: 防衛(自分がポータルを取得しているとき).
 	void Defense();
+
+
 private:
 	std::shared_ptr<Portal> m_pPortal;
 
 	Boss* m_pOwner;
 
+	BossDifficulty m_Difficulty;
+
 	//ボスの歩く速度.
 	float m_MoveSpeed;
+
+	//難易度依存のパラメーター.
+	//弾の発射間隔.
+	float m_ShotInterval;
+	//防衛時の許容半径.
+	float m_DefenseRadius;
 };
