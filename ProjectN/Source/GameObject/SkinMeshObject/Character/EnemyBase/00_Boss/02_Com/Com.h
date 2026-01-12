@@ -55,8 +55,11 @@ private:
 
 	//優先度1: ポータルへの移動関数.
 	void MoveToPortal();
-	//優先度2: 攻撃(プレイヤーがポータルを取得しているとき).
+	//優先度2: 攻撃(通常時).
 	void PlayerAttack();
+	//攻撃(プレイヤーが取得している).
+	//ToDo : プレイヤーがポータルを取得している時に入れる攻撃用の関数.
+	void PlayerPressureAttack();
 	//優先度2: 防衛(自分がポータルを取得しているとき).
 	void Defense();
 
@@ -76,4 +79,6 @@ private:
 	float m_ShotInterval;
 	//防衛時の許容半径.
 	float m_DefenseRadius;
+	//プレイヤーがポータル主の時の発射速度.
+	float m_PressureShotInterval;
 };

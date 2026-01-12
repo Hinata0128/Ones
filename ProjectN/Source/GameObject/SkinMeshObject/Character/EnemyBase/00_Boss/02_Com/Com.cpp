@@ -22,6 +22,8 @@ Com::Com(
 
 	, m_ShotInterval(0.0f)
 	, m_DefenseRadius(0.0f)
+
+	, m_PressureShotInterval(0.0f)
 {
 	ApplyDifficultyParam();
 }
@@ -140,18 +142,21 @@ void Com::ApplyDifficultyParam()
 	{
 		m_MoveSpeed = 1.2f;
 		m_ShotInterval = 5.0f;
+		m_PressureShotInterval = 2.5f;
 		m_DefenseRadius = 6.0f;
 	}
 	else if (m_Difficulty == BossDifficulty::Hard)
 	{
 		m_MoveSpeed = 1.8f;
 		m_ShotInterval = 0.8f;
+		m_PressureShotInterval = 0.5f;
 		m_DefenseRadius = 8.0f;
 	}
 	else if (m_Difficulty == BossDifficulty::Final)
 	{
 		m_MoveSpeed = 2.4f;
 		m_ShotInterval = 0.4f;
+		m_PressureShotInterval = 0.2f;
 		m_DefenseRadius = 10.0f;
 	}
 
@@ -183,6 +188,7 @@ void Com::DecideAction()
 	// 優先度1：未取得 → 取りに行く
 	if (state == Portal::PortalPriority::None)
 	{
+		m_pOwner->SetShotInterval(m_ShotInterval);
 		MoveToPortal();
 		return;
 	}
@@ -190,6 +196,7 @@ void Com::DecideAction()
 	// 優先度2：自分が所持 → 防衛
 	if (state == Portal::PortalPriority::Enemy)
 	{
+		m_pOwner->SetShotInterval(m_ShotInterval);
 		Defense();
 		return;
 	}
@@ -197,11 +204,10 @@ void Com::DecideAction()
 	// 優先度3：プレイヤーが所持 → 奪いに行く
 	if (state == Portal::PortalPriority::Player)
 	{
-		if (Dist > PortalGet)
-		{
-			MoveToPortal();
-		}
-		PlayerAttack();
+		m_pOwner->SetShotInterval(m_PressureShotInterval);
+
+		PlayerPressureAttack();
+		return;
 	}
 }
 
@@ -244,6 +250,52 @@ void Com::MoveToPortal()
 
 void Com::PlayerAttack()
 {
+	m_pOwner->RequestShot();
+}
+
+void Com::PlayerPressureAttack()
+{
+	const float IDEAL_DISTANCE = 10.0f; 
+
+	float dt = Timer::GetInstance().DeltaTime();
+
+	D3DXVECTOR3 bossPos = m_pOwner->GetPosition();
+	D3DXVECTOR3 playerPos = m_pOwner->GetPlayerPos();
+
+	D3DXVECTOR3 toPlayer = playerPos - bossPos;
+	float dist = D3DXVec3Length(&toPlayer);
+	if (dist < 0.01f) return;
+
+	D3DXVec3Normalize(&toPlayer, &toPlayer);
+
+	// プレイヤーを見る
+	float angle = std::atan2f(-toPlayer.x, -toPlayer.z);
+	m_pOwner->SetRotationY(angle);
+
+	D3DXVECTOR3 move(0, 0, 0);
+
+	// 距離調整
+	if (dist < IDEAL_DISTANCE - 1.0f)
+	{
+		// 近すぎる → 離れる
+		move -= toPlayer;
+	}
+	else if (dist > IDEAL_DISTANCE + 1.0f)
+	{
+		// 遠すぎる → 近づく
+		move += toPlayer;
+	}
+
+	// 横移動（プレイヤーをどかす）
+	D3DXVECTOR3 up(0, 1, 0);
+	D3DXVECTOR3 side;
+	D3DXVec3Cross(&side, &up, &toPlayer);
+	move += side * 0.7f; // 円を描くように動く
+
+	D3DXVec3Normalize(&move, &move);
+	m_pOwner->AddPosition(move * m_MoveSpeed * dt);
+
+	// 攻撃（発射レート高め）
 	m_pOwner->RequestShot();
 }
 
