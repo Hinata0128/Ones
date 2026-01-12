@@ -16,7 +16,12 @@ Com::Com(
 	: m_pPortal	(pPortal)
 	, m_pOwner(pOwner)
 
+	, m_Difficulty(BossDifficulty::Easy)
+
 	, m_MoveSpeed(1.5f)
+
+	, m_ShotInterval(0.0f)
+	, m_DefenseRadius(0.0f)
 {
 }
 
@@ -26,8 +31,6 @@ Com::~Com()
 
 void Com::Update()
 {
-
-
 	DecideAction();
 }
 
@@ -83,6 +86,72 @@ void Com::DrawDebugImGui()
 
 	ImGui::End();
 #endif
+}
+
+void Com::DecideDifficultyByRound(int raund)
+{
+	int Raund = rand() % 100;
+
+	if (raund == 1)
+	{
+		//7割りEasyモード.
+		if (Raund < 70)
+		{
+			SetDifficulty(BossDifficulty::Easy);
+		}
+		//残りHardモード.
+		else
+		{
+			SetDifficulty(BossDifficulty::Hard);
+		}
+	}
+	else if (raund == 2)
+	{
+		//8割りHardモード.
+		if (Raund < 80)
+		{
+			SetDifficulty(BossDifficulty::Hard);
+		}
+		//残りEasyモード.
+		else
+		{
+			SetDifficulty(BossDifficulty::Easy);
+		}
+	}
+	//最終ラウンドは、固定.
+	else if (raund == 3)
+	{
+		SetDifficulty(BossDifficulty::Final);
+	}
+}
+
+//難易度用Set関数.
+void Com::SetDifficulty(BossDifficulty diff)
+{
+	//引数代入.
+	m_Difficulty = diff;
+
+	if (diff == BossDifficulty::Easy)
+	{
+		m_MoveSpeed = 1.2f;
+		m_ShotInterval = 1.2f;
+		m_DefenseRadius = 6.0f;
+	}
+	else if (diff == BossDifficulty::Hard)
+	{
+		m_MoveSpeed = 1.8f;
+		m_ShotInterval = 0.8f;
+		m_DefenseRadius = 8.0f;
+	}
+	else if (diff == BossDifficulty::Final)
+	{
+		m_MoveSpeed = 2.4f;
+		m_ShotInterval = 0.4f;
+		m_DefenseRadius = 10.0f;
+	}
+
+	//Boss側に発射間隔を反映.
+	m_pOwner->SetShotInterval(m_ShotInterval);
 }
 
 //1. 優先度1の処理を書く関数.
@@ -215,15 +284,6 @@ void Com::PlayerAttack()
 	m_pOwner->RequestShot();
 }
 
-#if 0
-void Com::Defense()
-{
-	//守っているとき.
-	MoveToPortal();
-	//防衛中敵が近くにいてるときに攻撃をする.
-	m_pOwner->AutoShot();
-}
-#else
 void Com::Defense()
 {
 	//時間を取得.
@@ -311,4 +371,7 @@ void Com::Defense()
 	m_pOwner->RequestShot();
 
 }
-#endif
+
+void Com::ApplyDifficultyParam()
+{
+}
