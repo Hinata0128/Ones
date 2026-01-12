@@ -46,6 +46,9 @@ public:
 	//難易度用Set関数.
 	void SetDifficulty(BossDifficulty diff);
 
+	//難易度を反映させる.
+	void ApplyDifficultyParam();
+
 private:
 	//決定アクション.
 	void DecideAction();
@@ -57,8 +60,6 @@ private:
 	//優先度2: 防衛(自分がポータルを取得しているとき).
 	void Defense();
 
-	//難易度を反映させる.
-	void ApplyDifficultyParam();
 
 private:
 	std::shared_ptr<Portal> m_pPortal;

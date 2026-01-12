@@ -78,6 +78,13 @@ void Portal::Update()
 			// 3. まだ決着がついていない場合（1-0, 0-1, 1-1）
 			else
 			{
+				//次のラウンドを計算してボスに通知.
+				int nextRound = pScore + eScore + 1;
+				if (auto enemy = m_pEnemy.lock())
+				{
+					enemy->StartNextRound(nextRound);
+				}
+
 				// 1対1になったときの特殊判定
 				if (pScore == 1 && eScore == 1)
 				{

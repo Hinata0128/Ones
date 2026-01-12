@@ -7,6 +7,8 @@
 
 #include "02_Com/Com.h"
 
+#include "SceneManager/SceneManager.h"
+
 constexpr float zero = 0.0f;
 
 Boss::Boss(std::shared_ptr<Portal> pPortal)
@@ -18,6 +20,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_pCom(std::make_unique<Com>(this, pPortal))
     
     , m_InitialPosition {}
+
+    , m_CurrentRound    (1) //開始はラウンド1からのため.
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -32,11 +36,11 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     //SetPosition(0.0f, 0.0f, 0.0f);
 
     // ステートセット
-    //m_pCurrentState = m_pIdol.get();
-    //if (m_pCurrentState)
-    //{
-    //    m_pCurrentState->Enter();
-    //}
+    m_pCurrentState = m_pIdol.get();
+    if (m_pCurrentState)
+    {
+        m_pCurrentState->Enter();
+    }
 
     //アニメーションの再生速度.
     m_AnimSpeed = 1.0f / 60.0f;
@@ -46,8 +50,7 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     m_BSphere.SetRadius(1.0f);
     m_HitCenterOffset = D3DXVECTOR3(0.0f, 3.5f, 0.0f);
 
-    m_CoolTime = 0.8f;
-    m_ShotCoolDown = m_CoolTime;
+    m_pCom->DecideDifficultyByRound(m_CurrentRound);
 
     Init();
 }
@@ -59,6 +62,14 @@ Boss::~Boss()
 void Boss::Init()
 {
     m_HitPoint = 100.0f;
+
+    int score = SceneManager::GetInstance()->GetPlayerScore() + SceneManager::GetInstance()->GetEnemyScore();
+    m_CurrentRound = score + 1;
+
+    if (m_pCom)
+    {
+        m_pCom->DecideDifficultyByRound(m_CurrentRound);
+    }
 
     //待機アニメーションを再生.
     const int IDLE_ANIM = 0;
@@ -156,24 +167,32 @@ void Boss::RequestShot()
 void Boss::SetShotInterval(float time)
 {
     m_CoolTime = time;
+    m_ShotCoolDown = time;
+}
+
+void Boss::StartNextRound(int nextround)
+{
+    m_CurrentRound = nextround;
+
+    //Comクラスに次のラウンドを知らせる.
+    if (m_pCom)
+    {
+        m_pCom->DecideDifficultyByRound(m_CurrentRound);
+    }
+    Respawn();
 }
 
 void Boss::Respawn()
 {
-    // 1. 位置を初期位置にリセット
+    //位置を初期位置にセット.
     SetPosition(m_InitialPosition);
 
-    // 2. ステートを待機（Idol）に強制的に戻す
-    //if (m_pCurrentState) m_pCurrentState->Exit();
-    //m_pCurrentState = m_pIdol.get();
-    //if (m_pCurrentState) m_pCurrentState->Enter();
-
-    // 3. パラメータの回復
+    //体力の回復.
     m_HitPoint = 100.0f;
 
-    // 4. クールタイム等のリセット
+    ChangeState(m_pIdol.get());
 
-    // 5. Initを呼び出して内部変数を初期化
+    //初期化.
     Init();
 }
 

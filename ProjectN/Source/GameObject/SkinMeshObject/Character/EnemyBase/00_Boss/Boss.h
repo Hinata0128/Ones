@@ -41,6 +41,10 @@ public:
 	void RequestShot();
 
 	void SetShotInterval(float time);
+
+	void StartNextRound(int nextround);
+
+	void Respawn();
 	
 public:
 
@@ -75,7 +79,10 @@ public:
 
 	//死亡しているかどうか.
 	bool IsDaed() const { return m_pCurrentState == (BossStateBase*)m_pDead.get(); }
-	void Respawn();
+	
+	//今のラウンドを確認する用の関数.
+	int GetCurrentRound() const { return m_CurrentRound; }
+
 public:
 	void ChangeState(BossStateBase* state);
 
@@ -101,4 +108,6 @@ private:
 	std::unique_ptr<Com> m_pCom;
 
 	D3DXVECTOR3 m_InitialPosition;
+	//現在のラウンド数(開始は1から).
+	int m_CurrentRound;
 };
