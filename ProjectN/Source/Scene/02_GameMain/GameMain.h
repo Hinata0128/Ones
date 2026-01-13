@@ -22,6 +22,8 @@
 
 #include "GameObject//UIObject//00_HPBar//HPBar.h"
 
+#include "GameObject/UIObject/02_BossHPBar/BossHPBar.h"
+
 #include "GameObject/StaticMeshObject/03_BackGround/BackGround.h"
 
 #include "GameObject/UIObject/01_Point/Point.h"
@@ -84,6 +86,7 @@ private:
 
 	//HPBarクラス(Test).
 	std::unique_ptr<HPBar> m_pHpBar;
+	std::unique_ptr<BossHPBar> m_pBossHpBar;
 
 	//背景クラス.
 	std::unique_ptr<BackGround> m_pSkyBox;

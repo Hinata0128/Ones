@@ -45,6 +45,8 @@ void AttackShort::ExecuteAttack(Player* player)
 		// クールタイムリセット (クールタイム = 当たり判定の有効時間)
 		m_ShortCoolDown = m_CoolTime;
 		m_IsHitActive = true;
+
+		m_HasHit = false;
 	}
 
 	std::string BoneName = "blade_r_head";
