@@ -76,6 +76,7 @@ void Boss::Init()
     if (m_pMesh && m_pAnimCtrl)
     {
         m_pMesh->ChangeAnimSet(IDLE_ANIM, m_pAnimCtrl);
+        m_AnimNo = IDLE_ANIM;
         m_pMesh->SetAnimSpeed(m_AnimSpeed);
     }
 
