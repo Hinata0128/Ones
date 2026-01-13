@@ -30,6 +30,10 @@ public:
 	bool IsHitActive() const { return m_IsHitActive; }
 	const BoundingSphere& GetHitBox() const { return m_SwordHitBox; }
 
+	void ResetHit() { m_HasHit = false; }
+	bool HasHit() const { return m_HasHit; }
+	void SetHit() { m_HasHit = true; }
+
 private:
 	//近距離攻撃のクールタイム.
 	float m_ShortCoolDown;
@@ -43,4 +47,7 @@ private:
 	bool m_IsHitActive = false;
 	//剣先用の当たり判定オブジェクト.
 	BoundingSphere m_SwordHitBox;
+
+	bool m_HasHit = false;
+	bool m_hitActive = false;
 };

@@ -26,6 +26,8 @@ GameMain::GameMain()
 
 	, m_pHpBar(std::make_unique<HPBar>())
 
+	, m_pBossHpBar(std::make_unique<BossHPBar>())
+
 	, m_pSkyBox(std::make_unique<BackGround>())
 
 	, m_pPointUI(std::make_unique<Point>())
@@ -76,6 +78,9 @@ void GameMain::Create()
 
 	m_pHpBar->SetTargetPlayer(m_pPlayer.get());
 	m_pHpBar->Create();
+
+	m_pBossHpBar->SetTragetBoss(m_pEnemyNomal.get());
+	m_pBossHpBar->Create();
 
 	m_pPointUI->Create();
 	m_pPortalGauge->Create();
@@ -170,6 +175,7 @@ void GameMain::Update()
 
 
 	m_pHpBar->Update();
+	m_pBossHpBar->Update();
 
 
 	// ==========================================================
@@ -273,6 +279,8 @@ void GameMain::Draw()
 	//Effectクラス
 	Effect::GetInstance()->Draw();
 	m_pHpBar->Draw();
+	m_pBossHpBar->Draw();
+
 	m_pPointUI->Draw();
 	m_pPortalGauge->Draw();
 	m_pLimitTime->Draw();

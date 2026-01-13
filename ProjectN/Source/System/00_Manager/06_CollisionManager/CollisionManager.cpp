@@ -158,23 +158,22 @@ void CollisionManager::AllCollider()
     AttackShort* pShortAttack = m_pPlayer->GetShortAttackState();
 
     // pShortAttack が有効で、かつ AttackShort ステートがヒット判定を有効にしている場合のみ実行
-    if (pShortAttack && pShortAttack->IsHitActive())
+    if (pShortAttack && pShortAttack->IsHitActive() && !pShortAttack->HasHit())
     {
-        //剣の当たり判定情報を取得 (参照で宣言しても、pShortAttack が有効なら初期化済み)
         const BoundingSphere& swordSphere = pShortAttack->GetHitBox();
-
 
         for (auto enemy : m_vEnemies)
         {
             if (!enemy) continue;
 
-            //敵の当たり判定更新
             enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
 
-            //剣の当たりと比較
-            if (swordSphere.IsHit(enemy->GetBoundingSphere())) // 判定実行
+            if (swordSphere.IsHit(enemy->GetBoundingSphere()))
             {
+
                 enemy->Hit();
+                pShortAttack->SetHit(); // ← ここで「もう当たった」
+
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
 
@@ -182,7 +181,7 @@ void CollisionManager::AllCollider()
                     Effect::Play(Effect::Test0, enemy->GetPosition());
                 }
 
-                OutputDebugStringA("Short Attack Hit Enemy!\n");
+                break;                  // 複数敵に当てないなら break
             }
         }
     }
