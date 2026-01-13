@@ -185,15 +185,30 @@ void Boss::StartNextRound(int nextround)
 
 void Boss::Respawn()
 {
-    //位置を初期位置にセット.
+    // 1. 位置と体力の復帰
     SetPosition(m_InitialPosition);
-
-    //体力の回復.
     m_HitPoint = 100.0f;
 
-    ChangeState(m_pIdol.get());
+    // 2. ステートを強制的に待機(Idol)に戻す
+    // ※これをしないと Update で死亡状態のまま処理されてしまいます
+    m_pCurrentState = m_pIdol.get();
+    if (m_pCurrentState)
+    {
+        m_pCurrentState->Enter();
+    }
 
-    //初期化.
+    // 3. アニメーションを強制的に初期化
+    const int IDLE_ANIM = 0;
+    if (m_pMesh && m_pAnimCtrl)
+    {
+        // 条件(m_AnimNo == -1)を削除し、強制的に待機アニメーションをセット
+        m_pMesh->ChangeAnimSet(IDLE_ANIM, m_pAnimCtrl);
+        m_AnimNo = IDLE_ANIM;
+        m_pMesh->SetAnimSpeed(m_AnimSpeed);
+    }
+
+    // 4. その他の初期化（Init内で二重にSetPositionなどしないよう注意）
+    // Init() の中身が重複している場合は整理が必要ですが、現状のコードなら維持でOKです
     Init();
 }
 

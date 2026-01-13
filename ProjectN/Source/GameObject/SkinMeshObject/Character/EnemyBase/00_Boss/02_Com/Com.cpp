@@ -250,9 +250,21 @@ void Com::MoveToPortal()
 
 void Com::PlayerAttack()
 {
+
+	BossContext ctx(m_pOwner);
+
+	// ⑥ 歩きアニメ
+	const int WALK_ANIM = 2;
+	if (ctx.AnimNo != WALK_ANIM)
+	{
+		ctx.AnimNo = WALK_ANIM;
+		ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+	}
+
 	m_pOwner->RequestShot();
 }
 
+#if 0
 void Com::PlayerPressureAttack()
 {
 	const float IDEAL_DISTANCE = 10.0f; 
@@ -298,6 +310,62 @@ void Com::PlayerPressureAttack()
 	// 攻撃（発射レート高め）
 	m_pOwner->RequestShot();
 }
+#else
+void Com::PlayerPressureAttack()
+{
+	const float IDEAL_DISTANCE = 10.0f;
+
+	float dt = Timer::GetInstance().DeltaTime();
+
+	D3DXVECTOR3 bossPos = m_pOwner->GetPosition();
+	D3DXVECTOR3 playerPos = m_pOwner->GetPlayerPos();
+
+	D3DXVECTOR3 toPlayer = playerPos - bossPos;
+	float dist = D3DXVec3Length(&toPlayer);
+	if (dist < 0.01f) return;
+
+	D3DXVec3Normalize(&toPlayer, &toPlayer);
+
+	// プレイヤーを見る
+	float angle = std::atan2f(-toPlayer.x, -toPlayer.z);
+	m_pOwner->SetRotationY(angle);
+
+	// --- ここから追加 ---
+	BossContext ctx(m_pOwner);
+	const int WALK_ANIM = 2; // 歩きアニメーション
+	if (ctx.AnimNo != WALK_ANIM)
+	{
+		ctx.AnimNo = WALK_ANIM;
+		ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+	}
+	// --- ここまで追加 ---
+
+	D3DXVECTOR3 move(0, 0, 0);
+
+	// 距離調整（近すぎるなら離れ、遠すぎるなら近づく）
+	if (dist < IDEAL_DISTANCE - 1.0f)
+	{
+		move -= toPlayer;
+	}
+	else if (dist > IDEAL_DISTANCE + 1.0f)
+	{
+		move += toPlayer;
+	}
+
+	// 横移動
+	D3DXVECTOR3 up(0, 1, 0);
+	D3DXVECTOR3 side;
+	D3DXVec3Cross(&side, &up, &toPlayer);
+	move += side * 0.7f;
+
+	D3DXVec3Normalize(&move, &move);
+	m_pOwner->AddPosition(move * m_MoveSpeed * dt);
+
+	// 攻撃
+	m_pOwner->RequestShot();
+}
+#endif
+
 
 void Com::Defense()
 {
