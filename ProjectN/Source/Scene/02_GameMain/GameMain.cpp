@@ -10,6 +10,8 @@
 #include "System/00_Manager/06_CollisionManager/CollisionManager.h" 
 #include "GameObject//SkinMeshObject//Character//Player//Player.h" 
 
+#include "System/02_Singleton/01_Camera/Camera.h"
+
 GameMain::GameMain()
 	: SceneBase()
 	, m_pStcMeshObj(std::make_unique<StaticMeshObject>())
@@ -100,6 +102,16 @@ void GameMain::Update()
 {
 	//Timer更新
 	Timer::GetInstance().Update();
+
+	static POINT prevMouse;
+	POINT currMouse;
+	GetCursorPos(&currMouse);
+	float dx = (float)(currMouse.x - (WND_W / 2));
+	float dy = (float)(currMouse.y - (WND_H / 2));
+	SetCursorPos(WND_W / 2, WND_H / 2); // カーソルを中央にロック
+
+	// カメラシングルトンの更新
+	Camera::GetInstance().Update(dx, dy, m_pPlayer->GetPosition());
 
 	{
 		static ::EsHandle hEffect = -1;
@@ -294,14 +306,7 @@ HRESULT GameMain::LoadData()
 
 void GameMain::Camera()
 {
-	D3DXVECTOR3 cam_pos = m_Camera.vPosition;
-	D3DXVECTOR3 cam_look = m_Camera.vLook;
-	D3DXVECTOR3	vUpVec(0.0f, 1.0f, 0.0f);	//上方（ベクトル）.
-
-	//ビュー（カメラ）変換.
-	D3DXMatrixLookAtLH(
-		&m_mView,	//(out)ビュー計算結果.
-		&cam_pos, &cam_look, &vUpVec);
+	m_mView = Camera::GetInstance().GetViewMatrix();
 }
 
 //プロジェクション関数.
@@ -326,13 +331,5 @@ void GameMain::Projection()
 //カメラをPlayerの背後に設定する.
 void GameMain::UpdateCamera()
 {
-	//ローカル変数.
-	constexpr float Ten = 5.0f;
-	constexpr float Fifteen = 15.0f;
-
-	D3DXVECTOR3 PlayerPos = m_pPlayer->GetPosition();
-	//いったんカメラの位置をここに固定しています.
-	m_Camera.vPosition = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + Ten, PlayerPos.z - Fifteen);
-	m_Camera.vLook = PlayerPos;
 }
 
