@@ -257,7 +257,7 @@
     <ClCompile Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.cpp" />
     <ClCompile Include="Source\System\00_Manager\ManagerBase.cpp" />
     <ClCompile Include="Source\System\01_Renderer\Renderer.cpp" />
-    <ClCompile Include="Source\System\02_Singleton\Timer\Timer.cpp" />
+    <ClCompile Include="Source\System\02_Singleton\00_Timer\Timer.cpp" />
     <ClCompile Include="Source\System\04_Input\InputKey\InputKey.cpp" />
     <ClCompile Include="Source\System\05_XInput\XInput.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
@@ -347,7 +347,7 @@
     <ClInclude Include="Source\System\00_Manager\08_InputKeyManager\InputKeyManager.h" />
     <ClInclude Include="Source\System\00_Manager\ManagerBase.h" />
     <ClInclude Include="Source\System\01_Renderer\Renderer.h" />
-    <ClInclude Include="Source\System\02_Singleton\Timer\Timer.h" />
+    <ClInclude Include="Source\System\02_Singleton\00_Timer\Timer.h" />
     <ClInclude Include="Source\System\03_Base\StateBase\StateBase.h" />
     <ClInclude Include="Source\System\04_Input\InputKey\InputKey.h" />
     <ClInclude Include="Source\System\05_XInput\XInput.h" />

@@ -4,7 +4,7 @@
 #include "..//..//00_BossContext//BossContext.h"
 #include "..//01_BossMove/BossMove.h"
 
-#include "System/02_Singleton/Timer/Timer.h"
+#include "System/02_Singleton/00_Timer/Timer.h"
 
 #include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/02_Com/Com.h"
 
