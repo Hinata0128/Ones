@@ -258,8 +258,10 @@ LRESULT CALLBACK Main::MsgProc(
 	case WM_KEYDOWN:
 		switch (static_cast<char>(wParam)) {
 		case VK_ESCAPE:
-			DestroyWindow(hWnd);
-			break;
+			if (MessageBox(hWnd, _T("ÉQÅ[ÉÄÇèIóπÇµÇ‹Ç∑Ç©ÅH"), _T("åxçê"), MB_YESNO) == IDYES) {
+				DestroyWindow(hWnd);
+				break;
+			}
 		}
 		break;
 	}
