@@ -259,6 +259,7 @@
     <ClCompile Include="Source\System\01_Renderer\Renderer.cpp" />
     <ClCompile Include="Source\System\02_Singleton\Timer\Timer.cpp" />
     <ClCompile Include="Source\System\04_Input\InputKey\InputKey.cpp" />
+    <ClCompile Include="Source\System\05_XInput\XInput.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +350,7 @@
     <ClInclude Include="Source\System\02_Singleton\Timer\Timer.h" />
     <ClInclude Include="Source\System\03_Base\StateBase\StateBase.h" />
     <ClInclude Include="Source\System\04_Input\InputKey\InputKey.h" />
+    <ClInclude Include="Source\System\05_XInput\XInput.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Ray.hlsl">
