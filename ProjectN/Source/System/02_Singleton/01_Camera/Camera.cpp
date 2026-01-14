@@ -4,31 +4,28 @@
 Camera::Camera()
     : m_angleX(0.0f), m_angleY(0.0f), m_sensitivity(0.005f)
 {
-    m_offset = D3DXVECTOR3(1.5f, 10.0f, -15.0f); // 初期状態はTPS（少し右寄り）
+    m_offset = D3DXVECTOR3(1.5f, 5.0f, -15.0f); // 初期状態はTPS（少し右寄り）
     D3DXMatrixIdentity(&m_viewMatrix);
 }
 
 void Camera::Update(float mouseDx, float mouseDy, const D3DXVECTOR3& targetPos) {
-    // 回転角の更新
+    // 左右の回転角だけを更新
     m_angleX += mouseDx * m_sensitivity;
-    m_angleY += mouseDy * m_sensitivity;
 
-    // 首が回る範囲を制限（真上・真下を向かないように）
-    const float limit = D3DX_PI * 0.45f;
-    if (m_angleY > limit)  m_angleY = limit;
-    if (m_angleY < -limit) m_angleY = -limit;
+    // 上下の回転角（m_angleY）は更新しない、または常に 0 に固定
+    m_angleY = 0.0f; // これで常に真横からの視点に固定されます
 
-    // 回転行列の作成（YawとPitchのみ）
+    // 回転行列の作成（angleYを0にするので、実質的に左右回転のみになる）
     D3DXMATRIX matRot;
     D3DXMatrixRotationYawPitchRoll(&matRot, m_angleX, m_angleY, 0.0f);
 
-    // 回転行列をオフセットベクトルに適用してカメラ位置を計算
+    // 回転行列をオフセットベクトルに適用
     D3DXVECTOR4 transformedOffset;
     D3DXVec3Transform(&transformedOffset, &m_offset, &matRot);
 
     D3DXVECTOR3 cameraPos = targetPos + D3DXVECTOR3(transformedOffset.x, transformedOffset.y, transformedOffset.z);
 
-    // 注視点（少し頭の上を狙うなど調整可能）
+    // 注視点
     D3DXVECTOR3 lookAt = targetPos;
     lookAt.y += 1.5f; // キャラクターの胸〜頭あたりを注視
 
