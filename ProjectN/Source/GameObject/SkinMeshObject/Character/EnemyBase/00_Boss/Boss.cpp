@@ -1,7 +1,7 @@
 ﻿#include "Boss.h"
 #include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 #include "System/00_Manager/04_BossShotManager/BossShotManager.h"
-#include "System/02_Singleton/Timer/Timer.h"
+#include "System/02_Singleton/00_Timer/Timer.h"
 #include "..//00_Boss/00_BossContext/BossContext.h"
 #include "..//00_Boss/01_BossStateBase/BossStateBase.h"
 

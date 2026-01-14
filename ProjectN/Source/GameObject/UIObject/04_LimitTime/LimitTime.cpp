@@ -2,7 +2,7 @@
 
 #include "Sprite2D/Sprite2D.h"
 #include "DirectX/DirectX11.h"
-#include "System/02_Singleton/Timer/Timer.h"
+#include "System/02_Singleton/00_Timer/Timer.h"
 
 LimitTime::LimitTime()
 	: UIObject				()

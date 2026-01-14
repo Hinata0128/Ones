@@ -1,7 +1,7 @@
 #include "BossMove.h"
 
 #include "..//..//00_BossContext/BossContext.h"
-#include "..//..//..//..//..//..//..//System/02_Singleton/Timer/Timer.h"
+#include "System/02_Singleton/00_Timer/Timer.h"
 #include "..//..//Boss.h" 
 #include <algorithm> // std::atan2 ‚ðŽg‚¤‚½‚ß
 
