@@ -81,6 +81,9 @@ public:
 	bool IsCapturingState() const;
 
 	Shadow* GetShadow() const { return m_pShadow.get(); }
+
+	void SetVisible(bool visible) { m_IsVisible = visible; }
+	bool IsVisible() const { return m_IsVisible; }
 private:
 	PShotManager*	m_pShotManager;
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;
@@ -99,4 +102,6 @@ private:
 	D3DXVECTOR3 m_InitialPosition;
 
 	std::unique_ptr<Shadow> m_pShadow;
+
+	bool m_IsVisible = true;
 };

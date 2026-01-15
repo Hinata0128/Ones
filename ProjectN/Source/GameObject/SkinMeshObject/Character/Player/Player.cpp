@@ -55,6 +55,15 @@ Player::~Player()
 void Player::Update()
 {
 
+    if (IsDead())
+    {
+        // アニメーションだけは更新しておかないと、死ぬ瞬間の動きが止まる場合があります
+        if (m_pAnimCtrl) m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
+
+        // 基底クラスの更新（座標更新などが必要な場合）
+        Character::Update();
+        return; // ★ここで終了！これ以降の攻撃や移動、影の更新は行われない
+    }
 
     // デバッグ用：Kキーを押すと10ダメージ
     if (GetAsyncKeyState('K') & 0x0001)
@@ -199,6 +208,7 @@ void Player::Hit()
             if (m_pCurrentState) {
                 m_pCurrentState->Enter();   //新しいステートの開始処理
             }
+            SetVisible(false);
         }
     }
 }
@@ -232,6 +242,9 @@ void Player::Respawn()
     
     // 3. パラメータのリセット
     m_HitPoint = 100.0f;
+
+    SetVisible(true);
+
     m_CaptureTimer = 0.0f;
 
     // 4. 攻撃マネージャー等の初期化（既存の関数を利用）

@@ -169,44 +169,51 @@ void Com::ApplyDifficultyParam()
 //1. 優先度1の処理を書く関数.
 void Com::DecideAction()
 {
-	//敵の位置を取得する.
+	// 敵（自分）の位置を取得する
 	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
-	//ポータルの位置を取得する.
+	// ポータルの位置を取得する
 	D3DXVECTOR3 PortalPos = m_pPortal->GetPosition();
 
-	//ポータルの位置 - 敵の位置の取得.
+	// ポータルから敵への距離を計算
 	D3DXVECTOR3 Diff = PortalPos - BossPos;
-
-	//ポータルから敵への長さ(距離を入手する).
 	float Dist = D3DXVec3Length(&Diff);
 
-	//ローカル変数(ポータルを触る距離).
-	float PortalGet = 5.0f;
-
+	// 現在のポータルの占有状態を取得
 	Portal::PortalPriority state = m_pPortal->GetPortalState();
 
-	// 優先度1：未取得 → 取りに行く
-	if (state == Portal::PortalPriority::None)
+	// ターゲット（プレイヤー）の死亡状態を取得
+	bool isPlayerDead = m_pOwner->IsTargetDead();
+
+	//---------------------------------------------------------
+	// AI行動決定ロジック（修正版）
+	//---------------------------------------------------------
+
+	// 【条件1】プレイヤーが生存していて、かつポータルを占有されている場合
+	// ★最優先：ポータル奪取よりも「プレイヤーの排除」を優先して、攻撃コード（円運動など）を実行させる
+	if (state == Portal::PortalPriority::Player && !isPlayerDead)
+	{
+		// プレイヤー占有中専用の連射速度に設定
+		m_pOwner->SetShotInterval(m_PressureShotInterval);
+		// プレイヤーを攻撃しながら間合いを調整する（円運動ロジック）
+		PlayerPressureAttack();
+		return;
+	}
+
+	// 【条件2】プレイヤーが死亡している、またはポータルが「None（誰もいない）」の場合
+	// 邪魔者がいないので、ポータルを奪取するために中心へ移動する
+	if (state == Portal::PortalPriority::None || (state == Portal::PortalPriority::Player && isPlayerDead))
 	{
 		m_pOwner->SetShotInterval(m_ShotInterval);
 		MoveToPortal();
 		return;
 	}
 
-	// 優先度2：自分が所持 → 防衛
+	// 【条件3】自分がポータルを所有（Enemy）している場合
+	// 自分の陣地を守るための防衛行動に切り替える
 	if (state == Portal::PortalPriority::Enemy)
 	{
 		m_pOwner->SetShotInterval(m_ShotInterval);
 		Defense();
-		return;
-	}
-
-	// 優先度3：プレイヤーが所持 → 奪いに行く
-	if (state == Portal::PortalPriority::Player)
-	{
-		m_pOwner->SetShotInterval(m_PressureShotInterval);
-
-		PlayerPressureAttack();
 		return;
 	}
 }
