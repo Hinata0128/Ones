@@ -55,6 +55,7 @@ Player::~Player()
 void Player::Update()
 {
 
+
     // デバッグ用：Kキーを押すと10ダメージ
     if (GetAsyncKeyState('K') & 0x0001)
     {
@@ -110,12 +111,6 @@ void Player::Update()
     //アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
-#ifdef _DEBUG
-
-    ImGui::Begin(JAPANESE("playerのポジションを変更"));
-    ImGui::InputFloat3("pos", m_Position);
-    ImGui::End();
-#endif
 
     //ボーン座標の取得.
     //弾の発射位置を計算するために使用.
@@ -140,6 +135,14 @@ void Player::Draw()
     //ToDo : 影の表示は先.
     m_pShadow->Draw();
 	Character::Draw();
+
+#ifdef _DEBUG
+
+    ImGui::Begin(JAPANESE("playerのポジションを変更"));
+    ImGui::InputFloat3("pos", m_Position);
+    ImGui::End();
+#endif
+
 }
 
 void Player::Init()

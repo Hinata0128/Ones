@@ -250,7 +250,7 @@ LRESULT CALLBACK Main::MsgProc(
 {
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 	{
-		return true; 
+		return 1; 
 	}
 
 	switch (uMsg) {
@@ -266,27 +266,53 @@ void Main::IsExitGame()
 {
 	static bool isPushed = false;
 
-	// キー入力取得 (リファレンスにあったInputクラス、もしくはGetAsyncKeyState等)
-	// 今回は標準的なWindows関数での例です
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 	{
-		if (!isPushed) // 押された瞬間だけ判定
+		if (!isPushed)
 		{
 			float currentTime = Timer::GetInstance().ElapsedTime();
 			float diff = currentTime - m_LastEscTime;
 
-			if (diff < 0.3f) // 0.3秒以内のダブルタップ
+			// ===== 2回押し：終了 =====
+			if (diff < 0.3f)
 			{
-				if (MessageBox(m_hWnd, _T("ゲームを終了しますか？"), _T("終了確認"), MB_YESNO | MB_ICONQUESTION) == IDYES)
+				if (MessageBox(m_hWnd,
+					_T("ゲームを終了しますか？"),
+					_T("終了確認"),
+					MB_YESNO | MB_ICONQUESTION) == IDYES)
 				{
 					DestroyWindow(m_hWnd);
 				}
 				m_LastEscTime = 0.0f;
 			}
+			// ===== 1回押し：ポーズ =====
 			else
 			{
 				m_LastEscTime = currentTime;
+				m_IsPause = !m_IsPause;
+
+				SceneManager::GetInstance()->SetPause(m_IsPause);
+
+				// マウス解放／ロック切り替え
+				ShowCursor(m_IsPause);
+
+				if (m_IsPause)
+				{
+					ClipCursor(nullptr); // マウス自由
+				}
+				else
+				{
+					RECT rc;
+					GetClientRect(m_hWnd, &rc);
+					POINT ul = { rc.left, rc.top };
+					POINT lr = { rc.right, rc.bottom };
+					ClientToScreen(m_hWnd, &ul);
+					ClientToScreen(m_hWnd, &lr);
+					rc = { ul.x, ul.y, lr.x, lr.y };
+					ClipCursor(&rc); // ウィンドウ内固定
+				}
 			}
+
 			isPushed = true;
 		}
 	}

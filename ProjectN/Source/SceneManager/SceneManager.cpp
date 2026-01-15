@@ -29,7 +29,6 @@ HRESULT SceneManager::Create(HWND hWnd)
 
 void SceneManager::Update()
 {
-	m_pScene->Update();
 
 #ifdef _DEBUG
 	//========================================================================================================
@@ -49,6 +48,12 @@ void SceneManager::Update()
 
 	ImGui::End();
 #endif
+	if (m_IsPause)
+	{
+		return;
+	}
+	m_pScene->Update();
+
 }
 
 void SceneManager::Draw()
@@ -68,6 +73,16 @@ void SceneManager::LoadScene(List Scene)
 HWND SceneManager::GetHWND() const
 {
 	return m_hWnd;
+}
+
+void SceneManager::SetPause(bool pause)
+{
+	m_IsPause = pause;
+}
+
+bool SceneManager::IsPause() const
+{
+	return m_IsPause;
 }
 
 void SceneManager::SetPortal(Portal* portal)

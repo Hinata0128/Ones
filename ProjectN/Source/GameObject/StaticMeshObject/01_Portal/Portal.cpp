@@ -46,6 +46,8 @@ Portal::~Portal()
 
 void Portal::Update()
 {
+
+
 	RestrictEntry();
 
 	// 1. 100%に達した後の遷移待ち処理
@@ -155,6 +157,13 @@ void Portal::Update()
 	}
 
 	//DEBUG ImGui
+
+	StaticMeshObject::Update();
+}
+
+void Portal::Draw()
+{
+	StaticMeshObject::Draw();
 #ifdef _DEBUG
 	ImGui::Begin(JAPANESE("Portal System"));
 	ImGui::Text(JAPANESE("Player Score: %d / 2"), SceneManager::GetInstance()->GetPlayerScore());
@@ -168,12 +177,6 @@ void Portal::Update()
 	ImGui::End();
 #endif
 
-	StaticMeshObject::Update();
-}
-
-void Portal::Draw()
-{
-	StaticMeshObject::Draw();
 }
 
 void Portal::Init()

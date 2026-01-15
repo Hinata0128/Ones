@@ -47,6 +47,9 @@ public:
 
 	//HWND‚ğæ“¾.
 	HWND GetHWND() const;
+
+	void SetPause(bool pause);
+	bool IsPause() const;
 public:
 	//============================================================================
 	// ƒ|[ƒ^ƒ‹ü‚è‚ÌŠÖ”.
@@ -110,4 +113,5 @@ private:
 	bool m_IsReadyToLoad = false;
 	SceneManager::List m_NextScene = SceneManager::max;
 
+	bool m_IsPause = false;
 };
