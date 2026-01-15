@@ -17,8 +17,9 @@ AttackShort::~AttackShort()
 
 void AttackShort::Enter(Player* player)
 {
-	m_ShortCoolDown = 0.0f;
+	m_ShortCoolDown = m_CoolTime;
 	m_IsHitActive = false;
+	m_HasHit = false;
 	// 当たり判定の半径を設定
 	m_SwordHitBox.SetRadius(Radius);
 }
