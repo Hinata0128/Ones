@@ -100,6 +100,13 @@ void GameMain::Create()
 
 void GameMain::Update()
 {
+
+	if (SceneManager::GetInstance()->IsPause())
+	{
+		// ImGuiは動かす、ゲームロジックは止める
+		return;
+	}
+
 	//Timer更新
 	Timer::GetInstance().Update();
 
@@ -108,10 +115,15 @@ void GameMain::Update()
 	GetCursorPos(&currMouse);
 	float dx = (float)(currMouse.x - (WND_W / 2));
 	float dy = (float)(currMouse.y - (WND_H / 2));
-	SetCursorPos(WND_W / 2, WND_H / 2); // カーソルを中央にロック
+	if (!SceneManager::GetInstance()->IsPause())
+	{
+		SetCursorPos(WND_W / 2, WND_H / 2);
+	}
 
-	// カメラシングルトンの更新
-	Camera::GetInstance().Update(dx, dy, m_pPlayer->GetPosition());
+	if (!SceneManager::GetInstance()->IsPause())
+	{
+		Camera::GetInstance().Update(dx, dy, m_pPlayer->GetPosition());
+	}
 
 	{
 		static ::EsHandle hEffect = -1;

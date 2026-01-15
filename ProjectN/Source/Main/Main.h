@@ -48,5 +48,6 @@ private:
 	float m_LastEscTime = 0.0f;
 	//I—¹”»’èŠÖ”.
 	void IsExitGame();
+	bool m_IsPause = false;
 
 };
