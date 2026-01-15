@@ -2,7 +2,10 @@
 #include <cmath>
 
 Camera::Camera()
-    : m_angleX(0.0f), m_angleY(0.0f), m_sensitivity(0.005f)
+    : m_angleX(0.0f)
+    , m_angleY(0.0f)
+    , m_sensitivity(0.0006f)
+    , m_isActive(true)
 {
     m_offset = D3DXVECTOR3(1.5f, 5.0f, -15.0f); // 初期状態はTPS（少し右寄り）
     D3DXMatrixIdentity(&m_viewMatrix);

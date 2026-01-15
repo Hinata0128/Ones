@@ -11,6 +11,7 @@
 // ImGuiのメッセージハンドラのための外部宣言。通常はImguiManager.hに含まれます。
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+#include "System/02_Singleton/00_Timer/Timer.h"
 
 //ウィンドウを画面中央で起動を有効にする.
 //#define ENABLE_WINDOWS_CENTERING
@@ -82,6 +83,9 @@ void Main::Update()
 
 	SceneManager::GetInstance()->Update();
 	Timer::GetInstance().Update();
+
+	//終了判定.
+	IsExitGame();
 }
 
 //=================================================
@@ -244,27 +248,50 @@ LRESULT CALLBACK Main::MsgProc(
 	HWND hWnd, UINT uMsg,
 	WPARAM wParam, LPARAM lParam)
 {
-	// ★ 修正: ImGuiのメッセージハンドラを最初に呼び出し、UIがメッセージを消費したら処理を中断します
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 	{
-		return true; // ImGuiがイベントを処理した
+		return true; 
 	}
 
 	switch (uMsg) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-
-	case WM_KEYDOWN:
-		switch (static_cast<char>(wParam)) {
-		case VK_ESCAPE:
-			if (MessageBox(hWnd, _T("ゲームを終了しますか？"), _T("警告"), MB_YESNO) == IDYES) {
-				DestroyWindow(hWnd);
-				break;
-			}
-		}
-		break;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+void Main::IsExitGame()
+{
+	static bool isPushed = false;
+
+	// キー入力取得 (リファレンスにあったInputクラス、もしくはGetAsyncKeyState等)
+	// 今回は標準的なWindows関数での例です
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		if (!isPushed) // 押された瞬間だけ判定
+		{
+			float currentTime = Timer::GetInstance().ElapsedTime();
+			float diff = currentTime - m_LastEscTime;
+
+			if (diff < 0.3f) // 0.3秒以内のダブルタップ
+			{
+				if (MessageBox(m_hWnd, _T("ゲームを終了しますか？"), _T("終了確認"), MB_YESNO | MB_ICONQUESTION) == IDYES)
+				{
+					DestroyWindow(m_hWnd);
+				}
+				m_LastEscTime = 0.0f;
+			}
+			else
+			{
+				m_LastEscTime = currentTime;
+			}
+			isPushed = true;
+		}
+	}
+	else
+	{
+		isPushed = false;
+	}
 }
