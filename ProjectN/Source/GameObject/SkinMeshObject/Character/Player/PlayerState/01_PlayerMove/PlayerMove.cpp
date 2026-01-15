@@ -188,15 +188,20 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
             IsLAttacking = false;
             break;//攻撃していない→移動処理に移動.
         case enLeftStep::first:
+        {
             //アニメーション切り替え.
             ctx.AnimNo = 6; //アニメーション番号.
             ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+
+            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
+
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
             LStep = enLeftStep::Attack;
             break;
+        }
         case enLeftStep::Attack:
         {
-            double period = ctx.Mesh->GetAnimPeriod(18);
+            double period = ctx.Mesh->GetAnimPeriod(ctx.AnimNo);
             if (ctx.AnimTime > period)
             {
                 LStep = enLeftStep::end;
@@ -209,7 +214,6 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
         }
         case enLeftStep::end:
             ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
-            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
 
             LStep = enLeftStep::release_anim;
             break;
