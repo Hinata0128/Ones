@@ -23,6 +23,8 @@ public:
     // 設定変更（FPS/TPS切り替え用）
     void SetOffset(const D3DXVECTOR3& offset) { m_offset = offset; }
 
+    void SetActive(bool active) { m_isActive = active; }
+    bool IsActive() const { return m_isActive; }
 private:
     Camera();
     ~Camera() {}
@@ -32,4 +34,6 @@ private:
     float       m_angleX;      // ヨー（左右）
     float       m_angleY;      // ピッチ（上下）
     float       m_sensitivity;
+
+    bool m_isActive;
 };

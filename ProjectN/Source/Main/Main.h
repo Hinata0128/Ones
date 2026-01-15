@@ -44,4 +44,9 @@ private:
 	float m_SomeFloatValue = 0.0f;
 	bool m_bFeatureEnabled = false;
 
+	//‘O‰ñEsc‚ğ‰Ÿ‚µ‚½ŠÔ.
+	float m_LastEscTime = 0.0f;
+	//I—¹”»’èŠÖ”.
+	void IsExitGame();
+
 };
