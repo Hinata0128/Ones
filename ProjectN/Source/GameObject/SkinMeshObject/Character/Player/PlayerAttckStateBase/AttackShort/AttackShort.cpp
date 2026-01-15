@@ -92,3 +92,8 @@ void AttackShort::Draw(Player* player)
 #endif
 
 }
+
+bool AttackShort::IsFinished() const
+{
+	return false;
+}

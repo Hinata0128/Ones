@@ -42,9 +42,15 @@ void PlayerMove::Update()
 
     float deltaTime = Timer::GetInstance().DeltaTime();
     //右クリックの攻撃の関数.
-    RbuttonAttackStep(ctx);
+    if (LStep == enLeftStep::none)
+    {
+        RbuttonAttackStep(ctx);
+    }
     bool RAttack = IsRAttacking;
-    LButtonAttackStep(ctx);
+    if (step == enStep::none)
+    {
+        LButtonAttackStep(ctx);
+    }
     bool LAttacking = IsLAttacking;
     //WASDの入力取得.
     Move = GetMoveInput();
@@ -220,7 +226,7 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 
                 LStep = enLeftStep::none;
 
-               // m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+                m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
 
             }
             break;
