@@ -26,6 +26,8 @@ public:
 
 	void Draw(Player* player);
 
+	bool IsFinished() const override;
+
 	// UŒ‚”»’è‚Ìó‘Ô‚ğæ“¾‚·‚éŠÖ”
 	bool IsHitActive() const { return m_IsHitActive; }
 	const BoundingSphere& GetHitBox() const { return m_SwordHitBox; }

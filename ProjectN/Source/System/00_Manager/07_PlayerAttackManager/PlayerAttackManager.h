@@ -31,6 +31,8 @@ public:
 		//‰½‚àUŒ‚‚µ‚Ä‚¢‚È‚¢.
 		NoAttack,
 
+		Cooldown,
+
 		max,
 	};
 public:

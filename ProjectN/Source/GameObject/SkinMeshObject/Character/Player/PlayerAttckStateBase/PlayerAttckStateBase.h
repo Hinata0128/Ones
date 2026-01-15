@@ -12,9 +12,11 @@ public:
 	PlayerAttckStateBase();
 	virtual ~PlayerAttckStateBase() = default;
 
-	virtual void Enter(Player* player) = 0;
-	virtual void ExecuteAttack(Player* player) = 0;
-	virtual void Exit(Player* player) = 0;
+	virtual void Enter(Player* player) {}
+	virtual void ExecuteAttack(Player* player) {}
+	virtual void Exit(Player* player) {}
+
+	virtual bool IsFinished() const { return false; }
 
 protected:
 };
