@@ -164,7 +164,7 @@ void GameMain::Update()
 		}
 	}
 
-
+	m_pEnemyNomal->SetTargetDead(m_pPlayer->IsDead());
 	m_pEnemyNomal->Update();
 
 	m_pEnemyNomal->SetTargetPos(m_pPlayer->GetPosition());
@@ -279,8 +279,10 @@ void GameMain::Draw()
 
 	//地面表示.
 	m_pGround->Draw();
-	m_pPlayer->Draw();
-
+	if (m_pPlayer && m_pPlayer->IsVisible())
+	{
+		m_pPlayer->Draw();
+	}
 	m_pPortal->Draw();
 
 	PShotManager::GetInstance()->Draw(m_mView, m_mProj);

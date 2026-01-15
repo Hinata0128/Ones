@@ -223,6 +223,9 @@ void Portal::RestrictEntry()
 	// --- プレイヤーの押し戻し ---
 	if (auto player = m_pPlayer.lock())
 	{
+
+		if (player->IsDead()) return;
+
 		D3DXVECTOR3 pos = player->GetPosition();
 		D3DXVECTOR3 portalPos = GetPosition();
 
@@ -284,9 +287,12 @@ void Portal::ChackPriority()
 	m_IsPlayerPriority = false;
 	if (auto player = m_pPlayer.lock())
 	{
-		D3DXVECTOR3 diff = player->GetPosition() - GetPosition();
-		playerDistance = D3DXVec3Length(&diff);
-		if (playerDistance <= PORTAL_DISTANCE) m_IsPlayerPriority = true;
+		if (!player->IsDead())
+		{
+			D3DXVECTOR3 diff = player->GetPosition() - GetPosition();
+			playerDistance = D3DXVec3Length(&diff);
+			if (playerDistance <= PORTAL_DISTANCE) m_IsPlayerPriority = true;
+		}
 	}
 
 	m_IsEnemyPriority = false;

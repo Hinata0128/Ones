@@ -91,6 +91,9 @@ public:
 	std::unique_ptr<BossIdol> m_pIdol;
 	std::unique_ptr<BossMove> m_pMove;
 	std::unique_ptr<BossDead> m_pDead;
+
+	void SetTargetDead(bool isDead) { m_IsTargetDead = isDead; }
+	bool IsTargetDead() const { return m_IsTargetDead; }
 private:
 	BossShotManager* m_pENShotManager;
 
@@ -110,4 +113,6 @@ private:
 	D3DXVECTOR3 m_InitialPosition;
 	//現在のラウンド数(開始は1から).
 	int m_CurrentRound;
+
+	bool m_IsTargetDead = false;
 };
