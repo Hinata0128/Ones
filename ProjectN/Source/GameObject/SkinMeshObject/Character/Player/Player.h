@@ -84,6 +84,9 @@ public:
 
 	void SetVisible(bool visible) { m_IsVisible = visible; }
 	bool IsVisible() const { return m_IsVisible; }
+
+	void SetFrozen(bool frozen) { m_IsFrozen = frozen; }
+	bool IsFrozen() const { return m_IsFrozen; }
 private:
 	PShotManager*	m_pShotManager;
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;
@@ -104,4 +107,6 @@ private:
 	std::unique_ptr<Shadow> m_pShadow;
 
 	bool m_IsVisible = true;
+
+	bool m_IsFrozen;
 };

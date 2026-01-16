@@ -192,6 +192,11 @@ void Portal::Init()
 
 	m_IsReadyToLoad = false;
 	m_NextScene = -1;
+
+	if (auto player = m_pPlayer.lock())
+	{
+		player->SetFrozen(false);
+	}
 }
 
 void Portal::ForceFinishByTimeUp()
@@ -213,6 +218,11 @@ void Portal::ForceFinishByTimeUp()
 	m_IsRoundFinished = true;
 	m_IsTransitionStarted = true;
 	m_TransitionTimer = 0.0f;
+
+	if (auto player = m_pPlayer.lock())
+	{
+		player->SetFrozen(true);
+	}
 }
 
 void Portal::RestrictEntry()
@@ -343,6 +353,11 @@ void Portal::PlayerToPortal()
 		m_IsTransitionStarted = true;
 		m_TransitionTimer = 0.0f;
 
+		if (auto player = m_pPlayer.lock())
+		{
+			player->SetFrozen(true);
+		}
+
 		// スコアを加算（SceneManager内の即時LoadSceneは消しておくこと）
 		SceneManager::GetInstance()->AddPlayerScore();
 	}
@@ -364,6 +379,11 @@ void Portal::EnemyToPortal()
 		m_IsRoundFinished = true;
 		m_IsTransitionStarted = true;
 		m_TransitionTimer = 0.0f;
+
+		if (auto player = m_pPlayer.lock())
+		{
+			player->SetFrozen(true);
+		}
 
 		// スコアを加算
 		SceneManager::GetInstance()->AddEnemyScore();

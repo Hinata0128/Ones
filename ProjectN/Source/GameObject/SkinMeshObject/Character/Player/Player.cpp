@@ -31,6 +31,8 @@ Player::Player()
     , m_InitialPosition {}
 
     , m_pShadow(std::make_unique<Shadow>())
+
+    , m_IsFrozen(false)
 {
 	SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Player);
 	auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh,[](SkinMesh*){});
@@ -62,6 +64,14 @@ void Player::Update()
         // 基底クラスの更新（座標更新などが必要な場合）
         Character::Update();
         return; // ★ここで終了！これ以降の攻撃や移動、影の更新は行われない
+    }
+
+    if (m_IsFrozen)
+    {
+        // 見た目だけ動かす
+        if (m_pAnimCtrl) m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
+        Character::Update();
+        return;
     }
 
     // デバッグ用：Kキーを押すと10ダメージ
