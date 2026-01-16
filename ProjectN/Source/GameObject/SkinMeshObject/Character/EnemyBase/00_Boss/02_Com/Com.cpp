@@ -24,6 +24,8 @@ Com::Com(
 	, m_DefenseRadius(0.0f)
 
 	, m_PressureShotInterval(0.0f)
+
+	, m_IsCapturingPortal(false)
 {
 	ApplyDifficultyParam();
 }
@@ -187,6 +189,26 @@ void Com::DecideAction()
 	//---------------------------------------------------------
 	// AI行動決定ロジック（修正版）
 	//---------------------------------------------------------
+
+	if (state == Portal::PortalPriority::Player && isPlayerDead)
+	{
+		m_IsCapturingPortal = true;
+	}
+
+	if (m_IsCapturingPortal)
+	{
+		// 奪取完了
+		if (state == Portal::PortalPriority::Enemy)
+		{
+			m_IsCapturingPortal = false;
+		}
+		else
+		{
+			m_pOwner->SetShotInterval(m_ShotInterval);
+			MoveToPortal();
+			return;
+		}
+	}
 
 	// 【条件1】プレイヤーが生存していて、かつポータルを占有されている場合
 	// ★最優先：ポータル奪取よりも「プレイヤーの排除」を優先して、攻撃コード（円運動など）を実行させる
