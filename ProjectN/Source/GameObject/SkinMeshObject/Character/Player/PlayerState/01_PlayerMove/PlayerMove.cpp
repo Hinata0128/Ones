@@ -168,7 +168,7 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
     }
 }
 
-
+#if 0
 //左クリックを押したときの近距離攻撃.
 void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 {
@@ -237,6 +237,110 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
         }
     }
 }
+#else
+
+// 左クリックを押したときの近距離攻撃.
+// 左クリックを押したときの近距離攻撃.
+void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
+{
+    // --- 【修正】ポータル取得アニメーション（仮に10番とします）が再生中なら攻撃を無視 ---
+    // もしポータル取得時のアニメーション番号がわかれば、0 以外のその番号を入れてください。
+    // 分からない場合は、この if ブロックごと削除しても「押しっぱなしバグ」は直ります。
+    if (ctx.AnimNo == 7) // ← ここを実際のポータル取得アニメ番号に変えてください
+    {
+        if (LStep != enLeftStep::none) {
+            LStep = enLeftStep::none;
+            IsLAttacking = false;
+        }
+        return;
+    }
+
+    // 左クリックの入力判定
+    if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+    {
+        // 【重要】LStepがnoneの時（＝まだ攻撃を始めていない時）だけ開始する。
+        // これで押しっぱなしにしていても、途中のステップからfirstに引き戻されなくなります。
+        if (LStep == enLeftStep::none)
+        {
+            LStep = enLeftStep::first;
+            IsLAttacking = true;
+        }
+    }
+
+    switch (LStep)
+    {
+    case enLeftStep::none:
+        IsLAttacking = false;
+        break;
+
+    case enLeftStep::first:
+    {
+        // アニメーション切り替え。
+        ctx.AnimNo = 6;         // 近接攻撃アニメーション番号。
+        ctx.AnimTime = 0.0f;    // ここでタイマーをリセット。
+
+        m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
+
+        // アニメーションの変更。
+        ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+
+        // 【重要】セットした直後にAttackステップへ移行。
+        // これにより、次のフレームでこの case first（0秒リセット）を通りません。
+        LStep = enLeftStep::Attack;
+        break;
+    }
+
+    case enLeftStep::Attack:
+    {
+        double period = ctx.Mesh->GetAnimPeriod(ctx.AnimNo);
+
+        // アニメーション終了判定。
+        if (ctx.AnimTime >= period)
+        {
+            LStep = enLeftStep::end;
+        }
+        else
+        {
+            // タイマーを累積。
+            ctx.AnimTime += ctx.AnimSpeed;
+        }
+        break;
+    }
+
+    case enLeftStep::end:
+    {
+        // アニメーションの停止。
+        ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
+
+        LStep = enLeftStep::release_anim;
+        break;
+    }
+
+    case enLeftStep::release_anim:
+    {
+        double period = ctx.Mesh->GetAnimPeriod(6);
+        if (ctx.AnimTime >= period)
+        {
+            // アイドル（0番）に戻す。
+            ctx.AnimNo = 0;
+            ctx.AnimTime = 0.0f;
+            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
+
+            m_IsShot = true;
+            LStep = enLeftStep::none; // ここで none に戻るので、次のクリックが可能になる。
+
+            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+        }
+        else
+        {
+            // 念のため時間を進める。
+            ctx.AnimTime += ctx.AnimSpeed;
+        }
+        break;
+    }
+    }
+}
+#endif
 
 void PlayerMove::HandleMove(
     PlayerContext& ctx,
