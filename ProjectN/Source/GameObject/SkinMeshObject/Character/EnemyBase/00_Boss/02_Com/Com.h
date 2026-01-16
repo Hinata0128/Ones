@@ -81,4 +81,6 @@ private:
 	float m_DefenseRadius;
 	//プレイヤーがポータル主の時の発射速度.
 	float m_PressureShotInterval;
+	//ポータル取得中か？.
+	bool m_IsCapturingPortal;
 };
