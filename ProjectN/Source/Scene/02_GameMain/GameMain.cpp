@@ -189,9 +189,23 @@ void GameMain::Update()
 	auto playerShotMgr = PShotManager::GetInstance();
 	auto enemyShotMgr = BossShotManager::GetInstance();
 
+	if (m_pPlayer && m_pPlayer->IsVisible())
+	{
+		m_pCollisionManager->SetPlayer(m_pPlayer); // shared_ptr を渡す
+	}
+	else
+	{
+		m_pCollisionManager->SetPlayer(nullptr);
+	}
 
-	m_pCollisionManager->SetPlayer(m_pPlayer); // shared_ptr を渡す
-	m_pCollisionManager->SetEnemies({m_pEnemyNomal.get()}); // EnemyNomalManagerにGetEnemies()が必要です
+	if (m_pEnemyNomal && m_pEnemyNomal->IsVisible())
+	{
+		m_pCollisionManager->SetEnemies({ m_pEnemyNomal.get() }); // EnemyNomalManagerにGetEnemies()が必要です
+	}
+	else
+	{
+		m_pCollisionManager->SetEnemies({});
+	}
 	m_pCollisionManager->SetPlayerShots(playerShotMgr->GetShots()); // PShotManagerにGetShots()が必要です
 	m_pCollisionManager->SetEnemyShots(enemyShotMgr->GetShots()); // EnemyNomalShotManagerにGetShots()が必要です
 
@@ -287,7 +301,10 @@ void GameMain::Draw()
 
 	PShotManager::GetInstance()->Draw(m_mView, m_mProj);
 
-	m_pEnemyNomal->Draw();
+	if (m_pEnemyNomal && m_pEnemyNomal->IsVisible())
+	{
+		m_pEnemyNomal->Draw();
+	}
 
 
 #ifdef _DEBUG
