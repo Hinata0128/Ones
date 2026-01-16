@@ -22,6 +22,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_InitialPosition {}
 
     , m_CurrentRound    (1) //開始はラウンド1からのため.
+
+    , m_IsVisible   (true)
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});

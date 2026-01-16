@@ -115,4 +115,7 @@ private:
 	int m_CurrentRound;
 
 	bool m_IsTargetDead = false;
+
+	//ボスの死んだときの表示・非表示フラグ.
+	bool m_IsVisible;
 };
