@@ -94,6 +94,10 @@ public:
 
 	void SetTargetDead(bool isDead) { m_IsTargetDead = isDead; }
 	bool IsTargetDead() const { return m_IsTargetDead; }
+
+	void SetVisible(bool visible) { m_IsVisible = visible; }
+	bool IsVisible() const { return m_IsVisible; }
+
 private:
 	BossShotManager* m_pENShotManager;
 

@@ -145,6 +145,8 @@ void Boss::Hit()
             if (m_pCurrentState) m_pCurrentState->Exit();
             m_pCurrentState = nextState;
             if (m_pCurrentState) m_pCurrentState->Enter();
+
+            SetVisible(false);
         }
     }
 }
@@ -208,6 +210,8 @@ void Boss::Respawn()
         m_AnimNo = IDLE_ANIM;
         m_pMesh->SetAnimSpeed(m_AnimSpeed);
     }
+
+    SetVisible(true);
 
     // 4. その他の初期化（Init内で二重にSetPositionなどしないよう注意）
     // Init() の中身が重複している場合は整理が必要ですが、現状のコードなら維持でOKです
