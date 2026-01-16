@@ -98,6 +98,8 @@ public:
 	void SetVisible(bool visible) { m_IsVisible = visible; }
 	bool IsVisible() const { return m_IsVisible; }
 
+	void SetFrozen(bool frozen) { m_IsFrozen = frozen; }
+	bool IsFrozen() const { return m_IsFrozen; }
 private:
 	BossShotManager* m_pENShotManager;
 
@@ -122,4 +124,6 @@ private:
 
 	//ボスの死んだときの表示・非表示フラグ.
 	bool m_IsVisible;
+
+	bool m_IsFrozen;
 };
