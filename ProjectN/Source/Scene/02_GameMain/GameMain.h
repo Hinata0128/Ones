@@ -32,6 +32,8 @@
 
 #include "GameObject/UIObject/04_LimitTime/LimitTime.h"
 
+#include "GameObject/UIObject/05_TestFont/TestFont.h"
+
 
 class Timer;
 
@@ -97,6 +99,7 @@ private:
 
 	std::unique_ptr<LimitTime> m_pLimitTime;
 
+	std::unique_ptr<TestFont> m_Font;
 
 	//プレイヤーとボスのリスポーン時間の設定.
 	float m_PlayerRespawnTimer;

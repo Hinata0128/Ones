@@ -37,6 +37,7 @@ GameMain::GameMain()
 	, m_pPortalGauge(std::make_shared<PortalGauge>())
 
 	, m_pLimitTime(std::make_unique<LimitTime>())
+	, m_Font(std::make_unique<TestFont>())
 
 	, m_PlayerRespawnTimer(0.0f)
 	, m_BossRespawnTimer(0.0f)
@@ -88,6 +89,8 @@ void GameMain::Create()
 	m_pPortalGauge->Create();
 
 	m_pLimitTime->Create();
+	m_Font->Create();
+
 
 	BossShotManager::GetInstance()->Init();
 	PShotManager::GetInstance()->Init();
@@ -327,6 +330,7 @@ void GameMain::Draw()
 	m_pPointUI->Draw();
 	m_pPortalGauge->Draw();
 	m_pLimitTime->Draw();
+	m_Font->Draw();
 }
 
 HRESULT GameMain::LoadData()

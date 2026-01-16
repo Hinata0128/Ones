@@ -225,6 +225,7 @@
     <ClCompile Include="Source\GameObject\UIObject\02_BossHPBar\BossHPBar.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\03_PortalGauge\PortalGauge.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\04_LimitTime\LimitTime.cpp" />
+    <ClCompile Include="Source\GameObject\UIObject\05_TestFont\TestFont.cpp" />
     <ClCompile Include="Source\Main\Main.cpp" />
     <ClCompile Include="Source\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\01_FirstRound\FirstRound.cpp" />
@@ -317,6 +318,7 @@
     <ClInclude Include="Source\GameObject\UIObject\02_BossHPBar\BossHPBar.h" />
     <ClInclude Include="Source\GameObject\UIObject\03_PortalGauge\PortalGauge.h" />
     <ClInclude Include="Source\GameObject\UIObject\04_LimitTime\LimitTime.h" />
+    <ClInclude Include="Source\GameObject\UIObject\05_TestFont\TestFont.h" />
     <ClInclude Include="Source\Main\Main.h" />
     <ClInclude Include="Source\SceneManager\SceneManager.h" />
     <ClInclude Include="Source\Scene\01_FirstRound\FirstRound.h" />
