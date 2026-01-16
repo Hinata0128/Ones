@@ -54,7 +54,6 @@ Player::~Player()
 
 void Player::Update()
 {
-
     if (IsDead())
     {
         // アニメーションだけは更新しておかないと、死ぬ瞬間の動きが止まる場合があります
