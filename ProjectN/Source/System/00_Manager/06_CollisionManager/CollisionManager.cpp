@@ -89,6 +89,54 @@ void CollisionManager::AllCollider()
 
     //プレイヤーの位置を同期
     m_pPlayer->GetBoundingSphere().SetPosition(m_pPlayer->GetHitCenter());
+    D3DXVECTOR3 pPos = m_pPlayer->GetHitCenter();
+    float pRadius = m_pPlayer->GetBoundingSphere().GetRadius();
+
+    // 敵（ボス）のリストをループ
+    for (auto enemy : m_vEnemies)
+    {
+        if (!enemy) continue;
+
+        // 2. ボスの現在の衝突判定用中心座標を取得
+        D3DXVECTOR3 ePos = enemy->GetHitCenter();
+        float eRadius = enemy->GetBoundingSphere().GetRadius();
+
+        // 3. ２点間のベクトルと距離を計算
+        D3DXVECTOR3 diff = pPos - ePos;
+        float distance = D3DXVec3Length(&diff);
+        float sumRadius = pRadius + eRadius;
+
+        // 4. 球体同士の衝突判定
+        if (distance < sumRadius)
+        {
+            // --- 押し戻しロジック (Hit関数は使わない) ---
+
+            // 重なっている距離（めり込み量）を算出
+            float overlap = sumRadius - distance;
+
+            // ゼロ除算を避けるための安全策
+            if (distance < 0.0001f) {
+                diff = D3DXVECTOR3(0, 0, 1); // 完全に重なっている場合はZ方向に逃がす
+            }
+            else {
+                D3DXVec3Normalize(&diff, &diff); // 押し戻す方向を正規化
+            }
+
+            // 5. プレイヤーを「めり込んだ分だけ」外側に移動させる
+            // プレイヤーの座標を直接書き換えることで物理的な壁を作る
+            D3DXVECTOR3 moveVec = diff * overlap;
+
+            // 地面（Y軸）のめり込みを計算に入れない場合は 0 にする
+            moveVec.y = 0.0f;
+
+            m_pPlayer->AddPosition(moveVec);
+
+            // 座標を動かしたので、プレイヤーの球体の位置も即座に更新する
+            m_pPlayer->GetBoundingSphere().SetPosition(m_pPlayer->GetHitCenter());
+
+            // ※必要であればここに「ボスに当たった」というフラグ処理だけ書くことも可能
+        }
+    }
 
     for (auto enemy : m_vEnemies)
     {
