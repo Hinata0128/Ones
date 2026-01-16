@@ -91,9 +91,20 @@ void PlayerMove::Draw()
 void PlayerMove::Init()
 {
     PlayerContext ctx(m_pOwner);
-    step = enStep::none;
-    ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
+
+    // 全ての攻撃状態を強制的に none にする
+    step = enStep::none;      // 遠距離リセット
+    LStep = enLeftStep::none; // 近距離リセット
+
+    IsRAttacking = false;
+    IsLAttacking = false;
+
+    ctx.AnimTime = 0.0f;
     m_IsShot = false;
+
+    // 攻撃タイプもリセット
+    m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+
     PlayerState::Init();
 }
 
@@ -102,6 +113,17 @@ void PlayerMove::Init()
 void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 {
     float deltaTime = Timer::GetInstance().DeltaTime();
+
+    if (ctx.AnimNo == 7)
+    {
+        if (step != enStep::none)
+        {
+            step = enStep::none;
+            IsRAttacking = false;
+            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
+        }
+        return;
+    }
 
     // 右クリック押されたら初期ステップへ
     if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
