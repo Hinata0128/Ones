@@ -197,6 +197,11 @@ void Portal::Init()
 	{
 		player->SetFrozen(false);
 	}
+
+	if (auto enemy = m_pEnemy.lock())
+	{
+		enemy->SetFrozen(false);
+	}
 }
 
 void Portal::ForceFinishByTimeUp()
@@ -358,6 +363,11 @@ void Portal::PlayerToPortal()
 			player->SetFrozen(true);
 		}
 
+		if (auto enemy = m_pEnemy.lock())
+		{
+			enemy->SetFrozen(true);
+		}
+
 		// スコアを加算（SceneManager内の即時LoadSceneは消しておくこと）
 		SceneManager::GetInstance()->AddPlayerScore();
 	}
@@ -383,6 +393,11 @@ void Portal::EnemyToPortal()
 		if (auto player = m_pPlayer.lock())
 		{
 			player->SetFrozen(true);
+		}
+
+		if (auto enemy = m_pEnemy.lock())
+		{
+			enemy->SetFrozen(true);
 		}
 
 		// スコアを加算

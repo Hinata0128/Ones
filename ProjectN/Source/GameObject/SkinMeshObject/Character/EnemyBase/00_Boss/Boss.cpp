@@ -24,6 +24,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_CurrentRound    (1) //開始はラウンド1からのため.
 
     , m_IsVisible   (true)
+
+    , m_IsFrozen    (false)
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -90,6 +92,12 @@ void Boss::Update()
 {
     float deltaTime = Timer::GetInstance().DeltaTime();
 
+    if (m_IsFrozen)
+    {
+        Character::Update();
+        return;
+    }
+
     m_pENShotManager->Update();
 
     // クールタイム
@@ -100,15 +108,7 @@ void Boss::Update()
         m_ShotCoolDown = 0.0f;
     }
 
-    m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
-
-    //if (m_pCurrentState)
-    //{
-    //    m_pCurrentState->Update();
-    //}
-
-    //AIの処理を呼んでいる.
-    //ToDo : UI作成中のためコメント化している.
+    //m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
     
     if (!IsDaed())
     {

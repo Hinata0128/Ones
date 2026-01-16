@@ -58,18 +58,18 @@ void Player::Update()
 {
     if (IsDead())
     {
-        // アニメーションだけは更新しておかないと、死ぬ瞬間の動きが止まる場合があります
-        if (m_pAnimCtrl) m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
+        if (m_pAnimCtrl) 
+        { 
+            m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr); 
+        }
 
-        // 基底クラスの更新（座標更新などが必要な場合）
         Character::Update();
-        return; // ★ここで終了！これ以降の攻撃や移動、影の更新は行われない
+        return; 
     }
 
     if (m_IsFrozen)
     {
         // 見た目だけ動かす
-        if (m_pAnimCtrl) m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
         Character::Update();
         return;
     }
