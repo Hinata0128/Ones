@@ -40,6 +40,10 @@ public:
 	void ForceFinishByTimeUp();
 
 	void RestrictEntry();
+
+	//ポータルの指定範囲に入った時に攻撃の遠距離消滅.
+	//弾が消滅する距離.
+	float GetBulletKillRadius() const { return 4.5f; }
 public:
 	//===============================================================================
 	// ポータルを触るときにPlayerとEnemyNomalの位置が必要なので

@@ -1,6 +1,8 @@
 #include "PShotManager.h"
 #include "GameObject/SkinMeshObject/Character/Player/Player.h"
 
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+
 PShotManager::PShotManager()
 {
 }
@@ -102,4 +104,24 @@ std::vector<PShot*> PShotManager::GetShots()
 		}
 	}
 	return rawPointers; // ílÇ∆ÇµÇƒï‘Ç∑
+}
+
+void PShotManager::ChackPortalKill(const Portal& portal)
+{
+	const float killRadius = portal.GetBulletKillRadius();
+	const D3DXVECTOR3 portalPos = portal.GetPosition();
+
+	for (auto& shot : m_PlayerShot)
+	{
+		if (!shot) continue;
+		if (!shot->IsActive()) continue;
+
+		D3DXVECTOR3 diff = shot->GetPosition() - portalPos;
+		float dist = D3DXVec3Length(&diff);
+
+		if (dist < killRadius)
+		{
+			shot->SetActive(false); // Åö è¡ñ≈ó\ñÒ
+		}
+	}
 }
