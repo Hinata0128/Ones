@@ -10,6 +10,8 @@
 
 #include "SceneManager/SceneManager.h"
 
+#include "System/00_Manager/02_PShotManager/PShotManager.h"
+
 Portal::Portal()
 	: StaticMeshObject()
 	, m_PortalIncreaseF(0.0f)
@@ -157,6 +159,8 @@ void Portal::Update()
 	}
 
 	//DEBUG ImGui
+
+	PShotManager::GetInstance()->ChackPortalKill(*this);
 
 	StaticMeshObject::Update();
 }

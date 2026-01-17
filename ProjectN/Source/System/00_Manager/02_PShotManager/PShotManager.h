@@ -3,6 +3,7 @@
 #include <vector>
 
 class Player;
+class Portal;
 
 /**********************************************
 *プレイヤー弾マネージャークラス.
@@ -30,6 +31,8 @@ public:
 	size_t GetPlayerShotCount()const;	//弾の総数を取得.
 
 	std::vector<PShot*> GetShots();
+
+	void ChackPortalKill(const Portal& portal);
 private:
 	PShotManager();
 	PShotManager(const PShotManager& rhs) = delete;
