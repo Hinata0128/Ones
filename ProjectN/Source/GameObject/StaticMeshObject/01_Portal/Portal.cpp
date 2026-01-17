@@ -11,6 +11,7 @@
 #include "SceneManager/SceneManager.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
+#include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 
 Portal::Portal()
 	: StaticMeshObject()
@@ -161,6 +162,7 @@ void Portal::Update()
 	//DEBUG ImGui
 
 	PShotManager::GetInstance()->ChackPortalKill(*this);
+	BossShotManager::GetInstance()->ChackPortalKill(*this);
 
 	StaticMeshObject::Update();
 }
@@ -237,7 +239,7 @@ void Portal::ForceFinishByTimeUp()
 void Portal::RestrictEntry()
 {
 	// 進入を禁止する距離（中心から1.0f）
-	const float LIMIT_DISTANCE = 3.0f;
+	const float LIMIT_DISTANCE = 4.0f;
 
 	// --- プレイヤーの押し戻し ---
 	if (auto player = m_pPlayer.lock())
