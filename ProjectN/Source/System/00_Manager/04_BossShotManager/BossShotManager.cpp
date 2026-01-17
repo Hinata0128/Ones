@@ -1,5 +1,7 @@
 #include "BossShotManager.h"
 
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+
 BossShotManager* BossShotManager::m_pInstance = nullptr;
 
 BossShotManager::BossShotManager()
@@ -103,4 +105,25 @@ std::vector<BossShot*> BossShotManager::GetShots()
 		}
 	}
 	return rawPointers; // ílÇ∆ÇµÇƒï‘Ç∑
+}
+
+void BossShotManager::ChackPortalKill(const Portal& portal)
+{
+	const float killRadius = portal.GetBulletKillRadius();
+	const D3DXVECTOR3 portalPos = portal.GetPosition();
+
+	for (auto& shot : m_pBossShot)
+	{
+		if (!shot) continue;
+		if (!shot->IsActive()) continue;
+
+		D3DXVECTOR3 diff = shot->GetPosition() - portalPos;
+		float dist = D3DXVec3Length(&diff);
+
+		if (dist < killRadius)
+		{
+			shot->SetActive(false); // Åö è¡ñ≈ó\ñÒ
+		}
+	}
+
 }

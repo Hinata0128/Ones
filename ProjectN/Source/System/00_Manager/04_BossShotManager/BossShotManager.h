@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject/StaticMeshObject/02_ShotBase/BossShot/BossShot.h"
 
+class Portal;
+
 /*****************************************************************
 *	敵の通常攻撃マネージャークラス.
 **/
@@ -27,6 +29,8 @@ public:
 	size_t GetEnemyNomalShotCount() const;	//敵の弾数取得.
 
 	std::vector<BossShot*> GetShots();
+
+	void ChackPortalKill(const Portal& portal);
 private:
 	BossShotManager();
 
