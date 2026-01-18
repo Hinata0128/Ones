@@ -25,10 +25,10 @@ const TCHAR APP_NAME[] = _T("Ones");
 //=================================================
 Main::Main()
 //初期化リスト.
-	: m_hWnd			(nullptr)
+	: m_hWnd			( nullptr )
 
-	, m_LastEscTime		(0.0f)
-	, m_IsPause			(false)
+	, m_LastEscTime		( 0.0f )
+	, m_IsPause			( false )
 {
 	AllocConsole(); //コマンドプロンプト表示.
 }

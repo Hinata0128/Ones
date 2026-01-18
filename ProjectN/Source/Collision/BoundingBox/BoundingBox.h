@@ -1,11 +1,11 @@
 #pragma once
 
 #include "StaticMash/StaticMesh.h"
-#include <d3dx9.h>       // D3DXVECTOR3 の定義が必要
-#include <cfloat>        // FLT_MAX, -FLT_MAX のために必要
+#include <cfloat>        //ToDo : FLT_MAX,-FLT_MAXの使用のため書いている
 
 /**************************************************
 *	バウンディングボックス.
+*  ToDo : 球とボックス、ボックスとボックスの当たり判定用.
 **/
 
 class BoundingBox
@@ -33,13 +33,13 @@ public:
 	//現在のAABBの最大座標を設定する.
 	void SetMaxPosition(const D3DXVECTOR3& MaxPos) { m_MaxPosition = MaxPos; }
 
-	// BoundingBoxの中心座標を取得
+	//BoundingBoxの中心座標を取得.
 	D3DXVECTOR3 GetCenter() const;
 
-	// BoundingBoxのサイズ（幅、高さ、奥行き）を取得するメソッド
+	//BoundingBoxのサイズ（幅、高さ、奥行き）を取得する.
 	D3DXVECTOR3 GetSize() const;
 
-	// オリジナルのローカルAABBの最小・最大座標を保存/取得する
+	//オリジナルのローカルAABBの最小・最大座標を保存/取得する.
 	void SetOriginalLocalMinMax(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos);
 	D3DXVECTOR3 GetOriginalLocalMin() const { return m_OriginalLocalMin; }
 	D3DXVECTOR3 GetOriginalLocalMax() const { return m_OriginalLocalMax; }
@@ -50,12 +50,12 @@ public:
 	const D3DXVECTOR3& GetMax() const { return m_MaxPosition; }
 
 private:
-	D3DXVECTOR3 m_MinPosition;	// ワールド空間、または変換後のAABBの最小座標.
-	D3DXVECTOR3 m_MaxPosition;	// ワールド空間、または変換後のAABBの最大座標.
-	D3DXVECTOR3 m_OriginalLocalMin; // CreateBoxForMeshで計算されたローカルAABBの最小座標.
-	D3DXVECTOR3 m_OriginalLocalMax; // CreateBoxForMeshで計算されたローカルAABBの最大座標.
+	D3DXVECTOR3		m_MinPosition;	// ワールド空間、または変換後のAABBの最小座標.
+	D3DXVECTOR3		m_MaxPosition;	// ワールド空間、または変換後のAABBの最大座標.
+	D3DXVECTOR3		m_OriginalLocalMin; // CreateBoxForMeshで計算されたローカルAABBの最小座標.
+	D3DXVECTOR3		m_OriginalLocalMax; // CreateBoxForMeshで計算されたローカルAABBの最大座標.
 
-	StaticMesh* m_pMesh;
+	StaticMesh*		m_pMesh;
 	D3DXVECTOR3		m_Position;	//中心座標.
 	float			m_Radius;	//半径(長さ).
 
