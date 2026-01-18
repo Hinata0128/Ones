@@ -96,7 +96,7 @@ public:
 	void SetScale(const D3DXVECTOR3& vScale) { m_Scale = vScale; }
 
 	//a値を設定
-	void Setalpha(float alpha) { m_Alpha = alpha; }
+	void SetAlpha(float alpha) { m_Alpha = alpha; }
 
 	// パターン番号(マス目)を設定
 	void SetPatternNo(SHORT x, SHORT y)

@@ -5,40 +5,57 @@ class UIObject;
 class Sprite2D;
 
 /*********************************************
-*	タイトル画像クラス.
-**/
-
-class Title
-	: public SceneBase
+*   タイトルシーンクラス
+*********************************************/
+class Title : public SceneBase
 {
 public:
-	//開始するか終わらせるかの選択.
-	enum class SelectMenu : byte
-	{
-		Start,
-		End
-	};
+    enum class SelectMenu : byte
+    {
+        Start,
+        End
+    };
+
+    enum class TitleState : byte
+    {
+        Select,
+        FadeOut,
+        End
+    };
+
 public:
-	Title();
-	~Title() override;
+    Title();
+    ~Title() override;
 
-	void Initialize() override;
-	void Create() override;
-	void Update() override;
-	void Draw() override;
-
-	void Decide();
+    void Initialize() override;
+    void Create() override;
+    void Update() override;
+    void Draw() override;
 
 private:
+    void UpdateSelect();
+    void UpdateFadeOut();
 
-	SelectMenu m_Select;
+private:
+    SelectMenu m_Select;
+    TitleState m_State;
 
-	std::shared_ptr<Sprite2D> m_pSpriteTitle;
-	std::shared_ptr<UIObject> m_upTitle;
+    D3DXVECTOR3 m_StartPos;
+    D3DXVECTOR3 m_EndPos;
 
-	std::shared_ptr<Sprite2D> m_pSpriteStart;
-	std::shared_ptr<UIObject> m_upStart;
+    float m_InputTimer;
+    float m_FadeAlpha;
+    float m_FadeSpeed;
 
-	std::shared_ptr<Sprite2D> m_pSpriteEnd;
-	std::shared_ptr<UIObject> m_upEnd;
+    std::shared_ptr<Sprite2D> m_pSpriteTitle;
+    std::shared_ptr<UIObject> m_upTitle;
+
+    std::shared_ptr<Sprite2D> m_pSpriteStart;
+    std::shared_ptr<UIObject> m_upStart;
+
+    std::shared_ptr<Sprite2D> m_pSpriteEnd;
+    std::shared_ptr<UIObject> m_upEnd;
+
+    std::shared_ptr<Sprite2D> m_pSpriteFade;
+    std::shared_ptr<UIObject> m_upFade;
 };
