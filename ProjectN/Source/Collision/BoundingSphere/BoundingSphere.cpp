@@ -84,16 +84,18 @@ void BoundingSphere::Update()
 void BoundingSphere::Draw()
 {
 	if (!m_pMesh)
-		return; //コメント.メッシュが無い場合はリターン.
+	{
+		return;
+	}
 
-	//コメント.Rendererから描画パラメータ取得.
+	//Rendererから描画パラメータ取得.
 	auto& renderer = Renderer::GetInstance();
 
-	//コメント.座標とスケールを設定.
+	//座標とスケールを設定.
 	m_pMesh->SetPosition(m_Position);
 	m_pMesh->SetScale(D3DXVECTOR3(m_Radius, m_Radius, m_Radius));
 
-	//コメント.レンダリング実行.
+	//レンダリング実行.
 	m_pMesh->Render(
 		renderer.GetView(),
 		renderer.GetProj(),

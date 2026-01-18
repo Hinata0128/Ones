@@ -50,10 +50,10 @@ public:
 	const D3DXVECTOR3& GetMax() const { return m_MaxPosition; }
 
 private:
-	D3DXVECTOR3		m_MinPosition;	// ワールド空間、または変換後のAABBの最小座標.
-	D3DXVECTOR3		m_MaxPosition;	// ワールド空間、または変換後のAABBの最大座標.
-	D3DXVECTOR3		m_OriginalLocalMin; // CreateBoxForMeshで計算されたローカルAABBの最小座標.
-	D3DXVECTOR3		m_OriginalLocalMax; // CreateBoxForMeshで計算されたローカルAABBの最大座標.
+	D3DXVECTOR3		m_MinPosition;	//AABBの最小座標.
+	D3DXVECTOR3		m_MaxPosition;	//AABBの最大座標.
+	D3DXVECTOR3		m_OriginalLocalMin; //ローカルAABBの最小座標.
+	D3DXVECTOR3		m_OriginalLocalMax; //ローカルAABBの最大座標.
 
 	StaticMesh*		m_pMesh;
 	D3DXVECTOR3		m_Position;	//中心座標.
