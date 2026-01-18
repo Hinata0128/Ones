@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "Scene/SceneBase.h"
-#include "GameObject/SpriteObject/SpriteObject.h"
-#include "SceneManager/SceneManager.h"
+
+class UIObject;
+class Sprite2D;
 
 /*********************************************
 *	タイトル画像クラス.
@@ -19,5 +20,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-private: 	
+private:
+	std::shared_ptr<Sprite2D> m_pSpriteTitle;
+	std::shared_ptr<UIObject> m_upTitle;
 };
