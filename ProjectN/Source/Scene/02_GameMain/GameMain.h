@@ -34,6 +34,7 @@
 
 #include "GameObject/UIObject/05_TestFont/TestFont.h"
 
+#include "GameObject/StaticMeshObject/04_PortalFrame/PortalFrame.h"
 
 class Timer;
 
@@ -100,6 +101,8 @@ private:
 	std::unique_ptr<LimitTime> m_pLimitTime;
 
 	std::unique_ptr<TestFont> m_Font;
+
+	std::unique_ptr<PortalFrame> m_PortalFrame;
 
 	//プレイヤーとボスのリスポーン時間の設定.
 	float m_PlayerRespawnTimer;
