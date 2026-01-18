@@ -22,11 +22,11 @@ void Ending::Create()
 
 void Ending::Update()
 {
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	if (GetAsyncKeyState(VK_RETURN) & 0x0001)
 	{
 		m_pPortal->Init();
 		//EnterƒL[‚ÅMain‚Ö‚Ì‘JˆÚ.
-		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
+		SceneManager::GetInstance()->LoadScene(SceneManager::OP);
 	}
 }
 
