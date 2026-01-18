@@ -58,4 +58,11 @@ private:
 
     std::shared_ptr<Sprite2D> m_pSpriteFade;
     std::shared_ptr<UIObject> m_upFade;
+
+    std::shared_ptr<Sprite2D> m_pSpriteSelectBack;
+    std::shared_ptr<UIObject> m_upSelectBack;
+
+    std::shared_ptr<Sprite2D> m_pSpriteSelectFrame;
+    std::shared_ptr<UIObject> m_upSelectFrame;
+
 };
