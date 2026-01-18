@@ -23,7 +23,7 @@ SceneManager::~SceneManager()
 HRESULT SceneManager::Create(HWND hWnd)
 {
 	m_hWnd = hWnd;
-	LoadScene(List::Main);
+	LoadScene(List::OP);
 	return S_OK;
 }
 
@@ -46,6 +46,44 @@ void SceneManager::Update()
 		ImGui::Text("Portal Progress : %d %%", m_pPortal->GetPortalPercent());
 	}
 
+	ImGui::End();
+#endif
+
+#ifdef _DEBUG
+	ImGui::Begin("Scene Debug");
+
+	ImGui::Text("Current Scene Control");
+	ImGui::Separator();
+
+	if (ImGui::Button("Title"))
+	{
+		LoadScene(SceneManager::OP);
+	}
+
+	if (ImGui::Button("Game Main"))
+	{
+		LoadScene(SceneManager::Main);
+	}
+
+	if (ImGui::Button("First Round"))
+	{
+		LoadScene(SceneManager::First);
+	}
+
+	if (ImGui::Button("Win"))
+	{
+		LoadScene(SceneManager::Win);
+	}
+
+	if (ImGui::Button("Lose"))
+	{
+		LoadScene(SceneManager::Lose);
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::Button("Player +1")) m_PlayerPoint++;
+	if (ImGui::Button("Enemy +1"))  m_EnemyNomalPoint++;
 	ImGui::End();
 #endif
 	if (m_IsPause)
