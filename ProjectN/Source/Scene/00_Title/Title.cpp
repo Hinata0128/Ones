@@ -9,8 +9,8 @@
 Title::Title()
     : m_Select(SelectMenu::Start)
     , m_State(TitleState::Select)
-    , m_StartPos(20.f, 0.f, 0.f)
-    , m_EndPos(0.f, 50.f, 0.f)
+    , m_StartPos ( 550.f, 550.f, 0.f )
+    , m_EndPos ( 550.f, 650.f, 0.f )
     , m_InputTimer(0.0f)
     , m_FadeAlpha(0.0f)
     , m_FadeSpeed(1.5f)
@@ -26,6 +26,13 @@ Title::Title()
 
     m_pSpriteFade = std::make_shared<Sprite2D>();
     m_upFade = std::make_shared<UIObject>();
+
+    m_pSpriteSelectBack = std::make_shared<Sprite2D>();
+    m_upSelectBack = std::make_shared<UIObject>();
+
+    m_pSpriteSelectFrame = std::make_shared<Sprite2D>();
+    m_upSelectFrame = std::make_shared<UIObject>();
+
 }
 
 Title::~Title()
@@ -65,6 +72,16 @@ void Title::Create()
     // š’Ç‰Á: ƒtƒF[ƒh—pƒpƒlƒ‹‚à‰æ–Ê‘S‘Ì‚ð•¢‚¤ˆÊ’u‚É”z’u
     m_upFade->SetPosition({ 0.0f, 0.0f, 0.0f });
     m_upFade->SetAlpha(0.0f);
+
+    Sprite2D::SPRITE_STATE ssBack{ 320,80,320,80,320,80 };
+    m_pSpriteSelectBack->Init(_T("Data\\Image\\Setting\\SelectBack.png"), ssBack);
+    m_upSelectBack->AttachSprite(m_pSpriteSelectBack);
+    m_upSelectBack->SetPosition(m_StartPos);
+
+    m_pSpriteSelectFrame->Init(_T("Data\\Image\\Setting\\SelectFrame.png"), ssBack);
+    m_upSelectFrame->AttachSprite(m_pSpriteSelectFrame);
+    m_upSelectFrame->SetPosition(m_StartPos);
+
 }
 
 void Title::Update()
@@ -94,6 +111,21 @@ void Title::Draw()
 
     // 1. ”wŒi‚ð•`‰æ
     m_upTitle->Draw();
+
+    // --- ‘I‘ð‰‰o‚Ì•`‰æ ---
+    D3DXVECTOR3 currentSelectPos = (m_Select == SelectMenu::Start) ? m_StartPos : m_EndPos;
+
+    D3DXVECTOR3 backPos = currentSelectPos;
+    backPos.x -= 100.0f; // ”wŒi‚ð¶‚É‚¸‚ç‚µ‚ÄA•¶Žš‚ð”wŒi‚Ì’†‰›‚É‡‚í‚¹‚é
+    backPos.y -= 15.0f; // ”wŒi‚ð­‚µã‚É‚¸‚ç‚µ‚Äã‰º‚Ì’†‰›‚ð‡‚í‚¹‚é
+
+    // Â‚¢”wŒi
+    m_upSelectBack->SetPosition(backPos);
+    m_upSelectBack->Draw();
+
+    // ‘I‘ð˜giƒtƒŒ[ƒ€j‚à“¯‚¶ˆÊ’u‚É
+    m_upSelectFrame->SetPosition(backPos);
+    m_upSelectFrame->Draw();
 
     // 2. ƒ{ƒ^ƒ“‚ÌÀ•WXV‚Æ•`‰æ
     m_upStart->SetPosition(m_StartPos);
@@ -132,15 +164,14 @@ void Title::UpdateSelect()
 
     if (m_Select == SelectMenu::Start)
     {
-        m_StartPos = { 20.f, 0.f, 0.f };
-        m_EndPos = { 0.f, 50.f, 0.f };
+        m_StartPos = { 550.f, 550.f, 0.f };
+        m_EndPos = { 550.f, 650.f, 0.f };
     }
     else
     {
-        m_StartPos = { 0.f, 0.f, 0.f };
-        m_EndPos = { 20.f, 50.f, 0.f };
+        m_StartPos = { 550.f, 550.f, 0.f };
+        m_EndPos = { 550.f, 650.f, 0.f };
     }
-
     if (GetAsyncKeyState(VK_RETURN) & 0x0001)
     {
         if (m_Select == SelectMenu::Start)
