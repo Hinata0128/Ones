@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StaticMash/StaticMesh.h"
+#include "StaticMash//StaticMesh.h"
 
 /**********************************************************************************
 *	バウンディングスフィアクラス(当たり判定クラス).

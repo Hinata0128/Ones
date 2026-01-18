@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StaticMash/StaticMesh.h"
+#include "StaticMash//StaticMesh.h"
 #include <cfloat>        //ToDo : FLT_MAX,-FLT_MAX‚Ìg—p‚Ì‚½‚ß‘‚¢‚Ä‚¢‚é
 
 /**************************************************
