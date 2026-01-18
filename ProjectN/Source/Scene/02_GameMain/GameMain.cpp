@@ -39,6 +39,8 @@ GameMain::GameMain()
 	, m_pLimitTime(std::make_unique<LimitTime>())
 	, m_Font(std::make_unique<TestFont>())
 
+	, m_PortalFrame(std::make_unique<PortalFrame>())
+
 	, m_PlayerRespawnTimer(0.0f)
 	, m_BossRespawnTimer(0.0f)
 {
@@ -324,6 +326,7 @@ void GameMain::Draw()
 #endif
 	//Effectクラス
 	Effect::GetInstance()->Draw();
+	m_PortalFrame->Draw();
 	m_pHpBar->Draw();
 	m_pBossHpBar->Draw();
 
