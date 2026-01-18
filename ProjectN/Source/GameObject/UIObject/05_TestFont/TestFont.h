@@ -22,8 +22,6 @@ private:
 
 
 	std::shared_ptr<Sprite2D> m_FontSprite_0;
-	std::shared_ptr<Sprite2D> m_FontSprite_1;
 
 	std::shared_ptr<UIObject> m_FontUI_0;
-	std::shared_ptr<UIObject> m_FontUI_1;
 };
