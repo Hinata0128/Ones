@@ -8,21 +8,16 @@
 #include "Sound/SoundManager.h"
 
 #include "System/00_Manager/03_ImGuiManager/ImGuiManager.h"
-// ImGuiのメッセージハンドラのための外部宣言。通常はImguiManager.hに含まれます。
+//ImGuiメッセージハンドラ.
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 #include "System/02_Singleton/00_Timer/Timer.h"
-
-//ウィンドウを画面中央で起動を有効にする.
-//#define ENABLE_WINDOWS_CENTERING
 
 //=================================================
 //	定数.
 //=================================================
 const TCHAR WND_TITLE[] = _T("Ones");
 const TCHAR APP_NAME[] = _T("Ones");
-// 外部定義のFPS定数 (Loop関数で使用)
-// const int FPS = 60; 
 
 
 //=================================================
@@ -30,10 +25,12 @@ const TCHAR APP_NAME[] = _T("Ones");
 //=================================================
 Main::Main()
 //初期化リスト.
-	: m_hWnd(nullptr)
-	// m_SomeFloatValue, m_bFeatureEnabled は Main.h の初期化リストで設定されていることを想定
+	: m_hWnd			(nullptr)
+
+	, m_LastEscTime		(0.0f)
+	, m_IsPause			(false)
 {
-	AllocConsole(); // コマンドプロンプト表示
+	AllocConsole(); //コマンドプロンプト表示.
 }
 
 
@@ -69,7 +66,9 @@ HRESULT Main::Create()
 
 	// ImGui 初期化
 	if (FAILED(ImGuiManager::GetInstance()->Init(m_hWnd)))
+	{
 		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -102,7 +101,7 @@ void Main::Draw()
 
 	ImGuiManager::GetInstance()->Render();
 
-	// 画面に表示
+	//画面に表示.
 	pDx11->Present();
 }
 
@@ -154,7 +153,7 @@ void Main::Loop()
 	DWORD sync_now;
 
 	timeBeginPeriod(1);
-	// FPSは外部で定義されていると仮定
+	//FPS外部設定(Global).
 	Rate = 1000.0f / static_cast<float>(FPS);
 
 	MSG msg = { 0 };
@@ -209,8 +208,6 @@ HRESULT Main::InitWindow(
 		return E_FAIL;
 	}
 
-	// ... (ウィンドウ表示位置の調整ロジックは簡略化) ...
-
 	RECT	rect = { 0, 0, width, height };
 	DWORD	dwStyle = WS_OVERLAPPEDWINDOW;
 
@@ -223,9 +220,10 @@ HRESULT Main::InitWindow(
 	INT winWidth = rect.right - rect.left;
 	INT winHeight = rect.bottom - rect.top;
 
+	//左上に表示.
 	m_hWnd = CreateWindow(
 		APP_NAME, WND_TITLE, dwStyle,
-		0, 0, // 簡略化して左上に表示
+		0, 0,
 		winWidth, winHeight,
 		nullptr, nullptr, hInstance, nullptr);
 
@@ -262,8 +260,12 @@ LRESULT CALLBACK Main::MsgProc(
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+//Escを押した際の処理.
 void Main::IsExitGame()
 {
+	//ToDo : ゲーム終了を実行する.
+	//		 一回目はポーズ状態でImGuiを調整する.
+	//		 ダブルタップをした際に終了メッセージを表示させている.
 	static bool isPushed = false;
 
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
@@ -273,7 +275,7 @@ void Main::IsExitGame()
 			float currentTime = Timer::GetInstance().ElapsedTime();
 			float diff = currentTime - m_LastEscTime;
 
-			// ===== 2回押し：終了 =====
+			//ダブルタップ.
 			if (diff < 0.3f)
 			{
 				if (MessageBox(m_hWnd,
@@ -285,7 +287,7 @@ void Main::IsExitGame()
 				}
 				m_LastEscTime = 0.0f;
 			}
-			// ===== 1回押し：ポーズ =====
+			//ImGui調整.
 			else
 			{
 				m_LastEscTime = currentTime;
@@ -300,6 +302,7 @@ void Main::IsExitGame()
 				{
 					ClipCursor(nullptr); // マウス自由
 				}
+				//.マウスをゲーム内に表示させておく.
 				else
 				{
 					RECT rc;
@@ -312,7 +315,6 @@ void Main::IsExitGame()
 					ClipCursor(&rc); // ウィンドウ内固定
 				}
 			}
-
 			isPushed = true;
 		}
 	}

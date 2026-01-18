@@ -38,16 +38,15 @@ private:
 		HWND hWnd, UINT uMsg,
 		WPARAM wParam, LPARAM lParam );
 
+	//終了判定関数.
+	void IsExitGame();
+
 private:
 	HWND			m_hWnd;	//ウィンドウハンドル.
 
-	float m_SomeFloatValue = 0.0f;
-	bool m_bFeatureEnabled = false;
-
 	//前回Escを押した時間.
-	float m_LastEscTime = 0.0f;
-	//終了判定関数.
-	void IsExitGame();
-	bool m_IsPause = false;
+	float			m_LastEscTime;
+	//ImGui調整モードフラグ.
+	bool			m_IsPause;
 
 };
