@@ -36,7 +36,7 @@ void GameOver::Update()
 {
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
+		SceneManager::GetInstance()->LoadScene(SceneManager::OP);
 	}
 }
 
