@@ -31,8 +31,13 @@ public:
 		m_PatternNo.y = y;
 	}
 
+	void SetAlpha(float alpha);
+	float GetAlpha() const { return m_Alpha; }
+
 protected:
 	std::shared_ptr<Sprite2D> m_pSprite;
 
 	POINTS		m_PatternNo;	// パターン番号(マス目)
+
+	float  m_Alpha;
 };
