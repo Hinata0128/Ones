@@ -8,13 +8,36 @@
 
 
 Ending::Ending()
-	: SceneBase			()
+	: SceneBase				()
 
-	, m_pSpriteBack		( std::make_shared<Sprite2D>() )
-	, m_upBack			( std::make_shared<UIObject>() )
+	, m_Select				( SelectMenu::Continue )
+	, m_State				( WinState::Select )
 
-	, m_pSpriteVictory	( std::make_shared<Sprite2D>() )
-	, m_upVictory		( std::make_shared<UIObject>() )
+	, m_ContinuePos			( 880.0f, 520.0f, 0.0f )
+	, m_EndPos				( 880.0f, 620.0f, 0.0f )
+	, m_EndSelectPos		( 920.0f, 620.0f, 0.0f )
+
+	, m_pSpriteBack			( std::make_shared<Sprite2D>() )
+	, m_upBack				( std::make_shared<UIObject>() )
+
+	, m_pSpriteVictory		( std::make_shared<Sprite2D>() )
+	, m_upVictory			( std::make_shared<UIObject>() )
+
+	, m_pSpriteEnd			( std::make_shared<Sprite2D>() )
+	, m_upEnd				( std::make_shared<UIObject>() )
+
+	, m_pSpriteContinue		( std::make_shared<Sprite2D>() )
+	, m_upContinue			( std::make_shared<UIObject>() )
+
+	, m_pSpriteFade			( std::make_shared<Sprite2D>() )
+	, m_upFade				( std::make_shared<UIObject>() )
+
+	, m_pSpriteSelectBack	( std::make_shared<Sprite2D>() )
+	, m_upSelectBack		( std::make_shared<UIObject>() )
+
+	, m_pSpriteSelectFrame	( std::make_shared<Sprite2D>() )
+	, m_upSelectFrame		( std::make_shared<UIObject>() )
+
 {
 }
 
