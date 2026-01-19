@@ -1,4 +1,5 @@
 ﻿#include "Player.h"
+
 #include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
@@ -7,15 +8,14 @@
 
 #include "System/00_Manager/03_ImGuiManager/ImGuiManager.h"
 
-//---------------------------------------------
-// PlayerStateのインクルード.
-//---------------------------------------------
 #include "..//01_Player/PlayerState/PlayerState.h"
 #include "GameObject//00_SkinMeshObject//Character//01_Player//PlayerState//00_PlayerIdol//PlayerIdol.h"
 #include "GameObject//00_SkinMeshObject//Character//01_Player//PlayerContext//PlayerContext.h"
 #include "..//01_Player/PlayerState/03_PlayerDead/PlayerDead.h"
 
 #include "..//01_Player/PlayerState/02_PlayerPortalAnim/PlayerPortalAnim.h"
+#include "GameObject/01_SpriteObject/00_Shadow/Shadow.h"
+
 
 
 Player::Player()
@@ -282,19 +282,8 @@ void Player::ChangeAttackType(PlayerAttackManager::enAttack type)
 {
     if (m_pAttackManager)
     {
-        // 実際のステート切り替え処理はAttackManagerに任せる
         m_pAttackManager->ChangeAttackState(type);
     }
-}
-
-void Player::CleanUpAttackState(PlayerAttackManager::enAttack type)
-{
-    if (m_pAttackManager)
-    {
-        // 実際のステート切り替え処理はAttackManagerに任せる
-        m_pAttackManager->CleanUpState(type);
-    }
-
 }
 
 bool Player::GetBonePosition(const char* boneName, D3DXVECTOR3* outPos) const
