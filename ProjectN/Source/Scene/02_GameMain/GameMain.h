@@ -7,7 +7,7 @@
 #include "SceneManager//SceneManager.h"
 
 #include "GameObject//StaticMeshObject//00_Ground//Ground.h"
-#include "GameObject//SkinMeshObject//Character//Player//Player.h"
+#include "GameObject//SkinMeshObject//Character//01_Player//Player.h"
 
 #include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
