@@ -6,6 +6,8 @@
 
 #include "DirectX//DirectX11.h"
 
+#include "System//02_Singleton//00_Timer//Timer.h"
+
 GameOver::GameOver()
 	: SceneBase				()
 

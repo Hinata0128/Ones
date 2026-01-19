@@ -5,6 +5,7 @@ class SceneManager;
 class UIObject;
 class Sprite2D;
 class DirectX11;
+class Timer;
 
 /*********************************************
 *	ゲームオーバー画像クラス.
