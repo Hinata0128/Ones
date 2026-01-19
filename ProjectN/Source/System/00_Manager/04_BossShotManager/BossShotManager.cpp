@@ -35,12 +35,13 @@ void BossShotManager::Update()
 	}
 }
 
-void BossShotManager::Draw()
+void BossShotManager::Draw(const D3DXMATRIX& view, const D3DXMATRIX& proj)
 {
 	for (std::unique_ptr<BossShot>& ENomalShot : m_pBossShot)
 	{
+		ENomalShot->SetMatrices(view, proj);
 		ENomalShot->Draw();	//’e‚Ì•`‰æˆ—.
-		ENomalShot->GetBoundingSphere().Draw();
+		//ENomalShot->GetBoundingSphere().Draw();
 
 	}
 }

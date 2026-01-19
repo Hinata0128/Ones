@@ -14,7 +14,7 @@ public:
 	static BossShotManager* GetInstance();
 
 	void Update();	//’e‚ÌXVˆ—.
-	void Draw();	//’e‚Ì•`‰æˆ—.
+	void Draw(const D3DXMATRIX& view, const D3DXMATRIX& proj);	//’e‚Ì•`‰æˆ—.
 
 	void Init();
 
