@@ -37,8 +37,20 @@ public:
 	void Draw() override;
 
 private:
+	void UpdateSelect();
+	void UpdateFadeOut();
+
+private:
 	SelectMenu	m_Select;
 	LoseState	m_State;
+
+	//コンティニューの位置.
+	D3DXVECTOR3 m_ContinuePos;
+	//ずらす用のEndの位置
+	D3DXVECTOR3 m_EndPos;
+	//End画像の表示位置
+	//ToDo : コンティニューと違和感のない配置にする.
+	D3DXVECTOR3 m_EndSelectPos;
 
 //ToDo : スマートポインタをまとめている.
 #pragma region smartpointer
@@ -54,10 +66,15 @@ private:
 	//タイトルへ戻る用のEnd画像.
 	std::shared_ptr<Sprite2D> m_pSpriteEnd;
 	std::shared_ptr<UIObject> m_upEnd;
+	//コンティニューを選んだときに流すフェード画像.
+	std::shared_ptr<Sprite2D> m_pSpriteFade;
+	std::shared_ptr<UIObject> m_upFade;
 	//選択肢.
 	std::shared_ptr<Sprite2D> m_pSpriteSelectBack;
 	std::shared_ptr<UIObject> m_upSelectBack;
-
+	//選択肢の枠.
+	std::shared_ptr<Sprite2D> m_pSpriteSelectFrame;
+	std::shared_ptr<UIObject> m_upSelectFrame;
 #pragma endregion
 
 };
