@@ -12,7 +12,7 @@
 constexpr float zero = 0.0f;
 
 Boss::Boss(std::shared_ptr<Portal> pPortal)
-    : EnemyBase()
+    : Character()
     , m_pENShotManager(nullptr)
     , m_pIdol(std::make_unique<BossIdol>(this))
     , m_pMove(std::make_unique<BossMove>(this))
@@ -85,7 +85,7 @@ void Boss::Init()
     }
 
 
-    EnemyBase::Init();
+    Character::Init();
 }
 
 void Boss::Update()
@@ -118,14 +118,14 @@ void Boss::Update()
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
-    EnemyBase::Update();
+    Character::Update();
 }
 
 void Boss::Draw()
 {
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
 
-    EnemyBase::Draw();
+    Character::Draw();
     m_pENShotManager->Draw();
     m_pCom->DrawDebugImGui();
 }

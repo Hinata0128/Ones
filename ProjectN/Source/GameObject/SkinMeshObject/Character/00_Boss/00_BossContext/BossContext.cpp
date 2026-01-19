@@ -1,6 +1,6 @@
 #include "BossContext.h"
 
-#include "GameObject//SkinMeshObject//Character//EnemyBase//00_Boss//Boss.h"
+#include "GameObject//SkinMeshObject//Character//00_Boss//Boss.h"
 #include "SkinMesh//SkinMesh.h"
 
 BossContext::BossContext(Boss* nomal)
