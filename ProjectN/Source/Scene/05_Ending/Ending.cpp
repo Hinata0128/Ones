@@ -22,8 +22,8 @@ Ending::Ending()
 	, m_pSpriteBack(std::make_shared<Sprite2D>())
 	, m_upBack(std::make_shared<UIObject>())
 
-	, m_pSpriteDefeat(std::make_shared<Sprite2D>())
-	, m_upDefeat(std::make_shared<UIObject>())
+	, m_pSpriteVictory(std::make_shared<Sprite2D>())
+	, m_upVictory(std::make_shared<UIObject>())
 
 	, m_pSpriteContinue(std::make_shared<Sprite2D>())
 	, m_upContinue(std::make_shared<UIObject>())
@@ -78,7 +78,7 @@ void Ending::Create()
 		WND_W, WMD_H, WND_W, WMD_H, WND_W, WMD_H
 	};
 	//”wŒi‰æ–Ê‚Ì“Ç‚Ýž‚Ý.
-	m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Surface.png"), SSBack);
+	m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Win.png"), SSBack);
 	//‰æ‘œ‚ÌÝ’è.
 	m_upBack->AttachSprite(m_pSpriteBack);
 	//•\Ž¦ˆÊ’u.
@@ -90,11 +90,11 @@ void Ending::Create()
 		Defeat_W, Defeat_H, Defeat_W, Defeat_H, Defeat_W, Defeat_H
 	};
 	//Lose‰æ‘œ‚Ì“Ç‚Ýž‚Ý.
-	m_pSpriteDefeat->Init(_T("Data\\Image\\Setting\\Defeat.png"), SSLose);
+	m_pSpriteVictory->Init(_T("Data\\Image\\Setting\\Victory.png"), SSLose);
 	//‰æ‘œ‚ÌÝ’è.
-	m_upDefeat->AttachSprite(m_pSpriteDefeat);
+	m_upVictory->AttachSprite(m_pSpriteVictory);
 	//•\Ž¦ˆÊ’u.
-	m_upDefeat->SetPosition(150.0f, 100.0f, 0.0f);
+	m_upVictory->SetPosition(150.0f, 100.0f, 0.0f);
 
 	//Continue\‘¢‘Ì.
 	Sprite2D::SPRITE_STATE SSContinue =
@@ -170,9 +170,7 @@ void Ending::Draw()
 	backPos.x -= 60.0f; // ”wŒi‚ð¶‚É‚¸‚ç‚µ‚ÄA•¶Žš‚ð”wŒi‚Ì’†‰›‚É‡‚í‚¹‚é
 	backPos.y -= 15.0f; // ”wŒi‚ð­‚µã‚É‚¸‚ç‚µ‚Äã‰º‚Ì’†‰›‚ð‡‚í‚¹‚é
 
-
-
-	m_upDefeat->Draw();
+	m_upVictory->Draw();
 
 	// Â‚¢”wŒi
 	m_upSelectBack->SetPosition(backPos);

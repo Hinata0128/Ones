@@ -54,13 +54,13 @@ private:
 	D3DXVECTOR3 m_EndSelectPos;
 
 	//ToDo : スマートポインタをまとめている.
-#pragma region smartpointer
+#pragma region SmartPointer
 	//背景画像.
 	std::shared_ptr<Sprite2D> m_pSpriteBack;
 	std::shared_ptr<UIObject> m_upBack;
 	//敗北画像.
-	std::shared_ptr<Sprite2D> m_pSpriteDefeat;
-	std::shared_ptr<UIObject> m_upDefeat;
+	std::shared_ptr<Sprite2D> m_pSpriteVictory;
+	std::shared_ptr<UIObject> m_upVictory;
 	//コンティニュー画像.
 	std::shared_ptr<Sprite2D> m_pSpriteContinue;
 	std::shared_ptr<UIObject> m_upContinue;
