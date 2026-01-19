@@ -3,7 +3,7 @@
 #include "..//UIObject.h"
 #include <memory>
 #include <vector>
-#include "GameObject/SkinMeshObject/Character/Player/Player.h"
+#include "GameObject/SkinMeshObject/Character/01_Player/Player.h"
 
 class Sprite2D;
 

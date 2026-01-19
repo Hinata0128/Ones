@@ -8,7 +8,7 @@
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
 #include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 #include "System/00_Manager/06_CollisionManager/CollisionManager.h" 
-#include "GameObject//SkinMeshObject//Character//Player//Player.h" 
+#include "GameObject//SkinMeshObject//Character//01_Player//Player.h" 
 
 #include "System/02_Singleton/01_Camera/Camera.h"
 

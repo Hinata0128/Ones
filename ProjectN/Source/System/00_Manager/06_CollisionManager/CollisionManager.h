@@ -7,7 +7,7 @@
 #include "System//00_Manager//ManagerBase.h"
 #include "System//00_Manager//04_BossShotManager//BossShotManager.h"
 #include "GameObject//StaticMeshObject//02_ShotBase//PShot//PShot.h"
-#include "GameObject//SkinMeshObject//Character//Player//Player.h"
+#include "GameObject//SkinMeshObject//Character//01_Player//Player.h"
 #include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
 /******************************************************************************

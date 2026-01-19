@@ -10,12 +10,12 @@
 //---------------------------------------------
 // PlayerStateのインクルード.
 //---------------------------------------------
-#include "..//Player/PlayerState/PlayerState.h"
-#include "GameObject//SkinMeshObject//Character//Player//PlayerState//00_PlayerIdol//PlayerIdol.h"
-#include "GameObject//SkinMeshObject//Character//Player//PlayerContext//PlayerContext.h"
-#include "..//Player/PlayerState/03_PlayerDead/PlayerDead.h"
+#include "..//01_Player/PlayerState/PlayerState.h"
+#include "GameObject//SkinMeshObject//Character//01_Player//PlayerState//00_PlayerIdol//PlayerIdol.h"
+#include "GameObject//SkinMeshObject//Character//01_Player//PlayerContext//PlayerContext.h"
+#include "..//01_Player/PlayerState/03_PlayerDead/PlayerDead.h"
 
-#include "..//Player/PlayerState/02_PlayerPortalAnim/PlayerPortalAnim.h"
+#include "..//01_Player/PlayerState/02_PlayerPortalAnim/PlayerPortalAnim.h"
 
 
 Player::Player()

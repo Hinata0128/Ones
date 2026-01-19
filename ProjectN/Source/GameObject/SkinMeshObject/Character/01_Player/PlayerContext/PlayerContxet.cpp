@@ -1,6 +1,6 @@
 #include "PlayerContext.h"
 
-#include "GameObject/SkinMeshObject/Character/Player/Player.h"
+#include "GameObject/SkinMeshObject/Character/01_Player/Player.h"
 #include "SkinMesh/SkinMesh.h"
 
 PlayerContext::PlayerContext(Player* player) 
