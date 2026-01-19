@@ -70,6 +70,16 @@ void SceneManager::Update()
 		LoadScene(SceneManager::First);
 	}
 
+	if (ImGui::Button("Second Round"))
+	{
+		LoadScene(SceneManager::Second);
+	}
+	
+	if (ImGui::Button("Final Round"))
+	{
+		LoadScene(SceneManager::Final);
+	}
+
 	if (ImGui::Button("Win"))
 	{
 		LoadScene(SceneManager::Win);
@@ -189,8 +199,14 @@ void SceneManager::MakeScene(List Scene)
 	case SceneManager::OP:
 		m_pScene = std::make_unique<Title>();
 		break;
-		case SceneManager::First:
+	case SceneManager::First:
 		m_pScene = std::make_unique<FirstRound>();
+		break;
+	case SceneManager::Second:
+		m_pScene = std::make_unique<SecondRound>();
+		break;
+	case SceneManager::Final:
+		m_pScene = std::make_unique<FinalRound>();
 		break;
 	case SceneManager::Main:
 		m_pScene = std::make_unique<GameMain>();

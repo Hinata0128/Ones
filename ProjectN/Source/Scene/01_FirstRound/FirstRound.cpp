@@ -1,19 +1,16 @@
 #include "FirstRound.h"
 
-#include "SceneManager/SceneManager.h"
-#include "System/02_Singleton/00_Timer/Timer.h"
+#include "SceneManager//SceneManager.h"
+#include "System//02_Singleton//00_Timer//Timer.h"
+#include "GameObject//03_UIObject//UIObject.h"
+#include "Sprite2D//Sprite2D.h"
+
 
 
 FirstRound::FirstRound()
 	: SceneBase			()
-	//, m_pFirstRoundImg	( nullptr)
-	//, m_pFirstRound		( std::make_shared<UIObject>() )
-
-	, m_pSpriteTitle(std::make_shared<Sprite2D>())
-	, m_pTitleObj(std::make_shared<UIObject>())
-	
-	, m_Timer	(0.0f)
-
+	, m_pSpriteFirstRound(std::make_shared<Sprite2D>())
+	, m_upFirstRound(std::make_shared<UIObject>())
 {
 }
 
@@ -27,34 +24,27 @@ void FirstRound::Initialize()
 
 void FirstRound::Create()
 {
-	//タイトル構造体.
-	Sprite2D::SPRITE_STATE SSTitle =
-	{ 1280.f, 720.f, 896.f, 560.f, 896.f , 560.f };
+	//画像サイズのローカル変数.
+	const float WND_W = 1280.0f;
+	const float WMD_H = 720.0f;
 
-	//タイトルスプライト読み込み.
-	m_pSpriteTitle->Init(_T("Data\\Texture\\FirstRoundImg.png"), SSTitle);
+	//FirstRound構造体.
+	Sprite2D::SPRITE_STATE SSFirst =
+	{ WND_W, WMD_H, WND_W, WMD_H, WND_W , WMD_H };
 
-
-	m_pTitleObj->AttachSprite(m_pSpriteTitle);
-
-	// 位置などを必要ならセット
-	m_pTitleObj->SetPosition(D3DXVECTOR3(0, 0, 0));
+	//FirstRound読み込み.
+	m_pSpriteFirstRound->Init(_T("Data\\Texture\\FirstRoundImg.png"), SSFirst);
+	//画像を設定.
+	m_upFirstRound->AttachSprite(m_pSpriteFirstRound);
+	//表示位置.
+	m_upFirstRound->SetPosition(D3DXVECTOR3(0, 0, 0));
 }
 
 void FirstRound::Update()
 {
-	//タイマーの動作関数.
-	//Mainクラスで書くと、弾の発射が機能しなくなったのでここで呼ぶ.
-	Timer::GetInstance().Update();
-
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
 	m_Timer += deltaTime;
-
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
-		SceneManager::GetInstance()->LoadScene(SceneManager::Main);
-	}
 
 	if (m_Timer >= 0.5f)
 	{
@@ -66,5 +56,5 @@ void FirstRound::Update()
 
 void FirstRound::Draw()
 {
-	m_pTitleObj->Draw();
+	m_upFirstRound->Draw();
 }

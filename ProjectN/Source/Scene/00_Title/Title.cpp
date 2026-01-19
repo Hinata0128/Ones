@@ -7,32 +7,33 @@
 #include "System/02_Singleton/00_Timer/Timer.h"
 
 Title::Title()
-    : m_Select(SelectMenu::Start)
-    , m_State(TitleState::Select)
-    , m_StartPos ( 550.f, 550.f, 0.f )
-    , m_EndPos ( 550.f, 650.f, 0.f )
-    , m_InputTimer(0.0f)
-    , m_FadeAlpha(0.0f)
-    , m_FadeSpeed(1.5f)
+    : m_Select              ( SelectMenu::Start )
+    , m_State               ( TitleState::Select )
+    , m_StartPos            ( 550.f, 550.f, 0.f )
+    , m_EndPos              ( 550.f, 650.f, 0.f )
+    , m_InputTimer          ( 0.0f )
+    , m_FadeAlpha           ( 0.0f )
+    , m_FadeSpeed           ( 1.5f )
+
+    , m_pSpriteTitle        ( std::make_shared<Sprite2D>() )
+    , m_upTitle             ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteStart         ( std::make_shared<Sprite2D>() )
+    ,m_upStart              ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteEnd           ( std::make_shared<Sprite2D>() )
+    ,m_upEnd                ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteFade          ( std::make_shared<Sprite2D>() )
+    ,m_upFade               ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteSelectBack    ( std::make_shared<Sprite2D>() )
+    ,m_upSelectBack         ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteSelectFrame   ( std::make_shared<Sprite2D>() )
+    ,m_upSelectFrame        ( std::make_shared<UIObject>() )
+
 {
-    m_pSpriteTitle = std::make_shared<Sprite2D>();
-    m_upTitle = std::make_shared<UIObject>();
-
-    m_pSpriteStart = std::make_shared<Sprite2D>();
-    m_upStart = std::make_shared<UIObject>();
-
-    m_pSpriteEnd = std::make_shared<Sprite2D>();
-    m_upEnd = std::make_shared<UIObject>();
-
-    m_pSpriteFade = std::make_shared<Sprite2D>();
-    m_upFade = std::make_shared<UIObject>();
-
-    m_pSpriteSelectBack = std::make_shared<Sprite2D>();
-    m_upSelectBack = std::make_shared<UIObject>();
-
-    m_pSpriteSelectFrame = std::make_shared<Sprite2D>();
-    m_upSelectFrame = std::make_shared<UIObject>();
-
 }
 
 Title::~Title()
@@ -45,31 +46,41 @@ void Title::Initialize()
 
 void Title::Create()
 {
-    const float W = 1280.0f;
-    const float H = 720.0f;
+    //タイトル画像のサイズ.
+    const float WND_W = 1280.0f;
+    const float WND_H = 720.0f;
 
-    // 背景画像の設定
-    Sprite2D::SPRITE_STATE ssTitle{ W,H,W,H,W,H };
+    //スタート画像のサイズ.
+    const float Start_W = 135.0f;
+    const float Staet_H = 45.0f;
+
+    //エンド画像のサイズ.
+    const float End_W = 84.0f;
+    const float End_H = 45.0f;
+
+    //背景画像の設定
+    Sprite2D::SPRITE_STATE ssTitle{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
+    //背景画像の読み込み.
     m_pSpriteTitle->Init(_T("Data\\Image\\Setting\\Surface.png"), ssTitle);
     m_upTitle->AttachSprite(m_pSpriteTitle);
-    // ★追加: 背景を画面中央（または左上）に配置
-    m_upTitle->SetPosition({ 0.0f, 0.0f, 0.0f });
+    m_upTitle->SetPosition( 0.0f, 0.0f, 0.0f );
 
     // スタートボタン
-    Sprite2D::SPRITE_STATE ssStart{ 135,45,135,45,135,45 };
+    Sprite2D::SPRITE_STATE ssStart{ Start_W, Staet_H, Start_W, Staet_H, Start_W, Staet_H };
+    //スタート画像の読み込み.
     m_pSpriteStart->Init(_T("Data\\Image\\Setting\\S_Start.png"), ssStart);
     m_upStart->AttachSprite(m_pSpriteStart);
 
     // エンドボタン
-    Sprite2D::SPRITE_STATE ssEnd{ 84,45,84,45,84,45 };
+    Sprite2D::SPRITE_STATE ssEnd{ End_W, End_H, End_W, End_H, End_W, End_H };
+    //エンド画像の読み込み.
     m_pSpriteEnd->Init(_T("Data\\Image\\Setting\\S_End.png"), ssEnd);
     m_upEnd->AttachSprite(m_pSpriteEnd);
 
     // フェード用の黒画像
-    Sprite2D::SPRITE_STATE ssFade{ W,H,W,H,W,H };
+    Sprite2D::SPRITE_STATE ssFade{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
     m_pSpriteFade->Init(_T("Data\\Image\\Setting\\Black.png"), ssFade);
     m_upFade->AttachSprite(m_pSpriteFade);
-    // ★追加: フェード用パネルも画面全体を覆う位置に配置
     m_upFade->SetPosition({ 0.0f, 0.0f, 0.0f });
     m_upFade->SetAlpha(0.0f);
 

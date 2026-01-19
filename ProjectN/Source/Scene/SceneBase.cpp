@@ -7,6 +7,7 @@ SceneBase::SceneBase()
 	, m_hWnd	(nullptr)
 	, m_Score	(0)
 	, m_Count	(0)
+	, m_Timer	(0.0f)
 {
 }
 
