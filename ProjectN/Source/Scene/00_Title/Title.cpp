@@ -11,9 +11,6 @@ Title::Title()
     , m_State               ( TitleState::Select )
     , m_StartPos            ( 550.f, 550.f, 0.f )
     , m_EndPos              ( 550.f, 650.f, 0.f )
-    , m_InputTimer          ( 0.0f )
-    , m_FadeAlpha           ( 0.0f )
-    , m_FadeSpeed           ( 1.5f )
 
     , m_pSpriteTitle        ( std::make_shared<Sprite2D>() )
     , m_upTitle             ( std::make_shared<UIObject>() )
@@ -107,7 +104,7 @@ void Title::Update()
         UpdateFadeOut();
         break;
 
-    case TitleState::End:
+    case TitleState::First:
         SceneManager::GetInstance()->LoadScene(SceneManager::First);
         break;
     }
@@ -204,6 +201,6 @@ void Title::UpdateFadeOut()
     if (m_FadeAlpha >= 1.0f)
     {
         m_FadeAlpha = 1.0f;
-        m_State = TitleState::End;
+        m_State = TitleState::First;
     }
 }
