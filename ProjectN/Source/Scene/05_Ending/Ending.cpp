@@ -82,3 +82,11 @@ void Ending::Draw()
 	m_upVictory->Draw();
 	DirectX11::GetInstance()->SetDepth(true);
 }
+
+void Ending::UpdateSelect()
+{
+}
+
+void Ending::UpdateFadeOut()
+{
+}
