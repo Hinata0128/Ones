@@ -13,7 +13,6 @@ SceneManager::SceneManager()
 	, m_PlayerPoint		( 0 )
 	, m_EnemyNomalPoint	( 0 )
 {
-	//
 }
 
 SceneManager::~SceneManager()
