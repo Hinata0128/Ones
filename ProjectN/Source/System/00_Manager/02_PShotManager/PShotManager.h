@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject/StaticMeshObject/02_ShotBase/PShot/PShot.h"
+#include "GameObject/02_StaticMeshObject/02_ShotBase/PShot/PShot.h"
 #include <vector>
 
 class Player;

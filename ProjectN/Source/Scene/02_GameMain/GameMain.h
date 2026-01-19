@@ -3,13 +3,13 @@
 //ここも継承させているわけではないのでSceneBaseだけインクルードして
 //他は前方宣言をしておく.
 #include "Scene//SceneBase.h"
-#include "GameObject//SpriteObject//SpriteObject.h"
+#include "GameObject//01_SpriteObject//SpriteObject.h"
 #include "SceneManager//SceneManager.h"
 
-#include "GameObject//StaticMeshObject//00_Ground//Ground.h"
-#include "GameObject//SkinMeshObject//Character//01_Player//Player.h"
+#include "GameObject//02_StaticMeshObject//00_Ground//Ground.h"
+#include "GameObject//00_SkinMeshObject//Character//01_Player//Player.h"
 
-#include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
+#include "GameObject/00_SkinMeshObject/Character//00_Boss/Boss.h"
 
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
 #include "System/00_Manager/04_BossShotManager/BossShotManager.h"
@@ -18,23 +18,23 @@
 
 #include "Sprite3D//Sprite3D.h"
 
-#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+#include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
-#include "GameObject//UIObject//00_HPBar//HPBar.h"
+#include "GameObject//03_UIObject//00_HPBar//HPBar.h"
 
-#include "GameObject/UIObject/02_BossHPBar/BossHPBar.h"
+#include "GameObject/03_UIObject/02_BossHPBar/BossHPBar.h"
 
-#include "GameObject/StaticMeshObject/03_BackGround/BackGround.h"
+#include "GameObject/02_StaticMeshObject/03_BackGround/BackGround.h"
 
-#include "GameObject/UIObject/01_Point/Point.h"
+#include "GameObject/03_UIObject/01_Point/Point.h"
 
-#include "GameObject/UIObject/03_PortalGauge/PortalGauge.h"
+#include "GameObject/03_UIObject/03_PortalGauge/PortalGauge.h"
 
-#include "GameObject/UIObject/04_LimitTime/LimitTime.h"
+#include "GameObject/03_UIObject/04_LimitTime/LimitTime.h"
 
-#include "GameObject/UIObject/05_TestFont/TestFont.h"
+#include "GameObject/03_UIObject/05_TestFont/TestFont.h"
 
-#include "GameObject/StaticMeshObject/04_PortalFrame/PortalFrame.h"
+#include "GameObject/02_StaticMeshObject/04_PortalFrame/PortalFrame.h"
 
 class Timer;
 

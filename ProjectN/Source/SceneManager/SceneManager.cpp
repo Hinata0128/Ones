@@ -23,7 +23,7 @@ SceneManager::~SceneManager()
 HRESULT SceneManager::Create(HWND hWnd)
 {
 	m_hWnd = hWnd;
-	LoadScene(List::Main);
+	LoadScene(List::OP);
 	return S_OK;
 }
 

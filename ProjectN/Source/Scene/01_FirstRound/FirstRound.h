@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene//SceneBase.h"	//Šî’êƒNƒ‰ƒX.
 
-#include "GameObject/UIObject/UIObject.h"
+#include "GameObject/03_UIObject/UIObject.h"
 
 #include "Sprite2D/Sprite2D.h"
 

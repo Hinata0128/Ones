@@ -1,9 +1,9 @@
 #pragma once
 #include "Scene/SceneBase.h"
-#include "GameObject/SpriteObject/SpriteObject.h"
+#include "GameObject/01_SpriteObject/SpriteObject.h"
 #include "SceneManager/SceneManager.h"
 
-#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+#include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
 /*********************************************
 *	エンディング画像クラス.

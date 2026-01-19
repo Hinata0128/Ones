@@ -1,10 +1,10 @@
 #pragma once
 #include "Scene/SceneBase.h"
-#include "GameObject/SpriteObject/SpriteObject.h"
+#include "GameObject/01_SpriteObject/SpriteObject.h"
 #include "SceneManager/SceneManager.h"
 
 #include "Sprite2D/Sprite2D.h"
-#include "GameObject/UIObject/UIObject.h"
+#include "GameObject/03_UIObject/UIObject.h"
 
 /*********************************************
 *	ゲームオーバー画像クラス.
