@@ -54,7 +54,9 @@ private:
 	//タイトルへ戻る用のEnd画像.
 	std::shared_ptr<Sprite2D> m_pSpriteEnd;
 	std::shared_ptr<UIObject> m_upEnd;
-
+	//選択肢.
+	std::shared_ptr<Sprite2D> m_pSpriteSelectBack;
+	std::shared_ptr<UIObject> m_upSelectBack;
 
 #pragma endregion
 
