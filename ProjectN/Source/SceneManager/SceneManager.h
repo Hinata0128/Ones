@@ -2,6 +2,8 @@
 #include "Scene/SceneBase.h"
 #include "Scene/00_Title/Title.h"
 #include "Scene/01_FirstRound/FirstRound.h"
+#include "Scene/02_SecondRound/SecondRound.h"
+#include "Scene/03_FinalRound/FinalRound.h"
 #include "Scene/04_GameMain/GameMain.h"
 #include "Scene/06_GameOver/GameOver.h"
 #include "Scene/05_Ending/Ending.h"
@@ -20,7 +22,9 @@ public:
 	enum List
 	{
 		OP,		//Title.
-		First,	//一ラウンド.
+		First,	//第一ラウンド開始画像.
+		Second,	//第二ラウンド開始画像.
+		Final,	//第三ラウンド開始画像.
 		Main,	//GameMain.
 		Lose,	//GameOver.
 		Win,	//Ending.

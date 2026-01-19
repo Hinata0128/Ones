@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene//SceneBase.h"	//Šî’êƒNƒ‰ƒX.
 
+class SceneManager;
+class Timer;
 class UIObject;
 class Sprite2D;
 
@@ -23,5 +25,6 @@ public:
 	void Draw() override;
 private:
 	std::shared_ptr<Sprite2D> m_pSpriteSecondRound;
-	std::shared_ptr<UIObject> m_pSecondRoundObj;
+	std::shared_ptr<UIObject> m_upSecondRound;
+
 };
