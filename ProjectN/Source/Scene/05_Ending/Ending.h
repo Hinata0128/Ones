@@ -54,10 +54,26 @@ private:
 
 //ToDo : スマートポインタをまとめている.
 #pragma region SmartPointer
+	//Win画像.
 	std::shared_ptr<Sprite2D> m_pSpriteBack;
 	std::shared_ptr<UIObject> m_upBack;
-
+	//勝利画像.
 	std::shared_ptr<Sprite2D> m_pSpriteVictory;
 	std::shared_ptr<UIObject> m_upVictory;
+	//タイトルへ戻る用のEnd画像.
+	std::shared_ptr<Sprite2D> m_pSpriteEnd;
+	std::shared_ptr<UIObject> m_upEnd;
+	//コンティニュー画像.
+	std::shared_ptr<Sprite2D> m_pSpriteContinue;
+	std::shared_ptr<UIObject> m_upContinue;
+	//コンティニューを選んだときに流すフェード画像.
+	std::shared_ptr<Sprite2D> m_pSpriteFade;
+	std::shared_ptr<UIObject> m_upFade;
+	//選択肢.
+	std::shared_ptr<Sprite2D> m_pSpriteSelectBack;
+	std::shared_ptr<UIObject> m_upSelectBack;
+	//選択肢の枠.
+	std::shared_ptr<Sprite2D> m_pSpriteSelectFrame;
+	std::shared_ptr<UIObject> m_upSelectFrame;
 #pragma endregion
 };
