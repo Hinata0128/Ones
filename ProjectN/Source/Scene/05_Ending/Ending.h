@@ -5,10 +5,11 @@ class SceneManager;
 class UIObject;
 class Sprite2D;
 class DirectX11;
+class Timer;
 
 /*********************************************
-*	エンディング画像クラス.
-*	ToDo : Win画像の作成.
+*	ゲームクリア画像クラス.
+*	ToDo : Win画面の作成.
 **/
 
 class Ending
@@ -17,15 +18,15 @@ class Ending
 public:
 	enum class SelectMenu : byte
 	{
-		End,		//タイトル.
+		End,		//Titleに遷移.
 		Continue	//Firstシーンへ遷移.
 	};
 
-	enum class WinState : byte
+	enum class LoseState : byte
 	{
-		Select,		//タイトルに戻るかコンティニューするか.
-		FadeOut,	//コンティニューした際に再生.
-		First,		//FadeOut後にFirstRoundへ遷移させる.
+		Select,		//コンティニューかタイトルへ戻すか.
+		FadeOut,	//Firstシーンに入る前に再生.
+		First,		//FadeOut後にFirstRoundに遷移させる.
 	};
 public:
 	Ending();
@@ -42,30 +43,30 @@ private:
 
 private:
 	SelectMenu	m_Select;
-	WinState	m_State;
+	LoseState	m_State;
 
+	//コンティニューの位置.
+	D3DXVECTOR3 m_ContinuePos;
 	//ずらす用のEndの位置
 	D3DXVECTOR3 m_EndPos;
 	//End画像の表示位置
 	//ToDo : コンティニューと違和感のない配置にする.
 	D3DXVECTOR3 m_EndSelectPos;
-	//コンティニューの位置.
-	D3DXVECTOR3 m_ContinuePos;
 
-//ToDo : スマートポインタをまとめている.
-#pragma region SmartPointer
-	//Win画像.
+	//ToDo : スマートポインタをまとめている.
+#pragma region smartpointer
+	//背景画像.
 	std::shared_ptr<Sprite2D> m_pSpriteBack;
 	std::shared_ptr<UIObject> m_upBack;
-	//勝利画像.
-	std::shared_ptr<Sprite2D> m_pSpriteVictory;
-	std::shared_ptr<UIObject> m_upVictory;
-	//タイトルへ戻る用のEnd画像.
-	std::shared_ptr<Sprite2D> m_pSpriteEnd;
-	std::shared_ptr<UIObject> m_upEnd;
+	//敗北画像.
+	std::shared_ptr<Sprite2D> m_pSpriteDefeat;
+	std::shared_ptr<UIObject> m_upDefeat;
 	//コンティニュー画像.
 	std::shared_ptr<Sprite2D> m_pSpriteContinue;
 	std::shared_ptr<UIObject> m_upContinue;
+	//タイトルへ戻る用のEnd画像.
+	std::shared_ptr<Sprite2D> m_pSpriteEnd;
+	std::shared_ptr<UIObject> m_upEnd;
 	//コンティニューを選んだときに流すフェード画像.
 	std::shared_ptr<Sprite2D> m_pSpriteFade;
 	std::shared_ptr<UIObject> m_upFade;
@@ -76,4 +77,5 @@ private:
 	std::shared_ptr<Sprite2D> m_pSpriteSelectFrame;
 	std::shared_ptr<UIObject> m_upSelectFrame;
 #pragma endregion
+
 };
