@@ -14,6 +14,8 @@ class BossStateBase;
 
 class Com;
 
+class Shadow;
+
 #include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
 
@@ -92,14 +94,16 @@ public:
 	std::unique_ptr<BossMove> m_pMove;
 	std::unique_ptr<BossDead> m_pDead;
 
-	void SetTargetDead(bool isDead) { m_IsTargetDead = isDead; }
-	bool IsTargetDead() const { return m_IsTargetDead; }
+	void SetTargetDead(bool isDead)		{ m_IsTargetDead = isDead; }
+	bool IsTargetDead() const			{ return m_IsTargetDead; }
 
-	void SetVisible(bool visible) { m_IsVisible = visible; }
-	bool IsVisible() const { return m_IsVisible; }
+	void SetVisible(bool visible)		{ m_IsVisible = visible; }
+	bool IsVisible() const				{ return m_IsVisible; }
 
-	void SetFrozen(bool frozen) { m_IsFrozen = frozen; }
-	bool IsFrozen() const { return m_IsFrozen; }
+	void SetFrozen(bool frozen)			{ m_IsFrozen = frozen; }
+	bool IsFrozen() const				{ return m_IsFrozen; }
+
+	Shadow* GetShadow() const { return m_pShadow.get(); }
 private:
 	BossShotManager* m_pENShotManager;
 
@@ -130,4 +134,6 @@ private:
 	D3DXVECTOR3 m_pPlayerPos;
 	//ポータルの位置の取得.
 	D3DXVECTOR3 m_pPortalPos;
+
+	std::shared_ptr<Shadow> m_pShadow;
 };

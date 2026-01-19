@@ -7,6 +7,8 @@
 
 #include "02_Com/Com.h"
 
+#include "GameObject/01_SpriteObject/00_Shadow/Shadow.h"
+
 #include "SceneManager/SceneManager.h"
 
 constexpr float zero = 0.0f;
@@ -26,6 +28,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_IsVisible   (true)
 
     , m_IsFrozen    (false)
+
+    , m_pShadow     ( std::make_shared<Shadow>() )
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -84,6 +88,8 @@ void Boss::Init()
         m_pMesh->SetAnimSpeed(m_AnimSpeed);
     }
 
+    m_pShadow->Create();
+    m_pShadow->SetTargetShadowPos(this);
 
     Character::Init();
 }
@@ -118,13 +124,15 @@ void Boss::Update()
     // ボーン座標取得
     m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
 
+    m_pShadow->Update();
+
     Character::Update();
 }
 
 void Boss::Draw()
 {
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
-
+    m_pShadow->Draw();
     Character::Draw();
     m_pENShotManager->Draw();
     m_pCom->DrawDebugImGui();

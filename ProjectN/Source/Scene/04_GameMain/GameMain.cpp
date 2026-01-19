@@ -293,6 +293,12 @@ void GameMain::Draw()
 		m_pPlayer->GetShadow()->SetProjMatrix(m_mProj);
 	}
 
+	if (m_pEnemyNomal && m_pEnemyNomal->GetShadow())
+	{
+		m_pEnemyNomal->GetShadow()->SetViewMatrix(m_mView);
+		m_pEnemyNomal->GetShadow()->SetProjMatrix(m_mProj);
+	}
+
 	//背景の表示.
 	//m_pSkyBox->Draw();
 
