@@ -98,12 +98,12 @@ void Portal::Update()
 					if (m_pPortalState == PortalPriority::Player) {
 						// プレイヤーが追いついて1-1にした場合
 						//ここにはFinalRoundに入る処理.
-						m_NextScene = SceneManager::First;
+						m_NextScene = SceneManager::Final;
 					}
 					else {
 						// ボスが追いついて1-1にした場合
 						//ここにはFinalRoundに入る処理.
-						m_NextScene = SceneManager::First;
+						m_NextScene = SceneManager::Final;
 					}
 				}
 				else
@@ -111,7 +111,7 @@ void Portal::Update()
 					// 初めての1ポイント取得時 (1-0 または 0-1)
 					Init();
 					//ここではSecondRoundに入る処理.
-					m_NextScene = SceneManager::First;
+					m_NextScene = SceneManager::Second;
 				}
 			}
 			m_IsReadyToLoad = true;
