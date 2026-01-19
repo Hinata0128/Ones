@@ -117,10 +117,8 @@ void Title::Draw()
     dx->SetDepth(false);
     dx->SetAlphaBlend(true);
 
-    // 1. ”wŒi‚ğ•`‰æ
     m_upTitle->Draw();
 
-    // --- ‘I‘ğ‰‰o‚Ì•`‰æ ---
     D3DXVECTOR3 currentSelectPos = (m_Select == SelectMenu::Start) ? m_StartPos : m_EndPos;
 
     D3DXVECTOR3 backPos = currentSelectPos;
