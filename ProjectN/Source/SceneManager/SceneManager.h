@@ -1,13 +1,13 @@
 #pragma once
 #include "Scene/SceneBase.h"
 #include "Scene/00_Title/Title.h"
-#include "Scene/02_GameMain/GameMain.h"
+#include "Scene/01_FirstRound/FirstRound.h"
+#include "Scene/04_GameMain/GameMain.h"
 #include "Scene/06_GameOver/GameOver.h"
 #include "Scene/05_Ending/Ending.h"
 
 #include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
-#include "Scene/01_FirstRound/FirstRound.h"
 
 /********************************************
 *	シーンマネージャークラス.
