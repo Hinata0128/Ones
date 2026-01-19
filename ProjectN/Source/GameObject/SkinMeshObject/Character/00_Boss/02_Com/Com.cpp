@@ -2,9 +2,9 @@
 
 #include "GameObject//StaticMeshObject//01_Portal//Portal.h"
 
-#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
+#include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
-#include "..//..//..//..//..//..//System/00_Manager/03_ImGuiManager/ImGuiManager.h"
+#include "System/00_Manager/03_ImGuiManager/ImGuiManager.h"
 
 #include "System/02_Singleton/00_Timer/Timer.h"
 

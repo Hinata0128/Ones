@@ -4,7 +4,7 @@
 #include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
 #include "System/02_Singleton/00_Timer/Timer.h"
 #include "GameObject/SkinMeshObject/Character/Player/Player.h"
-#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
+#include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
 #include "GameObject/UIObject/03_PortalGauge/PortalGauge.h"
 

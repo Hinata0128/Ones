@@ -8,7 +8,7 @@
 #include "System//00_Manager//04_BossShotManager//BossShotManager.h"
 #include "GameObject//StaticMeshObject//02_ShotBase//PShot//PShot.h"
 #include "GameObject//SkinMeshObject//Character//Player//Player.h"
-#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
+#include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.

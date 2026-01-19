@@ -2,7 +2,7 @@
 
 #include "..//UIObject.h"
 #include <vector>
-#include "GameObject/SkinMeshObject/Character/EnemyBase/00_Boss/Boss.h"
+#include "GameObject/SkinMeshObject/Character//00_Boss/Boss.h"
 
 class Sprite2D;
 

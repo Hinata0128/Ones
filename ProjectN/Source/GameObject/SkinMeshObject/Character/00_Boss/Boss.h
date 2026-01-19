@@ -1,6 +1,6 @@
 #pragma once
-#include "GameObject//SkinMeshObject//Character//EnemyBase//EnemyBase.h"	//ベースクラス.
-#include "..//..//..//..//..//Collision/BoundingSphere/BoundingSphere.h" // BoundingSphereの定義が必要
+#include "GameObject/SkinMeshObject/Character/Character.h"
+#include "Collision/BoundingSphere/BoundingSphere.h" // BoundingSphereの定義が必要
 
 #include "..//00_Boss/01_BossStateBase/01_BossMove/BossMove.h" // NomalMove の定義が必要
 
@@ -14,12 +14,12 @@ class BossStateBase;
 
 class Com;
 
-#include "..//..//..//..//StaticMeshObject/01_Portal/Portal.h"
+#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
 
 
 
 class Boss final
-	: public EnemyBase
+	: public Character
 {
 public:
 	friend BossContext;
@@ -126,4 +126,8 @@ private:
 	bool m_IsVisible;
 
 	bool m_IsFrozen;
+
+	D3DXVECTOR3 m_pPlayerPos;
+	//ポータルの位置の取得.
+	D3DXVECTOR3 m_pPortalPos;
 };
