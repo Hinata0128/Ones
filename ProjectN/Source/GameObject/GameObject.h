@@ -1,19 +1,19 @@
 #pragma once
 
-#include "System/01_Renderer/Renderer.h"
+#include "System//01_Renderer//Renderer.h"
 
-/**************************************************
+/**************************************************************
 *	ゲームオブジェクトクラス.
+*	ToDo : 継承元のクラスで使用するので純粋仮想関数を使用している.
+*		   ポジション等の設定は、このクラスで書いている.
 **/
 class GameObject
 {
 public:
 	GameObject();
-	//継承を行う場合は、デストラクタにvirtualを付けて仮想関数にすること.
 	virtual ~GameObject();
 
-	//virtual 型 関数名 = 0; 純粋仮想関数.
-	//子クラスに処理をお任せするので、ここでは名前だけ宣言して定義は書かない.
+	//処理は子クラスに任せる.
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
@@ -52,14 +52,11 @@ public:
 	}
 
 	//回転取得関数.
-	const D3DXVECTOR3& GetRotation() const {
+	const D3DXVECTOR3& GetRotation() const 
+	{
 		return m_Rotation;
 	}
-
-	void SetScale(float xyz) {
-		m_Scale = D3DXVECTOR3(xyz, xyz, xyz);
-	}
-
+	//拡縮設定関数.
 	void SetScale(const D3DXVECTOR3& newScale)
 	{
 		m_Scale = newScale;
@@ -69,8 +66,9 @@ public:
 	const D3DXVECTOR3& GetScale() const {
 		return m_Scale;
 	}
-
-	void AddPosition(const D3DXVECTOR3& delta) {
+	//位置の追加関数.
+	void AddPosition(const D3DXVECTOR3& delta)
+	{
 		m_Position += delta;
 	}
 

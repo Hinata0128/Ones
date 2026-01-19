@@ -134,7 +134,7 @@ void GameMain::Update()
 		static ::EsHandle hEffect = -1;
 
 		if (GetAsyncKeyState('Y') & 0x0001) {
-			hEffect = Effect::Play(Effect::Test0, D3DXVECTOR3(0.f, 1.f, 0.f));
+			hEffect = Effect::Play(Effect::Laser01, D3DXVECTOR3(0.f, 1.f, 0.f));
 
 			//拡大縮小
 			Effect::SetScale(hEffect, D3DXVECTOR3(0.8f, 0.8f, 0.8f));

@@ -10,7 +10,7 @@ class StaticMeshManager
 {
 public:
 	//ƒ‚ƒfƒ‹‚ÌŽí—Þ‚Ì—ñ‹“Œ^.
-	enum class CMeshList
+	enum class CMeshList : byte
 	{
 		Bullet,				//’e.
 		Ground,				//’n–Ê.

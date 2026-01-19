@@ -164,7 +164,7 @@ void CollisionManager::AllCollider()
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
                     // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
-                    Effect::Play(Effect::Test0, enemy->GetHitCenter());
+                    Effect::Play(Effect::Laser01, enemy->GetHitCenter());
                     enemy->SetPosition(0.0f, -10.0f, 0.0f);
                 }
 
@@ -189,7 +189,7 @@ void CollisionManager::AllCollider()
 
             if (m_pPlayer->GetHitPoint() <= 0.0f)
             {
-                Effect::Play(Effect::Test0, eShot->GetPosition());
+                Effect::Play(Effect::Laser01, eShot->GetPosition());
             }
 
             eShot->SetDisplay(false);
@@ -225,7 +225,7 @@ void CollisionManager::AllCollider()
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
                     // エフェクト
-                    Effect::Play(Effect::Test0, enemy->GetHitCenter());
+                    Effect::Play(Effect::Laser01, enemy->GetHitCenter());
                     enemy->SetPosition(0.0f,-10.0f,0.0f);
                 }
 

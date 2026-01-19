@@ -21,7 +21,8 @@
 
 //エイリアスを用意
 //※コードが横に長くなって読みづらいため
-namespace {
+namespace 
+{
 	namespace Es = ::Effekseer;
 	using EsManagerRef = ::Es::ManagerRef;
 	using EsManager = ::Es::Manager;
@@ -41,94 +42,103 @@ namespace {
 class Effect
 {
 public:
-	//エフェクト種類列挙型
+	//エフェクト種類列挙型.
 	enum enList
 	{
-		Test0 = 0,	//仮で設定
-		Test1,		//仮で設定
-		Test2,		//仮で設定
-		Max			//最大数
+		Laser01 = 0,	//当たり判定確認用で設定.
+		//ToDo : エフェクトの追加はこの下から.
+
+		Max				//最大数.
 	};
 
 	//インスタンス取得(唯一のアクセス経路)
 	static Effect* GetInstance()
 	{
-		//唯一のインスタンスを作成する
-		//※staticで作成されたので２回目以降は下の１行は無視される
+		//唯一のインスタンスを作成する.
+		//※staticで作成されたので２回目以降は下の１行は無視される.
 		static Effect s_Instance;	//s_:staticの意味
 		return &s_Instance;
 	}
 	~Effect();
 
-	//構築
+	//構築.
 	HRESULT Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	//データ読み込み
+	//データ読み込み.
 	HRESULT LoadData();
-	//描画
+	//描画.
 	void Draw();
 
 	//-----------------------------------
 	// 変換系
 	//-----------------------------------
-	//ベクター
+	//ベクター.
 	::EsVec3 ToEfkVector3(const D3DXVECTOR3* pSrcVec3Dx);
 	D3DXVECTOR3 ToDxVector3(const ::EsVec3* pSrcVec3Efk);
-	//行列
+	//行列.
 	::EsMatrix ToEfkMatrix(const D3DXMATRIX* pSrcMatDx);
 	D3DXMATRIX ToDxMatrix(const ::EsMatrix* pSrcMatEfk);
 
 	//-----------------------------------
 	// 制御系
 	//-----------------------------------
-	//再生
-	static ::EsHandle Play(enList listNo, const D3DXVECTOR3& pos) {
+	//再生.
+	static ::EsHandle Play(enList listNo, const D3DXVECTOR3& pos) 
+	{
 		Effect* pE = Effect::GetInstance();
 		return pE->m_pManager->Play(pE->m_pEffect[listNo], pos.x, pos.y, pos.z);
 	}
-	//停止
-	static void Stop(::EsHandle handle) {
+	//停止.
+	static void Stop(::EsHandle handle) 
+	{
 		Effect::GetInstance()->m_pManager->StopEffect(handle);
 	}
-	//全て停止
-	static void StopAll() {
+	//全て停止.
+	static void StopAll() 
+	{
 		Effect::GetInstance()->m_pManager->StopAllEffects();
 	}
-	//一時停止
-	static void Paused(::EsHandle handle, bool paused) {
+	//一時停止.
+	static void Paused(::EsHandle handle, bool paused)
+	{
 		Effect::GetInstance()->m_pManager->SetPaused(handle, paused);
 	}
-	//再生速度の設定
-	static void SetSpeed(::EsHandle handle, float speed) {
+	//再生速度の設定.
+	static void SetSpeed(::EsHandle handle, float speed) 
+	{
 		Effect::GetInstance()->m_pManager->SetSpeed(handle, speed);
 	}
-	//位置を指定する
-	static void SetLocation(::EsHandle handle, D3DXVECTOR3 pos) {
+	//位置を指定する.
+	static void SetLocation(::EsHandle handle, D3DXVECTOR3 pos) 
+	{
 		Effect::GetInstance()->m_pManager->
 			SetLocation(handle, ::EsVec3(pos.x, pos.y, pos.z));
 	}
-	//回転を指定する
-	static void SetRotation(::EsHandle handle, D3DXVECTOR3 rot) {
+	//回転を指定する.
+	static void SetRotation(::EsHandle handle, D3DXVECTOR3 rot) 
+	{
 		Effect::GetInstance()->m_pManager->
 			SetRotation(handle, rot.x, rot.y, rot.z);
 	}
-	//回転を指定する（軸回転）
-	static void SetRotation(::EsHandle handle, D3DXVECTOR3 vAxis, float angle) {
+	//回転を指定する（軸回転）.
+	static void SetRotation(::EsHandle handle, D3DXVECTOR3 vAxis, float angle)
+	{
 		Effect::GetInstance()->m_pManager->
 			SetRotation(handle, ::EsVec3(vAxis.x, vAxis.y, vAxis.z), angle);
 	}
-	//サイズを指定する
-	static void SetScale(::EsHandle handle, D3DXVECTOR3 scale) {
+	//サイズを指定する.
+	static void SetScale(::EsHandle handle, D3DXVECTOR3 scale) 
+	{
 		Effect::GetInstance()->m_pManager->
 			SetScale(handle, scale.x, scale.y, scale.z);
 	}
 
 private:
-	//生成やコピーを禁止する
+	//生成やコピーを禁止する.
 	Effect();
 	Effect(const Effect& rhs) = delete;
 	Effect& operator = (const Effect& rhs) = delete;
 
-	//データ解放
+	//データ解放.
 	HRESULT ReleaseData();
 
 	void SetViewMatrixFromRenderer();
@@ -136,11 +146,11 @@ private:
 
 
 private:
-	//エフェクトを動作させるために必要
+	//エフェクトを動作させるために必要.
 	::EsManagerRef		m_pManager;
 	::EsRendererRef		m_pRenderer;
 
-	//エフェクトの種類ごとに必要
+	//エフェクトの種類ごとに必要.
 	::EsEffectRef		m_pEffect[enList::Max];
 };
 

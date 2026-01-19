@@ -92,9 +92,3 @@ void SkinMeshObject::DetachMesh()
 
 	SAFE_RELEASE(m_pAnimCtrl);
 }
-
-void SkinMeshObject::SetIsLoop(const bool& IsLoop)
-{
-	m_Loop = IsLoop;
-}
-

@@ -2,7 +2,7 @@
 
 Character::Character()
 	: SkinMeshObject()
-	, m_HitPoint	(0.0f)
+	, m_HitPoint	( 0.0f )
 {
 }
 

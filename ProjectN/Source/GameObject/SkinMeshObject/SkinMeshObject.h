@@ -1,10 +1,11 @@
 #pragma once
 
-#include "GameObject/GameObject.h"
-#include "SkinMesh/SkinMesh.h"
+#include "GameObject//GameObject.h"
+#include "SkinMesh//SkinMesh.h"
 
 /************************************************************
 *	スキンメッシュオブジェクトクラス.
+*	ToDo : プレイヤー・ボスのメッシュを使用するためのクラス.
 **/
 class SkinMeshObject
 	: public GameObject
@@ -13,7 +14,6 @@ public:
 	SkinMeshObject();
 	virtual ~SkinMeshObject() override;
 
-	//CGameObjectで純粋仮想関数の宣言がされてるのでこちらで定義を書く.
 	virtual void Update() override;
 	virtual void Draw() override;
 
@@ -24,9 +24,6 @@ public:
 
 public:
 	//セット・ゲット関数.
-	//アニメーションの再生用セット関数.
-	void SetIsLoop(const bool& IsLoop);
-
 	//接続メッシュ名を取得.
 	const std::weak_ptr<SkinMesh> GetAttachMesh() const
 	{

@@ -1,9 +1,10 @@
 #pragma once
-#include "GameObject/SkinMeshObject/SkinMeshObject.h"
-#include "Collision/BoundingSphere/BoundingSphere.h"
+#include "GameObject//SkinMeshObject//SkinMeshObject.h"
+#include "Collision//BoundingSphere//BoundingSphere.h"
 
-/************************************************************
+/***************************************************************
 *	キャラクタークラス.
+*	ToDo : このクラスを親としてプレイヤー・ボスを子クラスとして設定.
 **/
 
 class Character
