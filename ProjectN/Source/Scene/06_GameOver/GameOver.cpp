@@ -7,22 +7,25 @@
 #include "DirectX//DirectX11.h"
 
 GameOver::GameOver()
-	: SceneBase			()
+	: SceneBase				()
 
-	, m_Select			( SelectMenu::Continue )
-	, m_State			( LoseState::Select )
+	, m_Select				( SelectMenu::Continue )
+	, m_State				( LoseState::Select )
 
-	, m_pSpriteBack		( std::make_shared<Sprite2D>() )
-	, m_upBack			( std::make_shared<UIObject>() )
+	, m_pSpriteBack			( std::make_shared<Sprite2D>() )
+	, m_upBack				( std::make_shared<UIObject>() )
 
-	, m_pSpriteDefeat	( std::make_shared<Sprite2D>() )
-	, m_upDefeat		( std::make_shared<UIObject>() )
+	, m_pSpriteDefeat		( std::make_shared<Sprite2D>() )
+	, m_upDefeat			( std::make_shared<UIObject>() )
 
-	, m_pSpriteContinue	( std::make_shared<Sprite2D>() )
-	, m_upContinue		( std::make_shared<UIObject>() )
+	, m_pSpriteContinue		( std::make_shared<Sprite2D>() )
+	, m_upContinue			( std::make_shared<UIObject>() )
 
-	, m_pSpriteEnd		( std::make_shared<Sprite2D>() )
-	, m_upEnd			( std::make_shared<UIObject>() )
+	, m_pSpriteEnd			( std::make_shared<Sprite2D>() )
+	, m_upEnd				( std::make_shared<UIObject>() )
+
+	, m_pSpriteSelectBack	(std::make_shared<Sprite2D>())
+	, m_upSelectBack		(std::make_shared<UIObject>())
 {
 }
 
@@ -51,6 +54,10 @@ void GameOver::Create()
 	//End画像のサイズのローカル変数.
 	const float End_W = 84.0f;
 	const float End_H = 45.0f;
+
+	//選択肢の背景.
+	const float SelectBack_W = 320.0f;
+	const float SelectBack_H = 80.0f;
 
 	//背景構造体.
 	Sprite2D::SPRITE_STATE SSBack =
@@ -99,6 +106,17 @@ void GameOver::Create()
 	m_upEnd->AttachSprite(m_pSpriteEnd);
 	//表示位置.
 	m_upEnd->SetPosition(920.0f, 620.0f, 0.0f);
+
+	//選択肢構造体.
+	Sprite2D::SPRITE_STATE SSSelectBack =
+	{
+		SelectBack_W, SelectBack_H, SelectBack_W, SelectBack_H, SelectBack_W, SelectBack_H
+	};
+	//選択肢の読み込み.
+	m_pSpriteSelectBack->Init(_T("Data\\Image\\Setting\\SelectBack.png"), SSSelectBack);
+	//画像の設定.
+	m_upSelectBack->AttachSprite(m_pSpriteSelectBack);
+	m_upSelectBack->SetPosition(0.0f, 0.0f, 0.0f);
 }
 
 void GameOver::Update()
@@ -121,5 +139,6 @@ void GameOver::Draw()
 	m_upDefeat->Draw();
 	m_upContinue->Draw();
 	m_upEnd->Draw();
+	m_upSelectBack->Draw();
 	DirectX11::GetInstance()->SetDepth(true);
 }
