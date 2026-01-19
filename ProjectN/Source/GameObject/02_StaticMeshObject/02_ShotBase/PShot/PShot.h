@@ -40,6 +40,5 @@ public:
 	}
 
 private:
-	std::unique_ptr<Shadow> m_pShadow;
 	std::unique_ptr<ShadowSmall> m_pShadowSmall;
 };

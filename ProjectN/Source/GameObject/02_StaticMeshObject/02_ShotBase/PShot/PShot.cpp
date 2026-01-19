@@ -3,7 +3,6 @@
 
 PShot::PShot()
 	: ShotBase()
-	, m_pShadow(std::make_unique<Shadow>())
 
 	, m_pShadowSmall(std::make_unique<ShadowSmall>())
 {

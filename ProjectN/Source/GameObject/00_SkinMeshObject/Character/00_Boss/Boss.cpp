@@ -134,7 +134,6 @@ void Boss::Draw()
     m_pMesh->SetAnimSpeed(m_AnimSpeed);
     m_pShadow->Draw();
     Character::Draw();
-    m_pENShotManager->Draw();
     m_pCom->DrawDebugImGui();
 }
 

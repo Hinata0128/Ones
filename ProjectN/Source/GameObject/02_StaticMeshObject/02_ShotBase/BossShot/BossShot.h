@@ -2,6 +2,7 @@
 #include "GameObject//02_StaticMeshObject//02_ShotBase//ShotBase.h"
 
 class StaticMeshManager;
+class ShadowSmall;
 
 /**********************************************************************
 *	ìGí èÌíeÉNÉâÉX.
@@ -21,7 +22,8 @@ public:
 	void Init() override;
 
 	void Reload(const D3DXVECTOR3& pos, const D3DXVECTOR3& direction, float speed) override;
-
+public:
+	void SetMatrices(const D3DXMATRIX& view, const D3DXMATRIX& proj);
 private:
-
+	std::shared_ptr<ShadowSmall> m_pShadowSmall;
 };
