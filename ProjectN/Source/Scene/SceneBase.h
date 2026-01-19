@@ -3,7 +3,7 @@
 #include "DirectX/DirectX11.h"
 #include "DirectX/DirectX9.h"
 #include "Sprite2D/Sprite2D.h"
-#include "GameObject/UIObject/UIObject.h"
+#include "GameObject/03_UIObject/UIObject.h"
 
 
 /**********************************************************

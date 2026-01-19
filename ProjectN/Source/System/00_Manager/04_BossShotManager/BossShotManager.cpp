@@ -1,6 +1,6 @@
 #include "BossShotManager.h"
 
-#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+#include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
 BossShotManager* BossShotManager::m_pInstance = nullptr;
 

@@ -1,7 +1,7 @@
 #include "PShotManager.h"
-#include "GameObject/SkinMeshObject/Character/01_Player/Player.h"
+#include "GameObject/00_SkinMeshObject/Character/01_Player/Player.h"
 
-#include "GameObject/StaticMeshObject/01_Portal/Portal.h"
+#include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
 PShotManager::PShotManager()
 {

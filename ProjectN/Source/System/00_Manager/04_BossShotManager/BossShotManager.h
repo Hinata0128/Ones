@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject/StaticMeshObject/02_ShotBase/BossShot/BossShot.h"
+#include "GameObject/02_StaticMeshObject/02_ShotBase/BossShot/BossShot.h"
 
 class Portal;
 
