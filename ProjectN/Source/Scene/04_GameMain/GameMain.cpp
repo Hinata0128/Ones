@@ -308,14 +308,15 @@ void GameMain::Draw()
 	{
 		m_pPlayer->Draw();
 	}
-	m_pPortal->Draw();
-
-	PShotManager::GetInstance()->Draw(m_mView, m_mProj);
-
 	if (m_pEnemyNomal && m_pEnemyNomal->IsVisible())
 	{
 		m_pEnemyNomal->Draw();
 	}
+
+	m_pPortal->Draw();
+
+	PShotManager::GetInstance()->Draw(m_mView, m_mProj);
+
 
 
 #ifdef _DEBUG
