@@ -1,14 +1,14 @@
 #pragma once
 #include "Scene/SceneBase.h"
-#include "GameObject/01_SpriteObject/SpriteObject.h"
-#include "SceneManager/SceneManager.h"
 
-#include "Sprite2D/Sprite2D.h"
-#include "GameObject/03_UIObject/UIObject.h"
+class SceneManager;
+class UIObject;
+class Sprite2D;
+class DirectX11;
 
 /*********************************************
 *	ゲームオーバー画像クラス.
-*  ToDo : Lose画面の作成.
+*	ToDo : Lose画面の作成.
 **/
 
 class GameOver
@@ -24,8 +24,9 @@ public:
 	void Draw() override;
 
 private:
-	//HPバーの2Dスプライト.
-	std::shared_ptr<Sprite2D> m_pHpBarSprite;
-	//UIObject* m_pHpBar;
-	std::shared_ptr<UIObject> m_pHpBar;
+	std::shared_ptr<Sprite2D> m_pSpriteBack;
+	std::shared_ptr<UIObject> m_upBack;
+	
+	std::shared_ptr<Sprite2D> m_pSpriteDefeat;
+	std::shared_ptr<UIObject> m_upDefeat;
 };
