@@ -75,7 +75,7 @@ void GameOver::Create()
 		WND_W, WMD_H, WND_W, WMD_H, WND_W, WMD_H
 	};
 	//”wŒi‰æ–Ê‚Ì“Ç‚Ýž‚Ý.
-	m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Lose.png"), SSBack);
+	m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Surface.png"), SSBack);
 	//‰æ‘œ‚ÌÝ’è.
 	m_upBack->AttachSprite(m_pSpriteBack);
 	//•\Ž¦ˆÊ’u.
