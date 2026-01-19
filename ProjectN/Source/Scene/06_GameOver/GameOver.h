@@ -41,7 +41,7 @@ private:
 	LoseState	m_State;
 
 //ToDo : スマートポインタをまとめている.
-#pragma region ImageList
+#pragma region smartpointer
 	//背景画像.
 	std::shared_ptr<Sprite2D> m_pSpriteBack;
 	std::shared_ptr<UIObject> m_upBack;
@@ -54,6 +54,8 @@ private:
 	//タイトルへ戻る用のEnd画像.
 	std::shared_ptr<Sprite2D> m_pSpriteEnd;
 	std::shared_ptr<UIObject> m_upEnd;
+
+
 #pragma endregion
 
 };
