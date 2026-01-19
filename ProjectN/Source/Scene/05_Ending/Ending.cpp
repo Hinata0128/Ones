@@ -64,6 +64,7 @@ void Ending::Create()
 
 void Ending::Update()
 {
+	//最終的には選択できるように表示する.
 	if (GetAsyncKeyState(VK_RETURN) & 0x0001)
 	{
 		SceneManager::GetInstance()->LoadScene(SceneManager::OP);
