@@ -1,12 +1,14 @@
 #pragma once
 #include "Scene/SceneBase.h"
-#include "GameObject/01_SpriteObject/SpriteObject.h"
-#include "SceneManager/SceneManager.h"
 
-#include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
+class SceneManager;
+class UIObject;
+class Sprite2D;
+class DirectX11;
 
 /*********************************************
 *	エンディング画像クラス.
+*	ToDo : Win画像の作成.
 **/
 
 class Ending
@@ -22,5 +24,9 @@ public:
 	void Draw() override;
 
 private:
-	std::unique_ptr<Portal> m_pPortal;
+	std::shared_ptr<Sprite2D> m_pSpriteBack;
+	std::shared_ptr<UIObject> m_upBack;
+
+	std::shared_ptr<Sprite2D> m_pSpriteVictory;
+	std::shared_ptr<UIObject> m_upVictory;
 };
