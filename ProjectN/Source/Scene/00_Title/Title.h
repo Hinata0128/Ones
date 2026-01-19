@@ -20,7 +20,7 @@ public:
     {
         Select,
         FadeOut,
-        End
+        First
     };
 
 public:
@@ -40,12 +40,9 @@ private:
     SelectMenu m_Select;
     TitleState m_State;
 
+    //選択画面の表示位置.
     D3DXVECTOR3 m_StartPos;
     D3DXVECTOR3 m_EndPos;
-
-    float m_InputTimer;
-    float m_FadeAlpha;
-    float m_FadeSpeed;
 
     std::shared_ptr<Sprite2D> m_pSpriteTitle;
     std::shared_ptr<UIObject> m_upTitle;

@@ -44,6 +44,8 @@ protected:
 	//行列.
 	D3DXMATRIX			m_mView;	//ビュー(カメラ)行列.
 	D3DXMATRIX			m_mProj;	//射影（プロジェクション）行列.
+	
+	
 	//スコア.
 	int m_Score;
 	//カウント.
@@ -51,4 +53,10 @@ protected:
 	//時間経過でシーンを遷移する.
 	//タイマーのメンバ変数.
 	float m_Timer;
+
+	//フェードで使用する変数.
+	float m_InputTimer;
+	float m_FadeAlpha;
+	float m_FadeSpeed;
+
 };
