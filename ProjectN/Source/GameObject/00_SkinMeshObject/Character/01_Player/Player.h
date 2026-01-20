@@ -80,7 +80,6 @@ public:
 	//プレイヤーの遠距離攻撃関数.
 	//ToDo : 遠距離攻撃を発射する座標を設定している.
 	D3DXVECTOR3 GetShortAttackCenter() const;
-	//.
 	AttackShort* GetShortAttackState() const;
 
 	PlayerAttackManager* GetAttackManager() const { return m_pAttackManager.get(); }
@@ -90,34 +89,37 @@ public:
 	void SetCaptureState(float duration);
 	//Portalがゲージ増加停止を判定するための関数.
 	bool IsCapturingState() const;
-
+	//影を取得.
 	Shadow* GetShadow() const		{ return m_pShadow.get(); }
-
+	//プレイヤーが死んだときにプレイヤーを隠すかどうか.
 	void SetVisible(bool visible)	{ m_IsVisible = visible; }
 	bool IsVisible() const			{ return m_IsVisible; }
-
+	//ポイントを取得した際にプレイヤーの動作を停止させる.
 	void SetFrozen(bool frozen)		{ m_IsFrozen = frozen; }
 	bool IsFrozen() const			{ return m_IsFrozen; }
 private:
+	//プレイヤーショットマネージャー.
 	PShotManager*	m_pShotManager;
+	//攻撃マネージャ.
 	std::unique_ptr<PlayerAttackManager> m_pAttackManager;
-
-	BoundingSphere m_BSphere; //プレイヤー用バウンディングスフィア.
-
+	//プレイヤー用バウンディングスフィア.
+	BoundingSphere m_BSphere; 
+	//プレイヤーの状態取得.
 	std::shared_ptr<PlayerIdol>		m_pPlayerIdol;
 	std::shared_ptr<PlayerDead>		m_pPlayerDead;
-
+	//ポータルを取得した際に再生される.
 	std::shared_ptr<PlayerPortalAnim> m_pPlayerAnim;
-
+	//プレイヤーのステート.
 	PlayerState* m_pCurrentState;
-
-	float m_CaptureTimer = 0.0f;
-
+	//ポータル取得演出の残り時間.
+	float m_CaptureTimer;
+	//プレイヤーの初期位置を設定.
+	//ToDo : リスポーン地点も同じ.
 	D3DXVECTOR3 m_InitialPosition;
-
+	//影.
 	std::unique_ptr<Shadow> m_pShadow;
-
-	bool m_IsVisible = true;
-
+	//キャラクター表示フラグ.
+	bool m_IsVisible;
+	//動作停止フラグ.
 	bool m_IsFrozen;
 };

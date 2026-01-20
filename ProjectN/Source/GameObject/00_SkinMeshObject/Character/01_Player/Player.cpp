@@ -1,52 +1,57 @@
 ﻿#include "Player.h"
 
-#include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
+#include "System//00_Manager//00_SkinMeshManager//SkinMeshManager.h"
 
-#include "System/00_Manager/02_PShotManager/PShotManager.h"
+#include "System//00_Manager//02_PShotManager//PShotManager.h"
 
-#include "System/02_Singleton/00_Timer//Timer.h"
+#include "System//02_Singleton//00_Timer//Timer.h"
 
-#include "System/00_Manager/03_ImGuiManager/ImGuiManager.h"
+#include "System//00_Manager//03_ImGuiManager//ImGuiManager.h"
 
-#include "..//01_Player/PlayerState/PlayerState.h"
+#include "..//01_Player//PlayerState//PlayerState.h"
 #include "GameObject//00_SkinMeshObject//Character//01_Player//PlayerState//00_PlayerIdol//PlayerIdol.h"
 #include "GameObject//00_SkinMeshObject//Character//01_Player//PlayerContext//PlayerContext.h"
-#include "..//01_Player/PlayerState/03_PlayerDead/PlayerDead.h"
+#include "..//01_Player//PlayerState//03_PlayerDead//PlayerDead.h"
 
-#include "..//01_Player/PlayerState/02_PlayerPortalAnim/PlayerPortalAnim.h"
-#include "GameObject/01_SpriteObject/00_Shadow/Shadow.h"
+#include "..//01_Player//PlayerState//02_PlayerPortalAnim//PlayerPortalAnim.h"
+#include "GameObject//01_SpriteObject//00_Shadow//Shadow.h"
 
 
 
 Player::Player()
     :Character()
-    , m_pShotManager    (PShotManager::GetInstance())
-    , m_pAttackManager(std::make_unique<PlayerAttackManager>(this))
-    , m_pPlayerIdol     (std::make_shared<PlayerIdol>(this))
-    , m_pPlayerDead     (std::make_shared<PlayerDead>(this))
-    , m_pPlayerAnim     (std::make_shared<PlayerPortalAnim>(this))
+    , m_pShotManager    ( PShotManager::GetInstance() )
+    , m_pAttackManager  ( std::make_unique<PlayerAttackManager>(this) )
+    , m_pPlayerIdol     ( std::make_shared<PlayerIdol>(this) )
+    , m_pPlayerDead     ( std::make_shared<PlayerDead>(this) )
+    , m_pPlayerAnim     ( std::make_shared<PlayerPortalAnim>(this) )
 
-    , m_pCurrentState   (nullptr)
+    , m_pCurrentState   ( nullptr )
+
+    , m_CaptureTimer    ( 0.0f )
 
     , m_InitialPosition {}
 
-    , m_pShadow(std::make_unique<Shadow>())
+    , m_pShadow         ( std::make_unique<Shadow>() )
 
-    , m_IsFrozen(false)
+    , m_IsVisible       ( true )
+
+    , m_IsFrozen        ( false )
 {
+    //プレイヤーのスキンメッシュの設定.
 	SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Player);
 	auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh,[](SkinMesh*){});
 	//AttachMesh に shared_ptr を渡す
 	AttachMesh(shared_mesh);
     
     //Game開始時にIdolclassに入る.
-    //Idolclassの中でMoveとAttackを呼んでいる.
     m_pCurrentState = m_pPlayerIdol.get();
 
     if (m_pCurrentState) 
     {
         m_pCurrentState->Enter();
     }
+    //初期化.
     Init();
 }
 
@@ -56,6 +61,7 @@ Player::~Player()
 
 void Player::Update()
 {
+    //プレイヤーが死んだとき.
     if (IsDead())
     {
         if (m_pAnimCtrl) 
@@ -66,28 +72,18 @@ void Player::Update()
         Character::Update();
         return; 
     }
-
+    //ポイントをどちらかが取得したら.
     if (m_IsFrozen)
     {
-        // 見た目だけ動かす
+        //見た目だけ動かす.
         Character::Update();
         return;
     }
 
-    // デバッグ用：Kキーを押すと10ダメージ
-    if (GetAsyncKeyState('K') & 0x0001)
-    {
-        m_HitPoint -= 10.0f;
-        if (m_HitPoint < 0.0f) m_HitPoint = 0.0f;
-    }
+    //ToDo : 最初に書いておかないと、ポータルを触った時に弾が進まない.
+    m_pShotManager->Update();
 
-    //最初に書いておかないと、ポータルを触った時に弾が進まない.
-    if (m_pShotManager)
-    {
-        m_pShotManager->Update(); // 弾の移動処理を実行
-    }
-
-
+    //ポータル取得アニメーション再生中.
     if (IsCapturingState())
     {
         //タイマーの更新.
@@ -98,14 +94,15 @@ void Player::Update()
             //タイマー終了: StateをIdolに戻す.
             PlayerState* nextState = m_pPlayerIdol.get();
             
-            if (m_pCurrentState) {
+            if (m_pCurrentState) 
+            {
                 m_pCurrentState->Exit(); // 古いステート(PortalAnim)の終了処理
             }
             m_pCurrentState = nextState; // ステートを切り替え
-            if (m_pCurrentState) {
+            if (m_pCurrentState) 
+            {
                 m_pCurrentState->Enter(); // 新しいステート(Idol)の開始処理
             }
-
             m_CaptureTimer = 0.0f;
         }
         return;
@@ -113,18 +110,11 @@ void Player::Update()
 
 
 
-    //PlayerAttackManager の更新
-    if (m_pAttackManager)
-    {
-        m_pAttackManager->Update();
-    }
+    //プレイヤーの攻撃マネージャーの更新.
+    m_pAttackManager->Update();
 
-
-    //これでその時のStateに入る.
-    if (m_pCurrentState)
-    {
-        m_pCurrentState->Update();
-    }
+    //プレイヤーステートの更新.
+    m_pCurrentState->Update();
 
     //アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
@@ -133,15 +123,8 @@ void Player::Update()
     //ボーン座標の取得.
     //弾の発射位置を計算するために使用.
     m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
-    //m_pMesh->GetPosFromBone("boss_head", &m_BonePos);
-
+    //影の更新.
     m_pShadow->Update();
-
-
-    if (GetAsyncKeyState('L') & 0x8000)
-    {
-        SetPosition(m_InitialPosition);
-    }
 
     //基底クラスの更新処理.
     Character::Update();
@@ -155,7 +138,6 @@ void Player::Draw()
 	Character::Draw();
 
 #ifdef _DEBUG
-
     ImGui::Begin(JAPANESE("playerのポジションを変更"));
     ImGui::InputFloat3("pos", m_Position);
     ImGui::End();
@@ -184,6 +166,7 @@ void Player::Init()
     //当たり判定の位置を変更.
     m_HitCenterOffset = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
+    //影の処理.
     m_pShadow->Create();
     m_pShadow->SetTargetShadowPos(this);
 
@@ -192,6 +175,7 @@ void Player::Init()
 
 void Player::Hit()
 {
+    //ダメージ系統.
     constexpr float zero = 0.0f;
     constexpr float ten = 10.0f;
     //Playerのダメージ実装用のローカル変数.
@@ -202,21 +186,24 @@ void Player::Hit()
     m_HitPoint -= Damege_Hit;
     if (m_HitPoint <= Dead_HP)
     {
-        //ここでPlayerのHPが0になったらPlayerDeadClassを呼ぶ.
+        //ここでPlayerのHPが0になったら死亡ステートを呼ぶ.
         m_HitPoint = Dead_HP;
 
-        // nextState という名前に修正し、ステート遷移ロジックを実装
+        //死んだときのステートへ移動.
         PlayerState* nextState = m_pPlayerDead.get();
 
         if (m_pCurrentState != nextState)
         {
-            if (m_pCurrentState) {
+            if (m_pCurrentState) 
+            {
                 m_pCurrentState->Exit();    //古いステートの終了処理
             }
             m_pCurrentState = nextState;    //ステートを切り替え
-            if (m_pCurrentState) {
+            if (m_pCurrentState) 
+            {
                 m_pCurrentState->Enter();   //新しいステートの開始処理
             }
+            //死んだのでプレイヤーを非表示.
             SetVisible(false);
         }
     }
@@ -230,6 +217,7 @@ D3DXVECTOR3 Player::GetHitCenter() const
 
 void Player::InitializePlayerMove()
 {
+    //ToDo : 遠距離攻撃の動作バグの修正.
     m_pAttackManager->CleanUpState(PlayerAttackManager::enAttack::Long);
     m_pPlayerIdol->Init();
 }
@@ -245,18 +233,19 @@ void Player::Respawn()
         m_pCurrentState->Exit();
     }
     m_pCurrentState = m_pPlayerIdol.get();
-    if (m_pCurrentState) {
-        m_pCurrentState->Enter(); // ここで Idle アニメーションに切り替わる
+    if (m_pCurrentState) 
+    {
+        m_pCurrentState->Enter(); 
     }
     
-    // 3. パラメータのリセット
+    //パラメータのリセット.
     m_HitPoint = 100.0f;
-
+    //プレイヤーを表示する.
     SetVisible(true);
 
     m_CaptureTimer = 0.0f;
 
-    // 4. 攻撃マネージャー等の初期化（既存の関数を利用）
+    //攻撃マネージャー等の初期化
     InitializePlayerMove();
 }
 
@@ -278,8 +267,10 @@ D3DXVECTOR3 Player::Player_AD(float RotationY) const
     return dir;
 }
 
-void Player::ChangeAttackType(PlayerAttackManager::enAttack type)
+void Player::ChangeAttackType(
+    PlayerAttackManager::enAttack type)
 {
+    //プレイヤーの攻撃状態の変更.
     if (m_pAttackManager)
     {
         m_pAttackManager->ChangeAttackState(type);
@@ -292,7 +283,6 @@ bool Player::GetBonePosition(const char* boneName, D3DXVECTOR3* outPos) const
     {
         return m_pMesh->GetPosFromBone(boneName, outPos);
     }
-
     return false;
 }
 
@@ -315,7 +305,6 @@ AttackShort* Player::GetShortAttackState() const
 {
     if (m_pAttackManager)
     {
-        // PlayerAttackManager の新しいメンバ関数を呼び出す
         return m_pAttackManager->GetCurrentShortAttack();
     }
     return nullptr;
@@ -329,15 +318,16 @@ void Player::SetCaptureState(float duration)
         return;
     }
 
-    // タイマーをセット
+    //タイマーをセット.
     m_CaptureTimer = duration;
 
-    // State 遷移ロジック
-    if (m_pCurrentState) {
+    if (m_pCurrentState) 
+    {
         m_pCurrentState->Exit();    // 古いステートの終了処理
     }
     m_pCurrentState = nextState;    // ステートを切り替え
-    if (m_pCurrentState) {
+    if (m_pCurrentState) 
+    {
         m_pCurrentState->Enter();   // 新しいステートの開始処理（PortalAnim::Enter() が呼ばれる）
     }
 }
