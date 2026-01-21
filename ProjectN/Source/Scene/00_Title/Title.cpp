@@ -6,6 +6,7 @@
 #include "DirectX/DirectX11.h"
 #include "System/02_Singleton/00_Timer/Timer.h"
 
+
 Title::Title()
     : m_Select              ( SelectMenu::Start )
     , m_State               ( TitleState::Select )
