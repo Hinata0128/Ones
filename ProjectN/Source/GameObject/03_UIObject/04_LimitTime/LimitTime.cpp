@@ -18,11 +18,11 @@ LimitTime::LimitTime()
 	, m_upClockMin			( std::make_shared<UIObject>() )
 
 
-	//, m_LimitTime			( 90.0f )
-	//, m_RemainTime		( 90.0f )
+	, m_LimitTime			( 90.0f )
+	, m_RemainTime			( 90.0f )
 
-	, m_LimitTime			( 500.0f )
-	, m_RemainTime			( 500.0f )
+	//, m_LimitTime			( 500.0f )
+	//, m_RemainTime			( 500.0f )
 
 	//, m_LimitTime			( 10.0f )
 	//, m_RemainTime		( 10.0f )

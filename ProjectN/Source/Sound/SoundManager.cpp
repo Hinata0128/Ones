@@ -33,6 +33,7 @@ bool SoundManager::Load( HWND hWnd )
 	};
 	SoundList SList[] =
 	{
+		{ enList::SE_Round,		_T( "Data\\Sound\\SE\\Round.mp3" ),				_T("SE_Round") },
 		{ enList::SE_Select,		_T( "Data\\Sound\\SE\\Select.mp3" ),				_T("SE_Select") },
 		{ enList::SE_Slash,		_T( "Data\\Sound\\SE\\Slash.mp3" ),				_T("SE_Slash") },
 		{ enList::SE_PortalGet,		_T( "Data\\Sound\\SE\\PortalGet.mp3" ),				_T("SE_PortalGet") },

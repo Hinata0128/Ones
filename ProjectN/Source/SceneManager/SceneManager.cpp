@@ -203,14 +203,17 @@ void SceneManager::MakeScene(List Scene)
 		break;
 	case SceneManager::First:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
+		SoundManager::GetInstance()->PlaySE(SoundManager::SE_Round);
 		m_pScene = std::make_unique<FirstRound>();
 		break;
 	case SceneManager::Second:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Main);
+		SoundManager::GetInstance()->PlaySE(SoundManager::SE_Round);
 		m_pScene = std::make_unique<SecondRound>();
 		break;
 	case SceneManager::Final:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Main);
+		SoundManager::GetInstance()->PlaySE(SoundManager::SE_Round);
 		m_pScene = std::make_unique<FinalRound>();
 		break;
 	case SceneManager::Main:

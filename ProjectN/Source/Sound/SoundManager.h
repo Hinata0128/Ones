@@ -22,6 +22,7 @@ public:
 		SE_PortalGet,	//ポータルを取得したときに再生されるSE.
 		SE_Slash,	//斬る攻撃.
 		SE_Select,	//選択肢選び.
+		SE_Round,	//ラウンド開始.
 
 		//音が増えたら「ここ」に追加してください.
 		max,		//最大数.
