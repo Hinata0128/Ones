@@ -47,8 +47,8 @@ void ShadowSmall::Draw()
 {
 	//深度チェックをする.
 	DirectX11::GetInstance()->SetDepth(false);
-	SpriteObject::Draw();
 	DirectX11::GetInstance()->SetDepth(true);
+	SpriteObject::Draw();
 
 	DirectX11::GetInstance()->SetAlphaBlend(false);
 }

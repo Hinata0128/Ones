@@ -196,7 +196,7 @@ void SceneManager::MakeScene(List Scene)
 	switch (Scene)
 	{
 	case SceneManager::OP:
-		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
+		//SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Ending);
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Over);
 		m_pScene = std::make_unique<Title>();

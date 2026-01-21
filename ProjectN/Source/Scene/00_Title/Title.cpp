@@ -166,21 +166,50 @@ void Title::Draw()
 void Title::UpdateSelect()
 {
     m_InputTimer += Timer::GetInstance().DeltaTime();
-    if (m_InputTimer < 0.2f) return;
 
-    if (GetAsyncKeyState(VK_UP) & 0x0001)
+    SelectMenu oldSelect = m_Select;
+
+    if (GetAsyncKeyState(VK_UP) & 0x8000)
     {
-        m_Select = SelectMenu::Start;
+        if (m_InputTimer >= 0.2f)
+        {
+            m_Select = SelectMenu::Start;
+        }
+    }
+    else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+    {
+        if (m_InputTimer >= 0.2f)
+        {
+            m_Select = SelectMenu::End;
+        }
+    }
+
+    if (m_Select != oldSelect)
+    {
         SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
+
+        // 選択が変わったのでタイマーリセット
         m_InputTimer = 0.0f;
     }
 
-    if (GetAsyncKeyState(VK_DOWN) & 0x0001)
+    if (GetAsyncKeyState(VK_RETURN) & 0x0001)
     {
-        m_Select = SelectMenu::End;
-        SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
-        m_InputTimer = 0.0f;
+        if (m_InputTimer >= 0.2f)
+        {
+            SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
+            if (m_Select == SelectMenu::Start)
+            {
+                m_State = TitleState::FadeOut;
+                m_FadeAlpha = 0.0f;
+            }
+            else
+            {
+                PostQuitMessage(0);
+            }
+            m_InputTimer = 0.0f;
+        }
     }
+
 
     if (m_Select == SelectMenu::Start)
     {
@@ -192,20 +221,7 @@ void Title::UpdateSelect()
         m_StartPos = { 550.f, 550.f, 0.f };
         m_EndPos = { 550.f, 650.f, 0.f };
     }
-    if (GetAsyncKeyState(VK_RETURN) & 0x0001)
-    {
-        if (m_Select == SelectMenu::Start)
-        {
-            SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
-            m_State = TitleState::FadeOut;
-            m_FadeAlpha = 0.0f;
-        }
-        else
-        {
-            SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
-            PostQuitMessage(0);
-        }
-    }
+
 }
 
 void Title::UpdateFadeOut()

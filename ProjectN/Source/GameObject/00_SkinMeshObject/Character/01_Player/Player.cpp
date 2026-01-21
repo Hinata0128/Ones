@@ -119,15 +119,24 @@ void Player::Update()
     //アニメーション更新
     m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
 
-
-    //ボーン座標の取得.
-    //弾の発射位置を計算するために使用.
-    m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
-    //影の更新.
-    m_pShadow->Update();
-
     //基底クラスの更新処理.
     Character::Update();
+
+
+    D3DXVECTOR3 neckPos;
+    if (GetBonePosition("Bone002", &neckPos))
+    {
+        m_BSphere.SetPosition(neckPos);
+    }
+    else
+    {
+        // ボーンが取れない場合のフォールバック（モデルの中心＋オフセット）
+        m_BSphere.SetPosition(m_Position + m_HitCenterOffset);
+    }
+
+    m_pMesh->GetPosFromBone("blade_l_head", &m_BonePos);
+    m_pShadow->Update();
+
 }
 
 void Player::Draw()
@@ -136,6 +145,16 @@ void Player::Draw()
     //ToDo : 影の表示は先.
     m_pShadow->Draw();
 	Character::Draw();
+#ifdef _DEBUG
+    // プレイヤーのスフィアを明示的に描画
+    m_BSphere.Draw();
+
+    ImGui::Begin(JAPANESE("playerのポジションを変更"));
+    ImGui::InputFloat3("pos", m_Position);
+    D3DXVECTOR3 bPos = m_BSphere.GetPostion();
+    ImGui::Text("Sphere Pos: %.2f, %.2f, %.2f", bPos.x, bPos.y, bPos.z);
+    ImGui::End();
+#endif
 
 #ifdef _DEBUG
     ImGui::Begin(JAPANESE("playerのポジションを変更"));
@@ -164,6 +183,7 @@ void Player::Init()
     m_BSphere.SetRadius(0.7f);
 
     //当たり判定の位置を変更.
+    m_BSphere.SetRadius(0.5f);
     m_HitCenterOffset = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
     //影の処理.
@@ -212,7 +232,7 @@ void Player::Hit()
 D3DXVECTOR3 Player::GetHitCenter() const
 {
     //プレイヤーモデルの位置 (m_Position) にオフセットを加算して返す
-    return m_Position + m_HitCenterOffset;
+    return m_BSphere.GetPostion();;
 }
 
 void Player::InitializePlayerMove()
