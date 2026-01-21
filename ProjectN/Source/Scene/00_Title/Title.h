@@ -45,6 +45,10 @@ private:
     D3DXVECTOR3 m_StartPos;
     D3DXVECTOR3 m_EndPos;
 
+    //背景画像.
+    std::shared_ptr<Sprite2D> m_pSpriteBack;
+    std::shared_ptr<UIObject> m_upBack;
+
     std::shared_ptr<Sprite2D> m_pSpriteTitle;
     std::shared_ptr<UIObject> m_upTitle;
 

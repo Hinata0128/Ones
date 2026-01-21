@@ -15,6 +15,9 @@ Title::Title()
     , m_StartPos            ( 550.f, 550.f, 0.f )
     , m_EndPos              ( 550.f, 650.f, 0.f )
 
+    , m_pSpriteBack         ( std::make_shared<Sprite2D>() )
+    , m_upBack              ( std::make_shared<UIObject>() )
+
     , m_pSpriteTitle        ( std::make_shared<Sprite2D>() )
     , m_upTitle             ( std::make_shared<UIObject>() )
 
@@ -46,9 +49,13 @@ void Title::Initialize()
 
 void Title::Create()
 {
-    //タイトル画像のサイズ.
+    //背景・フェード画像のサイズ.
     const float WND_W = 1280.0f;
     const float WND_H = 720.0f;
+
+    //Lose画像のサイズのローカル変数.
+    const float Defeat_W = 430.0f;
+    const float Defeat_H = 210.0f;
 
     //スタート画像のサイズ.
     const float Start_W = 135.0f;
@@ -61,9 +68,18 @@ void Title::Create()
     //背景画像の設定
     Sprite2D::SPRITE_STATE ssTitle{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
     //背景画像の読み込み.
-    m_pSpriteTitle->Init(_T("Data\\Image\\Setting\\Surface.png"), ssTitle);
+    m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Surface.png"), ssTitle);
+    m_upBack->AttachSprite(m_pSpriteBack);
+    m_upBack->SetPosition( 0.0f, 0.0f, 0.0f );
+
+    //タイトル画像の読み込み.
+    Sprite2D::SPRITE_STATE SSTitle =
+    {
+        Defeat_W, Defeat_H, Defeat_W, Defeat_H, Defeat_W, Defeat_H
+    };
+    m_pSpriteTitle->Init(_T("Data\\Image\\Setting\\Title.png"), SSTitle);
     m_upTitle->AttachSprite(m_pSpriteTitle);
-    m_upTitle->SetPosition( 0.0f, 0.0f, 0.0f );
+    m_upTitle->SetPosition(450.0f, 200.0, 0.0f);
 
     // スタートボタン
     Sprite2D::SPRITE_STATE ssStart{ Start_W, Staet_H, Start_W, Staet_H, Start_W, Staet_H };
@@ -129,6 +145,7 @@ void Title::Draw()
     dx->SetDepth(false);
     dx->SetAlphaBlend(true);
 
+    m_upBack->Draw();
     m_upTitle->Draw();
 
     D3DXVECTOR3 currentSelectPos = (m_Select == SelectMenu::Start) ? m_StartPos : m_EndPos;
