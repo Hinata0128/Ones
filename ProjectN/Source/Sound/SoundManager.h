@@ -19,6 +19,9 @@ public:
 		SE_Shot,	//ショット.
 		SE_Exp,		//爆発.
 		SE_Enter,	//決定の時になる音.
+		SE_PortalGet,	//ポータルを取得したときに再生されるSE.
+		SE_Slash,	//斬る攻撃.
+		SE_Select,	//選択肢選び.
 
 		//音が増えたら「ここ」に追加してください.
 		max,		//最大数.

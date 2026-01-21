@@ -33,8 +33,11 @@ bool SoundManager::Load( HWND hWnd )
 	};
 	SoundList SList[] =
 	{
+		{ enList::SE_Select,		_T( "Data\\Sound\\SE\\Select.mp3" ),				_T("SE_Select") },
+		{ enList::SE_Slash,		_T( "Data\\Sound\\SE\\Slash.mp3" ),				_T("SE_Slash") },
+		{ enList::SE_PortalGet,		_T( "Data\\Sound\\SE\\PortalGet.mp3" ),				_T("SE_PortalGet") },
 		{ enList::SE_Enter,		_T( "Data\\Sound\\SE\\Enter.mp3" ),				_T("SE_Enter") },
-		{ enList::SE_Exp,		_T( "Data\\Sound\\SE\\explosion.mp3" ),			_T( "SE_Exp" ) },
+		{ enList::SE_Exp,		_T( "Data\\Sound\\SE\\Daed.mp3" ),			_T( "SE_Daed" ) },
 		{ enList::SE_Shot,		_T( "Data\\Sound\\SE\\Shot.mp3" ),				_T( "SE_Shot" )},
 		{ enList::BGM_Ending,	_T( "Data\\Sound\\BGM\\Win.mp3" ),			_T( "BGM_End"	)},
 		{ enList::BGM_Over,		_T( "Data\\Sound\\BGM\\GameOver.mp3" ),			_T( "BGM_Over"	)},
