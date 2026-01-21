@@ -30,6 +30,7 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     , m_IsFrozen    (false)
 
     , m_pShadow     ( std::make_shared<Shadow>() )
+    , m_pPlayer     ( std::make_unique<Player>() )
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});
@@ -238,42 +239,42 @@ void Boss::ChangeState(BossStateBase* state)
 
 void Boss::AutoShot()
 {
-        //プレイヤーとの距離計算
-        D3DXVECTOR3 toPlayer = GetPlayerPos() - GetPosition();
-        float distance = D3DXVec3Length(&toPlayer);
+    if (!m_pPlayer) return;
 
-        //発射距離の設定
-        //個々の数値を変更すると発射までの距離が変更できる.
-        constexpr float SHOOT_DISTANCE = 20.0f;
+    // 1. 距離チェック（足元基準でOK）
+    D3DXVECTOR3 playerPos = GetPlayerPos();
+    D3DXVECTOR3 toPlayer = playerPos - GetPosition();
+    float distance = D3DXVec3Length(&toPlayer);
 
-        if (distance <= SHOOT_DISTANCE)
+    constexpr float SHOOT_DISTANCE = 20.0f;
+
+    if (distance <= SHOOT_DISTANCE)
+    {
+        // 2. 発射位置（ユーザー様のご指定通り固定）
+        D3DXVECTOR3 shotPos = GetPosition() + D3DXVECTOR3(0.0f, 3.0f, 0.0f);
+
+        // 3. 狙うターゲットの位置（プレイヤーのボーン）
+        D3DXVECTOR3 targetPos;
+        if (!m_pPlayer->GetBonePosition("Bone002", &targetPos))
         {
-            //変換行列作成
-            D3DXMATRIX matS, matR, matT, enemyWorldMatrix;
-            D3DXMatrixScaling(&matS, m_Scale.x, m_Scale.y, m_Scale.z);
-            D3DXMatrixRotationYawPitchRoll(&matR, m_Rotation.y, m_Rotation.x, m_Rotation.z);
-            D3DXMatrixTranslation(&matT, m_Position.x, m_Position.y, m_Position.z);
-            D3DXMatrixMultiply(&enemyWorldMatrix, &matS, &matR);
-            D3DXMatrixMultiply(&enemyWorldMatrix, &enemyWorldMatrix, &matT);
-
-            //ボーン座標をワールド座標に変換
-            D3DXVECTOR3 worldBonePos;
-            D3DXVec3TransformCoord(&worldBonePos, &m_BonePos, &enemyWorldMatrix);
-
-            //発射位置
-            D3DXVECTOR3 shotPos = GetPosition() + D3DXVECTOR3(0.0f, 3.0f, 0.0f);
-
-            //プレイヤー方向ベクトル
-            D3DXVECTOR3 dir = toPlayer;
-            float len = D3DXVec3Length(&dir);
-            if (len > 0.001f)
-            {
-                D3DXVec3Normalize(&dir, &dir);
-
-                //弾追加
-                m_pENShotManager->AddEnemyNomalShot(shotPos, dir);
-            }
+            // ボーンが取得できなかった時の保険（少し高い位置を狙う）
+            targetPos = playerPos + D3DXVECTOR3(0.0f, 2.0f, 0.0f);
         }
+
+        // 4. 方向ベクトルの計算を修正
+        // 「固定の発射位置」から「動いているボーン」へ向かうベクトルを作成
+        D3DXVECTOR3 finalDir = targetPos - shotPos;
+        float len = D3DXVec3Length(&finalDir);
+
+        if (len > 0.001f)
+        {
+            // 正規化して長さを1にする
+            D3DXVec3Normalize(&finalDir, &finalDir);
+
+            // 弾を追加（計算した finalDir を使用）
+            m_pENShotManager->AddEnemyNomalShot(shotPos, finalDir);
+        }
+    }
 }
 
 D3DXVECTOR3 Boss::GetHitCenter() const

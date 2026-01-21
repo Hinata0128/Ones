@@ -87,78 +87,54 @@ void CollisionManager::Clear()
 
 void CollisionManager::AllCollider()
 {
-    if (!m_pPlayer) return;
+    if (!m_pPlayer || m_pPlayer->IsDead()) return;
 
-    //プレイヤーの位置を同期
-    m_pPlayer->GetBoundingSphere().SetPosition(m_pPlayer->GetHitCenter());
-    D3DXVECTOR3 pPos = m_pPlayer->GetHitCenter();
-    float pRadius = m_pPlayer->GetBoundingSphere().GetRadius();
+    // プレイヤーのスフィア座標を取得（Player::Updateでボーン位置に更新済み）
+    const BoundingSphere& pSphere = m_pPlayer->GetBoundingSphere();
+    D3DXVECTOR3 pPos = pSphere.GetPostion();
+    float pRadius = pSphere.GetRadius();
 
-    // 敵（ボス）のリストをループ
+    // 1. プレイヤー vs ボス (押し戻し)
     for (auto enemy : m_vEnemies)
     {
         if (!enemy) continue;
 
-        // 2. ボスの現在の衝突判定用中心座標を取得
+        enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
         D3DXVECTOR3 ePos = enemy->GetHitCenter();
         float eRadius = enemy->GetBoundingSphere().GetRadius();
 
-        // 3. ２点間のベクトルと距離を計算
         D3DXVECTOR3 diff = pPos - ePos;
         float distance = D3DXVec3Length(&diff);
         float sumRadius = pRadius + eRadius;
 
-        // 4. 球体同士の衝突判定
         if (distance < sumRadius)
         {
-            // --- 押し戻しロジック (Hit関数は使わない) ---
-
-            // 重なっている距離（めり込み量）を算出
             float overlap = sumRadius - distance;
+            if (distance < 0.0001f) { diff = D3DXVECTOR3(0, 0, 1); }
+            else { D3DXVec3Normalize(&diff, &diff); }
 
-            // ゼロ除算を避けるための安全策
-            if (distance < 0.0001f) {
-                diff = D3DXVECTOR3(0, 0, 1); // 完全に重なっている場合はZ方向に逃がす
-            }
-            else {
-                D3DXVec3Normalize(&diff, &diff); // 押し戻す方向を正規化
-            }
-
-            // 5. プレイヤーを「めり込んだ分だけ」外側に移動させる
-            // プレイヤーの座標を直接書き換えることで物理的な壁を作る
             D3DXVECTOR3 moveVec = diff * overlap;
-
-            // 地面（Y軸）のめり込みを計算に入れない場合は 0 にする
-            moveVec.y = 0.0f;
-
+            moveVec.y = 0.0f; // Y軸移動を制限
             m_pPlayer->AddPosition(moveVec);
 
-            // 座標を動かしたので、プレイヤーの球体の位置も即座に更新する
+            // 移動させたのでスフィア位置を即時再同期
             m_pPlayer->GetBoundingSphere().SetPosition(m_pPlayer->GetHitCenter());
-
-            // ※必要であればここに「ボスに当たった」というフラグ処理だけ書くことも可能
         }
     }
 
+    // 2. プレイヤー弾 vs ボス
     for (auto enemy : m_vEnemies)
     {
         if (!enemy) continue;
-
-        // 敵の当たり判定の中心を更新
-        enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
-
         for (auto pShot : m_PlayerShots)
         {
             if (!pShot || !pShot->IsDisplay() || !pShot->IsActive()) continue;
 
-            // プレイヤー弾の当たり判定の中心を更新
             pShot->GetBoundingSphere().SetPosition(pShot->GetPosition());
 
             if (pShot->GetBoundingSphere().IsHit(enemy->GetBoundingSphere()))
             {
                 enemy->Hit();
-
-                // プレイヤー弾の非表示化と移動
                 pShot->SetDisplay(false);
                 pShot->SetActive(false);
                 pShot->SetPosition(D3DXVECTOR3(0.f, -100.f, 0.f));
@@ -166,29 +142,25 @@ void CollisionManager::AllCollider()
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
                     SoundManager::GetInstance()->PlaySE(SoundManager::SE_Exp);
-                    // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
                     Effect::Play(Effect::Laser01, enemy->GetHitCenter());
                     enemy->SetPosition(0.0f, -10.0f, 0.0f);
                 }
-
-
-                // 衝突処理が完了したので、次の敵へ
                 break;
             }
         }
     }
 
+    // 3. 敵の弾 vs プレイヤー
     for (auto eShot : m_EnemyShots)
     {
         if (!eShot || !eShot->IsDisplay() || !eShot->IsActive()) continue;
 
         eShot->GetBoundingSphere().SetPosition(eShot->GetPosition());
 
+        // プレイヤーのスフィアと判定
         if (eShot->GetBoundingSphere().IsHit(m_pPlayer->GetBoundingSphere()))
         {
-            //出力に表示する.
-            OutputDebugStringA("Enemy Shot hit Player!\n");
-            m_pPlayer->Hit();
+            m_pPlayer->Hit(); // ここでプレイヤーのHPが減る
 
             if (m_pPlayer->GetHitPoint() <= 0.0f)
             {
@@ -198,43 +170,29 @@ void CollisionManager::AllCollider()
 
             eShot->SetDisplay(false);
             eShot->SetActive(false);
-
             break;
         }
     }
 
-    // ----------------------------------------------
-    // 近距離攻撃（剣） vs 敵
-    // ----------------------------------------------
-    // Playerクラス経由でAttackShortインスタンスを取得 (実装済みの関数を使用)
+    // 4. 近距離攻撃 vs 敵
     AttackShort* pShortAttack = m_pPlayer->GetShortAttackState();
-
-    // pShortAttack が有効で、かつ AttackShort ステートがヒット判定を有効にしている場合のみ実行
     if (pShortAttack && pShortAttack->IsHitActive() && !pShortAttack->HasHit())
     {
         const BoundingSphere& swordSphere = pShortAttack->GetHitBox();
-
         for (auto enemy : m_vEnemies)
         {
             if (!enemy) continue;
-
-            enemy->GetBoundingSphere().SetPosition(enemy->GetHitCenter());
-
             if (swordSphere.IsHit(enemy->GetBoundingSphere()))
             {
-
                 enemy->Hit();
-                pShortAttack->SetHit(); // ← ここで「もう当たった」
-
+                pShortAttack->SetHit();
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
                     SoundManager::GetInstance()->PlaySE(SoundManager::SE_Exp);
-                    // エフェクト
                     Effect::Play(Effect::Laser01, enemy->GetHitCenter());
-                    enemy->SetPosition(0.0f,-10.0f,0.0f);
+                    enemy->SetPosition(0.0f, -10.0f, 0.0f);
                 }
-
-                break;                  // 複数敵に当てないなら break
+                break;
             }
         }
     }

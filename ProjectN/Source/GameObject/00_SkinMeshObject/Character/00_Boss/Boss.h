@@ -136,4 +136,5 @@ private:
 	D3DXVECTOR3 m_pPortalPos;
 
 	std::shared_ptr<Shadow> m_pShadow;
+	std::unique_ptr<Player> m_pPlayer;
 };

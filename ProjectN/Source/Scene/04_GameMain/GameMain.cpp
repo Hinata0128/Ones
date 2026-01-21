@@ -313,12 +313,12 @@ void GameMain::Draw()
 		m_pEnemyNomal->Draw();
 	}
 
+
+
 	m_pPortal->Draw();
 
 	PShotManager::GetInstance()->Draw(m_mView, m_mProj);
 	BossShotManager::GetInstance()->Draw(m_mView, m_mProj);
-
-
 
 #ifdef _DEBUG
 
