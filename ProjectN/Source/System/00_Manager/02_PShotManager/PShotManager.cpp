@@ -3,6 +3,8 @@
 
 #include "GameObject/02_StaticMeshObject/01_Portal/Portal.h"
 
+#include "Sound/SoundManager.h"
+
 PShotManager::PShotManager()
 {
 }
@@ -59,6 +61,8 @@ void PShotManager::AddPlayerShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Init
 	PlayerShot->Update();
 
 	m_PlayerShot.push_back(std::move(PlayerShot));	//ƒŠƒXƒg‚É’Ç‰Á.
+
+	SoundManager::GetInstance()->PlaySE(SoundManager::SE_Shot);
 }
 
 void PShotManager::ReMovePlayerShot(size_t index)
