@@ -5,6 +5,8 @@
 
 #include "System/02_Singleton/01_Camera/Camera.h"
 
+#include "Sound/SoundManager.h"
+
 //ƒ[ƒJƒ‹•Ï”.
 constexpr float zero = 0.0f;
 constexpr float add_value = 0.1f;
