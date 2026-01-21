@@ -6,6 +6,8 @@
 #include "DirectX/DirectX11.h"
 #include "System/02_Singleton/00_Timer/Timer.h"
 
+#include "Sound/SoundManager.h"
+
 
 Title::Title()
     : m_Select              ( SelectMenu::Start )
@@ -109,6 +111,15 @@ void Title::Update()
         SceneManager::GetInstance()->LoadScene(SceneManager::First);
         break;
     }
+
+    if (GetAsyncKeyState(VK_SPACE) & 0x0001)
+    {
+        SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
+    }
+    if (GetAsyncKeyState('A') & 0x0001)
+    {
+        SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+    }
 }
 
 void Title::Draw()
@@ -160,12 +171,14 @@ void Title::UpdateSelect()
     if (GetAsyncKeyState(VK_UP) & 0x0001)
     {
         m_Select = SelectMenu::Start;
+        SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
         m_InputTimer = 0.0f;
     }
 
     if (GetAsyncKeyState(VK_DOWN) & 0x0001)
     {
         m_Select = SelectMenu::End;
+        SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
         m_InputTimer = 0.0f;
     }
 
@@ -183,11 +196,13 @@ void Title::UpdateSelect()
     {
         if (m_Select == SelectMenu::Start)
         {
+            SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
             m_State = TitleState::FadeOut;
             m_FadeAlpha = 0.0f;
         }
         else
         {
+            SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
             PostQuitMessage(0);
         }
     }

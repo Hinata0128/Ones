@@ -13,6 +13,8 @@
 #include "System/00_Manager/02_PShotManager/PShotManager.h"
 #include "System/00_Manager/04_BossShotManager/BossShotManager.h"
 
+#include "Sound/SoundManager.h"
+
 Portal::Portal()
 	: StaticMeshObject()
 	, m_PortalIncreaseF(0.0f)
@@ -192,6 +194,8 @@ void Portal::Init()
 	m_PortalIncrease = 0;
 	m_pPortalState = PortalPriority::None;
 
+	m_FirstEnterPriority = PortalPriority::None;
+
 	m_IsRoundFinished = false;      // 100%判定をリセット
 	m_IsTransitionStarted = false;  // 遷移中フラグをリセット
 	m_TransitionTimer = 0.0f;       // タイマーを0にリセット
@@ -330,13 +334,22 @@ void Portal::ChackPriority()
 		{
 			if (auto player = m_pPlayer.lock()) player->SetCaptureState(1.0f);
 			m_FirstEnterPriority = PortalPriority::Player;
+
+			SoundManager::GetInstance()->PlaySE(SoundManager::SE_PortalGet);
 		}
 		m_pPortalState = PortalPriority::Player;
 	}
 	else if (!m_IsPlayerPriority && m_IsEnemyPriority)
 	{
-		if (m_pPortalState != PortalPriority::Enemy) m_FirstEnterPriority = PortalPriority::Enemy;
+		// --- ここを修正 ---
+		if (m_pPortalState != PortalPriority::Enemy)
+		{
+			m_FirstEnterPriority = PortalPriority::Enemy;
+			// この if ブロックの中に入れることで「切り替わった瞬間」だけ鳴ります
+			SoundManager::GetInstance()->PlaySE(SoundManager::SE_PortalGet);
+		}
 		m_pPortalState = PortalPriority::Enemy;
+		// SoundManager::GetInstance()->PlaySE(SoundManager::SE_PortalGet); // ←ここにあったのを消す
 	}
 	else if (m_IsPlayerPriority && m_IsEnemyPriority)
 	{
