@@ -55,6 +55,8 @@ bool SoundManager::Load( HWND hWnd )
 		{
 			return false;
 		}
+		//‰¹—Ê‚Ì’²ß‚ğ‚µ‚Ä‚¢‚é.
+		m_pSound[SList[i].listNo]->SetVolume(200);
 	}
 
 	return true;

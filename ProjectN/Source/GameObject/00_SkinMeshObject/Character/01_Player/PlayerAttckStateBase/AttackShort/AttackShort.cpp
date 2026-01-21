@@ -4,6 +4,8 @@
 #include "..//..//PlayerContext/PlayerContext.h"
 #include "System/02_Singleton/00_Timer/Timer.h"
 
+#include "Sound/SoundManager.h"
+
 AttackShort::AttackShort()
 	: PlayerAttckStateBase	()
 	, m_ShortCoolDown		(0.0f)
@@ -17,7 +19,7 @@ AttackShort::~AttackShort()
 
 void AttackShort::Enter(Player* player)
 {
-	m_ShortCoolDown = m_CoolTime;
+	m_ShortCoolDown = 0.0f;
 	m_IsHitActive = false;
 	m_HasHit = false;
 	// 当たり判定の半径を設定
@@ -37,19 +39,24 @@ void AttackShort::ExecuteAttack(Player* player)
 	}
 	else
 	{
+		m_ShortCoolDown = 0.0f;
 		m_IsHitActive = false; // クールタイム終了で無効化
 	}
 
 	// 近距離攻撃動作 (クリック検出)
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 && m_ShortCoolDown <= 0.0f)
+	if (m_ShortCoolDown <= 0.0f)
 	{
-		// クールタイムリセット (クールタイム = 当たり判定の有効時間)
-		m_ShortCoolDown = m_CoolTime;
-		m_IsHitActive = true;
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		{
+			// クールタイム設定
+			m_ShortCoolDown = m_CoolTime;
+			m_IsHitActive = true;
+			m_HasHit = false;
 
-		m_HasHit = false;
+			// SE再生（ここを通るはずです！）
+			SoundManager::GetInstance()->PlaySE(SoundManager::SE_Slash);
+		}
 	}
-
 	std::string BoneName = "blade_r_head";
 
 	//剣先の位置を毎フレーム更新していく.
