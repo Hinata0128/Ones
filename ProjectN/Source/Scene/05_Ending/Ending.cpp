@@ -8,6 +8,8 @@
 
 #include "System//02_Singleton//00_Timer//Timer.h"
 
+#include "Sound//SoundManager.h"
+
 Ending::Ending()
 	: SceneBase()
 
@@ -202,21 +204,49 @@ void Ending::Draw()
 void Ending::UpdateSelect()
 {
 	m_InputTimer += Timer::GetInstance().DeltaTime();
-	if (m_InputTimer < 0.2f)
-	{
-		return;
-	}
 
+	SelectMenu oldSelect = m_Select;
+	
 	if (GetAsyncKeyState(VK_UP) & 0x0001)
 	{
-		m_Select = SelectMenu::End;
+		if (m_InputTimer >= 0.2f)
+		{
+			m_Select = SelectMenu::End;
+		}
+	}
+	else if (GetAsyncKeyState(VK_DOWN) & 0x0001)
+	{
+		if (m_InputTimer >= 0.2f)
+		{
+			m_Select = SelectMenu::Continue;
+		}
+	}
+
+	if (m_Select != oldSelect)
+	{
+		SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
+
+		//選択が変わったのでタイマーを初期化.
 		m_InputTimer = 0.0f;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x0001)
+	if (GetAsyncKeyState(VK_RETURN) & 0x0001)
 	{
-		m_Select = SelectMenu::Continue;
-		m_InputTimer = 0.0f;
+		if (m_InputTimer >= 0.2f)
+		{
+			SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
+			if (m_Select == SelectMenu::Continue)
+			{
+				m_State = LoseState::FadeOut;
+				m_FadeAlpha = 0.0f;
+			}
+			else
+			{
+				//タイトルへ遷移.
+				SceneManager::GetInstance()->LoadScene(SceneManager::OP);
+			}
+			m_InputTimer = 0.0f;
+		}
 	}
 
 	if (m_Select == SelectMenu::Continue)
@@ -228,19 +258,6 @@ void Ending::UpdateSelect()
 	{
 		m_ContinuePos;
 		m_EndPos;
-	}
-	if (GetAsyncKeyState(VK_RETURN) & 0x0001)
-	{
-		if (m_Select == SelectMenu::Continue)
-		{
-			m_State = LoseState::FadeOut;
-			m_FadeAlpha = 0.0f;
-		}
-		else
-		{
-			//タイトルへ遷移.
-			SceneManager::GetInstance()->LoadScene(SceneManager::OP);
-		}
 	}
 }
 

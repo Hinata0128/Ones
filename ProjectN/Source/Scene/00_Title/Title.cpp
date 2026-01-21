@@ -205,7 +205,7 @@ void Title::UpdateSelect()
     {
         SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
 
-        // 選択が変わったのでタイマーリセット
+        //選択が変わったのでタイマーを初期化.
         m_InputTimer = 0.0f;
     }
 
