@@ -96,7 +96,7 @@ void Com::DrawDebugImGui()
 void Com::DecideDifficultyByRound(int raund)
 {
 	int Raund = rand() % 100;
-
+#if 0
 	if (raund == 1)
 	{
 		//7割りEasyモード.
@@ -128,6 +128,12 @@ void Com::DecideDifficultyByRound(int raund)
 	{
 		SetDifficulty(BossDifficulty::Final);
 	}
+
+#else
+	//ToDo : いったんEasyでしていく
+	SetDifficulty(BossDifficulty::Easy);
+#endif // 0
+
 }
 
 //難易度用Set関数.
@@ -140,6 +146,7 @@ void Com::SetDifficulty(BossDifficulty diff)
 
 void Com::ApplyDifficultyParam()
 {
+#if 0
 	if (m_Difficulty == BossDifficulty::Easy)
 	{
 		m_MoveSpeed = 1.2f;
@@ -161,6 +168,15 @@ void Com::ApplyDifficultyParam()
 		m_PressureShotInterval = 0.2f;
 		m_DefenseRadius = 10.0f;
 	}
+#else
+	if (m_Difficulty == BossDifficulty::Easy)
+	{
+		m_MoveSpeed = 1.2f;
+		m_ShotInterval = 5.0f;
+		m_PressureShotInterval = 2.5f;
+		m_DefenseRadius = 6.0f;
+	}
+#endif
 
 	//Boss側に発射間隔を反映.
 	m_pOwner->SetShotInterval(m_ShotInterval);
@@ -206,12 +222,12 @@ void Com::DecideAction()
 		{
 			m_pOwner->SetShotInterval(m_ShotInterval);
 			MoveToPortal();
+			m_pOwner->RequestShot();
 			return;
 		}
 	}
 
 	// 【条件1】プレイヤーが生存していて、かつポータルを占有されている場合
-	// ★最優先：ポータル奪取よりも「プレイヤーの排除」を優先して、攻撃コード（円運動など）を実行させる
 	if (state == Portal::PortalPriority::Player && !isPlayerDead)
 	{
 		// プレイヤー占有中専用の連射速度に設定
@@ -227,6 +243,7 @@ void Com::DecideAction()
 	{
 		m_pOwner->SetShotInterval(m_ShotInterval);
 		MoveToPortal();
+		m_pOwner->RequestShot();
 		return;
 	}
 
@@ -275,6 +292,7 @@ void Com::MoveToPortal()
 			ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 		}
 	}
+	m_pOwner->RequestShot();
 }
 
 void Com::PlayerAttack()
@@ -359,7 +377,6 @@ void Com::PlayerPressureAttack()
 	float angle = std::atan2f(-toPlayer.x, -toPlayer.z);
 	m_pOwner->SetRotationY(angle);
 
-	// --- ここから追加 ---
 	BossContext ctx(m_pOwner);
 	const int WALK_ANIM = 2; // 歩きアニメーション
 	if (ctx.AnimNo != WALK_ANIM)
@@ -367,7 +384,6 @@ void Com::PlayerPressureAttack()
 		ctx.AnimNo = WALK_ANIM;
 		ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 	}
-	// --- ここまで追加 ---
 
 	D3DXVECTOR3 move(0, 0, 0);
 

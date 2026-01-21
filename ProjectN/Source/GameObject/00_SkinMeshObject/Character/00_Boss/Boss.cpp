@@ -266,14 +266,13 @@ void Boss::AutoShot()
         D3DXVECTOR3 finalDir = targetPos - shotPos;
         float len = D3DXVec3Length(&finalDir);
 
-        if (len > 0.001f)
+        if (len <= 0.001f)
         {
-            // 正規化して長さを1にする
-            D3DXVec3Normalize(&finalDir, &finalDir);
-
-            // 弾を追加（計算した finalDir を使用）
-            m_pENShotManager->AddEnemyNomalShot(shotPos, finalDir);
+            m_pENShotManager->Clear();
+            return; // 弾は発射せずに終了   
         }
+        D3DXVec3Normalize(&finalDir, &finalDir);
+        m_pENShotManager->AddEnemyNomalShot(shotPos, finalDir);
     }
 }
 

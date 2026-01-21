@@ -20,6 +20,8 @@ public:
 
 	void AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirecton);	//“G‚Ì’e‚ğì¬‚µ‚ÄŠÇ—ƒŠƒXƒg‚É’Ç‰Á.
 
+	void Clear();
+
 	void ReMoveEnemyNomalShot(size_t index);	//“G‚Ì’e‚ğíœ.
 
 	const std::vector<std::unique_ptr<BossShot>>& GetEnemyNomalShot() const;	//“G‚Ì’eƒŠƒXƒgæ“¾.

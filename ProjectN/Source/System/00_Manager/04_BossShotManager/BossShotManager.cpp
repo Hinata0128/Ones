@@ -64,6 +64,11 @@ void BossShotManager::AddEnemyNomalShot(const D3DXVECTOR3& Pos, const D3DXVECTOR
 	m_pBossShot.push_back(std::move(ENomalShot));	//ƒŠƒXƒg‚É’Ç‰Á.
 }
 
+void BossShotManager::Clear()
+{
+	m_pBossShot.clear();
+}
+
 void BossShotManager::ReMoveEnemyNomalShot(size_t index)
 {
 	if (index < m_pBossShot.size())
