@@ -6,6 +6,8 @@
 
 #include "System//02_Singleton//00_Timer//Timer.h"
 
+#include "Sound//SoundManager.h"
+
 
 
 CollisionManager::CollisionManager()
@@ -163,6 +165,7 @@ void CollisionManager::AllCollider()
 
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
+                    SoundManager::GetInstance()->PlaySE(SoundManager::SE_Exp);
                     // エフェクトの再生 (SetEnemyPosition -> GetPosition に修正)
                     Effect::Play(Effect::Laser01, enemy->GetHitCenter());
                     enemy->SetPosition(0.0f, -10.0f, 0.0f);
@@ -189,6 +192,7 @@ void CollisionManager::AllCollider()
 
             if (m_pPlayer->GetHitPoint() <= 0.0f)
             {
+                SoundManager::GetInstance()->PlaySE(SoundManager::SE_Exp);
                 Effect::Play(Effect::Laser01, eShot->GetPosition());
             }
 
@@ -224,6 +228,7 @@ void CollisionManager::AllCollider()
 
                 if (enemy->GetEnemyHitPoint() <= 0.0f)
                 {
+                    SoundManager::GetInstance()->PlaySE(SoundManager::SE_Exp);
                     // エフェクト
                     Effect::Play(Effect::Laser01, enemy->GetHitCenter());
                     enemy->SetPosition(0.0f,-10.0f,0.0f);
