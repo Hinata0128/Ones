@@ -196,24 +196,35 @@ void SceneManager::MakeScene(List Scene)
 	switch (Scene)
 	{
 	case SceneManager::OP:
+		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Ending);
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Over);
 		m_pScene = std::make_unique<Title>();
 		break;
 	case SceneManager::First:
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
 		m_pScene = std::make_unique<FirstRound>();
 		break;
 	case SceneManager::Second:
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
 		m_pScene = std::make_unique<SecondRound>();
 		break;
 	case SceneManager::Final:
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
 		m_pScene = std::make_unique<FinalRound>();
 		break;
 	case SceneManager::Main:
+		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Main);
 		m_pScene = std::make_unique<GameMain>();
 		break;
 	case SceneManager::Lose:
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Main);
+		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Over);
 		m_pScene = std::make_unique<GameOver>();
 		break;
 	case SceneManager::Win:
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Main);
+		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Ending);
 		m_pScene = std::make_unique<Ending>();
 		break;
 	default:

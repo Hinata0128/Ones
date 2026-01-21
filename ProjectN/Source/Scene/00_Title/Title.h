@@ -3,6 +3,7 @@
 
 class UIObject;
 class Sprite2D;
+class SoundManager;
 
 /*********************************************
 *   タイトルシーンクラス

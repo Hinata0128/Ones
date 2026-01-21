@@ -6,7 +6,6 @@
 #include "Sprite2D//Sprite2D.h"
 
 
-
 FirstRound::FirstRound()
 	: SceneBase			()
 	, m_pSpriteFirstRound(std::make_shared<Sprite2D>())
