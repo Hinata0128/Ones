@@ -35,7 +35,7 @@ void SceneManager::Update()
 	ImGui::Text("Player Score : %d", m_PlayerPoint);
 	ImGui::Text("Enemy  Score : %d", m_EnemyNomalPoint);
 
-	// ポータルが存在していれば、進行状況も確認可能
+	//ポータルが存在していれば、進行状況も確認可能
 	if (m_pPortal)
 	{
 		ImGui::Separator();
@@ -46,6 +46,7 @@ void SceneManager::Update()
 #endif
 
 #ifdef _DEBUG
+	//それぞれのシーンへの移動ができる
 	ImGui::Begin("Scene Debug");
 
 	ImGui::Text("Current Scene Control");
@@ -87,7 +88,7 @@ void SceneManager::Update()
 	}
 
 	ImGui::Separator();
-
+	//ポイントのUIの確認のため.
 	if (ImGui::Button("Player +1")) m_PlayerPoint++;
 	if (ImGui::Button("Enemy +1"))  m_EnemyNomalPoint++;
 	ImGui::End();
