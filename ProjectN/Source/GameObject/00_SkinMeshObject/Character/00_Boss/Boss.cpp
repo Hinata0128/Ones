@@ -31,6 +31,8 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
 
     , m_pShadow     ( std::make_shared<Shadow>() )
     , m_pPlayer     ( std::make_unique<Player>() )
+    , m_CoolTime(1.0f)       
+    , m_ShotCoolDown(0.0f)   
 {
     SkinMesh* raw_mesh = SkinMeshManager::GetInstance()->GetSkinMeshInstance(SkinMeshManager::SkinList::Enemy);
     auto shared_mesh = std::shared_ptr<SkinMesh>(raw_mesh, [](SkinMesh*) {});

@@ -112,7 +112,7 @@ std::vector<PShot*> PShotManager::GetShots()
 
 void PShotManager::ChackPortalKill(const Portal& portal)
 {
-	const float killRadius = portal.GetBulletKillRadius();
+	const float killRadius = portal.GetPlayerKillRadius();
 	const D3DXVECTOR3 portalPos = portal.GetPosition();
 
 	for (auto& shot : m_PlayerShot)

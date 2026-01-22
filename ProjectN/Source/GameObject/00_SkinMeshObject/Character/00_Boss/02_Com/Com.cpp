@@ -202,9 +202,6 @@ void Com::DecideAction()
 	// ターゲット（プレイヤー）の死亡状態を取得
 	bool isPlayerDead = m_pOwner->IsTargetDead();
 
-	//---------------------------------------------------------
-	// AI行動決定ロジック（修正版）
-	//---------------------------------------------------------
 
 	if (state == Portal::PortalPriority::Player && isPlayerDead)
 	{
@@ -227,7 +224,6 @@ void Com::DecideAction()
 		}
 	}
 
-	// 【条件1】プレイヤーが生存していて、かつポータルを占有されている場合
 	if (state == Portal::PortalPriority::Player && !isPlayerDead)
 	{
 		// プレイヤー占有中専用の連射速度に設定
@@ -237,7 +233,6 @@ void Com::DecideAction()
 		return;
 	}
 
-	// 【条件2】プレイヤーが死亡している、またはポータルが「None（誰もいない）」の場合
 	// 邪魔者がいないので、ポータルを奪取するために中心へ移動する
 	if (state == Portal::PortalPriority::None || (state == Portal::PortalPriority::Player && isPlayerDead))
 	{
@@ -247,7 +242,6 @@ void Com::DecideAction()
 		return;
 	}
 
-	// 【条件3】自分がポータルを所有（Enemy）している場合
 	// 自分の陣地を守るための防衛行動に切り替える
 	if (state == Portal::PortalPriority::Enemy)
 	{

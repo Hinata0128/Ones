@@ -27,6 +27,8 @@ Portal::Portal()
 	, m_IsEnemyPriority(false)
 	, m_IsTransitionStarted(false)
 	, m_TransitionTimer(0.0f)
+
+	, m_BulletKillRadius(4.0f)
 {
 	AttachMesh(*StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Portal));
 
@@ -38,10 +40,6 @@ Portal::Portal()
 	SetPosition(Pos);
 	SetScale(D3DXVECTOR3(Scale));
 
-	D3DXVECTOR3 center = GetPosition();
-	m_BBox.SetMinPosition(center + D3DXVECTOR3(-0.5f, 0.0f, -0.5f));
-	m_BBox.SetMaxPosition(center + D3DXVECTOR3(0.5f, 3.0f, 0.5f));
-
 	Init();
 }
 
@@ -51,6 +49,11 @@ Portal::~Portal()
 
 void Portal::Update()
 {
+	StaticMeshObject::Update();
+
+	PShotManager::GetInstance()->ChackPortalKill(*this);
+	BossShotManager::GetInstance()->ChackPortalKill(*this);
+
 
 
 	RestrictEntry();
@@ -163,10 +166,6 @@ void Portal::Update()
 
 	//DEBUG ImGui
 
-	PShotManager::GetInstance()->ChackPortalKill(*this);
-	BossShotManager::GetInstance()->ChackPortalKill(*this);
-
-	StaticMeshObject::Update();
 }
 
 void Portal::Draw()
@@ -189,7 +188,6 @@ void Portal::Draw()
 
 void Portal::Init()
 {
-	// --- 全てのステータスをリセット ---
 	m_PortalIncreaseF = 0.0f;
 	m_PortalIncrease = 0;
 	m_pPortalState = PortalPriority::None;
@@ -242,10 +240,7 @@ void Portal::ForceFinishByTimeUp()
 
 void Portal::RestrictEntry()
 {
-	// 進入を禁止する距離（中心から1.0f）
 	const float LIMIT_DISTANCE = 4.0f;
-
-	// --- プレイヤーの押し戻し ---
 	if (auto player = m_pPlayer.lock())
 	{
 
@@ -257,7 +252,6 @@ void Portal::RestrictEntry()
 		D3DXVECTOR3 diff = pos - portalPos;
 		float distance = D3DXVec3Length(&diff);
 
-		// 1.0f以内に入っていたら強制移動
 		if (distance < LIMIT_DISTANCE)
 		{
 			// 中心から外側に向かう方向ベクトルを正規化
@@ -276,8 +270,6 @@ void Portal::RestrictEntry()
 			player->SetPosition(newPos);
 		}
 	}
-
-	// --- 敵（ボス）の押し戻し（必要であれば） ---
 	if (auto enemy = m_pEnemy.lock())
 	{
 		D3DXVECTOR3 pos = enemy->GetPosition();
@@ -341,15 +333,12 @@ void Portal::ChackPriority()
 	}
 	else if (!m_IsPlayerPriority && m_IsEnemyPriority)
 	{
-		// --- ここを修正 ---
 		if (m_pPortalState != PortalPriority::Enemy)
 		{
 			m_FirstEnterPriority = PortalPriority::Enemy;
-			// この if ブロックの中に入れることで「切り替わった瞬間」だけ鳴ります
 			SoundManager::GetInstance()->PlaySE(SoundManager::SE_PortalGet);
 		}
 		m_pPortalState = PortalPriority::Enemy;
-		// SoundManager::GetInstance()->PlaySE(SoundManager::SE_PortalGet); // ←ここにあったのを消す
 	}
 	else if (m_IsPlayerPriority && m_IsEnemyPriority)
 	{
