@@ -31,29 +31,27 @@ void AttackShort::ExecuteAttack(Player* player)
 	// deltaTimeを取得する.
 	float deltaTime = Timer::GetInstance().DeltaTime();
 
-	// 攻撃フラグは、クールタイムが残っている間は ON にするロジックに変更
 	if (m_ShortCoolDown > 0.0f)
 	{
 		m_ShortCoolDown -= deltaTime;
-		m_IsHitActive = true; // クールタイム中は判定を有効化
+		m_IsHitActive = true; //クールタイム中は判定を有効化
 	}
 	else
 	{
 		m_ShortCoolDown = 0.0f;
-		m_IsHitActive = false; // クールタイム終了で無効化
+		m_IsHitActive = false; //クールタイム終了で無効化
 	}
 
-	// 近距離攻撃動作 (クリック検出)
+	// 近距離攻撃動作
 	if (m_ShortCoolDown <= 0.0f)
 	{
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
-			// クールタイム設定
+			//クールタイム設定
 			m_ShortCoolDown = m_CoolTime;
 			m_IsHitActive = true;
 			m_HasHit = false;
 
-			// SE再生（ここを通るはずです！）
 			SoundManager::GetInstance()->PlaySE(SoundManager::SE_Slash);
 		}
 	}
@@ -61,17 +59,16 @@ void AttackShort::ExecuteAttack(Player* player)
 
 	//剣先の位置を毎フレーム更新していく.
 	D3DXVECTOR3 bonePos;
-	// 剣先のボーン位置 (ワールド座標) を Player 経由で取得
+	//剣先のボーン位置をPlayer経由で取得
 	if (player->GetBonePosition(BoneName.c_str(), &bonePos))
 	{
-		// 剣の当たり判定の位置を毎フレーム更新
+		//剣の当たり判定の位置を毎フレーム更新
 		m_SwordHitBox.SetPosition(bonePos);
 	}
 }
 
 void AttackShort::Exit(Player* player)
 {
-	//終了処理.
 }
 
 void AttackShort::Draw(Player* player)

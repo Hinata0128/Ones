@@ -30,11 +30,6 @@ PlayerMove::~PlayerMove()
 
 void PlayerMove::Enter()
 {
-
-
-
-
-
     PlayerState::Enter();
 }
 
@@ -110,7 +105,6 @@ void PlayerMove::Init()
     PlayerState::Init();
 }
 
-//型をboolに変更させたのでbreckではなくreturn false/trueで返す.
 //右クリックの遠距離攻撃.
 void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
 {
@@ -192,85 +186,10 @@ void PlayerMove::RbuttonAttackStep(PlayerContext& ctx)
     }
 }
 
-#if 0
-//左クリックを押したときの近距離攻撃.
-void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
-{
-    //左クリックを押したら次のステップに入る.
-    if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-    {
-        if (LStep == enLeftStep::none)
-        {
-            LStep = enLeftStep::first;
-            IsLAttacking = true;
-        }
-    }
-
-    switch (LStep)
-    {
-        case enLeftStep::none:
-            IsLAttacking = false;
-            break;//攻撃していない→移動処理に移動.
-        case enLeftStep::first:
-        {
-            //アニメーション切り替え.
-            ctx.AnimNo = 6; //アニメーション番号.
-            ctx.AnimTime = 0.0f;    //アニメーションタイマーの初期化.
-
-            m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::Short);
-
-            ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);//アニメーションの変更.
-            LStep = enLeftStep::Attack;
-            break;
-        }
-        case enLeftStep::Attack:
-        {
-            double period = ctx.Mesh->GetAnimPeriod(ctx.AnimNo);
-            if (ctx.AnimTime > period)
-            {
-                LStep = enLeftStep::end;
-            }
-            else
-            {
-                ctx.AnimTime += ctx.AnimSpeed;
-            }
-            break;
-        }
-        case enLeftStep::end:
-            ctx.Mesh->SetAnimSpeed(0.0f, ctx.AnimCtrl);
-
-            LStep = enLeftStep::release_anim;
-            break;
-        case enLeftStep::release_anim:
-        {
-            double period = ctx.Mesh->GetAnimPeriod(6);
-            if (ctx.AnimTime >= period)
-            {
-                ctx.AnimNo = 0;
-                ctx.AnimTime = 0.0f;
-                ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
-
-                m_IsShot = true;
-
-                LStep = enLeftStep::none;
-
-                m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
-
-            }
-            break;
-        }
-    }
-}
-#else
-
-// 左クリックを押したときの近距離攻撃.
 // 左クリックを押したときの近距離攻撃.
 void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
 {
-    // --- 【修正】ポータル取得アニメーション（仮に10番とします）が再生中なら攻撃を無視 ---
-    // もしポータル取得時のアニメーション番号がわかれば、0 以外のその番号を入れてください。
-    // 分からない場合は、この if ブロックごと削除しても「押しっぱなしバグ」は直ります。
-    if (ctx.AnimNo == 7) // ← ここを実際のポータル取得アニメ番号に変えてください
+    if (ctx.AnimNo == 7)
     {
         if (LStep != enLeftStep::none) {
             LStep = enLeftStep::none;
@@ -282,8 +201,6 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
     // 左クリックの入力判定
     if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
     {
-        // 【重要】LStepがnoneの時（＝まだ攻撃を始めていない時）だけ開始する。
-        // これで押しっぱなしにしていても、途中のステップからfirstに引き戻されなくなります。
         if (LStep == enLeftStep::none)
         {
             LStep = enLeftStep::first;
@@ -308,8 +225,6 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
         // アニメーションの変更。
         ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 
-        // 【重要】セットした直後にAttackステップへ移行。
-        // これにより、次のフレームでこの case first（0秒リセット）を通りません。
         LStep = enLeftStep::Attack;
         break;
     }
@@ -345,33 +260,29 @@ void PlayerMove::LButtonAttackStep(PlayerContext& ctx)
         double period = ctx.Mesh->GetAnimPeriod(6);
         if (ctx.AnimTime >= period)
         {
-            // アイドル（0番）に戻す。
             ctx.AnimNo = 0;
             ctx.AnimTime = 0.0f;
             ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 
             m_IsShot = true;
-            LStep = enLeftStep::none; // ここで none に戻るので、次のクリックが可能になる。
+            LStep = enLeftStep::none;
 
             m_pOwner->ChangeAttackType(PlayerAttackManager::enAttack::NoAttack);
         }
         else
         {
-            // 念のため時間を進める。
             ctx.AnimTime += ctx.AnimSpeed;
         }
         break;
     }
     }
 }
-#endif
 
 void PlayerMove::HandleMove(
     PlayerContext& ctx,
     const D3DXVECTOR3& ForwardAndBackward, // 既存の引数
     const D3DXVECTOR3& LeftAndRight)       // 既存の引数
 {
-    // --- 【追加】カメラから現在の「前」と「右」を取得 ---
     Camera& cam = Camera::GetInstance();
     D3DXVECTOR3 camForward = cam.GetForward();
     D3DXVECTOR3 camRight = cam.GetRight();
@@ -380,7 +291,7 @@ void PlayerMove::HandleMove(
     bool IsRAttacking = (step != enStep::none);
     bool IsLAttacking = (LStep != enLeftStep::none);
 
-    // 移動アニメーションを適応させる（既存のラムダ式、そのまま残します）
+    // 移動アニメーションを適応させる
     auto ApplyMoveAnimation = [&](int animNo)
         {
             if (IsRAttacking || IsLAttacking)
@@ -396,7 +307,6 @@ void PlayerMove::HandleMove(
             }
         };
 
-    // --- 【修正】各ケースで「カメラの向き」を使用する ---
     switch (Move)
     {
     case enMove::Idol:
@@ -408,7 +318,6 @@ void PlayerMove::HandleMove(
 
     case enMove::ForWard:
     {
-        // ForwardAndBackward の代わりに camForward を使用
         ctx.Position += camForward * add_value;
         ctx.Rotation.y = atan2f(camForward.x, camForward.z); // キャラを進行方向に向ける
         ApplyMoveAnimation(2);
@@ -514,7 +423,6 @@ void PlayerMove::HandleMove(
 PlayerMove::enMove PlayerMove::GetMoveInput()
 {
     // WASDの動作.
-    // Managerを使ってキーの状態を取得します。
     bool W = (m_Key->GetKey("W") && m_Key->GetKey("W")->HoldDownKey());
     bool A = (m_Key->GetKey("A") && m_Key->GetKey("A")->HoldDownKey());
     bool S = (m_Key->GetKey("S") && m_Key->GetKey("S")->HoldDownKey());

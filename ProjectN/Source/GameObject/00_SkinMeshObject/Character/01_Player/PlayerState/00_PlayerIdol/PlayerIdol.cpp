@@ -26,22 +26,6 @@ void PlayerIdol::Update()
     bool isMoving = false; //移動しているかフラグ.
     const int IDOL_ANIM_NO = 0;
 
-
-    if (!isMoving)
-    {
-        //// 現在のアニメーション番号が7番でない場合のみ切り替える
-        //if (ctx.AnimNo != IDOL_ANIM_NO)
-        //{
-        //    ctx.AnimNo = IDOL_ANIM_NO;
-        //    ctx.AnimTime = 0.0f; // アニメーション時間をリセット
-
-        //    if (ctx.Mesh && ctx.AnimCtrl)
-        //    {
-        //        // アニメーションコントローラに7番をセット
-        //        ctx.Mesh->ChangeAnimSet(IDOL_ANIM_NO, ctx.AnimCtrl);
-        //    }
-        //}
-    }
     //最初はIdolでその中で毎フレームUpdata()が回っている.
     m_pPlayerMove->Update();
 }

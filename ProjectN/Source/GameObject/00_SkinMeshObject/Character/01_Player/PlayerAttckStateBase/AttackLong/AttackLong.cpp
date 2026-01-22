@@ -40,7 +40,6 @@ void AttackLong::ExecuteAttack(Player* player)
 
     //発射元ボーン.
     //右の剣.
-    //std::stringを使用してコードを書き直す.
     std::string BoneName = "blade_r_head";
 
     //ボーンのワールド位置.

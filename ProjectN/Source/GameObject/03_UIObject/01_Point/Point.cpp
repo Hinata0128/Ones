@@ -25,13 +25,12 @@ Point::~Point()
 void Point::Create()
 {
 	const float size = 32.0f;
-	const float margin = 5.0f;// ƒTƒCƒY‚ª¬‚³‚­‚È‚Á‚½‚Ì‚ÅŒ„ŠÔ‚à’²®
-	const float groupSpacing = 100.0f; // ŠÔŠu‚à’²®
+	const float margin = 5.0f;
+	const float groupSpacing = 100.0f;
 
 	const float startX = 530.0f;
 	const float posY = 80.0f;
 
-	// SPRITE_STATE ‚à 32x32 ‚É‡‚í‚¹‚é
 	Sprite2D::SPRITE_STATE ss = { size, size, size, size, size, size };
 
 	m_spBaseSprite->Init(_T("Data\\Texture\\PointBase.png"), ss);
