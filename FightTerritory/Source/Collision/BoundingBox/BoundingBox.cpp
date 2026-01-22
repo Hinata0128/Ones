@@ -6,6 +6,7 @@
 #define SAFE_RELEASE(p) { if(p) { (p)->Release(); (p)=nullptr; } }
 #endif
 
+
 //MAX_FVF_DECL_SIZEの定義.
 #ifndef MAX_FVF_DECL_SIZE
 #define MAX_FVF_DECL_SIZE (27) // MAXD3DDECLLENGTH + 1
