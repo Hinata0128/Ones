@@ -62,7 +62,6 @@ public:
 	// GetPortalでは、return Portalで返しています.
 	// PlayerとEnemyNomalの今の取得ポイント関数.
 	// PlayerPointとEnemyNomalPointのGet関数(pointをreturnで返す).
-	// 
 	//============================================================================
 	
 	void SetPortal(Portal* portal);
@@ -85,9 +84,9 @@ public:
 
 
 
-	// 遷移の準備ができたか
+	//遷移の準備ができたか.
 	bool IsReadyToLoad() const { return m_IsReadyToLoad; }
-	// 次のシーンを取得
+	//次のシーンを取得.
 	SceneManager::List GetNextScene() const { return m_NextScene; }
 
 
