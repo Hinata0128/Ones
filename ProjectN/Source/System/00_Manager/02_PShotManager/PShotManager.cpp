@@ -15,7 +15,7 @@ PShotManager::~PShotManager()
 
 PShotManager* PShotManager::GetInstance()
 {
-	static PShotManager s_Instance;	//唯一のインスタンス.
+	static PShotManager s_Instance;
 	return &s_Instance;
 }
 
@@ -107,7 +107,7 @@ std::vector<PShot*> PShotManager::GetShots()
 			rawPointers.push_back(shot.get());
 		}
 	}
-	return rawPointers; // 値として返す
+	return rawPointers;
 }
 
 void PShotManager::ChackPortalKill(const Portal& portal)

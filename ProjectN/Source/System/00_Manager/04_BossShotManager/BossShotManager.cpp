@@ -14,7 +14,7 @@ BossShotManager::~BossShotManager()
 
 BossShotManager* BossShotManager::GetInstance()
 {
-	static BossShotManager s_Instance;	//唯一のインスタンス生成.
+	static BossShotManager s_Instance;	
 	return &s_Instance;
 }
 
@@ -41,7 +41,6 @@ void BossShotManager::Draw(const D3DXMATRIX& view, const D3DXMATRIX& proj)
 	{
 		ENomalShot->SetMatrices(view, proj);
 		ENomalShot->Draw();	//弾の描画処理.
-		//ENomalShot->GetBoundingSphere().Draw();
 
 	}
 }
@@ -98,13 +97,10 @@ size_t BossShotManager::GetEnemyNomalShotCount() const
 
 std::vector<BossShot*> BossShotManager::GetShots()
 {
-	// 生のポインタを格納するための新しいベクターを宣言
 	std::vector<BossShot*> rawPointers;
 
-	// 内部の unique_ptr のリストを走査
 	for (const auto& shot : m_pBossShot)
 	{
-		// unique_ptr が有効な場合、生のポインタを取得して新しいベクターに追加
 		if (shot)
 		{
 			rawPointers.push_back(shot.get());
@@ -128,7 +124,7 @@ void BossShotManager::ChackPortalKill(const Portal& portal)
 
 		if (dist < killRadius)
 		{
-			shot->SetActive(false); // ★ 消滅予約
+			shot->SetActive(false); 
 		}
 	}
 
