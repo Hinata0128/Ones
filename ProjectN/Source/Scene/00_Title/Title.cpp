@@ -81,19 +81,19 @@ void Title::Create()
     m_upTitle->AttachSprite(m_pSpriteTitle);
     m_upTitle->SetPosition(450.0f, 200.0, 0.0f);
 
-    // スタートボタン
+    //スタートボタン
     Sprite2D::SPRITE_STATE ssStart{ Start_W, Staet_H, Start_W, Staet_H, Start_W, Staet_H };
     //スタート画像の読み込み.
     m_pSpriteStart->Init(_T("Data\\Image\\Setting\\S_Start.png"), ssStart);
     m_upStart->AttachSprite(m_pSpriteStart);
 
-    // エンドボタン
+    //エンドボタン
     Sprite2D::SPRITE_STATE ssEnd{ End_W, End_H, End_W, End_H, End_W, End_H };
     //エンド画像の読み込み.
     m_pSpriteEnd->Init(_T("Data\\Image\\Setting\\S_End.png"), ssEnd);
     m_upEnd->AttachSprite(m_pSpriteEnd);
 
-    // フェード用の黒画像
+    //フェード用の黒画像
     Sprite2D::SPRITE_STATE ssFade{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
     m_pSpriteFade->Init(_T("Data\\Image\\Setting\\Black.png"), ssFade);
     m_upFade->AttachSprite(m_pSpriteFade);
@@ -151,25 +151,25 @@ void Title::Draw()
     D3DXVECTOR3 currentSelectPos = (m_Select == SelectMenu::Start) ? m_StartPos : m_EndPos;
 
     D3DXVECTOR3 backPos = currentSelectPos;
-    backPos.x -= 100.0f; // 背景を左にずらして、文字を背景の中央に合わせる
-    backPos.y -= 15.0f; // 背景を少し上にずらして上下の中央を合わせる
+    backPos.x -= 100.0f; //背景を左にずらして、文字を背景の中央に合わせる
+    backPos.y -= 15.0f; //背景を少し上にずらして上下の中央を合わせる
 
-    // 青い背景
+    //青い背景
     m_upSelectBack->SetPosition(backPos);
     m_upSelectBack->Draw();
 
-    // 選択枠（フレーム）も同じ位置に
+    //選択枠も同じ位置に
     m_upSelectFrame->SetPosition(backPos);
     m_upSelectFrame->Draw();
 
-    // 2. ボタンの座標更新と描画
+    //ボタンの座標更新と描画
     m_upStart->SetPosition(m_StartPos);
     m_upEnd->SetPosition(m_EndPos);
     m_upStart->Draw();
     m_upEnd->Draw();
 
-    // 3. フェード（常に最前面）
-    // ステートに関わらず、アルファ値が0より大きければ描画する
+    //フェード
+    //ステートに関わらず、アルファ値が0より大きければ描画する
     if (m_FadeAlpha > 0.0f)
     {
         m_upFade->SetAlpha(m_FadeAlpha);

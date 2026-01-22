@@ -21,13 +21,13 @@ public:
 	//シーンリストの列挙型.
 	enum List
 	{
-		OP,		//Title.
+		OP,		//タイトル.
 		First,	//第一ラウンド開始画像.
 		Second,	//第二ラウンド開始画像.
 		Final,	//第三ラウンド開始画像.
-		Main,	//GameMain.
-		Lose,	//GameOver.
-		Win,	//Ending.
+		Main,	//メイン.
+		Lose,	//敗北.
+		Win,	//勝利.
 
 		max,	//何も書かない.
 	};

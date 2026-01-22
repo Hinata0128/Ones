@@ -117,7 +117,7 @@ void GameOver::Create()
 	//‰æ‘œ‚ÌÝ’è.
 	m_upEnd->AttachSprite(m_pSpriteEnd);
 
-	// ƒtƒF[ƒh—p‚Ì•‰æ‘œ
+	//ƒtƒF[ƒh—p‚Ì•‰æ‘œ
 	m_pSpriteFade->Init(_T("Data\\Image\\Setting\\Black.png"), SSBack);
 	m_upFade->AttachSprite(m_pSpriteFade);
 	m_upFade->SetPosition({ 0.0f, 0.0f, 0.0f });
@@ -168,18 +168,18 @@ void GameOver::Draw()
 	D3DXVECTOR3 currentSelectPos = (m_Select == SelectMenu::Continue) ? m_ContinuePos : m_EndPos;
 
 	D3DXVECTOR3 backPos = currentSelectPos;
-	backPos.x -= 60.0f; // ”wŒi‚ð¶‚É‚¸‚ç‚µ‚ÄA•¶Žš‚ð”wŒi‚Ì’†‰›‚É‡‚í‚¹‚é
-	backPos.y -= 15.0f; // ”wŒi‚ð­‚µã‚É‚¸‚ç‚µ‚Äã‰º‚Ì’†‰›‚ð‡‚í‚¹‚é
+	backPos.x -= 60.0f; //”wŒi‚ð¶‚É‚¸‚ç‚µ‚ÄA•¶Žš‚ð”wŒi‚Ì’†‰›‚É‡‚í‚¹‚é
+	backPos.y -= 15.0f; //”wŒi‚ð­‚µã‚É‚¸‚ç‚µ‚Äã‰º‚Ì’†‰›‚ð‡‚í‚¹‚é
 
 
 
 	m_upDefeat->Draw();
 
-	// Â‚¢”wŒi
+	//Â‚¢”wŒi
 	m_upSelectBack->SetPosition(backPos);
 	m_upSelectBack->Draw();
 
-	// ‘I‘ð˜giƒtƒŒ[ƒ€j‚à“¯‚¶ˆÊ’u‚É
+	//‘I‘ð˜g‚à“¯‚¶ˆÊ’u‚É
 	m_upSelectFrame->SetPosition(backPos);
 	m_upSelectFrame->Draw();
 

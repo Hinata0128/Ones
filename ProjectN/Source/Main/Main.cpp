@@ -287,7 +287,6 @@ void Main::IsExitGame()
 				}
 				m_LastEscTime = 0.0f;
 			}
-			//ImGui調整.
 			else
 			{
 				m_LastEscTime = currentTime;
@@ -295,14 +294,14 @@ void Main::IsExitGame()
 
 				SceneManager::GetInstance()->SetPause(m_IsPause);
 
-				// マウス解放／ロック切り替え
+				//マウス解放／ロック切り替え
 				ShowCursor(m_IsPause);
 
 				if (m_IsPause)
 				{
-					ClipCursor(nullptr); // マウス自由
+					ClipCursor(nullptr); //マウス自由
 				}
-				//.マウスをゲーム内に表示させておく.
+				//マウスをゲーム内に表示させておく.
 				else
 				{
 					RECT rc;
@@ -312,7 +311,7 @@ void Main::IsExitGame()
 					ClientToScreen(m_hWnd, &ul);
 					ClientToScreen(m_hWnd, &lr);
 					rc = { ul.x, ul.y, lr.x, lr.y };
-					ClipCursor(&rc); // ウィンドウ内固定
+					ClipCursor(&rc); //ウィンドウ内固定
 				}
 			}
 			isPushed = true;
