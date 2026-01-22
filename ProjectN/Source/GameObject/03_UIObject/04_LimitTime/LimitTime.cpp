@@ -22,7 +22,7 @@ LimitTime::LimitTime()
 	, m_RemainTime			( 90.0f )
 
 	//, m_LimitTime			( 500.0f )
-	//, m_RemainTime			( 500.0f )
+	//, m_RemainTime		( 500.0f )
 
 	//, m_LimitTime			( 10.0f )
 	//, m_RemainTime		( 10.0f )
@@ -40,8 +40,8 @@ void LimitTime::Create()
 	const float Clock = 158.0f;
 
 	//制限時間の表示位置.
-	const float posX = static_cast<float>(WND_W - 250);
-	const float posY = 100.0f;
+	const float posX = static_cast<float>(WND_W - 200);
+	const float posY = 30.0f;
 
 	//表示サイズの設定.
 	//ToDo : 全部の画像に使用する. 
@@ -79,12 +79,11 @@ void LimitTime::Update()
 
 	m_upClockMin->SetRotation(D3DXVECTOR3(0.0f, 0.0f, m_RotateZ));
 
-	// 画像のサイズ（158x158）の半分
 	float halfW = 158.0f / 2.0f;
 	float halfH = 158.0f / 2.0f;
 
-	float posX = static_cast<float>(WND_W - 250);
-	float posY = 100.0f;
+	float posX = static_cast<float>(WND_W - 200.f);
+	float posY = 30.0f;
 
 	float targetX = posX + halfW;
 	float targetY = posY + halfH;
