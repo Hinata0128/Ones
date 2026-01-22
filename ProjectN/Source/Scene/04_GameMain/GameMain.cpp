@@ -157,8 +157,8 @@ void GameMain::Update()
 	{
 		m_PlayerRespawnTimer += Timer::GetInstance().DeltaTime();
 
-		// 3秒経過したら復活
-		if (m_PlayerRespawnTimer >= 3.0f)
+		//5秒経過したら復活
+		if (m_PlayerRespawnTimer >= 5.0f)
 		{
 			m_pPlayer->Respawn();
 			m_PlayerRespawnTimer = 0.0f;
