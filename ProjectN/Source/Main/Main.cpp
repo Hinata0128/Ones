@@ -16,8 +16,8 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 //=================================================
 //	íËêî.
 //=================================================
-const TCHAR WND_TITLE[] = _T("Ones");
-const TCHAR APP_NAME[] = _T("Ones");
+const TCHAR WND_TITLE[] = _T("FightTerritory");
+const TCHAR APP_NAME[] = _T("FightTerritory");
 
 
 //=================================================
