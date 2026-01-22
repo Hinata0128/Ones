@@ -19,7 +19,6 @@ ShadowSmall::~ShadowSmall()
 
 void ShadowSmall::Update()
 {
-	//ヌルチェック.
 	if (m_pTragetSmall == nullptr)
 	{
 		return;

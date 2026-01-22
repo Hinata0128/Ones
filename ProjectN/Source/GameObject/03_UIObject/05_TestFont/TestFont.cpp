@@ -23,9 +23,7 @@ void TestFont::Create()
 
 	Sprite2D::SPRITE_STATE ssFont =
 	{
-		{ texW, texH }, // Disp
-		{ texW, texH     }, // Base
-		{ texW, texH }  // Stride
+		texW, texH, texW, texH, texW, texH
 	};
 
 	const float posX = 50.0f;

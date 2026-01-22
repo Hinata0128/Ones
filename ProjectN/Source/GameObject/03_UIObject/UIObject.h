@@ -13,7 +13,7 @@ public:
 	UIObject();
 	virtual ~UIObject() override;
 
-	// Update ‚Æ Drawiˆø”‚È‚µj
+	// Update ‚Æ Draw
 	virtual void Update() override;
 	virtual void Draw() override;
 

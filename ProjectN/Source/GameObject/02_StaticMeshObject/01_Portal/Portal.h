@@ -112,16 +112,14 @@ private:
 	float m_IsPlayerPriority;
 	float m_IsEnemyPriority;
 
-	bool m_IsRoundFinished = false;
+	bool m_IsRoundFinished;
 
-	float m_TransitionTimer = 0.0f;      // 遷移用のタイマー
-	const float WAIT_TIME = 2.0f;        // 待機時間（秒）例：2.0秒
-	bool m_IsTransitionStarted = false;  // 遷移プロセスが始まったかどうかのフラグ
+	float m_TransitionTimer;      //遷移用のタイマー
+	const float WAIT_TIME;        //待機時間
+	bool m_IsTransitionStarted;   //遷移プロセスが始まったかどうかのフラグ
 
-	int m_NextSceneID = -1;
+	bool m_IsReadyToLoad;
 
-	bool m_IsReadyToLoad = false;
-
-	int m_NextScene = -1; 
+	int m_NextScene; 
 	float m_BulletKillRadius;
 };

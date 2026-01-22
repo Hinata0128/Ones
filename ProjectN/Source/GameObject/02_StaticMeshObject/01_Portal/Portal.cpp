@@ -25,8 +25,16 @@ Portal::Portal()
 
 	, m_IsPlayerPriority(false)
 	, m_IsEnemyPriority(false)
-	, m_IsTransitionStarted(false)
+
+	, m_IsRoundFinished(false)
+
+	, WAIT_TIME(2.0f)
 	, m_TransitionTimer(0.0f)
+	, m_IsTransitionStarted(false)
+
+	, m_IsReadyToLoad(false)
+
+	, m_NextScene(-1)
 
 	, m_BulletKillRadius(4.0f)
 {
@@ -58,34 +66,34 @@ void Portal::Update()
 
 	RestrictEntry();
 
-	// 1. 100%に達した後の遷移待ち処理
+	//100%に達した後の遷移待ち処理
 	if (m_IsTransitionStarted)
 	{
 		float deltaTime = Timer::GetInstance().DeltaTime();
 		m_TransitionTimer += deltaTime;
 
-		// 2秒待機して演出を見せる
+		//2秒待機して演出を見せる
 		if (m_TransitionTimer >= 2.0f)
 		{
 			// 最新のスコアを取得
 			int pScore = SceneManager::GetInstance()->GetPlayerScore();
 			int eScore = SceneManager::GetInstance()->GetEnemyScore();
 
-			// 1. プレイヤーが2勝した（2-0 または 2-1）
+			//プレイヤーが2勝した（2-0 または 2-1）
 			if (pScore >= 2)
 			{
 				SceneManager::GetInstance()->ResetScore();
 				Init();
 				m_NextScene = SceneManager::Win;
 			}
-			// 2. 敵（ボス）が2勝した（0-2 または 1-2）
+			//敵（ボス）が2勝した（0-2 または 1-2）
 			else if (eScore >= 2)
 			{
 				SceneManager::GetInstance()->ResetScore();
 				Init();
 				m_NextScene = SceneManager::Lose;
 			}
-			// 3. まだ決着がついていない場合（1-0, 0-1, 1-1）
+			//まだ決着がついていない場合（1-0, 0-1, 1-1）
 			else
 			{
 				//次のラウンドを計算してボスに通知.
@@ -95,25 +103,25 @@ void Portal::Update()
 					enemy->StartNextRound(nextRound);
 				}
 
-				// 1対1になったときの特殊判定
+				//1対1になったときの特殊判定
 				if (pScore == 1 && eScore == 1)
 				{
 					Init();
-					// 「最後に100%にした人」の判定（PortalStateに現在の占有者が入っています）
+					//最後に100%にした人」の判定（PortalStateに現在の占有者を入れている）
 					if (m_pPortalState == PortalPriority::Player) {
-						// プレイヤーが追いついて1-1にした場合
+						//プレイヤーが追いついて1-1にした場合
 						//ここにはFinalRoundに入る処理.
 						m_NextScene = SceneManager::Final;
 					}
 					else {
-						// ボスが追いついて1-1にした場合
+						//ボスが追いついて1-1にした場合
 						//ここにはFinalRoundに入る処理.
 						m_NextScene = SceneManager::Final;
 					}
 				}
 				else
 				{
-					// 初めての1ポイント取得時 (1-0 または 0-1)
+					//初めての1ポイント取得時 (1-0 または 0-1)
 					Init();
 					//ここではSecondRoundに入る処理.
 					m_NextScene = SceneManager::Second;
@@ -125,7 +133,7 @@ void Portal::Update()
 	}
 	else
 	{
-		// 2. 通常の占有チェック（100%になるまで）
+		//通常の占有チェック（100%になるまで）
 		ChackPriority();
 
 		switch (m_pPortalState)
@@ -143,10 +151,10 @@ void Portal::Update()
 
 	if (m_spPortalGauge)
 	{
-		// 進捗率を渡す (0.0~1.0)
+		//進捗率を渡す
 		m_spPortalGauge->SetPercent(m_PortalIncreaseF / 100.0f);
 
-		// 現在の占有状態を見て、UIの表示モード（色）を切り替える
+		//現在の占有状態を見て、UIの表示モード（色）を切り替える
 		if (m_pPortalState == PortalPriority::Player)
 		{
 			m_spPortalGauge->SetGaugeMode(PortalGauge::GaugeMode::Player);
@@ -160,12 +168,9 @@ void Portal::Update()
 			m_spPortalGauge->SetGaugeMode(PortalGauge::GaugeMode::None);
 		}
 
-		// UIの更新
+		//UIの更新
 		m_spPortalGauge->Update();
 	}
-
-	//DEBUG ImGui
-
 }
 
 void Portal::Draw()
@@ -214,10 +219,10 @@ void Portal::Init()
 
 void Portal::ForceFinishByTimeUp()
 {
-	// すでに100%で決着がついている場合は何もしない
+	//すでに100%で決着がついている場合は何もしない
 	if (m_IsRoundFinished) return;
 
-	// 現在のポータルの状態を見てスコアを加算
+	//現在のポータルの状態を見てスコアを加算
 	if (m_pPortalState == PortalPriority::Player)
 	{
 		SceneManager::GetInstance()->AddPlayerScore();
@@ -227,7 +232,7 @@ void Portal::ForceFinishByTimeUp()
 		SceneManager::GetInstance()->AddEnemyScore();
 	}
 
-	// 終了フラグを立てて、2秒間の待機演出に入る
+	//終了フラグを立てて、2秒間の待機演出に入る
 	m_IsRoundFinished = true;
 	m_IsTransitionStarted = true;
 	m_TransitionTimer = 0.0f;
@@ -254,17 +259,17 @@ void Portal::RestrictEntry()
 
 		if (distance < LIMIT_DISTANCE)
 		{
-			// 中心から外側に向かう方向ベクトルを正規化
+			//中心から外側に向かう方向ベクトルを正規化
 			D3DXVECTOR3 direction;
 			D3DXVec3Normalize(&direction, &diff);
 
-			// 距離がゼロ（真ん中）にいる場合は、適当な方向（前方など）に逃がす
+			//距離がゼロにいる場合は、適当な方向に逃がす
 			if (distance < 0.001f) direction = D3DXVECTOR3(0, 0, 1);
 
-			// 制限距離の場所まで強制的に押し出す
+			//制限距離の場所まで強制的に押し出す
 			D3DXVECTOR3 newPos = portalPos + direction * LIMIT_DISTANCE;
 
-			// Y軸（高さ）はプレイヤーの現在の高さを維持（ポータルが空中にある場合など）
+			//Y軸（高さ）はプレイヤーの現在の高さを維持
 			newPos.y = pos.y;
 
 			player->SetPosition(newPos);
@@ -376,7 +381,7 @@ void Portal::PlayerToPortal()
 			enemy->SetFrozen(true);
 		}
 
-		// スコアを加算（SceneManager内の即時LoadSceneは消しておくこと）
+		// スコアを加算
 		SceneManager::GetInstance()->AddPlayerScore();
 	}
 }
@@ -408,7 +413,7 @@ void Portal::EnemyToPortal()
 			enemy->SetFrozen(true);
 		}
 
-		// スコアを加算
+		//スコアを加算
 		SceneManager::GetInstance()->AddEnemyScore();
 	}
 }

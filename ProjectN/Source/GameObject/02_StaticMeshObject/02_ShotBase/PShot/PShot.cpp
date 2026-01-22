@@ -11,7 +11,6 @@ PShot::PShot()
 	m_pShadowSmall->Create();
 	m_pShadowSmall->SetTargetShadowSmallPos(this);
 
-	// コンストラクタで初期化
 	Init();
 }
 
@@ -28,16 +27,16 @@ void PShot::Update()
 
 	if (m_Disp)
 	{
-		// 位置更新
+		//位置更新
 		m_Position += m_Direction * m_Speed;
 
-		// 一定距離を超えたらリセット
+		//一定距離を超えたらリセット
 		if (D3DXVec3Length(&m_Position) >= MaxRange)
 		{
 			Init();
 			return;
 		}
-		// バウンディングスフィアの位置同期
+		//バウンディングスフィアの位置同期
 		UpdateBPosition();
 
 		//影の実装.
@@ -56,16 +55,16 @@ void PShot::Draw()
 
 void PShot::Init()
 {
-	// 親クラスの基本初期化
+	//親クラスの基本初期化
 	ShotBase::Init();
 
-	// 見た目の大きさ（プレイヤーの弾）
+	//見た目の大きさ（プレイヤーの弾）
 	m_Scale = D3DXVECTOR3(5.0f, 5.0f, 5.0f);
 
-	// 当たり判定の大きさ（スケールに合わせて）
+	//当たり判定の大きさ（スケールに合わせて）
 	if (m_BSphere)
 	{
-		m_BSphere->SetRadius(1.0f); // スケールの半分
+		m_BSphere->SetRadius(1.0f); 
 	}
 }
 

@@ -82,7 +82,6 @@ void Point::Draw()
 {
 	DirectX11::GetInstance()->SetDepth(false);
 
-	// “y‘ä‚ğæ‚É•`‚«A‚»‚Ìã‚ÉActive‰æ‘œ‚ğd‚Ë‚é
 	for (int i = 0; i < 2; ++i) {
 		m_upPlayerBase[i]->Draw();
 		m_upBossBase[i]->Draw();

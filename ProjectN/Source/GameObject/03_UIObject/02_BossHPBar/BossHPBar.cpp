@@ -35,7 +35,7 @@ void BossHPBar::Update()
 
 	//最大HP100と仮定して割合(0.0～1.0)を算出
 	float hpRate = m_pTargetBoss->GetEnemyHitPoint() / 100.0f;
-	hpRate = max(0.0f, min(1.0f, hpRate)); // 0～1の範囲にクランプ
+	hpRate = max(0.0f, min(1.0f, hpRate)); 
 
 	float targetScaleX = m_MaxBarScaleX * hpRate;
 
@@ -71,13 +71,11 @@ void BossHPBar::Draw()
 {
 	DirectX11::GetInstance()->SetDepth(false);
 
-	// 重なり順：下から順に描画
-	if (m_upBack)   m_upBack->Draw();   //灰色背景（一番下）
-	if (m_upDamage) m_upDamage->Draw(); //赤色バー（ダメージ跡）
-	if (m_upGauge)  m_upGauge->Draw();  //緑色バー（現在のHP）
-	if (m_upBase)   m_upBase->Draw();   //外枠（一番上：バーの端を隠す）
+	if (m_upBack)   m_upBack->Draw();  
+	if (m_upDamage) m_upDamage->Draw(); 
+	if (m_upGauge)  m_upGauge->Draw();  
+	if (m_upBase)   m_upBase->Draw();  
 
-	// 深度バッファを有効に戻す
 	DirectX11::GetInstance()->SetDepth(true);
 
 }
@@ -85,35 +83,27 @@ void BossHPBar::Draw()
 void BossHPBar::Create()
 {
 	// -----------------------------------------------------------
-	// 各画像のサイズ定義（ピクセル単位）
+	// 各画像のサイズ定義
 	// -----------------------------------------------------------
 	const float baseW = 460.0f;  // HPBase.png の横幅
 	const float baseH = 64.0f;   // HPBase.png の縦幅
 	const float barW = 1000.0f; // ゲージ用画像(GaugeBack等)のテクスチャ本来の横幅
 	const float barH = 34.0f;   // ゲージ用画像の縦幅
 
-	// バーが枠からはみ出ないための余白設定
 	const float paddingX = 8.0f;
-	const float innerBarW = baseW - (paddingX * 2.0f); // 枠の中に入るバーの表示幅
+	const float innerBarW = baseW - (paddingX * 2.0f); //枠の中に入るバーの表示幅
 
-	// 表示位置（画面左下付近）
+	// 表示位置
 	const float posX = 800.0f;
 	const float posY = static_cast<float>(WND_H - 100.0f);
 
 	m_MaxBarScaleX = innerBarW / barW;
 
-	// -----------------------------------------------------------
-	// 1. HPBase (外枠) の設定
-	// -----------------------------------------------------------
 	Sprite2D::SPRITE_STATE ssBase = { baseW, baseH, baseW, baseH, baseW, baseH };
 	m_spBaseSprite->Init(_T("Data\\Image\\Buttle\\HPBase.png"), ssBase);
 	m_upBase->AttachSprite(m_spBaseSprite);
 	m_upBase->SetPosition(posX, posY, 0.0f);
 
-	// -----------------------------------------------------------
-	// 2. 各バーの共通設定
-	// -----------------------------------------------------------
-	// 枠の高さ(baseH)とバーの高さ(barH)の差から、上下中央に来るオフセットを計算
 	float offsetY = (baseH - barH) * 0.5f;
 	Sprite2D::SPRITE_STATE ssBar = { barW, barH, barW, barH, barW, barH };
 	D3DXVECTOR3 initialScale(m_MaxBarScaleX, 1.0f, 1.0f);

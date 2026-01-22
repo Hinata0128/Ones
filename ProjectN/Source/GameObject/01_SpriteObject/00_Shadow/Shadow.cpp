@@ -42,7 +42,6 @@ void Shadow::Update()
 
 void Shadow::Draw()
 {
-	//深度チェックをする.
 	DirectX11::GetInstance()->SetDepth(false);
 	SpriteObject::Draw(); 
 	DirectX11::GetInstance()->SetDepth(true);
