@@ -52,7 +52,7 @@ void PShotManager::Init()
 
 void PShotManager::AddPlayerShot(const D3DXVECTOR3& Pos, const D3DXVECTOR3& InitDirection)
 {
-	constexpr float Speed = 0.05f;	//’e‘¬.
+	constexpr float Speed = 0.1f;	//’e‘¬.
 
 	auto PlayerShot = std::make_unique<PShot>();	//V‹K’e¶¬.
 	PlayerShot->Reload(Pos, InitDirection, Speed);	//ˆÊ’uE•ûŒüE‘¬“x‚ğİ’è.

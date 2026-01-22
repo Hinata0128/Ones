@@ -116,8 +116,6 @@ void Boss::Update()
     {
         m_ShotCoolDown = 0.0f;
     }
-
-    //m_pAnimCtrl->AdvanceTime(m_AnimSpeed, nullptr);
     
     if (!IsDaed())
     {
@@ -182,7 +180,6 @@ void Boss::RequestShot()
 void Boss::SetShotInterval(float time)
 {
     m_CoolTime = time;
-    //m_ShotCoolDown = time;
 }
 
 void Boss::StartNextRound(int nextround)
@@ -199,23 +196,20 @@ void Boss::StartNextRound(int nextround)
 
 void Boss::Respawn()
 {
-    // 1. 位置と体力の復帰
     SetPosition(m_InitialPosition);
     m_HitPoint = 100.0f;
 
-    // 2. ステートを強制的に待機(Idol)に戻す
-    // ※これをしないと Update で死亡状態のまま処理されてしまいます
+    //状態をIdolに戻す.
     m_pCurrentState = m_pIdol.get();
     if (m_pCurrentState)
     {
         m_pCurrentState->Enter();
     }
 
-    // 3. アニメーションを強制的に初期化
+    //アニメーションを強制的に初期化
     const int IDLE_ANIM = 0;
     if (m_pMesh && m_pAnimCtrl)
     {
-        // 条件(m_AnimNo == -1)を削除し、強制的に待機アニメーションをセット
         m_pMesh->ChangeAnimSet(IDLE_ANIM, m_pAnimCtrl);
         m_AnimNo = IDLE_ANIM;
         m_pMesh->SetAnimSpeed(m_AnimSpeed);
@@ -223,8 +217,6 @@ void Boss::Respawn()
 
     SetVisible(true);
 
-    // 4. その他の初期化（Init内で二重にSetPositionなどしないよう注意）
-    // Init() の中身が重複している場合は整理が必要ですが、現状のコードなら維持でOKです
     Init();
 }
 
@@ -243,7 +235,7 @@ void Boss::AutoShot()
 {
     if (!m_pPlayer) return;
 
-    // 1. 距離チェック（足元基準でOK）
+    //距離チェック
     D3DXVECTOR3 playerPos = GetPlayerPos();
     D3DXVECTOR3 toPlayer = playerPos - GetPosition();
     float distance = D3DXVec3Length(&toPlayer);
@@ -252,22 +244,22 @@ void Boss::AutoShot()
 
     if (distance <= SHOOT_DISTANCE)
     {
-        // 2. 発射位置（ユーザー様のご指定通り固定）
+        //発射位置
         D3DXVECTOR3 shotPos = GetPosition() + D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 
-        // 3. 狙うターゲットの位置（プレイヤーのボーン）
+        //狙うターゲットの位置
         D3DXVECTOR3 targetPos;
         if (!m_pPlayer->GetBonePosition("Bone002", &targetPos))
         {
-            // ボーンが取得できなかった時の保険（少し高い位置を狙う）
+            //ボーンが取得できなかった時の保険
             targetPos = playerPos + D3DXVECTOR3(0.0f, 2.0f, 0.0f);
         }
 
-        // 4. 方向ベクトルの計算を修正
-        // 「固定の発射位置」から「動いているボーン」へ向かうベクトルを作成
+        //方向ベクトルの計算
         D3DXVECTOR3 finalDir = targetPos - shotPos;
         float len = D3DXVec3Length(&finalDir);
 
+        //ゼロ除算.
         if (len <= 0.001f)
         {
             m_pENShotManager->Clear();
