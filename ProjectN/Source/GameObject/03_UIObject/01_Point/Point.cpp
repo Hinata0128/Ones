@@ -28,8 +28,8 @@ void Point::Create()
 	const float margin = 5.0f;// サイズが小さくなったので隙間も調整
 	const float groupSpacing = 100.0f; // 間隔も調整
 
-	const float startX = 150.0f;
-	const float posY = 50.0f;
+	const float startX = 530.0f;
+	const float posY = 80.0f;
 
 	// SPRITE_STATE も 32x32 に合わせる
 	Sprite2D::SPRITE_STATE ss = { size, size, size, size, size, size };
@@ -88,7 +88,6 @@ void Point::Draw()
 		m_upPlayerBase[i]->Draw();
 		m_upBossBase[i]->Draw();
 
-		// スケールがほぼ0なら描画スキップするなどの最適化も可能
 		m_upPlayerActive[i]->Draw();
 		m_upBossActive[i]->Draw();
 	}

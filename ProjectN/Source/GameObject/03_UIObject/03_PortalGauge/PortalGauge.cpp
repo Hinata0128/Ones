@@ -37,15 +37,14 @@ void PortalGauge::Create()
 	const float barW = 1000.0f; // PortalGauge.png の本来の横幅
 	const float barH = 34.0f;   // PortalGauge.png の本来の縦幅
 
-	const float paddingX = 8.0f; // HPBarと同じ余白
+	const float paddingX = 8.0f; 
 	const float innerBarW = baseW - (paddingX * 2.0f);
 
-	// 表示位置 (HPBarがposX=50なので、PortalGaugeは画面上の適切な位置に)
-	const float posX = 512.0f;
-	const float posY = 100.0f;
+	const float posX = 420.0f;
+	const float posY = 10.0f;
 
 	m_barWidth = barW;
-	m_maxBarScaleX = innerBarW / barW; // 枠にピッタリ収まる倍率
+	m_maxBarScaleX = innerBarW / barW; 
 	SetPosition(posX, posY, 0.0f);
 
 	// -----------------------------------------------------------
