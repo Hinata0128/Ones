@@ -100,7 +100,6 @@ void GameMain::Create()
 	//ポータルの初期化.
 	m_pPortal->Init();
 
-	UpdateCamera();
 }
 
 void GameMain::Update()
@@ -152,12 +151,10 @@ void GameMain::Update()
 	//地面.
 	m_pGround->Update();
 	m_pPlayer->Update();
-	UpdateCamera();
 
 	// リスポーン管理
-	if (m_pPlayer->IsDead()) // PlayerDeadステートにいるか？
+	if (m_pPlayer->IsDead()) 
 	{
-		// 静的変数またはメンバ変数でタイマーを管理
 		m_PlayerRespawnTimer += Timer::GetInstance().DeltaTime();
 
 		// 3秒経過したら復活
@@ -187,7 +184,6 @@ void GameMain::Update()
 	}
 
 
-	// =========================================================================
 
 
 	auto playerShotMgr = PShotManager::GetInstance();
