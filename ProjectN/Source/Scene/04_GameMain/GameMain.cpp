@@ -108,7 +108,6 @@ void GameMain::Update()
 
 	if (SceneManager::GetInstance()->IsPause())
 	{
-		// ImGuiは動かす、ゲームロジックは止める
 		return;
 	}
 
@@ -221,32 +220,25 @@ void GameMain::Update()
 	m_pBossHpBar->Update();
 
 
-	// ==========================================================
-	// 【修正】SceneManagerから「累計スコア」を取得してUIに送る
-	// ==========================================================
-	// SceneManagerに GetPlayerScore() という関数がある前提です。
-	// もし名前が違ったら、実際の関数名に合わせてください。
 	int totalPlayerScore = SceneManager::GetInstance()->GetPlayerScore();
 
-	// 累計スコアが1以上なら1つ目を点灯
+	//累計スコアが1以上なら1つ目を点灯
 	if (totalPlayerScore >= 1) {
 		m_pPointUI->SetPlayerPointActive(0, true);
 	}
-	// 累計スコアが2以上なら2つ目を点灯
+	//累計スコアが2以上なら2つ目を点灯
 	if (totalPlayerScore >= 2) {
 		m_pPointUI->SetPlayerPointActive(1, true);
 	}
 
-	// 敵のスコアも同様に反映させる場合
+	//敵のスコアも同様に反映させる場合
 	int totalEnemyScore = SceneManager::GetInstance()->GetEnemyScore();
-	// if (totalEnemyScore >= 1) m_pPointUI->SetEnemyPointActive(0, true);
-	// ==========================================================
 
-		// 累計スコアが1以上なら1つ目を点灯
+	//累計スコアが1以上なら1つ目を点灯
 	if (totalEnemyScore >= 1) {
 		m_pPointUI->SetBossPointActive(0, true);
 	}
-	// 累計スコアが2以上なら2つ目を点灯
+	//累計スコアが2以上なら2つ目を点灯
 	if (totalEnemyScore >= 2) {
 		m_pPointUI->SetBossPointActive(1, true);
 	}
@@ -254,29 +246,24 @@ void GameMain::Update()
 
 	m_pPointUI->Update();
 
-	// ポータルの更新（ここで100%判定とシーン遷移が行われる）
+	//ポータルの更新（ここで100%判定とシーン遷移が行われる）
 	m_pPortal->Update();
 
 	if (m_pPortal->IsReadyToLoad())
 	{
 		int nextID = m_pPortal->GetNextScene();
 
-		// ここで static_cast を使って型を合わせる
 		SceneManager::GetInstance()->LoadScene(static_cast<SceneManager::List>(nextID));
-		// LoadScene を呼んだ瞬間に GameMain は破棄されるので、
-		// 直後に return することで「死んだ後のメモリ」へのアクセスを防ぐ
 		return;
 	}
 
-	// 3. タイムアップ判定（ポータルが決着していない時のみ実行）
+	//タイムアップ判定（ポータルが決着していない時のみ実行）
 	if (!m_pPortal->IsTransitionStarted())
 	{
 		m_pLimitTime->Update();
 		if (m_pLimitTime->IsTimeUp())
 		{
 			m_pPortal->ForceFinishByTimeUp();
-			//SceneManager::GetInstance()->LoadScene(SceneManager::First);
-			//return;
 		}
 	}
 }
@@ -372,10 +359,5 @@ void GameMain::Projection()
 		aspect,		//アスペクト.
 		near_z,		//近いビュー平面のz値.
 		far_z);		//遠いビュー平面のz値.
-}
-
-//カメラをPlayerの背後に設定する.
-void GameMain::UpdateCamera()
-{
 }
 

@@ -63,8 +63,6 @@ public:
 	//プロジェクション関数.
 	void Projection();
 
-	void UpdateCamera();
-
 private:
 	//ゲームで扱うスプライトデータ(使いまわす資源).
 	std::unique_ptr<Sprite3D> m_pSp3D;
@@ -78,10 +76,10 @@ private:
 	//プレイヤークラス.
 	std::shared_ptr<Player> m_pPlayer;
 
-	// 1. ポータルを先に宣言し、shared_ptr に変える
+	//ポータルを先に宣言し、shared_ptr に変える
 	std::shared_ptr<Portal> m_pPortal;
 
-	// 2. ボスをポータルの後に宣言する
+	//ボスをポータルの後に宣言する
 	std::shared_ptr<Boss> m_pEnemyNomal;
 
 	std::shared_ptr<CollisionManager> m_pCollisionManager;
