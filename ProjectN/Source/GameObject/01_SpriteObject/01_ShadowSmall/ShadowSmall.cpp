@@ -31,14 +31,22 @@ void ShadowSmall::Update()
 	//高さ調整.
 	m_Position.y = 0.01f;
 
-	//影の画像のサイズ変更.
-	//ToDo : 影のサイズを小さくして弾の表示をする.
-	m_Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+	if (TargetPos.y < 0.0f)
+	{
+		// スケールを0にして事実上消す、あるいは描画フラグをオフにする
+		m_Scale = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		m_Position.x = TargetPos.x;
+		m_Position.z = TargetPos.z;
+		m_Position.y = 0.01f; // 地面スレスレに配置
 
-	m_pShadowSmallSprite->SetPosition(m_Position);
-	m_pShadowSmallSprite->SetRotation(m_Rotation);
-	m_pShadowSmallSprite->SetScale(m_Scale);
-
+		// 影のサイズ設定
+		//影の画像のサイズ変更.
+		//ToDo : 影のサイズを小さくして弾の表示をする.
+		m_Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+	}
 	SpriteObject::Update();
 }
 
