@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject/00_SkinMeshObject/Character/Character.h"
 #include "Collision/BoundingSphere/BoundingSphere.h" 
-#include "..//00_Boss/01_BossStateBase/01_BossMove/BossMove.h" 
 
 #include "..//00_Boss/01_BossStateBase/00_BossIdol/BossIdol.h"
 #include "..//00_Boss/01_BossStateBase/02_BossDead/BossDead.h"
@@ -90,7 +89,6 @@ public:
 	void AutoShot();
 	//public‚ÅState‚Ì‘JˆÚ‚ð‚µ‚Ä‚¢‚é.
 	std::unique_ptr<BossIdol> m_pIdol;
-	std::unique_ptr<BossMove> m_pMove;
 	std::unique_ptr<BossDead> m_pDead;
 
 	void SetTargetDead(bool isDead)		{ m_IsTargetDead = isDead; }

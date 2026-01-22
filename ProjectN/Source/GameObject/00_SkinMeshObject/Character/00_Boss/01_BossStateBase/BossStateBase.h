@@ -16,7 +16,7 @@ class BossStateBase
 	: public StateBase
 {
 public:
-	//引数アリのコンストラクタを使用します.
+	//引数アリのコンストラクタを使用する.
 	//引数にEnemyの情報を取得する.
 	BossStateBase(Boss* pOwner);
 	virtual ~BossStateBase() override;

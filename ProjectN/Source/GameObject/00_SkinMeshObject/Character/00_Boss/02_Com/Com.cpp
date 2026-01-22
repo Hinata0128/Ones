@@ -44,7 +44,7 @@ void Com::DrawDebugImGui()
 #ifdef _DEBUG
 	ImGui::Begin(JAPANESE("Com: 内部ステータス"));
 
-	// 1. ポータルの認識状態
+	//ポータルの認識状態
 	Portal::PortalPriority PortalState = m_pPortal->GetPortalState();
 	const char* stateStr = "Unknown";
 	ImVec4 color = ImVec4(1, 1, 1, 1); // デフォルト白
@@ -66,7 +66,7 @@ void Com::DrawDebugImGui()
 	ImGui::SameLine();
 	ImGui::TextColored(color, stateStr);
 
-	// 2. 距離情報の表示
+	//距離情報の表示
 	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
 	D3DXVECTOR3 PortalPos = m_pPortal->GetPosition();
 	D3DXVECTOR3 Length = PortalPos - BossPos;
@@ -75,7 +75,7 @@ void Com::DrawDebugImGui()
 	ImGui::Text(JAPANESE("ポータルへの距離: %.2f"), Pos_Lenght);
 	ImGui::Text(JAPANESE("占拠可能距離: 5.0f"));
 
-	// 3. 実行中の行動推測（if文のどこを通っているか）
+	//実行中の行動推測
 	if (PortalState == Portal::PortalPriority::None && Pos_Lenght > 5.0f) {
 		ImGui::BulletText(JAPANESE("現在: MoveToPortal (移動中)"));
 	}
@@ -184,22 +184,22 @@ void Com::ApplyDifficultyParam()
 }
 
 
-//1. 優先度1の処理を書く関数.
+//優先度1の処理を書く関数.
 void Com::DecideAction()
 {
-	// 敵（自分）の位置を取得する
+	//敵の位置を取得する
 	D3DXVECTOR3 BossPos = m_pOwner->GetPosition();
-	// ポータルの位置を取得する
+	//ポータルの位置を取得する
 	D3DXVECTOR3 PortalPos = m_pPortal->GetPosition();
 
-	// ポータルから敵への距離を計算
+	//ポータルから敵への距離を計算
 	D3DXVECTOR3 Diff = PortalPos - BossPos;
 	float Dist = D3DXVec3Length(&Diff);
 
-	// 現在のポータルの占有状態を取得
+	//現在のポータルの占有状態を取得
 	Portal::PortalPriority state = m_pPortal->GetPortalState();
 
-	// ターゲット（プレイヤー）の死亡状態を取得
+	//ターゲットの死亡状態を取得
 	bool isPlayerDead = m_pOwner->IsTargetDead();
 
 
@@ -228,7 +228,7 @@ void Com::DecideAction()
 	{
 		// プレイヤー占有中専用の連射速度に設定
 		m_pOwner->SetShotInterval(m_PressureShotInterval);
-		// プレイヤーを攻撃しながら間合いを調整する（円運動ロジック）
+		// プレイヤーを攻撃しながら間合いを調整する
 		PlayerPressureAttack();
 		return;
 	}
@@ -294,7 +294,7 @@ void Com::PlayerAttack()
 
 	BossContext ctx(m_pOwner);
 
-	// ⑥ 歩きアニメ
+	//歩きアニメ
 	const int WALK_ANIM = 2;
 	if (ctx.AnimNo != WALK_ANIM)
 	{
@@ -305,53 +305,6 @@ void Com::PlayerAttack()
 	m_pOwner->RequestShot();
 }
 
-#if 0
-void Com::PlayerPressureAttack()
-{
-	const float IDEAL_DISTANCE = 10.0f; 
-
-	float dt = Timer::GetInstance().DeltaTime();
-
-	D3DXVECTOR3 bossPos = m_pOwner->GetPosition();
-	D3DXVECTOR3 playerPos = m_pOwner->GetPlayerPos();
-
-	D3DXVECTOR3 toPlayer = playerPos - bossPos;
-	float dist = D3DXVec3Length(&toPlayer);
-	if (dist < 0.01f) return;
-
-	D3DXVec3Normalize(&toPlayer, &toPlayer);
-
-	// プレイヤーを見る
-	float angle = std::atan2f(-toPlayer.x, -toPlayer.z);
-	m_pOwner->SetRotationY(angle);
-
-	D3DXVECTOR3 move(0, 0, 0);
-
-	// 距離調整
-	if (dist < IDEAL_DISTANCE - 1.0f)
-	{
-		// 近すぎる → 離れる
-		move -= toPlayer;
-	}
-	else if (dist > IDEAL_DISTANCE + 1.0f)
-	{
-		// 遠すぎる → 近づく
-		move += toPlayer;
-	}
-
-	// 横移動（プレイヤーをどかす）
-	D3DXVECTOR3 up(0, 1, 0);
-	D3DXVECTOR3 side;
-	D3DXVec3Cross(&side, &up, &toPlayer);
-	move += side * 0.7f; // 円を描くように動く
-
-	D3DXVec3Normalize(&move, &move);
-	m_pOwner->AddPosition(move * m_MoveSpeed * dt);
-
-	// 攻撃（発射レート高め）
-	m_pOwner->RequestShot();
-}
-#else
 void Com::PlayerPressureAttack()
 {
 	const float IDEAL_DISTANCE = 10.0f;
@@ -367,12 +320,12 @@ void Com::PlayerPressureAttack()
 
 	D3DXVec3Normalize(&toPlayer, &toPlayer);
 
-	// プレイヤーを見る
+	//プレイヤーを見る
 	float angle = std::atan2f(-toPlayer.x, -toPlayer.z);
 	m_pOwner->SetRotationY(angle);
 
 	BossContext ctx(m_pOwner);
-	const int WALK_ANIM = 2; // 歩きアニメーション
+	const int WALK_ANIM = 2; //歩きアニメーション
 	if (ctx.AnimNo != WALK_ANIM)
 	{
 		ctx.AnimNo = WALK_ANIM;
@@ -381,7 +334,7 @@ void Com::PlayerPressureAttack()
 
 	D3DXVECTOR3 move(0, 0, 0);
 
-	// 距離調整（近すぎるなら離れ、遠すぎるなら近づく）
+	//距離調整（近すぎるなら離れ、遠すぎるなら近づく）
 	if (dist < IDEAL_DISTANCE - 1.0f)
 	{
 		move -= toPlayer;
@@ -391,7 +344,7 @@ void Com::PlayerPressureAttack()
 		move += toPlayer;
 	}
 
-	// 横移動
+	//横移動
 	D3DXVECTOR3 up(0, 1, 0);
 	D3DXVECTOR3 side;
 	D3DXVec3Cross(&side, &up, &toPlayer);
@@ -400,10 +353,9 @@ void Com::PlayerPressureAttack()
 	D3DXVec3Normalize(&move, &move);
 	m_pOwner->AddPosition(move * m_MoveSpeed * dt);
 
-	// 攻撃
+	//攻撃
 	m_pOwner->RequestShot();
 }
-#endif
 
 
 void Com::Defense()
@@ -416,14 +368,14 @@ void Com::Defense()
 
 	BossContext ctx(m_pOwner);
 
-	// ① プレイヤーを見る
+	//プレイヤーを見る
 	D3DXVECTOR3 look = playerPos - bossPos;
 	look.y = 0.0f;
 	D3DXVec3Normalize(&look, &look);
 	float angle = std::atan2f(-look.x, -look.z);
 	m_pOwner->SetRotationY(angle);
 
-	// ② ポータル中心基準の方向
+	//ポータル中心基準の方向
 	D3DXVECTOR3 toBoss = bossPos - portalPos;
 	toBoss.y = 0.0f;
 
@@ -433,15 +385,15 @@ void Com::Defense()
 
 	D3DXVec3Normalize(&toBoss, &toBoss);
 
-	// ③ 円運動用の接線ベクトル
+	//円運動用の接線ベクトル
 	D3DXVECTOR3 up(0, 1, 0);
 	D3DXVECTOR3 tangent;
 	D3DXVec3Cross(&tangent, &up, &toBoss);
 
-	// ④ 円運動
+	//円運動
 	D3DXVECTOR3 velocity = tangent * m_MoveSpeed;
 
-	// ⑤ 半径制御
+	//半径制御
 	if (dist > m_DefenseRadius)
 	{
 		velocity -= toBoss * m_MoveSpeed;
@@ -449,7 +401,7 @@ void Com::Defense()
 
 	m_pOwner->AddPosition(velocity * dt);
 
-	// ⑥ 歩きアニメ
+	//歩きアニメ
 	const int WALK_ANIM = 2;
 	if (ctx.AnimNo != WALK_ANIM)
 	{
@@ -457,6 +409,6 @@ void Com::Defense()
 		ctx.Mesh->ChangeAnimSet(ctx.AnimNo, ctx.AnimCtrl);
 	}
 
-	// ⑦ 攻撃
+	//攻撃
 	m_pOwner->RequestShot();
 }

@@ -17,7 +17,6 @@ Boss::Boss(std::shared_ptr<Portal> pPortal)
     : Character()
     , m_pENShotManager(nullptr)
     , m_pIdol(std::make_unique<BossIdol>(this))
-    , m_pMove(std::make_unique<BossMove>(this))
     , m_pDead(std::make_unique<BossDead>(this))
     , m_pCom(std::make_unique<Com>(this, pPortal))
     
