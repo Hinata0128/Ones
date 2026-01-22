@@ -201,6 +201,8 @@ void SceneManager::MakeScene(List Scene)
 		break;
 	case SceneManager::First:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Ending);
+		SoundManager::GetInstance()->Stop(SoundManager::BGM_Over);
 		SoundManager::GetInstance()->PlaySE(SoundManager::SE_Round);
 		m_pScene = std::make_unique<FirstRound>();
 		break;
@@ -215,8 +217,6 @@ void SceneManager::MakeScene(List Scene)
 		m_pScene = std::make_unique<FinalRound>();
 		break;
 	case SceneManager::Main:
-		SoundManager::GetInstance()->Stop(SoundManager::BGM_Ending);
-		SoundManager::GetInstance()->Stop(SoundManager::BGM_Over);
 		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Main);
 		m_pScene = std::make_unique<GameMain>();
 		break;
