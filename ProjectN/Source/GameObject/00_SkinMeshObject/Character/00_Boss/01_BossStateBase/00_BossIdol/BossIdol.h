@@ -3,7 +3,6 @@
 
 class Boss;
 class BossContext;
-class BossMove;
 
 class Com;
 

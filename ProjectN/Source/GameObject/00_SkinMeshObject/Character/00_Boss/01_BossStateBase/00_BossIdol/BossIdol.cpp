@@ -2,7 +2,6 @@
 
 #include "..//..//Boss.h"
 #include "..//..//00_BossContext//BossContext.h"
-#include "..//01_BossMove/BossMove.h"
 
 #include "System/02_Singleton/00_Timer/Timer.h"
 
@@ -51,11 +50,6 @@ void BossIdol::Update()
 
     const float changeDistance = 15.0f * 15.0f;
 
-    if (distanceSq < changeDistance)
-    {
-        pEnemy->ChangeState(pEnemy->m_pMove.get());
-        return;
-    }
 }
 
 void BossIdol::Exit()
