@@ -24,20 +24,20 @@ public:
 	void Create() override;
 
 
-	// 参照するプレイヤーをセットする関数
+	//参照するプレイヤーをセットする関数
 	//体力減少に必要.
 	void SetTargetPlayer(Player* player) { m_pTargetPlayer = player; }
 
 	Player* m_pTargetPlayer;
 	float m_maxBarScaleX;
 private:
-	// 各パーツ用のSprite
+	//各パーツ用のSprite
 	std::shared_ptr<Sprite2D> m_spBaseSprite;   // HPBase (枠)
 	std::shared_ptr<Sprite2D> m_spBackSprite;   // GaugeBack (背景)
 	std::shared_ptr<Sprite2D> m_spDamageSprite; // HPDamage (赤)
 	std::shared_ptr<Sprite2D> m_spGaugeSprite;  // HPGauge (緑)
 
-	// 各パーツ用のUIオブジェクト
+	//各パーツ用のUIオブジェクト
 	std::shared_ptr<UIObject> m_upBase;
 	std::shared_ptr<UIObject> m_upBack;
 	std::shared_ptr<UIObject> m_upDamage;

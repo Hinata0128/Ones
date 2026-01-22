@@ -15,11 +15,10 @@ public:
 	StaticMeshObject();
 	virtual ~StaticMeshObject() override;
 
-	// CGameObjectで純粋仮想関数の宣言がされてるのでこちらで定義を書く.
 	virtual void Update() override;
 	virtual void Draw() override;
 
-	// メッシュを接続する. (生参照を受け取り、生ポインターに設定)
+	// メッシュを接続する. 
 	void AttachMesh(StaticMesh& pMesh) {
 		m_pMesh = &pMesh;
 	}
@@ -30,6 +29,5 @@ public:
 
 
 protected:
-	// 生ポインターに戻すことで、AttachMesh の代入エラーを解消します。
 	StaticMesh* m_pMesh;
 };

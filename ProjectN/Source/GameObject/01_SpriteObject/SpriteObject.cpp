@@ -17,7 +17,6 @@ void SpriteObject::Update()
 	if (m_pSprite == nullptr) {
 		return;
 	}
-	// 必要ならここに更新処理を追加
 }
 
 void SpriteObject::Draw()
@@ -26,11 +25,11 @@ void SpriteObject::Draw()
 		return;
 	}
 
-	// 座標や回転情報などをスプライトに反映
+	//座標や回転情報などをスプライトに反映
 	m_pSprite->SetPosition(m_Position);
 	m_pSprite->SetRotation(m_Rotation);
 	m_pSprite->SetScale(m_Scale);
 
-	// 設定済みのView・Proj行列を使用して描画
+	//設定済みのView・Proj行列を使用して描画
 	m_pSprite->Render(m_View, m_Proj);
 }

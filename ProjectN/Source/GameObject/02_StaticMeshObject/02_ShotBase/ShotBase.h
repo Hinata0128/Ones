@@ -20,23 +20,22 @@ public:
 	virtual void Draw() override;
 	virtual void Init();
 
-	// 弾の再設定（位置・方向・スピード）
+	//弾の再設定（位置・方向・スピード）
 	virtual void Reload(const D3DXVECTOR3& pos, const D3DXVECTOR3& direction, float speed) = 0;
 
-	// バウンディングスフィアを位置に同期
+	//バウンディングスフィアを位置に同期
 	virtual void UpdateBPosition();
 
-	// バウンディングスフィアを取得 (参照を返すように統一)
-	// const修飾子を付けて、constオブジェクトからも呼べるようにする
+	//バウンディングスフィアを取得
 	virtual BoundingSphere& GetBoundingSphere() const;
 
-	// 表示フラグ設定
+	//表示フラグ設定
 	virtual void SetDisplay(bool disp) { m_Disp = disp; }
 
-	// 表示フラグ取得
+	//表示フラグ取得
 	virtual bool IsDisplay() const { return m_Disp; }
 
-	// アクティブ状態取得
+	//アクティブ状態取得
 	virtual bool IsActive() const { return m_IsActive; }
 
 	//アクティブ状態を設定する関数 

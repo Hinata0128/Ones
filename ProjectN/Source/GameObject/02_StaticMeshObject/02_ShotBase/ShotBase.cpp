@@ -4,7 +4,6 @@ ShotBase::ShotBase()
 	: m_Speed(0.02f)
 	, m_Disp(false)
 	, m_IsActive(false)
-	// BoundingSphere の実体化は shared_ptr で正しく行われています
 	, m_BSphere(std::make_shared<BoundingSphere>())
 {
 }
@@ -15,7 +14,6 @@ ShotBase::~ShotBase()
 
 void ShotBase::Update()
 {
-	// 必要なら共通の弾移動処理をここに書く（現状は子クラス任せ）
 	StaticMeshObject::Update();
 }
 
@@ -53,6 +51,5 @@ void ShotBase::UpdateBPosition()
 
 BoundingSphere& ShotBase::GetBoundingSphere() const
 {
-	// shared_ptr の中身（実体）への参照を返す
 	return *m_BSphere;
 }
