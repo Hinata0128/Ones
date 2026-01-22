@@ -65,5 +65,4 @@ void StaticMeshManager::Release()
 
 void StaticMeshManager::Init()
 {
-	//初期化処理が必要な場合ここに記述.
 }

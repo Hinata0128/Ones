@@ -34,15 +34,10 @@ void CollisionManager::Draw()
         if (sphere) sphere->Draw();	
     }
 
-    //-----------------------------------------------------
-    // 敵の弾の当たり判定描画
-    //-----------------------------------------------------
     for (auto eShot : m_EnemyShots)
     {
-        // 敵弾がアクティブで表示されているかを確認 (AllCollider のロジックと一致させる)
         if (eShot && eShot->IsDisplay() && eShot->IsActive())
         {
-            // BoundingSphere を取得し、Draw() 関数を呼び出す
             eShot->GetBoundingSphere().Draw();
         }
     }
@@ -57,8 +52,8 @@ void CollisionManager::Draw()
 
 void CollisionManager::Create()
 {
-    m_pBSphere.clear();	//スフィアクリア.
-    m_pBBox.clear();	//ボックスクリア.
+    m_pBSphere.clear();	
+    m_pBBox.clear();	
 }
 
 void CollisionManager::Release()
@@ -89,12 +84,12 @@ void CollisionManager::AllCollider()
 {
     if (!m_pPlayer || m_pPlayer->IsDead()) return;
 
-    // プレイヤーのスフィア座標を取得（Player::Updateでボーン位置に更新済み）
+    //プレイヤーのスフィア座標を取得
     const BoundingSphere& pSphere = m_pPlayer->GetBoundingSphere();
     D3DXVECTOR3 pPos = pSphere.GetPostion();
     float pRadius = pSphere.GetRadius();
 
-    // 1. プレイヤー vs ボス (押し戻し)
+    //プレイヤー vs ボス (押し戻し)
     for (auto enemy : m_vEnemies)
     {
         if (!enemy) continue;
@@ -122,7 +117,7 @@ void CollisionManager::AllCollider()
         }
     }
 
-    // 2. プレイヤー弾 vs ボス
+    //プレイヤー弾 vs ボス
     for (auto enemy : m_vEnemies)
     {
         if (!enemy) continue;
@@ -150,7 +145,7 @@ void CollisionManager::AllCollider()
         }
     }
 
-    // 3. 敵の弾 vs プレイヤー
+    //敵の弾 vs プレイヤー
     for (auto eShot : m_EnemyShots)
     {
         if (!eShot || !eShot->IsDisplay() || !eShot->IsActive()) continue;
@@ -174,7 +169,7 @@ void CollisionManager::AllCollider()
         }
     }
 
-    // 4. 近距離攻撃 vs 敵
+    //近距離攻撃 vs 敵
     AttackShort* pShortAttack = m_pPlayer->GetShortAttackState();
     if (pShortAttack && pShortAttack->IsHitActive() && !pShortAttack->HasHit())
     {

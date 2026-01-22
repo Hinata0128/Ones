@@ -46,13 +46,11 @@ bool InputKeyManager::HoldDownKey()
 {
 	for (auto& pair : m_Keys)
 	{
-		// 1つでも true であれば、即座に true を返してループを終了
 		if (pair.second.HoldDownKey())
 		{
 			return true;
 		}
 	}
-	// 全てのキーが false だった
 	return false;
 }
 
@@ -75,5 +73,5 @@ const InputKey* InputKeyManager::GetKey(const std::string& keyName) const
 	{
 		return &it->second;
 	}
-	return nullptr; // 見つからなかったらnullptrを返す
+	return nullptr;
 }

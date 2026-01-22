@@ -14,7 +14,6 @@ PlayerAttackManager::PlayerAttackManager(Player* pOwner)
     , m_pCurrentAttackState(nullptr) 
 {
     RegisterStates();
-    // 最初のStateを設定し、Enter()を呼び出す
     ChangeAttackState(enAttack::Short);
 }
 
@@ -35,17 +34,14 @@ void PlayerAttackManager::Update()
 
 void PlayerAttackManager::Draw()
 {
-    // m_pCurrentAttackState は PlayerAttckStateBase* 型
     if (m_pCurrentAttackState && m_pOwner)
     {
-        // 現在のステートが AttackShort であるかを確認し、ダウンキャスト
         if (auto pShort = dynamic_cast<AttackShort*>(m_pCurrentAttackState))
         {
-            // AttackShort に固有の Draw 関数を呼び出す
-            pShort->Draw(m_pOwner); // ★ 呼び出し場所
+            //AttackShortに固有のDraw関数を呼び出す
+            pShort->Draw(m_pOwner); 
         }
     }
-    // Baseクラスの処理を呼ぶ（あれば）
     ManagerBase::Draw();
 }
 
@@ -89,17 +85,14 @@ void PlayerAttackManager::ChangeAttackState(enAttack type)
 
 AttackShort* PlayerAttackManager::GetCurrentShortAttack() const
 {
-    // マップに enAttack::Short が存在するか確認
+    //enAttack::Shortが存在するか確認
     if (m_StateMap.count(enAttack::Short) == 0)
     {
         return nullptr;
     }
 
-    // マップから該当する unique_ptr を取得し、その raw ポインタを取得
     PlayerAttckStateBase* baseState = m_StateMap.at(enAttack::Short).get();
 
-    // 取得したポインタを AttackShort* にダウンキャストして返す
-    // dynamic_cast を使用すると、安全に型チェックを行えます。
     return dynamic_cast<AttackShort*>(baseState);
 }
 // ---------------------------------------------------------------------

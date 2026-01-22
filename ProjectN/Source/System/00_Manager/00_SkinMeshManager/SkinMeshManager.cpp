@@ -6,7 +6,7 @@ SkinMeshManager::SkinMeshManager()
 
 SkinMeshManager::~SkinMeshManager()
 {
-	Release();//念のため安全にリソース解放.
+	Release();
 }
 
 void SkinMeshManager::Create()
@@ -65,6 +65,6 @@ SkinMesh* SkinMeshManager::GetSkinMeshInstance(SkinList skinNo)
 //シングルトンインスタンスの取得.
 SkinMeshManager* SkinMeshManager::GetInstance()
 {
-	static SkinMeshManager s_Instance;//静的インスタンス.
-	return &s_Instance;//参照を返す.
+	static SkinMeshManager s_Instance;
+	return &s_Instance;
 }

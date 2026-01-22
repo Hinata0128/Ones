@@ -32,7 +32,6 @@ public:
 	void Create() override;
 	void Release() override;
 
-	// “Æ©ŠÖ”
 	SkinMesh* GetSkinMeshInstance(SkinList skinNo);
 
 private:
